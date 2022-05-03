@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\graphics">
+      <UniqueIdentifier>{21d5c97c-e759-405b-8abe-f445f576ef3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics">
+      <UniqueIdentifier>{21d37a72-f4a3-42e7-bf79-eab648b91420}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics\interfaces">
+      <UniqueIdentifier>{476ae588-1b6f-4fb9-91ab-189e59dfcc48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game">
+      <UniqueIdentifier>{9d92b01e-46cd-4ba1-93f5-326d14293435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level loading">
+      <UniqueIdentifier>{71d3d6b3-6770-4c03-8495-fc3769e035aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level loading\interfaces">
+      <UniqueIdentifier>{e8c83b7c-1d81-41c0-baf3-bbc2003cfc59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game">
+      <UniqueIdentifier>{3cdd17f3-effd-4ad5-9a09-b9d8a6bc55d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\utils">
+      <UniqueIdentifier>{affac581-a71a-489a-a012-48cdf48e2c14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\level loading">
+      <UniqueIdentifier>{5587a557-4795-4e00-a150-911a38f08bf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils">
+      <UniqueIdentifier>{c8af2025-618e-4241-b7be-e972826d71f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\level editor server">
+      <UniqueIdentifier>{bf838fec-e86f-4663-a6d0-659bcfd4ff59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level editor server">
+      <UniqueIdentifier>{ea629dcc-9fc2-4710-95fc-7a5d7d7cb357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level editor server\grpc">
+      <UniqueIdentifier>{4d349f5c-2523-49e6-9c2c-afa039b173a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\level editor server\grpc">
+      <UniqueIdentifier>{eaaed2e9-e37c-4985-bcca-120a50026d1e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glad.c">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeDrawer.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="MockLevelLoader.cpp">
+      <Filter>Source Files\game\level loading</Filter>
+    </ClCompile>
+    <ClCompile Include="FallingBlock.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockInstanceRenderData.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEditImpl.cpp">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.grpc.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
+    </ClCompile>
+    <ClCompile Include="GrpcLevelEditorServer.cpp">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
+    </ClCompile>
+    <ClCompile Include="FallingBlockManager.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayboardEditAsyncImpl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="ILevelEditorServer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="IRenderer.h">
+      <Filter>Header Files\graphics\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeDrawer.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="game.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayfieldDefs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="ILevelLoader.h">
+      <Filter>Header Files\game\level loading\interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="Array3d.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorHandling.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="MockLevelLoader.h">
+      <Filter>Header Files\game\level loading</Filter>
+    </ClInclude>
+    <ClInclude Include="MockLoaderLevelData.h">
+      <Filter>Header Files\game\level loading</Filter>
+    </ClInclude>
+    <ClInclude Include="FallingBlock.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="FallingBlockManager.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockColourDefs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Array3DMap.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="typedefs.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="FallingBlockFinishedEventArgs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="SizedQueue.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineUpdateFrameEventArgs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockInstanceRenderData.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="MasterArrayUpdatedEventArgs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="ILevelEditorServerGame.h">
+      <Filter>Header Files\game\level editor server</Filter>
+    </ClInclude>
+    <ClInclude Include="ILevelEditorServer.h">
+      <Filter>Header Files\game\level editor server</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelEditorServerFactoryTypedef.h">
+      <Filter>Header Files\game\level editor server</Filter>
+    </ClInclude>
+    <ClInclude Include="TSQueue.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBoardEditImpl.h">
+      <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBoardEdit.pb.h">
+      <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBoardEdit.grpc.pb.h">
+      <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayboardEditAsyncImpl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GrpcLevelEditorServer.h">
+      <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

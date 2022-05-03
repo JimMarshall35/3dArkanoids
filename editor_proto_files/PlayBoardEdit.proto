@@ -1,0 +1,46 @@
+syntax = "proto3";
+package EditorGRPC;
+
+service PlayBoardEdit{
+	rpc AddBlock(Point) returns(EditBlockResult);
+	rpc RemoveBlock(Point) returns(EditBlockResult);
+	rpc GetBoardState(Void) returns(BoardDescription);
+	rpc SetBoardState(BoardDescription) returns(SetBoardDescriptionResult);
+}
+
+message Point{
+	int32 x = 1;
+	int32 y = 2;
+	int32 z = 3;
+}
+
+message EditBlockResult{
+	enum Result{
+		SPACE_EMPTY = 0;
+		BLOCK_AT_SPACE = 1;
+		FAILURE_POINT_OUT_OF_BOUNDS = 2;
+		OTHER_FAILURE = 3;
+	}
+	Result result = 1;
+	int32 blockCode = 2;
+	string errorMessage = 3;
+}
+
+message SetBoardDescriptionResult {
+	enum Result{
+		SUCCESS = 0;
+		FAILURE_TOO_MANY_BYTES_FOR_WHD = 1;
+		FAILURE_TOO_FEW_BYTES_FOR_WHD = 2;
+	}
+	Result result = 1;
+
+}
+
+message Void{}
+
+message BoardDescription {
+	int32 width = 1;
+	int32 height = 2;
+	int32 depth = 3;
+	bytes data = 4;
+}

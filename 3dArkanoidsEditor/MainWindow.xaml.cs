@@ -13,6 +13,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
+using _3dArkanoidsEditor.ViewModels;
+using _3dArkanoidsEditor.Services;
 
 namespace _3dArkanoidsEditor
 {
@@ -26,9 +29,7 @@ namespace _3dArkanoidsEditor
         public MainWindow()
         {
             InitializeComponent();
-            m_channel = GrpcChannel.ForAddress("http://localhost:50051");
-            m_client = new EditorGRPC.PlayBoardEdit.PlayBoardEditClient(m_channel);
-
+            DataContext = new MainViewModel(new GRPCService());
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

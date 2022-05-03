@@ -166,7 +166,6 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
-    <ClCompile Include="ILevelEditorServer.cpp" />
     <ClCompile Include="PlayboardEditAsyncImpl.cpp" />
     <ClCompile Include="PlayBoardEditImpl.cpp" />
     <ClCompile Include="main.cpp" />

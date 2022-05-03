@@ -13,4 +13,8 @@
     <PackageReference Include="Grpc.Net.Client" Version="2.45.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
 </Project>

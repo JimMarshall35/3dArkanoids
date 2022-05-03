@@ -398,3 +398,4 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+/3dArkanoids/3dArkanoids/MSVC142_64.zip

@@ -16,7 +16,8 @@ namespace _3dArkanoidsEditor.Services
         }
         public async Task<GameBoardDescription> GetBoardStateAsync()
         {
-            return GRPCConversionHelper.GRPCMessageToModel(await m_client.GetBoardStateAsync(new EditorGRPC.Void()));
+            var BoardState = await m_client.GetBoardStateAsync(new EditorGRPC.Void());
+            return BoardState.ToModel();
         }
         private PlayBoardEditClient m_client;
     }

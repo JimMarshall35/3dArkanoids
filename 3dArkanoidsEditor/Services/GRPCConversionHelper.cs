@@ -7,9 +7,15 @@ using Google.Protobuf;
 
 namespace _3dArkanoidsEditor.Services
 {
-    internal static class GRPCConversionHelper
+    internal static class GRPCConversionHelperExtensions
     {
-        public static Models.GameBoardDescription GRPCMessageToModel(EditorGRPC.BoardDescription grpc)
+        /// <summary>
+        /// extension method for Models.GameBoardDescription to convert it
+        /// to grpc generated class
+        /// </summary>
+        /// <param name="grpc"></param>
+        /// <returns></returns>
+        public static Models.GameBoardDescription ToModel(this EditorGRPC.BoardDescription grpc)
         {
             return new Models.GameBoardDescription(
                     grpc.Data.ToList<byte>(),
@@ -18,7 +24,13 @@ namespace _3dArkanoidsEditor.Services
                     grpc.Depth);
         }
 
-        public static EditorGRPC.BoardDescription ModelToGRPCMessage(Models.GameBoardDescription model)
+        /// <summary>
+        /// extension method for the grpc generated BoardDescription
+        /// class to convert it into the model class used internally
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public static EditorGRPC.BoardDescription ToGRPCMessage(this Models.GameBoardDescription model)
         {
             var grpc = new EditorGRPC.BoardDescription();
             grpc.Data = ByteString.CopyFrom(model.PlayfieldArray.ToArray());

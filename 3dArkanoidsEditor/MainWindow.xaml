@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3dArkanoidsEditor"
+        xmlns:views="clr-namespace:_3dArkanoidsEditor.Views"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -29,6 +30,13 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
+            
         </StackPanel>
+        <views:PlayBoardCanvas 
+            Grid.Row="2" 
+            Grid.Column="2" 
+            PlayBoardTilesX="{Binding PlayFieldX}"
+            PlayBoardTilesY="{Binding PlayFieldY}"
+            PlayBoardTilesZ="{Binding PlayFieldZ}"/>
     </Grid>
 </Window>

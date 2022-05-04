@@ -12,6 +12,7 @@ namespace _3dArkanoidsEditor.Models
         {
             PlayfieldArray = playfieldArray;
             Width = width;
+            Height = height;
             Depth = depth;
         }
         public List<byte> PlayfieldArray { get; private set; }

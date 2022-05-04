@@ -24,23 +24,11 @@ namespace _3dArkanoidsEditor
     /// </summary>
     public partial class MainWindow : Window
     {
-        private EditorGRPC.PlayBoardEdit.PlayBoardEditClient m_client;
-        private GrpcChannel m_channel;
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new MainViewModel(new GRPCService());
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            var result = await m_client.GetBoardStateAsync(new EditorGRPC.Void());
-            Console.WriteLine(result.Depth);
-        }
-
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            var result = m_client.AddBlockAsync(new EditorGRPC.Point());
-        }
     }
 }

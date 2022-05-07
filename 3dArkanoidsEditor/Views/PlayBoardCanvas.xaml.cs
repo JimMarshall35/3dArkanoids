@@ -63,14 +63,39 @@ namespace _3dArkanoidsEditor.Views
                 m_coordsSetFlags.HasFlag(CoordsSetFlags.Z))
             {
                 m_coordsSetFlags = CoordsSetFlags.None;
-                RespondToAllCoordinatesSet();
+                OnAllCoordinatesSet();
             }
         }
 
-        private void RespondToAllCoordinatesSet()
+        private void OnAllCoordinatesSet()
         {
-            m_playBoardCanvas.Width = PlayBoardTilesX * m_blockWidthPixels;
-            m_playBoardCanvas.Height = PlayBoardTilesY * m_blockHeightPixels;
+            m_playBoardCanvas.Width = PlayBoardTilesX * m_blockWidthPixels * m_canvasScale;
+            m_playBoardCanvas.Height = PlayBoardTilesY * m_blockHeightPixels * m_canvasScale;
+            for(int x=0; x< PlayBoardTilesX; x++)
+            {
+                for (int y = 0; y < PlayBoardTilesY; y++)
+                {
+                    var rect = new Rectangle();
+                    rect.Stroke = m_blockOutlineBrush;
+                    rect.Fill = m_blockNotHoveredFill;
+                    rect.Width = m_blockWidthPixels * m_canvasScale;
+                    rect.Height = m_blockHeightPixels * m_canvasScale;
+                    rect.StrokeThickness = 2;
+                    Canvas.SetLeft(rect, x * m_blockWidthPixels * m_canvasScale);
+                    Canvas.SetTop(rect, y * m_blockHeightPixels * m_canvasScale);
+
+                    rect.MouseEnter += (object sender, MouseEventArgs e) =>
+                    {
+                        rect.Fill = m_blockHoveredFill;
+                    };
+                    rect.MouseLeave += (object sender, MouseEventArgs e) =>
+                    {
+                        rect.Fill = m_blockNotHoveredFill;
+                    };
+                    m_playBoardCanvas.Children.Add(rect);
+
+                }
+            }
         }
 
         private static void OnBoardSizeDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -96,6 +121,10 @@ namespace _3dArkanoidsEditor.Views
             }
         }
 
+        private readonly SolidColorBrush m_blockOutlineBrush = new SolidColorBrush(Colors.Black);
+        private readonly SolidColorBrush m_blockNotHoveredFill = new SolidColorBrush(Colors.Transparent);
+        private readonly SolidColorBrush m_blockHoveredFill = new SolidColorBrush(Colors.BlanchedAlmond);
+        private double m_canvasScale = 2.0;
         private double m_blockWidthPixels = 16.0f;
         private double m_blockHeightPixels = 8.0f;
         private PlayBoardCanvas m_canvas;

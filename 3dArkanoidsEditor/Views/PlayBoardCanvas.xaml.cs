@@ -63,8 +63,16 @@ namespace _3dArkanoidsEditor.Views
         {
             InitializeComponent();
             //DataContext = new PlayBoardCanvasViewModel(this);
+            m_canvasZLayerChangerVm = 
+                new CanvasZLayerChangerViewModel(OnLayerChange, PlayBoardTilesZ);
+            m_zSlider.DataContext = m_canvasZLayerChangerVm;
         }
 
+        private void OnLayerChange(int newLayer)
+        {
+            m_currentLayer = newLayer;
+            UpdateGrid();
+        }
 
 
         public void RespondToCoordsSet(CoordsSetFlags whichCoordSet)
@@ -79,15 +87,15 @@ namespace _3dArkanoidsEditor.Views
             }
         }
 
-        private void OnAllCoordinatesSet()
+        private void UpdateGrid()
         {
-            m_playBoardCanvas.Width = PlayBoardTilesX * m_blockWidthPixels * m_canvasScale;
-            m_playBoardCanvas.Height = PlayBoardTilesY * m_blockHeightPixels * m_canvasScale;
-            for(int x=0; x < PlayBoardTilesX; x++)
+            m_playBoardCanvas.Children.Clear();
+            for (int x = 0; x < PlayBoardTilesX; x++)
             {
                 for (int y = 0; y < PlayBoardTilesY; y++)
                 {
-                    var colourOfRect = m_byteToColourDict[PlayBoardDescription.GetAt(x, y, 0)];
+                    var byteAtCoords = PlayBoardDescription.GetAt(x, y, m_currentLayer);
+                    var colourOfRect = m_byteToColourDict[byteAtCoords];
                     var rectBrush = new SolidColorBrush(colourOfRect);
 
                     var rect = new Rectangle();
@@ -99,8 +107,7 @@ namespace _3dArkanoidsEditor.Views
                     Canvas.SetLeft(rect, x * m_blockWidthPixels * m_canvasScale);
                     Canvas.SetTop(rect, y * m_blockHeightPixels * m_canvasScale);
 
-                    int tileX = x;
-                    int tileY = y;
+                    // Possible memory leak ?
                     rect.MouseEnter += (object sender, MouseEventArgs e) =>
                     {
                         rect.Fill = m_blockHoveredFill;
@@ -109,14 +116,26 @@ namespace _3dArkanoidsEditor.Views
                     {
                         rect.Fill = rectBrush;
                     };
+                    // got to do this to stop the lambda capturing by reference (i think)
+                    // https://stackoverflow.com/questions/451779/how-to-tell-a-lambda-function-to-capture-a-copy-instead-of-a-reference-in-c
+                    int tileX = x;
+                    int tileY = y;
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {
-                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, 0, 0xff));
+                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, 0xff, byteAtCoords));
                     };
                     m_playBoardCanvas.Children.Add(rect);
 
                 }
             }
+        }
+
+        private void OnAllCoordinatesSet()
+        {
+            m_playBoardCanvas.Width = PlayBoardTilesX * m_blockWidthPixels * m_canvasScale;
+            m_playBoardCanvas.Height = PlayBoardTilesY * m_blockHeightPixels * m_canvasScale;
+            m_canvasZLayerChangerVm.SetMaxLayerIndex(PlayBoardTilesZ);
+            UpdateGrid();
         }
 
         private static void OnBoardSizeDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -157,7 +176,6 @@ namespace _3dArkanoidsEditor.Views
 
         private readonly SolidColorBrush m_blockOutlineBrush = new SolidColorBrush(Colors.Black);
         private readonly SolidColorBrush m_blockHoveredFill = new SolidColorBrush(Colors.BlanchedAlmond);
-        private static readonly SolidColorBrush m_blockNotHoveredFill = new SolidColorBrush(Colors.Transparent);
         private static readonly Color m_blockNotHoveredFillColour = Colors.Transparent;
         private readonly Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>
         {
@@ -174,5 +192,7 @@ namespace _3dArkanoidsEditor.Views
         private double m_blockWidthPixels = 16.0f;
         private double m_blockHeightPixels = 8.0f;
         private CoordsSetFlags m_coordsSetFlags = CoordsSetFlags.None;
+        private int m_currentLayer = 0;
+        private CanvasZLayerChangerViewModel m_canvasZLayerChangerVm;
     }
 }

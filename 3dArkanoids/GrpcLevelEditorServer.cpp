@@ -48,7 +48,7 @@ void GrpcLevelEditorServer::Run()
 
 		// Spawn a new CallData instance to serve new clients.
 		new GetBoardStateCallData(&m_service, cq.get(), m_game, this);
-		new AddBlockCallData(&m_service, cq.get(), m_game, this);
+		new ChangeBlockCallData(&m_service, cq.get(), m_game, this);
 		void* tag;  // uniquely identifies a request.
 		bool ok;
 		while (true) {
@@ -68,27 +68,32 @@ void GrpcLevelEditorServer::Run()
 void GrpcLevelEditorServer::EnactRPC(const LevelEditorRPC& rpc)
 {
 	switch (rpc.rpcType) {
-		case AddBlock:
-			std::cout << "AddBlock" << std::endl;
-			break;
-		case RemoveBlock:
-			std::cout << "RemoveBlock" << std::endl;
-			break;
-		case GetBlocks:
-			{
-				std::cout << "GetBlocks" << std::endl;
-				const auto& boardState = m_game->GetBoardState();
-				auto ptr = boardState.getPtr();
-				auto w = boardState.getW(); auto h = boardState.getH(); auto d = boardState.getD();
-				auto size = w * d * h;
-				auto getBoardStateCallDataPtr = (GetBoardStateCallData*)rpc.callData;
-				getBoardStateCallDataPtr->reply_.set_data(std::string(ptr, ptr + size));
-				getBoardStateCallDataPtr->reply_.set_depth(d);
-				getBoardStateCallDataPtr->reply_.set_height(h);
-				getBoardStateCallDataPtr->reply_.set_width(w);
-			}
+		case OnChangeBLock:
+		{
+			// TODO: implement
+			auto changeBlockCallDataPtr = (ChangeBlockCallData*)rpc.callData;
+			std::cout <<
+				"change block x: "<< changeBlockCallDataPtr->request_.x() << 
+				" y: " << changeBlockCallDataPtr->request_.y() <<
+				" z: " << changeBlockCallDataPtr->request_.z() << 
+				" newVal: "<< changeBlockCallDataPtr->request_.newval() << std::endl;
+		}
+		break;
+	case GetBlocks:
+		{
+			std::cout << "GetBlocks" << std::endl;
+			const auto& boardState = m_game->GetBoardState();
+			auto ptr = boardState.getPtr();
+			auto w = boardState.getW(); auto h = boardState.getH(); auto d = boardState.getD();
+			auto size = w * d * h;
+			auto getBoardStateCallDataPtr = (GetBoardStateCallData*)rpc.callData;
+			getBoardStateCallDataPtr->reply_.set_data(std::string(ptr, ptr + size));
+			getBoardStateCallDataPtr->reply_.set_depth(d);
+			getBoardStateCallDataPtr->reply_.set_height(h);
+			getBoardStateCallDataPtr->reply_.set_width(w);
+		}
 			
-			break;
+		break;
 	}
 }
 
@@ -126,44 +131,22 @@ void GrpcLevelEditorServer::GetBoardStateCallData::Finish()
 
 }
 
-void GrpcLevelEditorServer::AddBlockCallData::RequestOnCreate()
+void GrpcLevelEditorServer::ChangeBlockCallData::RequestOnCreate()
 {
-	service_->RequestAddBlock(&ctx_, &request_, &responder_, cq_, cq_, this);
+	service_->RequestChangeBlock(&ctx_, &request_, &responder_, cq_, cq_, this);
 }
 
-void GrpcLevelEditorServer::AddBlockCallData::OnProcess()
+void GrpcLevelEditorServer::ChangeBlockCallData::OnProcess()
 {
-	using namespace EditorGRPC;
-	new AddBlockCallData(service_, cq_, m_game, server_);
-	auto rpc = LevelEditorRPC{ this,AddBlock };
+	new ChangeBlockCallData(service_, cq_, m_game, server_);
+
+	auto rpc = LevelEditorRPC{ this, OnChangeBLock };
 	server_->m_editorQueue.Push(rpc);
-
-	
 }
 
-void GrpcLevelEditorServer::AddBlockCallData::Finish()
+void GrpcLevelEditorServer::ChangeBlockCallData::Finish()
 {
 	responder_.Finish(reply_, Status::OK, this);
 	status_ = FINISH;
 
-}
-
-void GrpcLevelEditorServer::RemoveBlockCallData::RequestOnCreate()
-{
-	service_->RequestRemoveBlock(&ctx_, &request_, &responder_, cq_, cq_, this);
-
-}
-
-void GrpcLevelEditorServer::RemoveBlockCallData::OnProcess()
-{
-	new RemoveBlockCallData(service_, cq_, m_game, server_);
-	auto rpc = LevelEditorRPC{ this,RemoveBlock };
-	server_->m_editorQueue.Push(rpc);
-
-}
-
-void GrpcLevelEditorServer::RemoveBlockCallData::Finish()
-{
-	responder_.Finish(reply_, Status::OK, this);
-	status_ = FINISH;
 }

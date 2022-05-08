@@ -49,6 +49,13 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>> PrepareAsyncRemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>>(PrepareAsyncRemoveBlockRaw(context, request, cq));
     }
+    virtual ::grpc::Status ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::EditorGRPC::EditBlockResult* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>> AsyncChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>>(AsyncChangeBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>> PrepareAsyncChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>>(PrepareAsyncChangeBlockRaw(context, request, cq));
+    }
     virtual ::grpc::Status GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::EditorGRPC::BoardDescription* response) = 0;
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::BoardDescription>> AsyncGetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::BoardDescription>>(AsyncGetBoardStateRaw(context, request, cq));
@@ -70,6 +77,8 @@ class PlayBoardEdit final {
       virtual void AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void RemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, std::function<void(::grpc::Status)>) = 0;
       virtual void RemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void SetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::BoardDescription* request, ::EditorGRPC::SetBoardDescriptionResult* response, std::function<void(::grpc::Status)>) = 0;
@@ -83,6 +92,8 @@ class PlayBoardEdit final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>* PrepareAsyncAddBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>* AsyncRemoveBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>* PrepareAsyncRemoveBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>* AsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::EditBlockResult>* PrepareAsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::BoardDescription>* AsyncGetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::BoardDescription>* PrepareAsyncGetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetBoardDescriptionResult>* AsyncSetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::BoardDescription& request, ::grpc::CompletionQueue* cq) = 0;
@@ -105,6 +116,13 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>> PrepareAsyncRemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>>(PrepareAsyncRemoveBlockRaw(context, request, cq));
     }
+    ::grpc::Status ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::EditorGRPC::EditBlockResult* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>> AsyncChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>>(AsyncChangeBlockRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>> PrepareAsyncChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>>(PrepareAsyncChangeBlockRaw(context, request, cq));
+    }
     ::grpc::Status GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::EditorGRPC::BoardDescription* response) override;
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::BoardDescription>> AsyncGetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::BoardDescription>>(AsyncGetBoardStateRaw(context, request, cq));
@@ -126,6 +144,8 @@ class PlayBoardEdit final {
       void AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) override;
       void RemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, std::function<void(::grpc::Status)>) override;
       void RemoveBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, std::function<void(::grpc::Status)>) override;
+      void ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response, std::function<void(::grpc::Status)>) override;
       void GetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response, ::grpc::ClientUnaryReactor* reactor) override;
       void SetBoardState(::grpc::ClientContext* context, const ::EditorGRPC::BoardDescription* request, ::EditorGRPC::SetBoardDescriptionResult* response, std::function<void(::grpc::Status)>) override;
@@ -145,12 +165,15 @@ class PlayBoardEdit final {
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PrepareAsyncAddBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* AsyncRemoveBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PrepareAsyncRemoveBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* AsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PrepareAsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::BoardDescription>* AsyncGetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::BoardDescription>* PrepareAsyncGetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetBoardDescriptionResult>* AsyncSetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::BoardDescription& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetBoardDescriptionResult>* PrepareAsyncSetBoardStateRaw(::grpc::ClientContext* context, const ::EditorGRPC::BoardDescription& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AddBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveBlock_;
+    const ::grpc::internal::RpcMethod rpcmethod_ChangeBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_GetBoardState_;
     const ::grpc::internal::RpcMethod rpcmethod_SetBoardState_;
   };
@@ -162,6 +185,7 @@ class PlayBoardEdit final {
     virtual ~Service();
     virtual ::grpc::Status AddBlock(::grpc::ServerContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response);
     virtual ::grpc::Status RemoveBlock(::grpc::ServerContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response);
+    virtual ::grpc::Status ChangeBlock(::grpc::ServerContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response);
     virtual ::grpc::Status GetBoardState(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response);
     virtual ::grpc::Status SetBoardState(::grpc::ServerContext* context, const ::EditorGRPC::BoardDescription* request, ::EditorGRPC::SetBoardDescriptionResult* response);
   };
@@ -206,12 +230,32 @@ class PlayBoardEdit final {
     }
   };
   template <class BaseClass>
+  class WithAsyncMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodAsync(2);
+    }
+    ~WithAsyncMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestChangeBlock(::grpc::ServerContext* context, ::EditorGRPC::BlockEdit* request, ::grpc::ServerAsyncResponseWriter< ::EditorGRPC::EditBlockResult>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithAsyncMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodAsync(2);
+      ::grpc::Service::MarkMethodAsync(3);
     }
     ~WithAsyncMethod_GetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -222,7 +266,7 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetBoardState(::grpc::ServerContext* context, ::EditorGRPC::Void* request, ::grpc::ServerAsyncResponseWriter< ::EditorGRPC::BoardDescription>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -231,7 +275,7 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithAsyncMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodAsync(3);
+      ::grpc::Service::MarkMethodAsync(4);
     }
     ~WithAsyncMethod_SetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -242,10 +286,10 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSetBoardState(::grpc::ServerContext* context, ::EditorGRPC::BoardDescription* request, ::grpc::ServerAsyncResponseWriter< ::EditorGRPC::SetBoardDescriptionResult>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<Service > > > > AsyncService;
+  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_ChangeBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<Service > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_AddBlock : public BaseClass {
    private:
@@ -301,18 +345,45 @@ class PlayBoardEdit final {
       ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::Point* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithCallbackMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response) { return this->ChangeBlock(context, request, response); }));}
+    void SetMessageAllocatorFor_ChangeBlock(
+        ::grpc::MessageAllocator< ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ChangeBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithCallbackMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodCallback(2,
+      ::grpc::Service::MarkMethodCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::Void, ::EditorGRPC::BoardDescription>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::BoardDescription* response) { return this->GetBoardState(context, request, response); }));}
     void SetMessageAllocatorFor_GetBoardState(
         ::grpc::MessageAllocator< ::EditorGRPC::Void, ::EditorGRPC::BoardDescription>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(2);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::Void, ::EditorGRPC::BoardDescription>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -333,13 +404,13 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithCallbackMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodCallback(3,
+      ::grpc::Service::MarkMethodCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::BoardDescription, ::EditorGRPC::SetBoardDescriptionResult>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::EditorGRPC::BoardDescription* request, ::EditorGRPC::SetBoardDescriptionResult* response) { return this->SetBoardState(context, request, response); }));}
     void SetMessageAllocatorFor_SetBoardState(
         ::grpc::MessageAllocator< ::EditorGRPC::BoardDescription, ::EditorGRPC::SetBoardDescriptionResult>* allocator) {
-      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(3);
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(4);
       static_cast<::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::BoardDescription, ::EditorGRPC::SetBoardDescriptionResult>*>(handler)
               ->SetMessageAllocator(allocator);
     }
@@ -354,7 +425,7 @@ class PlayBoardEdit final {
     virtual ::grpc::ServerUnaryReactor* SetBoardState(
       ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::BoardDescription* /*request*/, ::EditorGRPC::SetBoardDescriptionResult* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<Service > > > > CallbackService;
+  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_ChangeBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<Service > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AddBlock : public BaseClass {
@@ -391,12 +462,29 @@ class PlayBoardEdit final {
     }
   };
   template <class BaseClass>
+  class WithGenericMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodGeneric(2);
+    }
+    ~WithGenericMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
   class WithGenericMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodGeneric(2);
+      ::grpc::Service::MarkMethodGeneric(3);
     }
     ~WithGenericMethod_GetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -413,7 +501,7 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithGenericMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodGeneric(3);
+      ::grpc::Service::MarkMethodGeneric(4);
     }
     ~WithGenericMethod_SetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -465,12 +553,32 @@ class PlayBoardEdit final {
     }
   };
   template <class BaseClass>
+  class WithRawMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodRaw(2);
+    }
+    ~WithRawMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestChangeBlock(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
   class WithRawMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodRaw(2);
+      ::grpc::Service::MarkMethodRaw(3);
     }
     ~WithRawMethod_GetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -481,7 +589,7 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestGetBoardState(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(2, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -490,7 +598,7 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodRaw(3);
+      ::grpc::Service::MarkMethodRaw(4);
     }
     ~WithRawMethod_SetBoardState() override {
       BaseClassMustBeDerivedFromService(this);
@@ -501,7 +609,7 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     void RequestSetBoardState(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
-      ::grpc::Service::RequestAsyncUnary(3, context, request, response, new_call_cq, notification_cq, tag);
+      ::grpc::Service::RequestAsyncUnary(4, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -549,12 +657,34 @@ class PlayBoardEdit final {
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
+  class WithRawCallbackMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodRawCallback(2,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->ChangeBlock(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* ChangeBlock(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
   class WithRawCallbackMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodRawCallback(2,
+      ::grpc::Service::MarkMethodRawCallback(3,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->GetBoardState(context, request, response); }));
@@ -576,7 +706,7 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithRawCallbackMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodRawCallback(3,
+      ::grpc::Service::MarkMethodRawCallback(4,
           new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
             [this](
                    ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetBoardState(context, request, response); }));
@@ -647,12 +777,39 @@ class PlayBoardEdit final {
     virtual ::grpc::Status StreamedRemoveBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::Point,::EditorGRPC::EditBlockResult>* server_unary_streamer) = 0;
   };
   template <class BaseClass>
+  class WithStreamedUnaryMethod_ChangeBlock : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_ChangeBlock() {
+      ::grpc::Service::MarkMethodStreamed(2,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult>* streamer) {
+                       return this->StreamedChangeBlock(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_ChangeBlock() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status ChangeBlock(::grpc::ServerContext* /*context*/, const ::EditorGRPC::BlockEdit* /*request*/, ::EditorGRPC::EditBlockResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedChangeBlock(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::BlockEdit,::EditorGRPC::EditBlockResult>* server_unary_streamer) = 0;
+  };
+  template <class BaseClass>
   class WithStreamedUnaryMethod_GetBoardState : public BaseClass {
    private:
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_GetBoardState() {
-      ::grpc::Service::MarkMethodStreamed(2,
+      ::grpc::Service::MarkMethodStreamed(3,
         new ::grpc::internal::StreamedUnaryHandler<
           ::EditorGRPC::Void, ::EditorGRPC::BoardDescription>(
             [this](::grpc::ServerContext* context,
@@ -679,7 +836,7 @@ class PlayBoardEdit final {
     void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
    public:
     WithStreamedUnaryMethod_SetBoardState() {
-      ::grpc::Service::MarkMethodStreamed(3,
+      ::grpc::Service::MarkMethodStreamed(4,
         new ::grpc::internal::StreamedUnaryHandler<
           ::EditorGRPC::BoardDescription, ::EditorGRPC::SetBoardDescriptionResult>(
             [this](::grpc::ServerContext* context,
@@ -700,9 +857,9 @@ class PlayBoardEdit final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetBoardState(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::BoardDescription,::EditorGRPC::SetBoardDescriptionResult>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<Service > > > > StreamedUnaryService;
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<Service > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<Service > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<Service > > > > > StreamedService;
 };
 
 }  // namespace EditorGRPC

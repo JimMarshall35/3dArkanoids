@@ -4,6 +4,7 @@ package EditorGRPC;
 service PlayBoardEdit{
 	rpc AddBlock(Point) returns(EditBlockResult);
 	rpc RemoveBlock(Point) returns(EditBlockResult);
+	rpc ChangeBlock(BlockEdit) returns(EditBlockResult);
 	rpc GetBoardState(Void) returns(BoardDescription);
 	rpc SetBoardState(BoardDescription) returns(SetBoardDescriptionResult);
 }
@@ -12,6 +13,13 @@ message Point{
 	int32 x = 1;
 	int32 y = 2;
 	int32 z = 3;
+}
+
+message BlockEdit{
+	int32 x = 1;
+	int32 y = 2;
+	int32 z = 3;
+	int32 newval = 4;
 }
 
 message EditBlockResult{

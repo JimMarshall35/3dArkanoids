@@ -48,7 +48,7 @@ struct TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[5]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[6]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -56,6 +56,9 @@ struct TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto {
 };
 extern const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
 namespace EditorGRPC {
+class BlockEdit;
+struct BlockEditDefaultTypeInternal;
+extern BlockEditDefaultTypeInternal _BlockEdit_default_instance_;
 class BoardDescription;
 struct BoardDescriptionDefaultTypeInternal;
 extern BoardDescriptionDefaultTypeInternal _BoardDescription_default_instance_;
@@ -73,6 +76,7 @@ struct VoidDefaultTypeInternal;
 extern VoidDefaultTypeInternal _Void_default_instance_;
 }  // namespace EditorGRPC
 PROTOBUF_NAMESPACE_OPEN
+template<> ::EditorGRPC::BlockEdit* Arena::CreateMaybeMessage<::EditorGRPC::BlockEdit>(Arena*);
 template<> ::EditorGRPC::BoardDescription* Arena::CreateMaybeMessage<::EditorGRPC::BoardDescription>(Arena*);
 template<> ::EditorGRPC::EditBlockResult* Arena::CreateMaybeMessage<::EditorGRPC::EditBlockResult>(Arena*);
 template<> ::EditorGRPC::Point* Arena::CreateMaybeMessage<::EditorGRPC::Point>(Arena*);
@@ -304,6 +308,185 @@ class Point final :
 };
 // -------------------------------------------------------------------
 
+class BlockEdit final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.BlockEdit) */ {
+ public:
+  inline BlockEdit() : BlockEdit(nullptr) {}
+  ~BlockEdit() override;
+  explicit constexpr BlockEdit(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  BlockEdit(const BlockEdit& from);
+  BlockEdit(BlockEdit&& from) noexcept
+    : BlockEdit() {
+    *this = ::std::move(from);
+  }
+
+  inline BlockEdit& operator=(const BlockEdit& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline BlockEdit& operator=(BlockEdit&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const BlockEdit& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const BlockEdit* internal_default_instance() {
+    return reinterpret_cast<const BlockEdit*>(
+               &_BlockEdit_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    1;
+
+  friend void swap(BlockEdit& a, BlockEdit& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(BlockEdit* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(BlockEdit* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  BlockEdit* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<BlockEdit>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const BlockEdit& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const BlockEdit& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(BlockEdit* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.BlockEdit";
+  }
+  protected:
+  explicit BlockEdit(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kXFieldNumber = 1,
+    kYFieldNumber = 2,
+    kZFieldNumber = 3,
+    kNewvalFieldNumber = 4,
+  };
+  // int32 x = 1;
+  void clear_x();
+  int32_t x() const;
+  void set_x(int32_t value);
+  private:
+  int32_t _internal_x() const;
+  void _internal_set_x(int32_t value);
+  public:
+
+  // int32 y = 2;
+  void clear_y();
+  int32_t y() const;
+  void set_y(int32_t value);
+  private:
+  int32_t _internal_y() const;
+  void _internal_set_y(int32_t value);
+  public:
+
+  // int32 z = 3;
+  void clear_z();
+  int32_t z() const;
+  void set_z(int32_t value);
+  private:
+  int32_t _internal_z() const;
+  void _internal_set_z(int32_t value);
+  public:
+
+  // int32 newval = 4;
+  void clear_newval();
+  int32_t newval() const;
+  void set_newval(int32_t value);
+  private:
+  int32_t _internal_newval() const;
+  void _internal_set_newval(int32_t value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.BlockEdit)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int32_t x_;
+  int32_t y_;
+  int32_t z_;
+  int32_t newval_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
 class EditBlockResult final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.EditBlockResult) */ {
  public:
@@ -352,7 +535,7 @@ class EditBlockResult final :
                &_EditBlockResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    1;
+    2;
 
   friend void swap(EditBlockResult& a, EditBlockResult& b) {
     a.Swap(&b);
@@ -559,7 +742,7 @@ class SetBoardDescriptionResult final :
                &_SetBoardDescriptionResult_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    2;
+    3;
 
   friend void swap(SetBoardDescriptionResult& a, SetBoardDescriptionResult& b) {
     a.Swap(&b);
@@ -736,7 +919,7 @@ class Void final :
                &_Void_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    3;
+    4;
 
   friend void swap(Void& a, Void& b) {
     a.Swap(&b);
@@ -855,7 +1038,7 @@ class BoardDescription final :
                &_BoardDescription_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    4;
+    5;
 
   friend void swap(BoardDescription& a, BoardDescription& b) {
     a.Swap(&b);
@@ -1058,6 +1241,90 @@ inline void Point::_internal_set_z(int32_t value) {
 inline void Point::set_z(int32_t value) {
   _internal_set_z(value);
   // @@protoc_insertion_point(field_set:EditorGRPC.Point.z)
+}
+
+// -------------------------------------------------------------------
+
+// BlockEdit
+
+// int32 x = 1;
+inline void BlockEdit::clear_x() {
+  x_ = 0;
+}
+inline int32_t BlockEdit::_internal_x() const {
+  return x_;
+}
+inline int32_t BlockEdit::x() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.BlockEdit.x)
+  return _internal_x();
+}
+inline void BlockEdit::_internal_set_x(int32_t value) {
+  
+  x_ = value;
+}
+inline void BlockEdit::set_x(int32_t value) {
+  _internal_set_x(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.BlockEdit.x)
+}
+
+// int32 y = 2;
+inline void BlockEdit::clear_y() {
+  y_ = 0;
+}
+inline int32_t BlockEdit::_internal_y() const {
+  return y_;
+}
+inline int32_t BlockEdit::y() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.BlockEdit.y)
+  return _internal_y();
+}
+inline void BlockEdit::_internal_set_y(int32_t value) {
+  
+  y_ = value;
+}
+inline void BlockEdit::set_y(int32_t value) {
+  _internal_set_y(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.BlockEdit.y)
+}
+
+// int32 z = 3;
+inline void BlockEdit::clear_z() {
+  z_ = 0;
+}
+inline int32_t BlockEdit::_internal_z() const {
+  return z_;
+}
+inline int32_t BlockEdit::z() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.BlockEdit.z)
+  return _internal_z();
+}
+inline void BlockEdit::_internal_set_z(int32_t value) {
+  
+  z_ = value;
+}
+inline void BlockEdit::set_z(int32_t value) {
+  _internal_set_z(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.BlockEdit.z)
+}
+
+// int32 newval = 4;
+inline void BlockEdit::clear_newval() {
+  newval_ = 0;
+}
+inline int32_t BlockEdit::_internal_newval() const {
+  return newval_;
+}
+inline int32_t BlockEdit::newval() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.BlockEdit.newval)
+  return _internal_newval();
+}
+inline void BlockEdit::_internal_set_newval(int32_t value) {
+  
+  newval_ = value;
+}
+inline void BlockEdit::set_newval(int32_t value) {
+  _internal_set_newval(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.BlockEdit.newval)
 }
 
 // -------------------------------------------------------------------
@@ -1301,6 +1568,8 @@ inline void BoardDescription::set_allocated_data(std::string* data) {
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------

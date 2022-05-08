@@ -19,6 +19,14 @@ namespace _3dArkanoidsEditor.Services
             var BoardState = await m_client.GetBoardStateAsync(new EditorGRPC.Void());
             return BoardState.ToModel();
         }
+
+        public async Task<EditBlockResult> ChangeBlockAsync(SingleTileEdit edit)
+        {
+            var grpc = edit.ToGRPCMessage();
+            var result = await m_client.ChangeBlockAsync(grpc);
+            return result.ToModel();
+        }
+
         private PlayBoardEditClient m_client;
     }
 }

@@ -138,10 +138,11 @@ namespace _3dArkanoidsEditor.ViewModels
             m_gameBoardDescription = await m_gameConnectionService.Client.GetBoardStateAsync();
         }
 
-        private void OnSingleTileEdit(object e)
+        private async void OnSingleTileEdit(object e)
         {
             SingleTileEdit edit = (SingleTileEdit)e;
-            throw new NotImplementedException();
+            var result = await m_gameConnectionService.Client.ChangeBlockAsync(edit);
+
         }
 
         #endregion

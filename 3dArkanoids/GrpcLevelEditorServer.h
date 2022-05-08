@@ -10,6 +10,7 @@
 
 
 using EditorGRPC::Void;
+using EditorGRPC::BlockEdit;
 using EditorGRPC::BoardDescription;
 using EditorGRPC::Point;
 using EditorGRPC::EditBlockResult;
@@ -31,7 +32,8 @@ enum RPCType : char {
     Invalid,
     AddBlock,
     RemoveBlock,
-    GetBlocks
+    GetBlocks,
+    OnChangeBLock
 };
 struct LevelEditorRPC {
     CallData* callData;
@@ -114,7 +116,7 @@ private:
     std::thread* m_serverThread = nullptr;
     TSQueue<LevelEditorRPC> m_editorQueue;
 
-    class GetBoardStateCallData : CallData {
+    class GetBoardStateCallData : public CallData {
     public:
         GetBoardStateCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
             :CallData(service,cq,game), responder_(&ctx_), server_(server)
@@ -141,18 +143,20 @@ private:
         virtual void Finish() override;
     };
 
-    class AddBlockCallData : CallData {
+    class ChangeBlockCallData : public CallData {
     public:
-        AddBlockCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
+        ChangeBlockCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
             :CallData(service, cq, game), responder_(&ctx_), server_(server)
         {
             Proceed();
         }
-    private:
+    public:
         // What we get from the client.
-        Point request_;
+        BlockEdit request_;
         // What we send back to the client.
         EditBlockResult reply_;
+
+    private:
         // The means to get back to the client.
         ServerAsyncResponseWriter<EditBlockResult> responder_;
 
@@ -166,30 +170,8 @@ private:
         virtual void Finish() override;
     };
 
-    class RemoveBlockCallData : CallData {
-    public:
-        RemoveBlockCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
-            :CallData(service, cq, game), responder_(&ctx_), server_(server)
-        {
-            Proceed();
-        }
-    private:
-        // What we get from the client.
-        Point request_;
-        // What we send back to the client.
-        EditBlockResult reply_;
-        // The means to get back to the client.
-        ServerAsyncResponseWriter<EditBlockResult> responder_;
 
-        GrpcLevelEditorServer* server_;
-    protected:
-        // Inherited via CallData
-        virtual void RequestOnCreate() override;
-        virtual void OnProcess() override;
 
-        // Inherited via CallData
-        virtual void Finish() override;
-    };
 
 
     // Inherited via ILevelEditorServer

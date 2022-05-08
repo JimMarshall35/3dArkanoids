@@ -24,6 +24,7 @@ namespace EditorGRPC {
 static const char* PlayBoardEdit_method_names[] = {
   "/EditorGRPC.PlayBoardEdit/AddBlock",
   "/EditorGRPC.PlayBoardEdit/RemoveBlock",
+  "/EditorGRPC.PlayBoardEdit/ChangeBlock",
   "/EditorGRPC.PlayBoardEdit/GetBoardState",
   "/EditorGRPC.PlayBoardEdit/SetBoardState",
 };
@@ -37,8 +38,9 @@ std::unique_ptr< PlayBoardEdit::Stub> PlayBoardEdit::NewStub(const std::shared_p
 PlayBoardEdit::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options)
   : channel_(channel), rpcmethod_AddBlock_(PlayBoardEdit_method_names[0], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_RemoveBlock_(PlayBoardEdit_method_names[1], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_GetBoardState_(PlayBoardEdit_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
-  , rpcmethod_SetBoardState_(PlayBoardEdit_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_ChangeBlock_(PlayBoardEdit_method_names[2], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetBoardState_(PlayBoardEdit_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_SetBoardState_(PlayBoardEdit_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status PlayBoardEdit::Stub::AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::EditorGRPC::EditBlockResult* response) {
@@ -83,6 +85,29 @@ void PlayBoardEdit::Stub::async::RemoveBlock(::grpc::ClientContext* context, con
 ::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PlayBoardEdit::Stub::AsyncRemoveBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::grpc::CompletionQueue* cq) {
   auto* result =
     this->PrepareAsyncRemoveBlockRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::Status PlayBoardEdit::Stub::ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::EditorGRPC::EditBlockResult* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_ChangeBlock_, context, request, response);
+}
+
+void PlayBoardEdit::Stub::async::ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangeBlock_, context, request, response, std::move(f));
+}
+
+void PlayBoardEdit::Stub::async::ChangeBlock(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_ChangeBlock_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PlayBoardEdit::Stub::PrepareAsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::EditorGRPC::EditBlockResult, ::EditorGRPC::BlockEdit, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_ChangeBlock_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::EditBlockResult>* PlayBoardEdit::Stub::AsyncChangeBlockRaw(::grpc::ClientContext* context, const ::EditorGRPC::BlockEdit& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncChangeBlockRaw(context, request, cq);
   result->StartCall();
   return result;
 }
@@ -157,6 +182,16 @@ PlayBoardEdit::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayBoardEdit_method_names[2],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayBoardEdit::Service, ::EditorGRPC::BlockEdit, ::EditorGRPC::EditBlockResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](PlayBoardEdit::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::EditorGRPC::BlockEdit* req,
+             ::EditorGRPC::EditBlockResult* resp) {
+               return service->ChangeBlock(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayBoardEdit_method_names[3],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayBoardEdit::Service, ::EditorGRPC::Void, ::EditorGRPC::BoardDescription, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PlayBoardEdit::Service* service,
              ::grpc::ServerContext* ctx,
@@ -165,7 +200,7 @@ PlayBoardEdit::Service::Service() {
                return service->GetBoardState(ctx, req, resp);
              }, this)));
   AddMethod(new ::grpc::internal::RpcServiceMethod(
-      PlayBoardEdit_method_names[3],
+      PlayBoardEdit_method_names[4],
       ::grpc::internal::RpcMethod::NORMAL_RPC,
       new ::grpc::internal::RpcMethodHandler< PlayBoardEdit::Service, ::EditorGRPC::BoardDescription, ::EditorGRPC::SetBoardDescriptionResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
           [](PlayBoardEdit::Service* service,
@@ -187,6 +222,13 @@ PlayBoardEdit::Service::~Service() {
 }
 
 ::grpc::Status PlayBoardEdit::Service::RemoveBlock(::grpc::ServerContext* context, const ::EditorGRPC::Point* request, ::EditorGRPC::EditBlockResult* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayBoardEdit::Service::ChangeBlock(::grpc::ServerContext* context, const ::EditorGRPC::BlockEdit* request, ::EditorGRPC::EditBlockResult* response) {
   (void) context;
   (void) request;
   (void) response;

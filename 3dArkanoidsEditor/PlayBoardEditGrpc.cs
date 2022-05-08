@@ -50,6 +50,8 @@ namespace EditorGRPC {
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.EditBlockResult> __Marshaller_EditorGRPC_EditBlockResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.EditBlockResult.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.BlockEdit> __Marshaller_EditorGRPC_BlockEdit = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.BlockEdit.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.Void> __Marshaller_EditorGRPC_Void = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.Void.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.BoardDescription> __Marshaller_EditorGRPC_BoardDescription = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.BoardDescription.Parser));
@@ -70,6 +72,14 @@ namespace EditorGRPC {
         __ServiceName,
         "RemoveBlock",
         __Marshaller_EditorGRPC_Point,
+        __Marshaller_EditorGRPC_EditBlockResult);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::EditorGRPC.BlockEdit, global::EditorGRPC.EditBlockResult> __Method_ChangeBlock = new grpc::Method<global::EditorGRPC.BlockEdit, global::EditorGRPC.EditBlockResult>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "ChangeBlock",
+        __Marshaller_EditorGRPC_BlockEdit,
         __Marshaller_EditorGRPC_EditBlockResult);
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
@@ -106,6 +116,12 @@ namespace EditorGRPC {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.EditBlockResult> RemoveBlock(global::EditorGRPC.Point request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.EditBlockResult> ChangeBlock(global::EditorGRPC.BlockEdit request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -192,6 +208,26 @@ namespace EditorGRPC {
         return CallInvoker.AsyncUnaryCall(__Method_RemoveBlock, null, options, request);
       }
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.EditBlockResult ChangeBlock(global::EditorGRPC.BlockEdit request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ChangeBlock(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.EditBlockResult ChangeBlock(global::EditorGRPC.BlockEdit request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_ChangeBlock, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.EditBlockResult> ChangeBlockAsync(global::EditorGRPC.BlockEdit request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return ChangeBlockAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.EditBlockResult> ChangeBlockAsync(global::EditorGRPC.BlockEdit request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_ChangeBlock, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::EditorGRPC.BoardDescription GetBoardState(global::EditorGRPC.Void request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
       {
         return GetBoardState(request, new grpc::CallOptions(headers, deadline, cancellationToken));
@@ -247,6 +283,7 @@ namespace EditorGRPC {
       return grpc::ServerServiceDefinition.CreateBuilder()
           .AddMethod(__Method_AddBlock, serviceImpl.AddBlock)
           .AddMethod(__Method_RemoveBlock, serviceImpl.RemoveBlock)
+          .AddMethod(__Method_ChangeBlock, serviceImpl.ChangeBlock)
           .AddMethod(__Method_GetBoardState, serviceImpl.GetBoardState)
           .AddMethod(__Method_SetBoardState, serviceImpl.SetBoardState).Build();
     }
@@ -260,6 +297,7 @@ namespace EditorGRPC {
     {
       serviceBinder.AddMethod(__Method_AddBlock, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult>(serviceImpl.AddBlock));
       serviceBinder.AddMethod(__Method_RemoveBlock, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult>(serviceImpl.RemoveBlock));
+      serviceBinder.AddMethod(__Method_ChangeBlock, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.BlockEdit, global::EditorGRPC.EditBlockResult>(serviceImpl.ChangeBlock));
       serviceBinder.AddMethod(__Method_GetBoardState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Void, global::EditorGRPC.BoardDescription>(serviceImpl.GetBoardState));
       serviceBinder.AddMethod(__Method_SetBoardState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.BoardDescription, global::EditorGRPC.SetBoardDescriptionResult>(serviceImpl.SetBoardState));
     }

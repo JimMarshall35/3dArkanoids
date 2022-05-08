@@ -31,6 +31,21 @@ struct PointDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PointDefaultTypeInternal _Point_default_instance_;
+constexpr BlockEdit::BlockEdit(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : x_(0)
+  , y_(0)
+  , z_(0)
+  , newval_(0){}
+struct BlockEditDefaultTypeInternal {
+  constexpr BlockEditDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~BlockEditDefaultTypeInternal() {}
+  union {
+    BlockEdit _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT BlockEditDefaultTypeInternal _BlockEdit_default_instance_;
 constexpr EditBlockResult::EditBlockResult(
   ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
   : errormessage_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
@@ -86,7 +101,7 @@ struct BoardDescriptionDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT BoardDescriptionDefaultTypeInternal _BoardDescription_default_instance_;
 }  // namespace EditorGRPC
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[5];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[6];
 static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[2];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = nullptr;
 
@@ -100,6 +115,16 @@ const uint32_t TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::Point, x_),
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::Point, y_),
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::Point, z_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockEdit, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockEdit, x_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockEdit, y_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockEdit, z_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockEdit, newval_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::EditBlockResult, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -135,14 +160,16 @@ const uint32_t TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offse
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::EditorGRPC::Point)},
-  { 9, -1, -1, sizeof(::EditorGRPC::EditBlockResult)},
-  { 18, -1, -1, sizeof(::EditorGRPC::SetBoardDescriptionResult)},
-  { 25, -1, -1, sizeof(::EditorGRPC::Void)},
-  { 31, -1, -1, sizeof(::EditorGRPC::BoardDescription)},
+  { 9, -1, -1, sizeof(::EditorGRPC::BlockEdit)},
+  { 19, -1, -1, sizeof(::EditorGRPC::EditBlockResult)},
+  { 28, -1, -1, sizeof(::EditorGRPC::SetBoardDescriptionResult)},
+  { 35, -1, -1, sizeof(::EditorGRPC::Void)},
+  { 41, -1, -1, sizeof(::EditorGRPC::BoardDescription)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_Point_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_BlockEdit_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_EditBlockResult_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_SetBoardDescriptionResult_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_Void_default_instance_),
@@ -152,31 +179,35 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
 const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
   "\n&editor_proto_files/PlayBoardEdit.proto"
   "\022\nEditorGRPC\"(\n\005Point\022\t\n\001x\030\001 \001(\005\022\t\n\001y\030\002 "
-  "\001(\005\022\t\n\001z\030\003 \001(\005\"\321\001\n\017EditBlockResult\0222\n\006re"
-  "sult\030\001 \001(\0162\".EditorGRPC.EditBlockResult."
-  "Result\022\021\n\tblockCode\030\002 \001(\005\022\024\n\014errorMessag"
-  "e\030\003 \001(\t\"a\n\006Result\022\017\n\013SPACE_EMPTY\020\000\022\022\n\016BL"
-  "OCK_AT_SPACE\020\001\022\037\n\033FAILURE_POINT_OUT_OF_B"
-  "OUNDS\020\002\022\021\n\rOTHER_FAILURE\020\003\"\267\001\n\031SetBoardD"
-  "escriptionResult\022<\n\006result\030\001 \001(\0162,.Edito"
-  "rGRPC.SetBoardDescriptionResult.Result\"\\"
-  "\n\006Result\022\013\n\007SUCCESS\020\000\022\"\n\036FAILURE_TOO_MAN"
-  "Y_BYTES_FOR_WHD\020\001\022!\n\035FAILURE_TOO_FEW_BYT"
-  "ES_FOR_WHD\020\002\"\006\n\004Void\"N\n\020BoardDescription"
-  "\022\r\n\005width\030\001 \001(\005\022\016\n\006height\030\002 \001(\005\022\r\n\005depth"
-  "\030\003 \001(\005\022\014\n\004data\030\004 \001(\0142\241\002\n\rPlayBoardEdit\022:"
-  "\n\010AddBlock\022\021.EditorGRPC.Point\032\033.EditorGR"
-  "PC.EditBlockResult\022=\n\013RemoveBlock\022\021.Edit"
-  "orGRPC.Point\032\033.EditorGRPC.EditBlockResul"
-  "t\022\?\n\rGetBoardState\022\020.EditorGRPC.Void\032\034.E"
-  "ditorGRPC.BoardDescription\022T\n\rSetBoardSt"
-  "ate\022\034.EditorGRPC.BoardDescription\032%.Edit"
-  "orGRPC.SetBoardDescriptionResultb\006proto3"
+  "\001(\005\022\t\n\001z\030\003 \001(\005\"<\n\tBlockEdit\022\t\n\001x\030\001 \001(\005\022\t"
+  "\n\001y\030\002 \001(\005\022\t\n\001z\030\003 \001(\005\022\016\n\006newval\030\004 \001(\005\"\321\001\n"
+  "\017EditBlockResult\0222\n\006result\030\001 \001(\0162\".Edito"
+  "rGRPC.EditBlockResult.Result\022\021\n\tblockCod"
+  "e\030\002 \001(\005\022\024\n\014errorMessage\030\003 \001(\t\"a\n\006Result\022"
+  "\017\n\013SPACE_EMPTY\020\000\022\022\n\016BLOCK_AT_SPACE\020\001\022\037\n\033"
+  "FAILURE_POINT_OUT_OF_BOUNDS\020\002\022\021\n\rOTHER_F"
+  "AILURE\020\003\"\267\001\n\031SetBoardDescriptionResult\022<"
+  "\n\006result\030\001 \001(\0162,.EditorGRPC.SetBoardDesc"
+  "riptionResult.Result\"\\\n\006Result\022\013\n\007SUCCES"
+  "S\020\000\022\"\n\036FAILURE_TOO_MANY_BYTES_FOR_WHD\020\001\022"
+  "!\n\035FAILURE_TOO_FEW_BYTES_FOR_WHD\020\002\"\006\n\004Vo"
+  "id\"N\n\020BoardDescription\022\r\n\005width\030\001 \001(\005\022\016\n"
+  "\006height\030\002 \001(\005\022\r\n\005depth\030\003 \001(\005\022\014\n\004data\030\004 \001"
+  "(\0142\344\002\n\rPlayBoardEdit\022:\n\010AddBlock\022\021.Edito"
+  "rGRPC.Point\032\033.EditorGRPC.EditBlockResult"
+  "\022=\n\013RemoveBlock\022\021.EditorGRPC.Point\032\033.Edi"
+  "torGRPC.EditBlockResult\022A\n\013ChangeBlock\022\025"
+  ".EditorGRPC.BlockEdit\032\033.EditorGRPC.EditB"
+  "lockResult\022\?\n\rGetBoardState\022\020.EditorGRPC"
+  ".Void\032\034.EditorGRPC.BoardDescription\022T\n\rS"
+  "etBoardState\022\034.EditorGRPC.BoardDescripti"
+  "on\032%.EditorGRPC.SetBoardDescriptionResul"
+  "tb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = {
-  false, false, 880, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
-  &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 5,
+  false, false, 1009, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
+  &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 6,
   schemas, file_default_instances, TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offsets,
   file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto,
 };
@@ -472,6 +503,262 @@ void Point::InternalSwap(Point* other) {
 
 // ===================================================================
 
+class BlockEdit::_Internal {
+ public:
+};
+
+BlockEdit::BlockEdit(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.BlockEdit)
+}
+BlockEdit::BlockEdit(const BlockEdit& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  ::memcpy(&x_, &from.x_,
+    static_cast<size_t>(reinterpret_cast<char*>(&newval_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(newval_));
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.BlockEdit)
+}
+
+inline void BlockEdit::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&newval_) -
+    reinterpret_cast<char*>(&x_)) + sizeof(newval_));
+}
+
+BlockEdit::~BlockEdit() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.BlockEdit)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void BlockEdit::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void BlockEdit::ArenaDtor(void* object) {
+  BlockEdit* _this = reinterpret_cast< BlockEdit* >(object);
+  (void)_this;
+}
+void BlockEdit::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void BlockEdit::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void BlockEdit::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.BlockEdit)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  ::memset(&x_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&newval_) -
+      reinterpret_cast<char*>(&x_)) + sizeof(newval_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* BlockEdit::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // int32 x = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          x_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 y = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          y_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 z = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          z_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 newval = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          newval_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* BlockEdit::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.BlockEdit)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // int32 x = 1;
+  if (this->_internal_x() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(1, this->_internal_x(), target);
+  }
+
+  // int32 y = 2;
+  if (this->_internal_y() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(2, this->_internal_y(), target);
+  }
+
+  // int32 z = 3;
+  if (this->_internal_z() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(3, this->_internal_z(), target);
+  }
+
+  // int32 newval = 4;
+  if (this->_internal_newval() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteInt32ToArray(4, this->_internal_newval(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.BlockEdit)
+  return target;
+}
+
+size_t BlockEdit::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.BlockEdit)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // int32 x = 1;
+  if (this->_internal_x() != 0) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_x());
+  }
+
+  // int32 y = 2;
+  if (this->_internal_y() != 0) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_y());
+  }
+
+  // int32 z = 3;
+  if (this->_internal_z() != 0) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_z());
+  }
+
+  // int32 newval = 4;
+  if (this->_internal_newval() != 0) {
+    total_size += ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::Int32SizePlusOne(this->_internal_newval());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData BlockEdit::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    BlockEdit::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*BlockEdit::GetClassData() const { return &_class_data_; }
+
+void BlockEdit::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<BlockEdit *>(to)->MergeFrom(
+      static_cast<const BlockEdit &>(from));
+}
+
+
+void BlockEdit::MergeFrom(const BlockEdit& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.BlockEdit)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_x() != 0) {
+    _internal_set_x(from._internal_x());
+  }
+  if (from._internal_y() != 0) {
+    _internal_set_y(from._internal_y());
+  }
+  if (from._internal_z() != 0) {
+    _internal_set_z(from._internal_z());
+  }
+  if (from._internal_newval() != 0) {
+    _internal_set_newval(from._internal_newval());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void BlockEdit::CopyFrom(const BlockEdit& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.BlockEdit)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool BlockEdit::IsInitialized() const {
+  return true;
+}
+
+void BlockEdit::InternalSwap(BlockEdit* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(BlockEdit, newval_)
+      + sizeof(BlockEdit::newval_)
+      - PROTOBUF_FIELD_OFFSET(BlockEdit, x_)>(
+          reinterpret_cast<char*>(&x_),
+          reinterpret_cast<char*>(&other->x_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata BlockEdit::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[1]);
+}
+
+// ===================================================================
+
 class EditBlockResult::_Internal {
  public:
 };
@@ -733,7 +1020,7 @@ void EditBlockResult::InternalSwap(EditBlockResult* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata EditBlockResult::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
-      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[1]);
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[2]);
 }
 
 // ===================================================================
@@ -914,7 +1201,7 @@ void SetBoardDescriptionResult::InternalSwap(SetBoardDescriptionResult* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata SetBoardDescriptionResult::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
-      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[2]);
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[3]);
 }
 
 // ===================================================================
@@ -953,7 +1240,7 @@ const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Void::GetClassData() const { r
 ::PROTOBUF_NAMESPACE_ID::Metadata Void::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
-      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[3]);
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[4]);
 }
 
 // ===================================================================
@@ -1233,7 +1520,7 @@ void BoardDescription::InternalSwap(BoardDescription* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata BoardDescription::GetMetadata() const {
   return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
       &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
-      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[4]);
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[5]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1241,6 +1528,9 @@ void BoardDescription::InternalSwap(BoardDescription* other) {
 PROTOBUF_NAMESPACE_OPEN
 template<> PROTOBUF_NOINLINE ::EditorGRPC::Point* Arena::CreateMaybeMessage< ::EditorGRPC::Point >(Arena* arena) {
   return Arena::CreateMessageInternal< ::EditorGRPC::Point >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::BlockEdit* Arena::CreateMaybeMessage< ::EditorGRPC::BlockEdit >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::BlockEdit >(arena);
 }
 template<> PROTOBUF_NOINLINE ::EditorGRPC::EditBlockResult* Arena::CreateMaybeMessage< ::EditorGRPC::EditBlockResult >(Arena* arena) {
   return Arena::CreateMessageInternal< ::EditorGRPC::EditBlockResult >(arena);

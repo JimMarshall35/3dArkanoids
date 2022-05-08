@@ -161,6 +161,8 @@
   <ItemGroup>
     <ClCompile Include="BlockInstanceRenderData.cpp" />
     <ClCompile Include="CubeDrawer.cpp" />
+    <ClCompile Include="editor_proto_files\PlayBoardEdit.grpc.pb.cc" />
+    <ClCompile Include="editor_proto_files\PlayBoardEdit.pb.cc" />
     <ClCompile Include="FallingBlock.cpp" />
     <ClCompile Include="FallingBlockManager.cpp" />
     <ClCompile Include="game.cpp" />
@@ -170,8 +172,6 @@
     <ClCompile Include="PlayBoardEditImpl.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MockLevelLoader.cpp" />
-    <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
-    <ClCompile Include="PlayBoardEdit.pb.cc" />
     <ClCompile Include="Renderer.cpp" />
   </ItemGroup>
   <ItemGroup>

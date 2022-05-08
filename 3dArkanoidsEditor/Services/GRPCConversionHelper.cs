@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Google.Protobuf;
+using static _3dArkanoidsEditor.Models.EditBlockResult;
 
 namespace _3dArkanoidsEditor.Services
 {
@@ -38,6 +39,21 @@ namespace _3dArkanoidsEditor.Services
             grpc.Width = model.Width;
             grpc.Height = model.Height;
             return grpc;
+        }
+
+        public static EditorGRPC.BlockEdit ToGRPCMessage(this Models.SingleTileEdit singleTileEdit)
+        {
+            var grpc = new EditorGRPC.BlockEdit();
+            grpc.X = singleTileEdit.XPos;
+            grpc.Y = singleTileEdit.YPos;
+            grpc.Z = singleTileEdit.ZPos;
+            grpc.Newval = singleTileEdit.NewValue;
+            return grpc;
+        }
+
+        public static Models.EditBlockResult ToModel(this EditorGRPC.EditBlockResult result)
+        {
+            return new Models.EditBlockResult((Result)result.Result, result.BlockCode, result.ErrorMessage);
         }
     }
 }

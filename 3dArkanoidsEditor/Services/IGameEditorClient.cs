@@ -10,6 +10,6 @@ namespace _3dArkanoidsEditor.Services
     interface IGameEditorClient
     {
         Task<GameBoardDescription> GetBoardStateAsync();
-
+        Task<EditBlockResult> ChangeBlockAsync(SingleTileEdit edit);
     }
 }

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:_3dArkanoidsEditor"
         xmlns:views="clr-namespace:_3dArkanoidsEditor.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -33,10 +33,12 @@
             
         </StackPanel>
         <views:PlayBoardCanvas 
-            Grid.Row="2" 
-            Grid.Column="2" 
+            Grid.Row="2"
+            Grid.Column="1"
             PlayBoardTilesX="{Binding PlayFieldX}"
             PlayBoardTilesY="{Binding PlayFieldY}"
-            PlayBoardTilesZ="{Binding PlayFieldZ}"/>
+            PlayBoardTilesZ="{Binding PlayFieldZ}"
+            PlayBoardDescription="{Binding GameBoardDescription}"
+            SingleTileEdit="{Binding OnSingleTileEditCommand}"/>
     </Grid>
 </Window>

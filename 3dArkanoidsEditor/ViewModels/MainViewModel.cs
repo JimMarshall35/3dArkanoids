@@ -15,7 +15,22 @@ namespace _3dArkanoidsEditor.ViewModels
     {
         #region Bindable properties
 
+        public ICommand OnSingleTileEditCommand { get; set; }
         public ICommand GetBlockCommand { get; private set; }
+
+        private GameBoardDescription m_gameBoardDescription;
+        public GameBoardDescription GameBoardDescription
+        {
+            get
+            {
+                return m_gameBoardDescription;
+            }
+            set
+            {
+                m_gameBoardDescription = value;
+                OnPropertyChange(nameof(GameBoardDescription));
+            }
+        }
 
         private bool m_loaded = false;
         public bool Loaded
@@ -83,6 +98,12 @@ namespace _3dArkanoidsEditor.ViewModels
                     _ => GetBlock(), 
                     null
                 );
+
+            OnSingleTileEditCommand = new RelayCommand(
+                    OnSingleTileEdit,
+                    null
+                );
+            
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
@@ -101,7 +122,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private void OnGameConnectionAquire(object sender, GameBoardDescription e)
         {
-            m_gameBoardDescription = e;
+            GameBoardDescription = e;
             PlayFieldX = e.Width;
             PlayFieldY = e.Height;
             PlayFieldZ = e.Depth;
@@ -117,9 +138,14 @@ namespace _3dArkanoidsEditor.ViewModels
             m_gameBoardDescription = await m_gameConnectionService.Client.GetBoardStateAsync();
         }
 
+        private void OnSingleTileEdit(object e)
+        {
+            SingleTileEdit edit = (SingleTileEdit)e;
+            throw new NotImplementedException();
+        }
+
         #endregion
 
-        private GameBoardDescription m_gameBoardDescription;
         private bool m_getBlockCommandRunning = false;
         private IGameConnectionService m_gameConnectionService;
     }

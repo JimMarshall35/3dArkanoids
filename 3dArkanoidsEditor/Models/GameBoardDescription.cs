@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _3dArkanoidsEditor.Models
 {
-    internal class GameBoardDescription
+    public class GameBoardDescription
     {
         public GameBoardDescription(List<byte> playfieldArray, int width, int height, int depth)
         {
@@ -19,6 +19,17 @@ namespace _3dArkanoidsEditor.Models
         public int Width { get; private set; }
         public int Height { get; private set; }
         public int Depth { get; private set; }
+
+        #region helpers
+        public byte GetAt(int x, int y, int z)
+        {
+            return PlayfieldArray[x * Height * Depth + y * Depth + z];
+        }
+        public void SetAt(int x, int y, int z, byte newValue)
+        {
+            PlayfieldArray[x * Height * Depth + y * Depth + z] = newValue;
+        }
+        #endregion
 
     }
 }

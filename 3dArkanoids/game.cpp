@@ -99,6 +99,7 @@ glm::vec3 GetColourFromByteValue(const unsigned char byteAt) {
 /// </summary>
 void Game::InitializeRenderData()
 {
+	m_currentNumBlocks = 0;
 	for (int z = 0; z < PLAYFIELD_DEPTH_BLOCKS; z++) {
 		for (int y = 0; y < PLAYFIELD_HEIGHT_BLOCKS; y++) {
 			for (int x = 0; x < PLAYFIELD_WIDTH_BLOCKS; x++) {
@@ -132,7 +133,7 @@ int Game::IndexOfRenderDataAt(const glm::ivec3& coords)
 {
 	for (int i = 0; i < m_currentNumBlocks; i++) {
 		const auto& rd = m_blockRenderData[i];
-		if (rd.atGridCoords == coords) {
+		if (rd.atGridCoords == coords && rd.shouldRender) {
 			return i;
 		}
 	}
@@ -230,13 +231,41 @@ const Array3D<unsigned char>& Game::GetBoardState()
 
 EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned char newVal, unsigned char& oldBlockVal)
 {
-	return EditBlockResultCode();
 
+	using namespace glm;
+
+	if (newVal > BLOCK_BYTE_MAX ) {
+		return INVALID_NEW_BYTE;
+	}
+	if (point.x < 0
+		|| point.x >= m_playFieldArray.getW()
+		|| point.y < 0
+		|| point.y >= m_playFieldArray.getH()
+		|| point.z < 0
+		|| point.z >= m_playFieldArray.getD()) {
+		return FAILURE_POINT_OUT_OF_BOUNDS;
+	}
+	if (m_playFieldArray[point] == newVal) {
+		return NO_CHANGE;
+	}
+	auto returnedResult = SPACE_EMPTY;
+
+	if (IndexOfRenderDataAt(point)) {
+		returnedResult = BLOCK_AT_SPACE;
+	}
+
+	m_playFieldArray[point] = newVal;
+	// obviously not efficient to always re-create the entire board
+	// but will do for now
+	InitializeRenderData();
+	LinkAndValidateBlocksRenderData();
 }
 
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
-	return EditBlockResultCode();
+	m_playFieldArray[point] = 0x00;
+	m_blockRenderData[IndexOfRenderDataAt(point)].SetShouldRender(false);
+	return BLOCK_AT_SPACE;
 }
 
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
@@ -246,7 +275,13 @@ SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& n
 
 EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode)
 {
-	return EditBlockResultCode();
+	blockCode = m_playFieldArray[point];
+	if (blockCode == 0x00) {
+		return EditBlockResultCode::SPACE_EMPTY;
+	}
+	else {
+		return EditBlockResultCode::BLOCK_AT_SPACE;
+	}
 }
 
 

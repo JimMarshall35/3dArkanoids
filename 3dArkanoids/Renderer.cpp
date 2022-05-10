@@ -341,7 +341,9 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     memcpy(blockBuffer.data() + m_coloursArrayUboOffset, coloursAndShouldDraw.data(), numberToDraw * sizeof(glm::vec4));
 
     // generate a new buffer to be the UBO and bind it to GL_UNIFORM_BUFFER
-    glGenBuffers(1, &m_blockInstanceDataUboHandle);
+    if (!glIsBuffer(m_blockInstanceDataUboHandle)) {
+        glGenBuffers(1, &m_blockInstanceDataUboHandle);
+    }
     glBindBuffer(GL_UNIFORM_BUFFER, m_blockInstanceDataUboHandle);
 
     // glBufferData the data from the staging array to the UBO 
@@ -381,4 +383,8 @@ void Renderer::SetCubePosAndScale(size_t indexCubeIsAt, const glm::vec3& newPos)
         sizeof(glm::mat4),                                                 // bytes to copy
         &model                                                             // source
     );
+}
+
+void Renderer::SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour)
+{
 }

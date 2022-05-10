@@ -72,11 +72,21 @@ void GrpcLevelEditorServer::EnactRPC(const LevelEditorRPC& rpc)
 		{
 			// TODO: implement
 			auto changeBlockCallDataPtr = (ChangeBlockCallData*)rpc.callData;
+			auto blockCoords = glm::ivec3(changeBlockCallDataPtr->request_.x(), changeBlockCallDataPtr->request_.y(), changeBlockCallDataPtr->request_.z());
+
 			std::cout <<
 				"change block x: "<< changeBlockCallDataPtr->request_.x() << 
 				" y: " << changeBlockCallDataPtr->request_.y() <<
 				" z: " << changeBlockCallDataPtr->request_.z() << 
 				" newVal: "<< changeBlockCallDataPtr->request_.newval() << std::endl;
+			auto newVal = static_cast<unsigned char>(changeBlockCallDataPtr->request_.newval());
+			unsigned char oldBlockVal;
+
+			m_game->AddOrChangeBlock(
+				blockCoords,
+				newVal,
+				oldBlockVal
+			);
 		}
 		break;
 	case GetBlocks:

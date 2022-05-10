@@ -28,7 +28,9 @@ enum EditBlockResultCode {
 	SPACE_EMPTY = 0,
 	BLOCK_AT_SPACE = 1,
 	FAILURE_POINT_OUT_OF_BOUNDS = 2,
-	OTHER_FAILURE = 3
+	OTHER_FAILURE = 3,
+	NO_CHANGE = 4,
+	INVALID_NEW_BYTE = 5
 };
 struct EditBlockResultCPP {
 	EditBlockResultCode resultCode;

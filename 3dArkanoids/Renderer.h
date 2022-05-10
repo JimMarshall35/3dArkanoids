@@ -17,6 +17,7 @@ public:
     virtual void SetScreenDims(const glm::ivec2& value) override;
     virtual void SetCubeShouldRender(size_t indexCubeIsAt, bool newValue) override;
     virtual void SetCubePosAndScale(size_t indexCubeIsAt, const glm::vec3& newPos) override;
+    virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) override;
 private:
     void Initialize();
 private:
@@ -27,7 +28,7 @@ private:
     glm::vec3 m_lightColour;
     unsigned int m_scrWidth;
     unsigned int m_scrHeight;
-    unsigned int m_blockInstanceDataUboHandle;
+    unsigned int m_blockInstanceDataUboHandle = 0;
 
     unsigned int m_coloursArrayUboOffset;
     unsigned int m_modelMatrixArrayUboOffset;

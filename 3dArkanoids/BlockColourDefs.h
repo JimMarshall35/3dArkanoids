@@ -5,3 +5,5 @@
 #define LBLU 0x04
 #define YLW_ 0x05
 #define WHIT 0x06
+
+#define BLOCK_BYTE_MAX WHIT

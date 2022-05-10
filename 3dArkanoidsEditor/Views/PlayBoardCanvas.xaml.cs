@@ -122,7 +122,7 @@ namespace _3dArkanoidsEditor.Views
                     int tileY = y;
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {
-                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, 0xff, byteAtCoords));
+                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, 0x04, byteAtCoords));
                     };
                     m_playBoardCanvas.Children.Add(rect);
 

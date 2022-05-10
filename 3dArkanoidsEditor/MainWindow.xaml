@@ -28,7 +28,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
             
         </StackPanel>

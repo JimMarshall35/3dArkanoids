@@ -1,4 +1,5 @@
 ﻿using Grpc.Net.Client;
+using System.Threading.Tasks;
 
 namespace _3dArkanoidsEditor.Services
 {
@@ -10,7 +11,7 @@ namespace _3dArkanoidsEditor.Services
         public event GameConnectionAquiredHandler GameConnectionAquired;
         public event GameConnectionLostHandler GameConnectionLost;
 
-        public async void Connect()
+        public async Task Connect()
         {
             m_channel = GrpcChannel.ForAddress("http://localhost:50051");
             Client = new GRPCGameEditorClient(

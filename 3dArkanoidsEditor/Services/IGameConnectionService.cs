@@ -1,4 +1,5 @@
 ﻿using _3dArkanoidsEditor.Models;
+using System.Threading.Tasks;
 
 namespace _3dArkanoidsEditor.Services
 {
@@ -11,7 +12,7 @@ namespace _3dArkanoidsEditor.Services
         event GameConnectionAquiredHandler GameConnectionAquired;
         event GameConnectionLostHandler GameConnectionLost;
 
-        void Connect();
+        Task Connect();
         IGameEditorClient Client { get; }
     }
 }

@@ -27,7 +27,10 @@ namespace _3dArkanoidsEditor
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new GRPCService());
+            DataContext = new MainViewModel(
+                                new GRPCService(), 
+                                new TerminalViewModel()
+                            );
         }
 
     }

@@ -25,9 +25,10 @@ namespace _3dArkanoidsEditor.Models
         {
             return PlayfieldArray[x * Height * Depth + y * Depth + z];
         }
-        public void SetAt(int x, int y, int z, byte newValue)
+        public GameBoardDescription SetAt(int x, int y, int z, byte newValue)
         {
             PlayfieldArray[x * Height * Depth + y * Depth + z] = newValue;
+            return new GameBoardDescription(PlayfieldArray, Width, Height, Depth);
         }
         #endregion
 

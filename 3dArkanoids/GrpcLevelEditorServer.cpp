@@ -82,11 +82,36 @@ void GrpcLevelEditorServer::EnactRPC(const LevelEditorRPC& rpc)
 			auto newVal = static_cast<unsigned char>(changeBlockCallDataPtr->request_.newval());
 			unsigned char oldBlockVal;
 
-			m_game->AddOrChangeBlock(
+			auto result = m_game->AddOrChangeBlock(
 				blockCoords,
 				newVal,
 				oldBlockVal
 			);
+			
+			switch (result) {
+			case SPACE_EMPTY:
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::SPACE_EMPTY);
+				break;
+			case BLOCK_AT_SPACE:
+				changeBlockCallDataPtr->reply_.set_blockcode(oldBlockVal);
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::BLOCK_AT_SPACE);
+				break;
+			case FAILURE_POINT_OUT_OF_BOUNDS:
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::FAILURE_POINT_OUT_OF_BOUNDS);
+				break;
+			case OTHER_FAILURE:
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+				changeBlockCallDataPtr->reply_.set_errormessage("An unknown error occured");
+				break;
+			case NO_CHANGE:
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+				changeBlockCallDataPtr->reply_.set_errormessage("The edit resulted in no change");
+				break;
+			case INVALID_NEW_BYTE:
+				changeBlockCallDataPtr->reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+				changeBlockCallDataPtr->reply_.set_errormessage("You chose a byte value that is too high");
+				break;
+			}
 		}
 		break;
 	case GetBlocks:

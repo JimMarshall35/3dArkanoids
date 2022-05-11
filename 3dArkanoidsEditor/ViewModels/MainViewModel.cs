@@ -1,13 +1,16 @@
 ﻿using _3dArkanoidsEditor.Models;
 using _3dArkanoidsEditor.Services;
 using _3dArkanoidsEditor.utils;
+using _3dArkanoidsEditor.ViewModels.interfaces;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using static _3dArkanoidsEditor.Models.EditBlockResult;
 
 namespace _3dArkanoidsEditor.ViewModels
 {
@@ -19,7 +22,7 @@ namespace _3dArkanoidsEditor.ViewModels
         public ICommand GetBlockCommand { get; private set; }
 
         private GameBoardDescription m_gameBoardDescription;
-        public GameBoardDescription GameBoardDescription
+        public GameBoardDescription MasterGameBoard
         {
             get
             {
@@ -28,7 +31,7 @@ namespace _3dArkanoidsEditor.ViewModels
             set
             {
                 m_gameBoardDescription = value;
-                OnPropertyChange(nameof(GameBoardDescription));
+                OnPropertyChange(nameof(MasterGameBoard));
             }
         }
 
@@ -88,12 +91,16 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        public ITerminalViewModel GameTerminal { get; private set; }
+
+
         #endregion
 
         #region ctor
 
-        public MainViewModel(IGameConnectionService gameConnectionService)
+        public MainViewModel(IGameConnectionService gameConnectionService, ITerminalViewModel terminal)
         {
+            GameTerminal = terminal;
             GetBlockCommand = new RelayCommand(
                     _ => GetBlock(), 
                     null
@@ -103,11 +110,14 @@ namespace _3dArkanoidsEditor.ViewModels
                     OnSingleTileEdit,
                     null
                 );
-            
+
+
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
-            Task.Run(() => m_gameConnectionService.Connect());
+            m_gameConnectionService.Connect().ContinueWith(_ => {
+                GameTerminal.WriteLine("Game connected");
+            });
 
         }
 
@@ -122,10 +132,10 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private void OnGameConnectionAquire(object sender, GameBoardDescription e)
         {
-            GameBoardDescription = e;
             PlayFieldX = e.Width;
             PlayFieldY = e.Height;
             PlayFieldZ = e.Depth;
+            MasterGameBoard = e;
             Loaded = true;
         }
 
@@ -136,13 +146,24 @@ namespace _3dArkanoidsEditor.ViewModels
         private async void GetBlock()
         {
             m_gameBoardDescription = await m_gameConnectionService.Client.GetBoardStateAsync();
+            
         }
 
         private async void OnSingleTileEdit(object e)
         {
             SingleTileEdit edit = (SingleTileEdit)e;
             var result = await m_gameConnectionService.Client.ChangeBlockAsync(edit);
-
+            if(result.EditResult != Result.FAILURE_POINT_OUT_OF_BOUNDS && result.EditResult != Result.OTHER_FAILURE)
+            {
+                // had to make SetAt return a new copy and set MasterGameBoardAgain to get the edits to appear on the
+                // WPF canvas.
+                // having SetAt returning void and calling OnPropertyChange(nameof(MasterGameBoard))
+                // didn't work. A weird and suspect solution
+                MasterGameBoard = MasterGameBoard.SetAt(edit.XPos, edit.YPos, edit.ZPos, edit.NewValue);
+            }
+            
+            GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " "+result.ErrorMessage
+                + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: "+result.BlockCode : ""));
         }
 
         #endregion

@@ -47,6 +47,7 @@ namespace _3dArkanoidsEditor.Views
         DependencyProperty.Register(nameof(PlayBoardTilesZ), typeof(int), typeof(PlayBoardCanvas),
             new FrameworkPropertyMetadata(OnBoardSizeDependencyPropertyChanged));
 
+        private GameBoardDescription m_playBoardDescription;
         public GameBoardDescription PlayBoardDescription { get; set; }
         public static readonly DependencyProperty PlayBoardDescriptionProperty =
         DependencyProperty.Register(nameof(PlayBoardDescription), typeof(GameBoardDescription), typeof(PlayBoardCanvas),
@@ -123,6 +124,7 @@ namespace _3dArkanoidsEditor.Views
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {
                         SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, 0x04, byteAtCoords));
+
                     };
                     m_playBoardCanvas.Children.Add(rect);
 
@@ -135,7 +137,7 @@ namespace _3dArkanoidsEditor.Views
             m_playBoardCanvas.Width = PlayBoardTilesX * m_blockWidthPixels * m_canvasScale;
             m_playBoardCanvas.Height = PlayBoardTilesY * m_blockHeightPixels * m_canvasScale;
             m_canvasZLayerChangerVm.SetMaxLayerIndex(PlayBoardTilesZ);
-            UpdateGrid();
+            //UpdateGrid();
         }
 
         private static void OnBoardSizeDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -165,6 +167,8 @@ namespace _3dArkanoidsEditor.Views
         {
             var newVal = e.NewValue;
             ((PlayBoardCanvas)d).PlayBoardDescription = (GameBoardDescription)e.NewValue;
+            ((PlayBoardCanvas)d).UpdateGrid();
+
         }
 
         private static void OnSingleTileEditDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

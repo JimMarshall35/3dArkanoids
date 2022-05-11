@@ -250,7 +250,9 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 	}
 	auto returnedResult = SPACE_EMPTY;
 
-	if (IndexOfRenderDataAt(point)) {
+	
+	if (IndexOfRenderDataAt(point) >= 0) {
+		oldBlockVal = m_playFieldArray[point];
 		returnedResult = BLOCK_AT_SPACE;
 	}
 
@@ -259,6 +261,7 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 	// but will do for now
 	InitializeRenderData();
 	LinkAndValidateBlocksRenderData();
+	return returnedResult;
 }
 
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)

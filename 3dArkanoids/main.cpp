@@ -15,7 +15,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
-Camera camera;
+Camera camera("Camera.cam");
 Renderer* renderer;
 Game* gamePtr;
 
@@ -85,13 +85,13 @@ int main()
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     
-    camera.Position.z = (((float)PLAYFIELD_DEPTH_BLOCKS / 2.0f) * (float)BLOCK_DEPTH_UNITS)*10;
-    camera.Position.x = ((float)PLAYFIELD_WIDTH_BLOCKS) * (float)BLOCK_WIDTH_UNITS * 0.5;
-    camera.Position.y = -200.0f;
-    //yaw: -90 pitch: 5
-    camera.Yaw = -90.0f;
-    camera.Pitch = 50.0f;
-    camera.updateCameraVectors();
+    //camera.Position.z = (((float)PLAYFIELD_DEPTH_BLOCKS / 2.0f) * (float)BLOCK_DEPTH_UNITS)*10;
+    //camera.Position.x = ((float)PLAYFIELD_WIDTH_BLOCKS) * (float)BLOCK_WIDTH_UNITS * 0.5;
+    //camera.Position.y = -200.0f;
+    ////yaw: -90 pitch: 5
+    //camera.Yaw = -90.0f;
+    //camera.Pitch = 50.0f;
+    //camera.updateCameraVectors();
 
     Game game(new MockLevelLoader(), new Renderer(), [](ILevelEditorServerGame* g) { return new GrpcLevelEditorServer(g); });
     gamePtr = &game;
@@ -140,6 +140,8 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
+        camera.SaveToFile("Camera.cam");
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

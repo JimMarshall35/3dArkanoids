@@ -99,6 +99,12 @@
     <ClCompile Include="editor_proto_files\PlayBoardEdit.pb.cc">
       <Filter>Source Files\game\level editor server\grpc</Filter>
     </ClCompile>
+    <ClCompile Include="FrameMemoryAllocator.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -196,6 +202,9 @@
     </ClInclude>
     <ClInclude Include="GrpcLevelEditorServer.h">
       <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameMemoryAllocator.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

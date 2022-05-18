@@ -10,6 +10,8 @@
 #include "MasterArrayUpdatedEventArgs.h"
 #include "ILevelEditorServerGame.h"
 #include "LevelEditorServerFactoryTypedef.h"
+#include "SizedQueue.h"
+#include "FrameMemoryAllocator.h"
 
 class ILevelLoader;
 class IRenderer;
@@ -30,7 +32,8 @@ private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();
 private:
-	BlockInstanceRenderData m_blockRenderData[MAX_POSSIBLE_BLOCKS];
+	SizedQueue<size_t, MAX_INSTANCES> m_deadBlockIndices;
+	BlockInstanceRenderData m_blockRenderData[MAX_INSTANCES];
 	size_t m_currentNumBlocks;
 	Event<EngineUpdateFrameEventArgs> m_frameUpdateEvent;
 	Event<MasterArrayUpdatedEventArgs> m_masterArrayUpdatedEvent;
@@ -41,7 +44,7 @@ private:
 	std::shared_ptr<IRenderer> m_renderer;
 	FallingBlockManager m_fallingBlockManager;
 
-	
+	FrameMemoryAllocator frameAllocator;
 
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;

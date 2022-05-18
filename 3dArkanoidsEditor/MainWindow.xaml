@@ -47,7 +47,7 @@
                     IsReadOnlyCaretVisible="False"
                     VerticalScrollBarVisibility="Visible"
                     IsReadOnly="false"
-                    Prompt="8==D"
+                    Prompt="->"
                     DataContext="{Binding GameTerminal}"
                     ItemsSource="{Binding Path=ConsoleItems, Mode=OneWay}"
                     Grid.Row="7"

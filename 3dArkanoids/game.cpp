@@ -213,7 +213,7 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 			m_playFieldArray[pasteIndex] = cutValue;
 			workingBlock->atGridCoords = pasteIndex;
 			if (pasteIndex.z > 0) {
-				// UNTESTED code to set the block that has just landed as the 
+				// set the block that has just landed as the 
 				// child of the one it has landed on
 				int indexOfLandedBlocksColumn = IndexOfRenderDataAt(pasteIndex);
 				int indexOfNewParent = IndexOfRenderDataAt(glm::ivec3(pasteIndex.x, pasteIndex.y, pasteIndex.z - 1));
@@ -267,7 +267,8 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
 	m_playFieldArray[point] = 0x00;
-	m_blockRenderData[IndexOfRenderDataAt(point)].SetShouldRender(false);
+	int index = IndexOfRenderDataAt(point);
+	m_blockRenderData[index].SetShouldRender(false);
 	return BLOCK_AT_SPACE;
 }
 

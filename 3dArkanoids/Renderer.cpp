@@ -6,6 +6,8 @@
 #include "ErrorHandling.h"
 #define DRAW_DISTANCE 10000.0f
 
+#include "PlayfieldDefs.h"
+
 std::string colourVertGlsl =
 "#version 330 core\n"
 "layout(location = 0) in vec3 aPos;\n"
@@ -59,11 +61,13 @@ std::string colourFragGlsl =
 "    FragColor = vec4(result, 1.0);\n"
 "}\n";
 
+
+
 std::string instancedColourVertGlsl = 
 "#version 460 core\n"
 "layout(location = 0) in vec3 aPos;\n"
 "layout(location = 1) in vec3 aNormal;\n"
-"#define MAX_INSTANCES 500\n"
+"#define MAX_INSTANCES " MAX_INSTANCES_STRING "\n"
 
 "out vec3 FragPos;\n"
 "out vec3 Normal;\n"
@@ -143,9 +147,23 @@ void Renderer::SetScreenDims(const glm::ivec2& value)
     m_scrHeight = value.y;
 }
 
+void PrintInfo() {
+    GLint maxUBOSize;
+    glGetIntegerv(GL_MAX_UNIFORM_BLOCK_SIZE, &maxUBOSize);
+    std::cout << "Max UBO Size : " << maxUBOSize << std::endl;
+    float spaceForHowManyBlocksApprox = maxUBOSize / (sizeof(glm::vec4) + sizeof(glm::mat4));
+    float spaceWithPosAndScale = maxUBOSize / (sizeof(glm::vec4) + sizeof(glm::vec4));
+    float spaceWithJustPos = maxUBOSize / (sizeof(glm::vec4));
+    std::cout << "Space for approximately " << spaceForHowManyBlocksApprox << " blocks with model matrix" << std::endl;
+    std::cout << "Space for approximately " << spaceWithPosAndScale << " blocks with Pos and Scale" << std::endl;
+    std::cout << "Space for approximately " << spaceWithJustPos << " blocks with Pos" << std::endl;
+
+
+}
 
 void Renderer::Initialize()
 {
+    PrintInfo();
     static const float vertices[] = {
         -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
          0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,

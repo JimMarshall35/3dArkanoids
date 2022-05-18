@@ -160,11 +160,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="BlockInstanceRenderData.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CubeDrawer.cpp" />
     <ClCompile Include="editor_proto_files\PlayBoardEdit.grpc.pb.cc" />
     <ClCompile Include="editor_proto_files\PlayBoardEdit.pb.cc" />
     <ClCompile Include="FallingBlock.cpp" />
     <ClCompile Include="FallingBlockManager.cpp" />
+    <ClCompile Include="FrameMemoryAllocator.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
@@ -187,6 +189,7 @@
     <ClInclude Include="FallingBlock.h" />
     <ClInclude Include="FallingBlockFinishedEventArgs.h" />
     <ClInclude Include="FallingBlockManager.h" />
+    <ClInclude Include="FrameMemoryAllocator.h" />
     <ClInclude Include="game.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="PlayboardEditAsyncImpl.h" />

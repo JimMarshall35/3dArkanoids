@@ -28,9 +28,10 @@ Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFact
 	);
 	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
 
-	m_playFieldArray.allocate(PLAYFIELD_WIDTH_BLOCKS, PLAYFIELD_HEIGHT_BLOCKS, PLAYFIELD_DEPTH_BLOCKS);
+	//m_playFieldArray.allocate(PLAYFIELD_WIDTH_BLOCKS, PLAYFIELD_HEIGHT_BLOCKS, PLAYFIELD_DEPTH_BLOCKS);
 	
-	m_levelLoader->LoadLevel(m_playFieldArray, "");
+	//m_levelLoader->LoadLevel(m_playFieldArray, "");
+	m_playFieldArray.LoadFromFile("Level.jim");
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
 	if (!isValid) {
@@ -138,6 +139,11 @@ int Game::IndexOfRenderDataAt(const glm::ivec3& coords)
 		}
 	}
 	return -1;
+}
+
+void Game::SaveLevelTest(std::string filePath)
+{
+	m_playFieldArray.SaveToFile(filePath);
 }
 
 /// <summary>

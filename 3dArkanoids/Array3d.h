@@ -1,6 +1,9 @@
 #pragma once
-#include <string.h>
+#include <string>
 #include <glm/glm.hpp>
+#include <vector>
+#include <fstream>
+#include <memory>
 
 
 template<typename T>
@@ -49,6 +52,9 @@ public:
 	T& operator [](const glm::ivec3& at) const { return At(at.x, at.y, at.z);}
 	xSlice operator[](int xCoord) const { return xSlice(xCoord, this); }
 	void free();
+
+	void SaveToFile(std::string filePath);
+	void LoadFromFile(std::string filePath);
 };
 
 template<typename T>
@@ -60,12 +66,14 @@ inline Array3D<T>::Array3D(size_t w, size_t h, size_t d)
 template<typename T>
 inline Array3D<T>::~Array3D()
 {
-	free();
+	if(_ptr != nullptr)
+		free();
 }
 
 template<typename T>
 inline void Array3D<T>::allocate(size_t w, size_t h, size_t d)
 {
+	if (_ptr != nullptr) free();
 	_w = w; _h = h; _d = d;
 	_ptr = new T[w * h * d];
 	memset(_ptr, 0x00, w * h * d * sizeof(T));
@@ -82,4 +90,51 @@ template<typename T>
 inline void Array3D<T>::free()
 {
 	delete[] _ptr;
+}
+
+template<typename T>
+inline void Array3D<T>::SaveToFile(std::string filePath)
+{
+	// allocate buffer to be written to file, layed out as follows:
+	// width, height, depth, array data
+	const auto outputBufferSize = (sizeof(size_t) * 3) + (sizeof(T) * _w * _d * _h);
+	auto outputBuffer = std::make_unique<char>(outputBufferSize);
+
+	// copy class data to the staging buffer
+	memcpy(outputBuffer.get()                     , &_w, sizeof(size_t));
+	memcpy(outputBuffer.get() + sizeof(size_t)    , &_h, sizeof(size_t));
+	memcpy(outputBuffer.get() + sizeof(size_t) * 2, &_d, sizeof(size_t));
+	memcpy(outputBuffer.get() + sizeof(size_t) * 3, _ptr, sizeof(T) * _w * _d * _h);
+
+	// write to file
+	std::ofstream file(filePath, std::ios::out | std::ios::binary);
+	file.write(outputBuffer.get(), outputBufferSize);
+}
+
+template<typename T>
+inline void Array3D<T>::LoadFromFile(std::string filePath)
+{
+	// open file
+	std::ifstream is(filePath, std::ios::in | std::ios::binary);
+
+	// get length
+	is.seekg(0, is.end);
+	int fileLength = is.tellg();
+	is.seekg(0, is.beg);
+
+	// allocate buffer for the entire files contents and write files contents into it
+	auto inputBuf = std::make_unique<char[]>(fileLength);
+	is.read(inputBuf.get(), fileLength);
+
+	// read width, height and depth, from the file into local vars
+	size_t w, h, d;
+	memcpy(&w, inputBuf.get()                     , sizeof(size_t));
+	memcpy(&h, inputBuf.get() + sizeof(size_t)    , sizeof(size_t));
+	memcpy(&d, inputBuf.get() + sizeof(size_t) * 2, sizeof(size_t));
+
+	// allocate using the w, h and d obtained from the file
+	allocate(w, h, d);
+
+	// copy array data into newly allocated array
+	memcpy(_ptr, inputBuf.get() + sizeof(size_t) * 3, sizeof(T) * w * h * d);
 }

@@ -27,7 +27,7 @@ public:
 	void SetScreenDims(const glm::ivec2& screenDims);
 	void Update(float deltaT);
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
-
+	void SaveLevelTest(std::string filePath);
 private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();

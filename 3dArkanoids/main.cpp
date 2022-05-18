@@ -140,8 +140,11 @@ void processInput(GLFWwindow* window)
         camera.ProcessKeyboard(LEFT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
-    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS)
-        camera.SaveToFile("Camera.cam");
+    if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
+        gamePtr->SaveLevelTest("Level.jim");
+        std::cout << "Saving " << std::endl;
+    }
+        //camera.SaveToFile("Camera.cam");
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

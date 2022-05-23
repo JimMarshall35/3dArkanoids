@@ -6,4 +6,4 @@ Will become a test bed for some openCV code  I am writing which does head tracki
 
 https://www.youtube.com/watch?v=xjH8Q4xsKpo
 
-OpenCV code will most likely also run in a separate process and communicate with the main game through GRPC
+My plan is that the OpenCV head tracking code will also run in a seperate process and communicate with the game through grpc

@@ -6,7 +6,7 @@
 #include "PlayBoardEdit.grpc.pb.h"
 #include "Array3d.h"
 #include "TSQueue.h"
-
+#include <functional>
 
 
 using EditorGRPC::Void;
@@ -28,17 +28,7 @@ namespace grpc {
 };
 class ILevelEditorServerGame;
 class CallData;
-enum RPCType : char {
-    Invalid,
-    AddBlock,
-    RemoveBlock,
-    GetBlocks,
-    OnChangeBLock
-};
-struct LevelEditorRPC {
-    CallData* callData;
-    RPCType rpcType;
-};
+
 
 class CallData {
 public:
@@ -107,14 +97,12 @@ public:
     GrpcLevelEditorServer(ILevelEditorServerGame* game);
     void Run();
 private:
-    void EnactRPC(const LevelEditorRPC& edit);
-private:
     ILevelEditorServerGame* m_game;
     std::unique_ptr<grpc::Server> m_server;
     ServerCompletionQueue* m_cq;
     EditorGRPC::PlayBoardEdit::AsyncService m_service;
     std::thread* m_serverThread = nullptr;
-    TSQueue<LevelEditorRPC> m_editorQueue;
+    TSQueue<std::function<void()>> m_editorQueue;
 
     class GetBoardStateCallData : public CallData {
     public:

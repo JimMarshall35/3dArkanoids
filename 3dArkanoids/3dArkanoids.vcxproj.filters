@@ -93,17 +93,17 @@
     <ClCompile Include="PlayboardEditAsyncImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="editor_proto_files\PlayBoardEdit.grpc.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
-    </ClCompile>
-    <ClCompile Include="editor_proto_files\PlayBoardEdit.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
-    </ClCompile>
     <ClCompile Include="FrameMemoryAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.grpc.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -646,6 +646,8 @@ class EditBlockResult final :
     kErrorMessageFieldNumber = 3,
     kResultFieldNumber = 1,
     kBlockCodeFieldNumber = 2,
+    kFinalZValueFieldNumber = 4,
+    kFallTimeSecondsFieldNumber = 5,
   };
   // string errorMessage = 3;
   void clear_errormessage();
@@ -679,6 +681,24 @@ class EditBlockResult final :
   void _internal_set_blockcode(int32_t value);
   public:
 
+  // int32 finalZValue = 4;
+  void clear_finalzvalue();
+  int32_t finalzvalue() const;
+  void set_finalzvalue(int32_t value);
+  private:
+  int32_t _internal_finalzvalue() const;
+  void _internal_set_finalzvalue(int32_t value);
+  public:
+
+  // float fallTimeSeconds = 5;
+  void clear_falltimeseconds();
+  float falltimeseconds() const;
+  void set_falltimeseconds(float value);
+  private:
+  float _internal_falltimeseconds() const;
+  void _internal_set_falltimeseconds(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:EditorGRPC.EditBlockResult)
  private:
   class _Internal;
@@ -689,6 +709,8 @@ class EditBlockResult final :
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr errormessage_;
   int result_;
   int32_t blockcode_;
+  int32_t finalzvalue_;
+  float falltimeseconds_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
 };
@@ -1420,6 +1442,46 @@ inline void EditBlockResult::set_allocated_errormessage(std::string* errormessag
   }
 #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
   // @@protoc_insertion_point(field_set_allocated:EditorGRPC.EditBlockResult.errorMessage)
+}
+
+// int32 finalZValue = 4;
+inline void EditBlockResult::clear_finalzvalue() {
+  finalzvalue_ = 0;
+}
+inline int32_t EditBlockResult::_internal_finalzvalue() const {
+  return finalzvalue_;
+}
+inline int32_t EditBlockResult::finalzvalue() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.EditBlockResult.finalZValue)
+  return _internal_finalzvalue();
+}
+inline void EditBlockResult::_internal_set_finalzvalue(int32_t value) {
+  
+  finalzvalue_ = value;
+}
+inline void EditBlockResult::set_finalzvalue(int32_t value) {
+  _internal_set_finalzvalue(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.EditBlockResult.finalZValue)
+}
+
+// float fallTimeSeconds = 5;
+inline void EditBlockResult::clear_falltimeseconds() {
+  falltimeseconds_ = 0;
+}
+inline float EditBlockResult::_internal_falltimeseconds() const {
+  return falltimeseconds_;
+}
+inline float EditBlockResult::falltimeseconds() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.EditBlockResult.fallTimeSeconds)
+  return _internal_falltimeseconds();
+}
+inline void EditBlockResult::_internal_set_falltimeseconds(float value) {
+  
+  falltimeseconds_ = value;
+}
+inline void EditBlockResult::set_falltimeseconds(float value) {
+  _internal_set_falltimeseconds(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.EditBlockResult.fallTimeSeconds)
 }
 
 // -------------------------------------------------------------------

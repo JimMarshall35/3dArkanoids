@@ -32,6 +32,8 @@ message EditBlockResult{
 	Result result = 1;
 	int32 blockCode = 2;
 	string errorMessage = 3;
+	int32 finalZValue = 4;
+	float fallTimeSeconds = 5;
 }
 
 message SetBoardDescriptionResult {

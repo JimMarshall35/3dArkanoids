@@ -2,8 +2,8 @@
 // If you make any local change, they will be lost.
 // source: editor_proto_files/PlayBoardEdit.proto
 
-#include "editor_proto_files/PlayBoardEdit.pb.h"
-#include "editor_proto_files/PlayBoardEdit.grpc.pb.h"
+#include "PlayBoardEdit.pb.h"
+#include "PlayBoardEdit.grpc.pb.h"
 
 #include <functional>
 #include <grpcpp/impl/codegen/async_stream.h>

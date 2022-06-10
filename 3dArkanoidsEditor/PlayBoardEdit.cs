@@ -27,32 +27,33 @@ namespace EditorGRPC {
             "CiZlZGl0b3JfcHJvdG9fZmlsZXMvUGxheUJvYXJkRWRpdC5wcm90bxIKRWRp",
             "dG9yR1JQQyIoCgVQb2ludBIJCgF4GAEgASgFEgkKAXkYAiABKAUSCQoBehgD",
             "IAEoBSI8CglCbG9ja0VkaXQSCQoBeBgBIAEoBRIJCgF5GAIgASgFEgkKAXoY",
-            "AyABKAUSDgoGbmV3dmFsGAQgASgFItEBCg9FZGl0QmxvY2tSZXN1bHQSMgoG",
+            "AyABKAUSDgoGbmV3dmFsGAQgASgFIv8BCg9FZGl0QmxvY2tSZXN1bHQSMgoG",
             "cmVzdWx0GAEgASgOMiIuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQuUmVz",
-            "dWx0EhEKCWJsb2NrQ29kZRgCIAEoBRIUCgxlcnJvck1lc3NhZ2UYAyABKAki",
-            "YQoGUmVzdWx0Eg8KC1NQQUNFX0VNUFRZEAASEgoOQkxPQ0tfQVRfU1BBQ0UQ",
-            "ARIfChtGQUlMVVJFX1BPSU5UX09VVF9PRl9CT1VORFMQAhIRCg1PVEhFUl9G",
-            "QUlMVVJFEAMitwEKGVNldEJvYXJkRGVzY3JpcHRpb25SZXN1bHQSPAoGcmVz",
-            "dWx0GAEgASgOMiwuRWRpdG9yR1JQQy5TZXRCb2FyZERlc2NyaXB0aW9uUmVz",
-            "dWx0LlJlc3VsdCJcCgZSZXN1bHQSCwoHU1VDQ0VTUxAAEiIKHkZBSUxVUkVf",
-            "VE9PX01BTllfQllURVNfRk9SX1dIRBABEiEKHUZBSUxVUkVfVE9PX0ZFV19C",
-            "WVRFU19GT1JfV0hEEAIiBgoEVm9pZCJOChBCb2FyZERlc2NyaXB0aW9uEg0K",
-            "BXdpZHRoGAEgASgFEg4KBmhlaWdodBgCIAEoBRINCgVkZXB0aBgDIAEoBRIM",
-            "CgRkYXRhGAQgASgMMuQCCg1QbGF5Qm9hcmRFZGl0EjoKCEFkZEJsb2NrEhEu",
-            "RWRpdG9yR1JQQy5Qb2ludBobLkVkaXRvckdSUEMuRWRpdEJsb2NrUmVzdWx0",
-            "Ej0KC1JlbW92ZUJsb2NrEhEuRWRpdG9yR1JQQy5Qb2ludBobLkVkaXRvckdS",
-            "UEMuRWRpdEJsb2NrUmVzdWx0EkEKC0NoYW5nZUJsb2NrEhUuRWRpdG9yR1JQ",
-            "Qy5CbG9ja0VkaXQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBI/Cg1H",
-            "ZXRCb2FyZFN0YXRlEhAuRWRpdG9yR1JQQy5Wb2lkGhwuRWRpdG9yR1JQQy5C",
-            "b2FyZERlc2NyaXB0aW9uElQKDVNldEJvYXJkU3RhdGUSHC5FZGl0b3JHUlBD",
-            "LkJvYXJkRGVzY3JpcHRpb24aJS5FZGl0b3JHUlBDLlNldEJvYXJkRGVzY3Jp",
-            "cHRpb25SZXN1bHRiBnByb3RvMw=="));
+            "dWx0EhEKCWJsb2NrQ29kZRgCIAEoBRIUCgxlcnJvck1lc3NhZ2UYAyABKAkS",
+            "EwoLZmluYWxaVmFsdWUYBCABKAUSFwoPZmFsbFRpbWVTZWNvbmRzGAUgASgC",
+            "ImEKBlJlc3VsdBIPCgtTUEFDRV9FTVBUWRAAEhIKDkJMT0NLX0FUX1NQQUNF",
+            "EAESHwobRkFJTFVSRV9QT0lOVF9PVVRfT0ZfQk9VTkRTEAISEQoNT1RIRVJf",
+            "RkFJTFVSRRADIrcBChlTZXRCb2FyZERlc2NyaXB0aW9uUmVzdWx0EjwKBnJl",
+            "c3VsdBgBIAEoDjIsLkVkaXRvckdSUEMuU2V0Qm9hcmREZXNjcmlwdGlvblJl",
+            "c3VsdC5SZXN1bHQiXAoGUmVzdWx0EgsKB1NVQ0NFU1MQABIiCh5GQUlMVVJF",
+            "X1RPT19NQU5ZX0JZVEVTX0ZPUl9XSEQQARIhCh1GQUlMVVJFX1RPT19GRVdf",
+            "QllURVNfRk9SX1dIRBACIgYKBFZvaWQiTgoQQm9hcmREZXNjcmlwdGlvbhIN",
+            "CgV3aWR0aBgBIAEoBRIOCgZoZWlnaHQYAiABKAUSDQoFZGVwdGgYAyABKAUS",
+            "DAoEZGF0YRgEIAEoDDLkAgoNUGxheUJvYXJkRWRpdBI6CghBZGRCbG9jaxIR",
+            "LkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3Vs",
+            "dBI9CgtSZW1vdmVCbG9jaxIRLkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0b3JH",
+            "UlBDLkVkaXRCbG9ja1Jlc3VsdBJBCgtDaGFuZ2VCbG9jaxIVLkVkaXRvckdS",
+            "UEMuQmxvY2tFZGl0GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPwoN",
+            "R2V0Qm9hcmRTdGF0ZRIQLkVkaXRvckdSUEMuVm9pZBocLkVkaXRvckdSUEMu",
+            "Qm9hcmREZXNjcmlwdGlvbhJUCg1TZXRCb2FyZFN0YXRlEhwuRWRpdG9yR1JQ",
+            "Qy5Cb2FyZERlc2NyaXB0aW9uGiUuRWRpdG9yR1JQQy5TZXRCb2FyZERlc2Ny",
+            "aXB0aW9uUmVzdWx0YgZwcm90bzM="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.Point), global::EditorGRPC.Point.Parser, new[]{ "X", "Y", "Z" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BlockEdit), global::EditorGRPC.BlockEdit.Parser, new[]{ "X", "Y", "Z", "Newval" }, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.EditBlockResult), global::EditorGRPC.EditBlockResult.Parser, new[]{ "Result", "BlockCode", "ErrorMessage" }, null, new[]{ typeof(global::EditorGRPC.EditBlockResult.Types.Result) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.EditBlockResult), global::EditorGRPC.EditBlockResult.Parser, new[]{ "Result", "BlockCode", "ErrorMessage", "FinalZValue", "FallTimeSeconds" }, null, new[]{ typeof(global::EditorGRPC.EditBlockResult.Types.Result) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SetBoardDescriptionResult), global::EditorGRPC.SetBoardDescriptionResult.Parser, new[]{ "Result" }, null, new[]{ typeof(global::EditorGRPC.SetBoardDescriptionResult.Types.Result) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.Void), global::EditorGRPC.Void.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BoardDescription), global::EditorGRPC.BoardDescription.Parser, new[]{ "Width", "Height", "Depth", "Data" }, null, null, null, null)
@@ -662,6 +663,8 @@ namespace EditorGRPC {
       result_ = other.result_;
       blockCode_ = other.blockCode_;
       errorMessage_ = other.errorMessage_;
+      finalZValue_ = other.finalZValue_;
+      fallTimeSeconds_ = other.fallTimeSeconds_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -707,6 +710,30 @@ namespace EditorGRPC {
       }
     }
 
+    /// <summary>Field number for the "finalZValue" field.</summary>
+    public const int FinalZValueFieldNumber = 4;
+    private int finalZValue_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int FinalZValue {
+      get { return finalZValue_; }
+      set {
+        finalZValue_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "fallTimeSeconds" field.</summary>
+    public const int FallTimeSecondsFieldNumber = 5;
+    private float fallTimeSeconds_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float FallTimeSeconds {
+      get { return fallTimeSeconds_; }
+      set {
+        fallTimeSeconds_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -725,6 +752,8 @@ namespace EditorGRPC {
       if (Result != other.Result) return false;
       if (BlockCode != other.BlockCode) return false;
       if (ErrorMessage != other.ErrorMessage) return false;
+      if (FinalZValue != other.FinalZValue) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(FallTimeSeconds, other.FallTimeSeconds)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -735,6 +764,8 @@ namespace EditorGRPC {
       if (Result != global::EditorGRPC.EditBlockResult.Types.Result.SpaceEmpty) hash ^= Result.GetHashCode();
       if (BlockCode != 0) hash ^= BlockCode.GetHashCode();
       if (ErrorMessage.Length != 0) hash ^= ErrorMessage.GetHashCode();
+      if (FinalZValue != 0) hash ^= FinalZValue.GetHashCode();
+      if (FallTimeSeconds != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(FallTimeSeconds);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -765,6 +796,14 @@ namespace EditorGRPC {
         output.WriteRawTag(26);
         output.WriteString(ErrorMessage);
       }
+      if (FinalZValue != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(FinalZValue);
+      }
+      if (FallTimeSeconds != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(FallTimeSeconds);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -787,6 +826,14 @@ namespace EditorGRPC {
         output.WriteRawTag(26);
         output.WriteString(ErrorMessage);
       }
+      if (FinalZValue != 0) {
+        output.WriteRawTag(32);
+        output.WriteInt32(FinalZValue);
+      }
+      if (FallTimeSeconds != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(FallTimeSeconds);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -805,6 +852,12 @@ namespace EditorGRPC {
       }
       if (ErrorMessage.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ErrorMessage);
+      }
+      if (FinalZValue != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(FinalZValue);
+      }
+      if (FallTimeSeconds != 0F) {
+        size += 1 + 4;
       }
       if (_unknownFields != null) {
         size += _unknownFields.CalculateSize();
@@ -826,6 +879,12 @@ namespace EditorGRPC {
       }
       if (other.ErrorMessage.Length != 0) {
         ErrorMessage = other.ErrorMessage;
+      }
+      if (other.FinalZValue != 0) {
+        FinalZValue = other.FinalZValue;
+      }
+      if (other.FallTimeSeconds != 0F) {
+        FallTimeSeconds = other.FallTimeSeconds;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -854,6 +913,14 @@ namespace EditorGRPC {
             ErrorMessage = input.ReadString();
             break;
           }
+          case 32: {
+            FinalZValue = input.ReadInt32();
+            break;
+          }
+          case 45: {
+            FallTimeSeconds = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -879,6 +946,14 @@ namespace EditorGRPC {
           }
           case 26: {
             ErrorMessage = input.ReadString();
+            break;
+          }
+          case 32: {
+            FinalZValue = input.ReadInt32();
+            break;
+          }
+          case 45: {
+            FallTimeSeconds = input.ReadFloat();
             break;
           }
         }

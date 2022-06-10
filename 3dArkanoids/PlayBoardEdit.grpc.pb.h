@@ -4,7 +4,7 @@
 #ifndef GRPC_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto__INCLUDED
 #define GRPC_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto__INCLUDED
 
-#include "editor_proto_files/PlayBoardEdit.pb.h"
+#include "PlayBoardEdit.pb.h"
 
 #include <functional>
 #include <grpcpp/impl/codegen/async_generic_service.h>

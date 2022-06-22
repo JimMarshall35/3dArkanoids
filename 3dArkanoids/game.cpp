@@ -294,6 +294,20 @@ EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char
 	}
 }
 
+std::vector<BlockTypeDescription> Game::GetPossibleBlocks()
+{
+	// TEMPORARILY HARD CODED - TODO: SORT OUT WITH BLOCKS WITH TEXTURES, MATERIALS, ECT
+	return std::vector<BlockTypeDescription>{
+		BlockTypeDescription{ DBLU , glm::vec3(0.184, 0.176, 0.803) },
+		BlockTypeDescription{ RED_ , glm::vec3(1.0, 0.0, 0.0) },
+			BlockTypeDescription{ GREN , glm::vec3(0.0, 1.0, 0.0) },
+			BlockTypeDescription{ LBLU , glm::vec3(0.094, 0.949, 0.898) },
+			BlockTypeDescription{ YLW_ , glm::vec3(0.980, 0.878, 0) },
+			BlockTypeDescription{ WHIT , glm::vec3(1.0, 1.0, 1.0) },
+
+	};
+}
+
 
 
 

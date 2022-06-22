@@ -49,6 +49,8 @@ void GrpcLevelEditorServer::Run()
 		// Spawn a new CallData instance to serve new clients.
 		new GetBoardStateCallData(&m_service, cq.get(), m_game, this);
 		new ChangeBlockCallData(&m_service, cq.get(), m_game, this);
+		new InitialConnectionHandshakeCallData(&m_service, cq.get(), m_game, this);
+		
 		void* tag;  // uniquely identifies a request.
 		bool ok;
 		while (true) {
@@ -77,7 +79,7 @@ void GrpcLevelEditorServer::OnEvent(EngineUpdateFrameEventArgs e)
 
 void GrpcLevelEditorServer::GetBoardStateCallData::RequestOnCreate()
 {
-	service_->RequestGetBoardState(&ctx_, &request_, &responder_, cq_, cq_, this);
+	m_service->RequestGetBoardState(&m_ctx, &m_request, &m_responder, m_cq, m_cq, this);
 }
 
 void GrpcLevelEditorServer::GetBoardStateCallData::OnProcess()
@@ -86,18 +88,18 @@ void GrpcLevelEditorServer::GetBoardStateCallData::OnProcess()
 	// the one for this CallData. The instance will deallocate itself as
 	// part of its FINISH state.
 			
-	new GetBoardStateCallData(service_, cq_, m_game, server_);
+	new GetBoardStateCallData(m_service, m_cq, m_game, m_server);
 
-	server_->m_editorQueue.Push([this]() {
+	m_server->m_editorQueue.Push([this]() {
 			std::cout << "GetBlocks" << std::endl;
 			const auto& boardState = m_game->GetBoardState();
 			auto ptr = boardState.getPtr();
 			auto w = boardState.getW(); auto h = boardState.getH(); auto d = boardState.getD();
 			auto size = w * d * h;
-			reply_.set_data(std::string(ptr, ptr + size));
-			reply_.set_depth(d);
-			reply_.set_height(h);
-			reply_.set_width(w);
+			m_reply.set_data(std::string(ptr, ptr + size));
+			m_reply.set_depth(d);
+			m_reply.set_height(h);
+			m_reply.set_width(w);
 			Finish();
 		});
 	
@@ -105,28 +107,28 @@ void GrpcLevelEditorServer::GetBoardStateCallData::OnProcess()
 
 void GrpcLevelEditorServer::GetBoardStateCallData::Finish()
 {
-	responder_.Finish(reply_, Status::OK, this);
-	status_ = FINISH;
+	m_responder.Finish(m_reply, Status::OK, this);
+	m_status = FINISH;
 }
 
 void GrpcLevelEditorServer::ChangeBlockCallData::RequestOnCreate()
 {
-	service_->RequestChangeBlock(&ctx_, &request_, &responder_, cq_, cq_, this);
+	m_service->RequestChangeBlock(&m_ctx, &m_request, &m_responder, m_cq, m_cq, this);
 }
 
 void GrpcLevelEditorServer::ChangeBlockCallData::OnProcess()
 {
-	new ChangeBlockCallData(service_, cq_, m_game, server_);
-	server_->m_editorQueue.Push([this]() {
+	new ChangeBlockCallData(m_service, m_cq, m_game, m_server);
+	m_server->m_editorQueue.Push([this]() {
 		// TODO: implement
-		auto blockCoords = glm::ivec3(request_.x(), request_.y(), request_.z());
+		auto blockCoords = glm::ivec3(m_request.x(), m_request.y(), m_request.z());
 
 		std::cout <<
-			"change block x: " << request_.x() <<
-			" y: " << request_.y() <<
-			" z: " << request_.z() <<
-			" newVal: " << request_.newval() << std::endl;
-		auto newVal = static_cast<unsigned char>(request_.newval());
+			"change block x: " << m_request.x() <<
+			" y: " << m_request.y() <<
+			" z: " << m_request.z() <<
+			" newVal: " << m_request.newval() << std::endl;
+		auto newVal = static_cast<unsigned char>(m_request.newval());
 		unsigned char oldBlockVal;
 
 		auto result = m_game->AddOrChangeBlock(
@@ -137,26 +139,26 @@ void GrpcLevelEditorServer::ChangeBlockCallData::OnProcess()
 
 		switch (result) {
 		case SPACE_EMPTY:
-			reply_.set_result(EditorGRPC::EditBlockResult::SPACE_EMPTY);
+			m_reply.set_result(EditorGRPC::EditBlockResult::SPACE_EMPTY);
 			break;
 		case BLOCK_AT_SPACE:
-			reply_.set_blockcode(oldBlockVal);
-			reply_.set_result(EditorGRPC::EditBlockResult::BLOCK_AT_SPACE);
+			m_reply.set_blockcode(oldBlockVal);
+			m_reply.set_result(EditorGRPC::EditBlockResult::BLOCK_AT_SPACE);
 			break;
 		case FAILURE_POINT_OUT_OF_BOUNDS:
-			reply_.set_result(EditorGRPC::EditBlockResult::FAILURE_POINT_OUT_OF_BOUNDS);
+			m_reply.set_result(EditorGRPC::EditBlockResult::FAILURE_POINT_OUT_OF_BOUNDS);
 			break;
 		case OTHER_FAILURE:
-			reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
-			reply_.set_errormessage("An unknown error occured");
+			m_reply.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+			m_reply.set_errormessage("An unknown error occured");
 			break;
 		case NO_CHANGE:
-			reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
-			reply_.set_errormessage("The edit resulted in no change");
+			m_reply.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+			m_reply.set_errormessage("The edit resulted in no change");
 			break;
 		case INVALID_NEW_BYTE:
-			reply_.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
-			reply_.set_errormessage("You chose a byte value that is too high");
+			m_reply.set_result(EditorGRPC::EditBlockResult::OTHER_FAILURE);
+			m_reply.set_errormessage("You chose a byte value that is too high");
 			break;
 		}
 		Finish();
@@ -165,6 +167,33 @@ void GrpcLevelEditorServer::ChangeBlockCallData::OnProcess()
 
 void GrpcLevelEditorServer::ChangeBlockCallData::Finish()
 {
-	responder_.Finish(reply_, Status::OK, this);
-	status_ = FINISH;
+	m_responder.Finish(m_reply, Status::OK, this);
+	m_status = FINISH;
+}
+
+void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::Finish()
+{
+	m_responder.Finish(m_reply, Status::OK, this);
+	m_status = FINISH;
+}
+
+void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::RequestOnCreate()
+{
+	m_service->RequestInitialConnectionHandshake(&m_ctx, &m_request, &m_responder, m_cq, m_cq, this);
+}
+
+void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::OnProcess()
+{
+	new InitialConnectionHandshakeCallData(m_service, m_cq, m_game, m_server);
+	m_server->m_editorQueue.Push([this]() {
+		auto blockTypes = m_game->GetPossibleBlocks();
+		for (const auto& block : blockTypes) {
+			auto output = m_reply.add_possibleblocks();
+			output->set_gameenginecode(block.GameEngineBlockCode);
+			output->set_red(block.Rgb.x);
+			output->set_green(block.Rgb.y);
+			output->set_blue(block.Rgb.y);
+		}
+		Finish();
+	});
 }

@@ -37,6 +37,12 @@ struct EditBlockResultCPP {
 	unsigned char blockCode;
 	std::string errorMessage;
 };
+
+struct BlockTypeDescription {
+	unsigned char GameEngineBlockCode;
+	glm::vec3 Rgb;
+};
+
 class ILevelEditorServerGame {
 	public:
 		virtual const Array3D<unsigned char>& GetBoardState() = 0;
@@ -44,4 +50,5 @@ class ILevelEditorServerGame {
 		virtual EditBlockResultCode RemoveBlock(const glm::ivec3& point) = 0;
 		virtual SetBoardDescriptionResultCPP SetBoardState(const Array3D<unsigned char>& newState) = 0;
 		virtual EditBlockResultCode BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode) = 0;
+		virtual std::vector<BlockTypeDescription> GetPossibleBlocks() = 0;
 };

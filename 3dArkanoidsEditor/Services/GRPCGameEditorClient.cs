@@ -27,6 +27,11 @@ namespace _3dArkanoidsEditor.Services
             return result.ToModel();
         }
 
+        public async Task<GameSettings> InitialConnectionHandshakeAsync(ClientInfo info)
+        {
+            var result = await m_client.InitialConnectionHandshakeAsync(new EditorGRPC.ClientInfo());
+            throw new NotImplementedException();
+        }
         private PlayBoardEditClient m_client;
     }
 }

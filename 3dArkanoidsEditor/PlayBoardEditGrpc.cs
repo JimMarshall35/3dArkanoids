@@ -57,6 +57,10 @@ namespace EditorGRPC {
     static readonly grpc::Marshaller<global::EditorGRPC.BoardDescription> __Marshaller_EditorGRPC_BoardDescription = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.BoardDescription.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.SetBoardDescriptionResult> __Marshaller_EditorGRPC_SetBoardDescriptionResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SetBoardDescriptionResult.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.ClientInfo> __Marshaller_EditorGRPC_ClientInfo = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.ClientInfo.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.GameSettings> __Marshaller_EditorGRPC_GameSettings = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.GameSettings.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult> __Method_AddBlock = new grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult>(
@@ -98,6 +102,14 @@ namespace EditorGRPC {
         __Marshaller_EditorGRPC_BoardDescription,
         __Marshaller_EditorGRPC_SetBoardDescriptionResult);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::EditorGRPC.ClientInfo, global::EditorGRPC.GameSettings> __Method_InitialConnectionHandshake = new grpc::Method<global::EditorGRPC.ClientInfo, global::EditorGRPC.GameSettings>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "InitialConnectionHandshake",
+        __Marshaller_EditorGRPC_ClientInfo,
+        __Marshaller_EditorGRPC_GameSettings);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -134,6 +146,12 @@ namespace EditorGRPC {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.SetBoardDescriptionResult> SetBoardState(global::EditorGRPC.BoardDescription request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.GameSettings> InitialConnectionHandshake(global::EditorGRPC.ClientInfo request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -267,6 +285,26 @@ namespace EditorGRPC {
       {
         return CallInvoker.AsyncUnaryCall(__Method_SetBoardState, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.GameSettings InitialConnectionHandshake(global::EditorGRPC.ClientInfo request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return InitialConnectionHandshake(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.GameSettings InitialConnectionHandshake(global::EditorGRPC.ClientInfo request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_InitialConnectionHandshake, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.GameSettings> InitialConnectionHandshakeAsync(global::EditorGRPC.ClientInfo request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return InitialConnectionHandshakeAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.GameSettings> InitialConnectionHandshakeAsync(global::EditorGRPC.ClientInfo request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_InitialConnectionHandshake, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override PlayBoardEditClient NewInstance(ClientBaseConfiguration configuration)
@@ -285,7 +323,8 @@ namespace EditorGRPC {
           .AddMethod(__Method_RemoveBlock, serviceImpl.RemoveBlock)
           .AddMethod(__Method_ChangeBlock, serviceImpl.ChangeBlock)
           .AddMethod(__Method_GetBoardState, serviceImpl.GetBoardState)
-          .AddMethod(__Method_SetBoardState, serviceImpl.SetBoardState).Build();
+          .AddMethod(__Method_SetBoardState, serviceImpl.SetBoardState)
+          .AddMethod(__Method_InitialConnectionHandshake, serviceImpl.InitialConnectionHandshake).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -300,6 +339,7 @@ namespace EditorGRPC {
       serviceBinder.AddMethod(__Method_ChangeBlock, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.BlockEdit, global::EditorGRPC.EditBlockResult>(serviceImpl.ChangeBlock));
       serviceBinder.AddMethod(__Method_GetBoardState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Void, global::EditorGRPC.BoardDescription>(serviceImpl.GetBoardState));
       serviceBinder.AddMethod(__Method_SetBoardState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.BoardDescription, global::EditorGRPC.SetBoardDescriptionResult>(serviceImpl.SetBoardState));
+      serviceBinder.AddMethod(__Method_InitialConnectionHandshake, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.ClientInfo, global::EditorGRPC.GameSettings>(serviceImpl.InitialConnectionHandshake));
     }
 
   }

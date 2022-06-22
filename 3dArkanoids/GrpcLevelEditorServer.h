@@ -14,6 +14,8 @@ using EditorGRPC::BlockEdit;
 using EditorGRPC::BoardDescription;
 using EditorGRPC::Point;
 using EditorGRPC::EditBlockResult;
+using EditorGRPC::GameSettings;
+using EditorGRPC::ClientInfo;
 
 using grpc::Server;
 using grpc::ServerAsyncResponseWriter;
@@ -36,14 +38,14 @@ public:
     // server) and the completion queue "cq" used for asynchronous communication
     // with the gRPC runtime.
     CallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game)
-        : service_(service), cq_(cq), status_(CREATE), m_game(game) {
+        : m_service(service), m_cq(cq), m_status(CREATE), m_game(game) {
         
     }
 
     void Proceed() {
-        if (status_ == CREATE) {
+        if (m_status == CREATE) {
             // Make this instance progress to the PROCESS state.
-            status_ = PROCESS;
+            m_status = PROCESS;
 
             // As part of the initial CREATE state, we *request* that the system
             // start processing SayHello requests. In this request, "this" acts are
@@ -52,11 +54,11 @@ public:
             // the memory address of this CallData instance.
             RequestOnCreate();
         }
-        else if (status_ == PROCESS) {
+        else if (m_status == PROCESS) {
             OnProcess();
         }
         else {
-            GPR_ASSERT(status_ == FINISH);
+            GPR_ASSERT(m_status == FINISH);
             // Once in the FINISH state, deallocate ourselves (CallData).
             delete this;
         }
@@ -69,16 +71,16 @@ private:
 protected:
     // The means of communication with the gRPC runtime for an asynchronous
     // server.
-    EditorGRPC::PlayBoardEdit::AsyncService* service_;
+    EditorGRPC::PlayBoardEdit::AsyncService* m_service;
     // The producer-consumer queue where for asynchronous server notifications.
-    ServerCompletionQueue* cq_;
+    ServerCompletionQueue* m_cq;
     // Context for the rpc, allowing to tweak aspects of it such as the use
     // of compression, authentication, as well as to send metadata back to the
     // client.
-    ServerContext ctx_;
+    ServerContext m_ctx;
 
     enum CallStatus { CREATE, PROCESS, FINISH };
-    CallStatus status_;  // The current serving state.
+    CallStatus m_status;  // The current serving state.
 
     ILevelEditorServerGame* m_game;
 protected:
@@ -107,21 +109,21 @@ private:
     class GetBoardStateCallData : public CallData {
     public:
         GetBoardStateCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
-            :CallData(service,cq,game), responder_(&ctx_), server_(server)
+            :CallData(service,cq,game), m_responder(&m_ctx), m_server(server)
         {
             Proceed();
         }
     public:
         // What we get from the client.
-        Void request_;
+        Void m_request;
         // What we send back to the client.
-        BoardDescription reply_;
+        BoardDescription m_reply;
 
     private:
         // The means to get back to the client.
-        ServerAsyncResponseWriter<BoardDescription> responder_;
+        ServerAsyncResponseWriter<BoardDescription> m_responder;
 
-        GrpcLevelEditorServer* server_;
+        GrpcLevelEditorServer* m_server;
     protected:
         // Inherited via CallData
         virtual void RequestOnCreate() override;
@@ -134,21 +136,21 @@ private:
     class ChangeBlockCallData : public CallData {
     public:
         ChangeBlockCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
-            :CallData(service, cq, game), responder_(&ctx_), server_(server)
+            :CallData(service, cq, game), m_responder(&m_ctx), m_server(server)
         {
             Proceed();
         }
     public:
         // What we get from the client.
-        BlockEdit request_;
+        BlockEdit m_request;
         // What we send back to the client.
-        EditBlockResult reply_;
+        EditBlockResult m_reply;
 
     private:
         // The means to get back to the client.
-        ServerAsyncResponseWriter<EditBlockResult> responder_;
+        ServerAsyncResponseWriter<EditBlockResult> m_responder;
 
-        GrpcLevelEditorServer* server_;
+        GrpcLevelEditorServer* m_server;
     protected:
         // Inherited via CallData
         virtual void RequestOnCreate() override;
@@ -158,7 +160,30 @@ private:
         virtual void Finish() override;
     };
 
+    class InitialConnectionHandshakeCallData : public CallData {
+    public:
+        InitialConnectionHandshakeCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
+            :CallData(service, cq, game), m_responder(&m_ctx), m_server(server)
+        {
+            Proceed();
+        }
+    public:
+        // What we get from the client.
+        ClientInfo m_request;
+        // What we send back to the client.
+        GameSettings m_reply;
 
+    private:
+        // The means to get back to the client.
+        ServerAsyncResponseWriter<GameSettings> m_responder;
+
+        GrpcLevelEditorServer* m_server;
+    protected:
+        // Inherited via CallData
+        virtual void Finish() override;
+        virtual void RequestOnCreate() override;
+        virtual void OnProcess() override;
+    };
 
 
 

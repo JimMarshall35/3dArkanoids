@@ -7,6 +7,7 @@ service PlayBoardEdit{
 	rpc ChangeBlock(BlockEdit) returns(EditBlockResult);
 	rpc GetBoardState(Void) returns(BoardDescription);
 	rpc SetBoardState(BoardDescription) returns(SetBoardDescriptionResult);
+	rpc InitialConnectionHandshake(ClientInfo) returns(GameSettings);
 }
 
 message Point{
@@ -53,4 +54,19 @@ message BoardDescription {
 	int32 height = 2;
 	int32 depth = 3;
 	bytes data = 4;
+}
+
+message ClientInfo{
+	
+}
+
+message BlockType{
+	int32 gameEngineCode = 1;
+	float red = 2;
+	float green = 3;
+	float blue = 4;
+}
+
+message GameSettings{
+	repeated BlockType possibleBlocks = 1;
 }

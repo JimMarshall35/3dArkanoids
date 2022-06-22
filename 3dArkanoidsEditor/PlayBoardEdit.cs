@@ -39,15 +39,20 @@ namespace EditorGRPC {
             "X1RPT19NQU5ZX0JZVEVTX0ZPUl9XSEQQARIhCh1GQUlMVVJFX1RPT19GRVdf",
             "QllURVNfRk9SX1dIRBACIgYKBFZvaWQiTgoQQm9hcmREZXNjcmlwdGlvbhIN",
             "CgV3aWR0aBgBIAEoBRIOCgZoZWlnaHQYAiABKAUSDQoFZGVwdGgYAyABKAUS",
-            "DAoEZGF0YRgEIAEoDDLkAgoNUGxheUJvYXJkRWRpdBI6CghBZGRCbG9jaxIR",
-            "LkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3Vs",
-            "dBI9CgtSZW1vdmVCbG9jaxIRLkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0b3JH",
-            "UlBDLkVkaXRCbG9ja1Jlc3VsdBJBCgtDaGFuZ2VCbG9jaxIVLkVkaXRvckdS",
-            "UEMuQmxvY2tFZGl0GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPwoN",
-            "R2V0Qm9hcmRTdGF0ZRIQLkVkaXRvckdSUEMuVm9pZBocLkVkaXRvckdSUEMu",
-            "Qm9hcmREZXNjcmlwdGlvbhJUCg1TZXRCb2FyZFN0YXRlEhwuRWRpdG9yR1JQ",
-            "Qy5Cb2FyZERlc2NyaXB0aW9uGiUuRWRpdG9yR1JQQy5TZXRCb2FyZERlc2Ny",
-            "aXB0aW9uUmVzdWx0YgZwcm90bzM="));
+            "DAoEZGF0YRgEIAEoDCIMCgpDbGllbnRJbmZvIk0KCUJsb2NrVHlwZRIWCg5n",
+            "YW1lRW5naW5lQ29kZRgBIAEoBRILCgNyZWQYAiABKAISDQoFZ3JlZW4YAyAB",
+            "KAISDAoEYmx1ZRgEIAEoAiI9CgxHYW1lU2V0dGluZ3MSLQoOcG9zc2libGVC",
+            "bG9ja3MYASADKAsyFS5FZGl0b3JHUlBDLkJsb2NrVHlwZTK0AwoNUGxheUJv",
+            "YXJkRWRpdBI6CghBZGRCbG9jaxIRLkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0",
+            "b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBI9CgtSZW1vdmVCbG9jaxIRLkVkaXRv",
+            "ckdSUEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBJBCgtD",
+            "aGFuZ2VCbG9jaxIVLkVkaXRvckdSUEMuQmxvY2tFZGl0GhsuRWRpdG9yR1JQ",
+            "Qy5FZGl0QmxvY2tSZXN1bHQSPwoNR2V0Qm9hcmRTdGF0ZRIQLkVkaXRvckdS",
+            "UEMuVm9pZBocLkVkaXRvckdSUEMuQm9hcmREZXNjcmlwdGlvbhJUCg1TZXRC",
+            "b2FyZFN0YXRlEhwuRWRpdG9yR1JQQy5Cb2FyZERlc2NyaXB0aW9uGiUuRWRp",
+            "dG9yR1JQQy5TZXRCb2FyZERlc2NyaXB0aW9uUmVzdWx0Ek4KGkluaXRpYWxD",
+            "b25uZWN0aW9uSGFuZHNoYWtlEhYuRWRpdG9yR1JQQy5DbGllbnRJbmZvGhgu",
+            "RWRpdG9yR1JQQy5HYW1lU2V0dGluZ3NiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -56,7 +61,10 @@ namespace EditorGRPC {
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.EditBlockResult), global::EditorGRPC.EditBlockResult.Parser, new[]{ "Result", "BlockCode", "ErrorMessage", "FinalZValue", "FallTimeSeconds" }, null, new[]{ typeof(global::EditorGRPC.EditBlockResult.Types.Result) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SetBoardDescriptionResult), global::EditorGRPC.SetBoardDescriptionResult.Parser, new[]{ "Result" }, null, new[]{ typeof(global::EditorGRPC.SetBoardDescriptionResult.Types.Result) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.Void), global::EditorGRPC.Void.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BoardDescription), global::EditorGRPC.BoardDescription.Parser, new[]{ "Width", "Height", "Depth", "Data" }, null, null, null, null)
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BoardDescription), global::EditorGRPC.BoardDescription.Parser, new[]{ "Width", "Height", "Depth", "Data" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.ClientInfo), global::EditorGRPC.ClientInfo.Parser, null, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BlockType), global::EditorGRPC.BlockType.Parser, new[]{ "GameEngineCode", "Red", "Green", "Blue" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.GameSettings), global::EditorGRPC.GameSettings.Parser, new[]{ "PossibleBlocks" }, null, null, null, null)
           }));
     }
     #endregion
@@ -1624,6 +1632,636 @@ namespace EditorGRPC {
           }
           case 34: {
             Data = input.ReadBytes();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class ClientInfo : pb::IMessage<ClientInfo>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<ClientInfo> _parser = new pb::MessageParser<ClientInfo>(() => new ClientInfo());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<ClientInfo> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[6]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ClientInfo() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ClientInfo(ClientInfo other) : this() {
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public ClientInfo Clone() {
+      return new ClientInfo(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as ClientInfo);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(ClientInfo other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(ClientInfo other) {
+      if (other == null) {
+        return;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class BlockType : pb::IMessage<BlockType>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<BlockType> _parser = new pb::MessageParser<BlockType>(() => new BlockType());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<BlockType> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[7]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public BlockType() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public BlockType(BlockType other) : this() {
+      gameEngineCode_ = other.gameEngineCode_;
+      red_ = other.red_;
+      green_ = other.green_;
+      blue_ = other.blue_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public BlockType Clone() {
+      return new BlockType(this);
+    }
+
+    /// <summary>Field number for the "gameEngineCode" field.</summary>
+    public const int GameEngineCodeFieldNumber = 1;
+    private int gameEngineCode_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int GameEngineCode {
+      get { return gameEngineCode_; }
+      set {
+        gameEngineCode_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "red" field.</summary>
+    public const int RedFieldNumber = 2;
+    private float red_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float Red {
+      get { return red_; }
+      set {
+        red_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "green" field.</summary>
+    public const int GreenFieldNumber = 3;
+    private float green_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float Green {
+      get { return green_; }
+      set {
+        green_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "blue" field.</summary>
+    public const int BlueFieldNumber = 4;
+    private float blue_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float Blue {
+      get { return blue_; }
+      set {
+        blue_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as BlockType);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(BlockType other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (GameEngineCode != other.GameEngineCode) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Red, other.Red)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Green, other.Green)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Blue, other.Blue)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (GameEngineCode != 0) hash ^= GameEngineCode.GetHashCode();
+      if (Red != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Red);
+      if (Green != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Green);
+      if (Blue != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Blue);
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (GameEngineCode != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(GameEngineCode);
+      }
+      if (Red != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(Red);
+      }
+      if (Green != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Green);
+      }
+      if (Blue != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Blue);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (GameEngineCode != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(GameEngineCode);
+      }
+      if (Red != 0F) {
+        output.WriteRawTag(21);
+        output.WriteFloat(Red);
+      }
+      if (Green != 0F) {
+        output.WriteRawTag(29);
+        output.WriteFloat(Green);
+      }
+      if (Blue != 0F) {
+        output.WriteRawTag(37);
+        output.WriteFloat(Blue);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (GameEngineCode != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(GameEngineCode);
+      }
+      if (Red != 0F) {
+        size += 1 + 4;
+      }
+      if (Green != 0F) {
+        size += 1 + 4;
+      }
+      if (Blue != 0F) {
+        size += 1 + 4;
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(BlockType other) {
+      if (other == null) {
+        return;
+      }
+      if (other.GameEngineCode != 0) {
+        GameEngineCode = other.GameEngineCode;
+      }
+      if (other.Red != 0F) {
+        Red = other.Red;
+      }
+      if (other.Green != 0F) {
+        Green = other.Green;
+      }
+      if (other.Blue != 0F) {
+        Blue = other.Blue;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            GameEngineCode = input.ReadInt32();
+            break;
+          }
+          case 21: {
+            Red = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            Green = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            Blue = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            GameEngineCode = input.ReadInt32();
+            break;
+          }
+          case 21: {
+            Red = input.ReadFloat();
+            break;
+          }
+          case 29: {
+            Green = input.ReadFloat();
+            break;
+          }
+          case 37: {
+            Blue = input.ReadFloat();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class GameSettings : pb::IMessage<GameSettings>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<GameSettings> _parser = new pb::MessageParser<GameSettings>(() => new GameSettings());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<GameSettings> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[8]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameSettings() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameSettings(GameSettings other) : this() {
+      possibleBlocks_ = other.possibleBlocks_.Clone();
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public GameSettings Clone() {
+      return new GameSettings(this);
+    }
+
+    /// <summary>Field number for the "possibleBlocks" field.</summary>
+    public const int PossibleBlocksFieldNumber = 1;
+    private static readonly pb::FieldCodec<global::EditorGRPC.BlockType> _repeated_possibleBlocks_codec
+        = pb::FieldCodec.ForMessage(10, global::EditorGRPC.BlockType.Parser);
+    private readonly pbc::RepeatedField<global::EditorGRPC.BlockType> possibleBlocks_ = new pbc::RepeatedField<global::EditorGRPC.BlockType>();
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public pbc::RepeatedField<global::EditorGRPC.BlockType> PossibleBlocks {
+      get { return possibleBlocks_; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as GameSettings);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(GameSettings other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if(!possibleBlocks_.Equals(other.possibleBlocks_)) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      hash ^= possibleBlocks_.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      possibleBlocks_.WriteTo(output, _repeated_possibleBlocks_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      possibleBlocks_.WriteTo(ref output, _repeated_possibleBlocks_codec);
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      size += possibleBlocks_.CalculateSize(_repeated_possibleBlocks_codec);
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(GameSettings other) {
+      if (other == null) {
+        return;
+      }
+      possibleBlocks_.Add(other.possibleBlocks_);
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            possibleBlocks_.AddEntriesFrom(input, _repeated_possibleBlocks_codec);
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            possibleBlocks_.AddEntriesFrom(ref input, _repeated_possibleBlocks_codec);
             break;
           }
         }

@@ -63,4 +63,8 @@ public:
 
 	virtual EditBlockResultCode BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode) override;
 
+
+	// Inherited via ILevelEditorServerGame
+	virtual std::vector<BlockTypeDescription> GetPossibleBlocks() override;
+
 };

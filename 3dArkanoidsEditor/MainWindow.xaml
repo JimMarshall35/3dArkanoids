@@ -33,7 +33,7 @@
         </Grid.RowDefinitions>
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
-            
+            <Button Command="{Binding ConnectCommand}" IsEnabled="{Binding IsAllowedToTryToConnect}">Connect</Button>
         </StackPanel>
         <views:PlayBoardCanvas 
             Grid.Row="2"

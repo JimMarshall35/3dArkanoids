@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using static _3dArkanoidsEditor.Models.EditBlockResult;
@@ -20,6 +21,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         public ICommand OnSingleTileEditCommand { get; set; }
         public ICommand GetBlockCommand { get; private set; }
+        public ICommand ConnectCommand { get; private set; }
 
         private GameBoardDescription m_gameBoardDescription;
         public GameBoardDescription MasterGameBoard
@@ -46,6 +48,7 @@ namespace _3dArkanoidsEditor.ViewModels
             {
                 m_loaded = value;
                 OnPropertyChange(nameof(Loaded));
+                OnPropertyChange(nameof(IsAllowedToTryToConnect));
             }
         }
 
@@ -91,6 +94,15 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        public bool IsAllowedToTryToConnect
+        {
+            get
+            {
+                return !m_loaded && !m_tryingToConnect;
+            }
+        }
+
+
         public ITerminalViewModel GameTerminal { get; private set; }
 
 
@@ -111,13 +123,13 @@ namespace _3dArkanoidsEditor.ViewModels
                     null
                 );
 
-
+            ConnectCommand = new RelayCommand(
+                    _ => TryConnectToGame(),
+                    null
+                );
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
-            m_gameConnectionService.Connect().ContinueWith(_ => {
-                GameTerminal.WriteLine("Game connected");
-            });
 
         }
 
@@ -127,16 +139,21 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private void OnGameConnectionLost(object sender, GameConnectionChangedArgs e)
         {
-            throw new NotImplementedException();
+            TryingToConnect = false;
+            GameTerminal.WriteLine(e.Message);
+            Loaded = false;
+            
         }
 
         private void OnGameConnectionAquire(object sender, GameBoardDescription e)
         {
+            TryingToConnect = false;
             PlayFieldX = e.Width;
             PlayFieldY = e.Height;
             PlayFieldZ = e.Depth;
             MasterGameBoard = e;
             Loaded = true;
+            GameTerminal.WriteLine("Connected to game");
         }
 
         #endregion
@@ -145,15 +162,14 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private async void GetBlock()
         {
-            m_gameBoardDescription = await m_gameConnectionService.Client.GetBoardStateAsync();
-            
+            MasterGameBoard = await m_gameConnectionService.Client.GetBoardStateAsync();
         }
 
         private async void OnSingleTileEdit(object e)
         {
             SingleTileEdit edit = (SingleTileEdit)e;
             var result = await m_gameConnectionService.Client.ChangeBlockAsync(edit);
-            if(result.EditResult != Result.FAILURE_POINT_OUT_OF_BOUNDS && result.EditResult != Result.OTHER_FAILURE)
+            if (result.EditResult != Result.FAILURE_POINT_OUT_OF_BOUNDS && result.EditResult != Result.OTHER_FAILURE)
             {
                 // had to make SetAt return a new copy and set MasterGameBoardAgain to get the edits to appear on the
                 // WPF canvas.
@@ -161,9 +177,34 @@ namespace _3dArkanoidsEditor.ViewModels
                 // didn't work. A weird and suspect solution
                 MasterGameBoard = MasterGameBoard.SetAt(edit.XPos, edit.YPos, edit.ZPos, edit.NewValue);
             }
-            
-            GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " "+result.ErrorMessage
-                + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: "+result.BlockCode : ""));
+
+            GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " " + result.ErrorMessage
+                + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: " + result.BlockCode : ""));
+        }
+
+        CancellationTokenSource cts;
+        public void TryConnectToGame()
+        {
+            cts = new CancellationTokenSource();
+
+            TryingToConnect = true;
+            GameTerminal.WriteLine("Trying to connect to game...");            
+            m_gameConnectionService.Connect(cts.Token);
+            cts.CancelAfter(10000);
+        }
+
+        #endregion
+
+        #region private set only properties?!
+
+        private bool m_tryingToConnect = false;
+        private bool TryingToConnect
+        {
+            set
+            {
+                m_tryingToConnect = value;
+                OnPropertyChange(nameof(IsAllowedToTryToConnect));
+            }
         }
 
         #endregion

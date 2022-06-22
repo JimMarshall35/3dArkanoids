@@ -58,6 +58,7 @@ namespace _3dArkanoidsEditor.Views
         DependencyProperty.Register(nameof(SingleTileEdit), typeof(ICommand), typeof(PlayBoardCanvas),
             new FrameworkPropertyMetadata(OnSingleTileEditDependencyPropertyChanged));
 
+        
 
 
         public PlayBoardCanvas()

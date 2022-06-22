@@ -9,6 +9,11 @@ namespace _3dArkanoidsEditor.Services
 {
     internal class GameConnectionChangedArgs
     {
-        //GameBoardDescription GameBoard { get; set; }
+        internal GameConnectionChangedArgs(string msg)
+        {
+            Message = msg;
+        }
+
+        internal string Message { get; private set; }
     }
 }

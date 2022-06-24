@@ -30,7 +30,7 @@ namespace _3dArkanoidsEditor.Services
         public async Task<GameSettings> InitialConnectionHandshakeAsync(ClientInfo info)
         {
             var result = await m_client.InitialConnectionHandshakeAsync(new EditorGRPC.ClientInfo());
-            throw new NotImplementedException();
+            return result.ToModel();
         }
         private PlayBoardEditClient m_client;
     }

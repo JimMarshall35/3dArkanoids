@@ -192,7 +192,7 @@ void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::OnProcess()
 			output->set_gameenginecode(block.GameEngineBlockCode);
 			output->set_red(block.Rgb.x);
 			output->set_green(block.Rgb.y);
-			output->set_blue(block.Rgb.y);
+			output->set_blue(block.Rgb.z);
 		}
 		Finish();
 	});

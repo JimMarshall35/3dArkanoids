@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace _3dArkanoidsEditor.Services
 {
-    internal class GameConnectionChangedArgs
+    internal class GameConnectionLostEventArgs
     {
-        internal GameConnectionChangedArgs(string msg)
+        internal GameConnectionLostEventArgs(string msg)
         {
             Message = msg;
         }

@@ -137,7 +137,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         #region Game Connection Handlers
 
-        private void OnGameConnectionLost(object sender, GameConnectionChangedArgs e)
+        private void OnGameConnectionLost(object sender, GameConnectionLostEventArgs e)
         {
             TryingToConnect = false;
             GameTerminal.WriteLine(e.Message);
@@ -145,13 +145,14 @@ namespace _3dArkanoidsEditor.ViewModels
             
         }
 
-        private void OnGameConnectionAquire(object sender, GameBoardDescription e)
+        private void OnGameConnectionAquire(object sender, GameConnectionAquiredEventArgs e)
         {
             TryingToConnect = false;
-            PlayFieldX = e.Width;
-            PlayFieldY = e.Height;
-            PlayFieldZ = e.Depth;
-            MasterGameBoard = e;
+            var board = e.GameBoardDescription;
+            PlayFieldX = board.Width;
+            PlayFieldY = board.Height;
+            PlayFieldZ = board.Depth;
+            MasterGameBoard = board;
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
         }

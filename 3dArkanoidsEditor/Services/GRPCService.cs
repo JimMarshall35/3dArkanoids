@@ -22,18 +22,21 @@ namespace _3dArkanoidsEditor.Services
                 Client = new GRPCGameEditorClient(
                         new EditorGRPC.PlayBoardEdit.PlayBoardEditClient(m_channel)
                     );
-                var result = await Client.GetBoardStateAsync()
+                var settings = await Client.InitialConnectionHandshakeAsync(new Models.ClientInfo())
                     .WaitOrCancel(ct);
-                // need to do this a better way using m_channel.State
-                GameConnectionAquired(this, result);
+
+                var board = await Client.GetBoardStateAsync()
+                    .WaitOrCancel(ct);
+
+                GameConnectionAquired(this, new GameConnectionAquiredEventArgs(board, settings));
             }
             catch (OperationCanceledException)
             {
-                GameConnectionLost(this, new GameConnectionChangedArgs("attempt to connect timed out"));
+                GameConnectionLost(this, new GameConnectionLostEventArgs("attempt to connect timed out"));
             }
             catch (Exception e)
             {
-                GameConnectionLost(this, new GameConnectionChangedArgs(e.Message));
+                GameConnectionLost(this, new GameConnectionLostEventArgs(e.Message));
             }
         }
     }

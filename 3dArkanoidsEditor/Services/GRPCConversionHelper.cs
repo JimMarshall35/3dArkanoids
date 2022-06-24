@@ -55,5 +55,13 @@ namespace _3dArkanoidsEditor.Services
         {
             return new Models.EditBlockResult((Result)result.Result, result.BlockCode, result.ErrorMessage);
         }
+
+        public static Models.GameSettings ToModel(this EditorGRPC.GameSettings input)
+        {
+            var models = input.PossibleBlocks
+                .Select(x => new Models.GameBlockType((byte)x.GameEngineCode, x.Red, x.Green, x.Blue))
+                .ToList();
+            return new Models.GameSettings(models);
+        }
     }
 }

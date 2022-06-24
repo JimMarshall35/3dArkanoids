@@ -4,9 +4,9 @@ using System.Threading.Tasks;
 
 namespace _3dArkanoidsEditor.Services
 {
-    internal delegate void GameConnectionAquiredHandler(object sender, GameBoardDescription e);
+    internal delegate void GameConnectionAquiredHandler(object sender, GameConnectionAquiredEventArgs e);
 
-    internal delegate void GameConnectionLostHandler(object sender, GameConnectionChangedArgs e);
+    internal delegate void GameConnectionLostHandler(object sender, GameConnectionLostEventArgs e);
 
     internal interface IGameConnectionService
     {

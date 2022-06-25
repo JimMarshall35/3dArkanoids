@@ -5,10 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3dArkanoidsEditor"
         xmlns:views="clr-namespace:_3dArkanoidsEditor.Views"
+        xmlns:converters="clr-namespace:_3dArkanoidsEditor.utils.converters" 
         mc:Ignorable="d"
         xmlns:t="clr-namespace:Simple.Wpf.Terminal;assembly=Simple.Wpf.Terminal"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         Title="MainWindow" Height="800" Width="800">
+    <Window.Resources>
+        <converters:GameBlockTypeToBrushConverter x:Key="gameBlockTypeToBrush"></converters:GameBlockTypeToBrushConverter>
+        <DataTemplate x:Key="GameBlock">
+            <StackPanel Orientation="Horizontal">
+                <Canvas Width="64" Height="64" Background="{Binding GameBlockType, Converter={StaticResource gameBlockTypeToBrush}}"/>
+                <Label Content="{Binding GameBlockType.GameBlockTypeCode}"></Label>
+            </StackPanel>
+        </DataTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5"/>
@@ -31,7 +41,7 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="2">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
             <Button Command="{Binding ConnectCommand}" IsEnabled="{Binding IsAllowedToTryToConnect}">Connect</Button>
         </StackPanel>
@@ -43,6 +53,13 @@
             PlayBoardTilesZ="{Binding PlayFieldZ}"
             PlayBoardDescription="{Binding MasterGameBoard}"
             SingleTileEdit="{Binding OnSingleTileEditCommand}"/>
+        <ListBox
+            Grid.Row="2"
+            Grid.Column="2"
+            ItemsSource="{Binding GameBlockTypes}"
+            ItemTemplate="{StaticResource GameBlock}">
+            
+        </ListBox>
         <t:Terminal x:Name="TerminalOutput"
                     IsReadOnlyCaretVisible="False"
                     VerticalScrollBarVisibility="Visible"

@@ -102,6 +102,8 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        public ObservableCollection<BlockTypeOptionViewModel> GameBlockTypes { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
+
 
         public ITerminalViewModel GameTerminal { get; private set; }
 
@@ -127,6 +129,7 @@ namespace _3dArkanoidsEditor.ViewModels
                     _ => TryConnectToGame(),
                     null
                 );
+            
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
@@ -142,7 +145,7 @@ namespace _3dArkanoidsEditor.ViewModels
             TryingToConnect = false;
             GameTerminal.WriteLine(e.Message);
             Loaded = false;
-            
+
         }
 
         private void OnGameConnectionAquire(object sender, GameConnectionAquiredEventArgs e)
@@ -153,6 +156,14 @@ namespace _3dArkanoidsEditor.ViewModels
             PlayFieldY = board.Height;
             PlayFieldZ = board.Depth;
             MasterGameBoard = board;
+
+            GameBlockTypes.Clear();
+            foreach(var block in e.GameSettings.GameBlockTypes)
+            {
+                GameBlockTypes.Add(new BlockTypeOptionViewModel(block));
+            }
+
+
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
         }

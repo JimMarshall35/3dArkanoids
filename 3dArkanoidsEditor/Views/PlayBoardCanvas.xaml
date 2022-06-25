@@ -9,7 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
         <StackPanel Orientation="Horizontal">
             <Canvas x:Name="m_playBoardCanvas" Visibility="Visible" Background="LimeGreen"/>
-        <Slider x:Name="m_zSlider" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="0" Maximum="{Binding MaxLayerIndex}" Value="{Binding CurrentLayer, Mode=TwoWay}" Orientation="Vertical" >
+        <Slider x:Name="m_zSlider" IsSnapToTickEnabled="True" TickFrequency="1" Minimum="0" Maximum="{Binding MaxLayerIndex}" Value="{Binding CurrentLayer, Mode=TwoWay}" Visibility="{Binding Visibility}" Orientation="Vertical" >
 
         </Slider>
         </StackPanel>

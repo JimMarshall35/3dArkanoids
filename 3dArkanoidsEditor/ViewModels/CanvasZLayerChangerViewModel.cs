@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace _3dArkanoidsEditor.ViewModels
 {
@@ -52,6 +53,20 @@ namespace _3dArkanoidsEditor.ViewModels
             {
                 m_maxLayerIndex = value;
                 OnPropertyChange(nameof(MaxLayerIndex));
+            }
+        }
+
+        private Visibility m_visibility = Visibility.Hidden; // should use a converter class and a bool for this for maximum MVVM... but can't be bothered
+        public Visibility Visibility
+        {
+            get
+            {
+                return m_visibility;
+            }
+            set
+            {
+                m_visibility = value;
+                OnPropertyChange(nameof(Visibility));
             }
         }
 

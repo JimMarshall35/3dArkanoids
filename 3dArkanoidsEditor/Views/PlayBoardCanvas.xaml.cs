@@ -131,6 +131,7 @@ namespace _3dArkanoidsEditor.Views
 
                 }
             }
+            m_canvasZLayerChangerVm.Visibility = Visibility.Visible;
         }
 
         private void OnAllCoordinatesSet()

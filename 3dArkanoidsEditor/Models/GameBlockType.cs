@@ -14,9 +14,7 @@ namespace _3dArkanoidsEditor.Models
         public GameBlockType(byte gameBlockTypeCode, float r, float g, float b)
         {
             GameBlockTypeCode = gameBlockTypeCode;
-            ColourR = r;
-            ColourG = g;
-            ColourB = b;
+            Colour = new Colour(r, g, b);
         }
 
         /// <summary>
@@ -27,8 +25,6 @@ namespace _3dArkanoidsEditor.Models
         /// <summary>
         /// Colour of the block in game.
         /// </summary>
-        public float ColourR { get; private set; }
-        public float ColourG { get; private set; }
-        public float ColourB { get; private set; }
+        public Colour Colour { get; private set; }
     }
 }

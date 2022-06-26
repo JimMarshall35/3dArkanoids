@@ -2,7 +2,7 @@
 #include "IRenderer.h"
 
 void BlockInstanceRenderData::SetNewWorldPos(const glm::vec3& val) {
-	myRenderer->SetCubePosAndScale(renderDataArrayIndex, val);
+	myRenderer->SetCubePos(renderDataArrayIndex, val);
 	worldPos = val;
 }
 

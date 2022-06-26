@@ -11,6 +11,6 @@ public:
 	virtual void DrawInstancedBlocks(const size_t numberToDraw, const Camera& camera) = 0;
 	virtual void SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToDraw) = 0;
 	virtual void SetCubeShouldRender(size_t indexCubeIsAt, bool newValue) = 0;
-	virtual void SetCubePosAndScale(size_t indexCubeIsAt, const glm::vec3& newPos) = 0;
+	virtual void SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos) = 0;
 	virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) = 0;
 };

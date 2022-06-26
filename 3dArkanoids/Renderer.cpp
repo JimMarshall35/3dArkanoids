@@ -75,7 +75,8 @@ std::string instancedColourVertGlsl =
 
 "layout(binding = 0) uniform InstanceData\n"
 "{\n"
-"    mat4 models[MAX_INSTANCES];\n"
+"    vec4 positions[MAX_INSTANCES];\n"
+"    vec4 scales[MAX_INSTANCES];\n"
 "    vec4 colours[MAX_INSTANCES];\n"
 "};\n"
 "uniform mat4 view;\n"
@@ -83,8 +84,14 @@ std::string instancedColourVertGlsl =
 
 "void main()\n"
 "{\n"
-"    mat4 model = models[gl_InstanceID];"
-"    FragPos = vec3(model * vec4(aPos, 1.0));\n"
+"   vec3 pos = positions[gl_InstanceID].xyz;\n"
+"   vec3 scale = scales[gl_InstanceID].xyz;\n"
+"   mat4 model = mat4(scale.x, 0.0,     0.0,     pos.x,  // 1. column\n"
+"                     0.0,     scale.y, 0.0,     pos.y,  // 2. column\n"
+"                     0.0,     0.0,     scale.z, pos.z,  // 3. column\n"
+"                     0.0,     0.0,     0.0,     1.0);   // 4. column\n"
+
+"    FragPos = vec3((scales[gl_InstanceID] * vec4(aPos, 1.0)) + positions[gl_InstanceID]);\n"
 "    Normal = mat3(transpose(inverse(model))) * aNormal;\n"
 "    Colour = colours[gl_InstanceID].xyz;\n"
 "    // use the fourth element of the colour vector as a flag, if < 0 then draw outside the screen\n"
@@ -245,11 +252,11 @@ glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& d
 /// <param name="colours"></param>
 /// <param name="instances"></param>
 /// <param name="numberToDraw"></param>
-void DeInterleaveInstanceDataArray(std::vector<glm::mat4>& models, std::vector<glm::vec4>& coloursAndShouldDraw, const BlockInstanceRenderData* instances, const size_t numberToDraw) {
+void DeInterleaveInstanceDataArray(std::vector<glm::vec4>& positions, std::vector<glm::vec4>& scales, std::vector<glm::vec4>& coloursAndShouldDraw, const BlockInstanceRenderData* instances, const size_t numberToDraw) {
     for (size_t i = 0; i < numberToDraw; i++) {
         const auto& instance = instances[i];
-        glm::mat4 model = PositionAndScaleToModelMatrix(instance.worldPos, instance.dims);
-        models[i] = model;
+        positions[i] = glm::vec4(instance.worldPos, 1.0);
+        scales[i] = glm::vec4(instance.dims, 1.0);
         // use the fourth element of the colour vector as a boolean 
         // for the shader to save adding an extra element to the uniform block
         coloursAndShouldDraw[i] = glm::vec4(instance.colour, 
@@ -317,8 +324,9 @@ void Renderer::DrawInstancedBlocks(const size_t numberToDraw, const Camera& came
 /// <param name="numberToDraw"></param>
 void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToDraw)
 {
-    // model matrix for each block, to be set by DeInterleaveInstanceDataArray
-    auto models = std::vector<glm::mat4>(numberToDraw);
+    // position and scale for each block, to be set by DeInterleaveInstanceDataArray
+    auto positions = std::vector<glm::vec4>(numberToDraw);
+    auto scales = std::vector<glm::vec4>(numberToDraw);
 
     // I can only get it to work properly with colour as a vec4 I think because of some gpu memory peculiarity- 
     // but we use the fourth element as a boolean to specify whether the block should be drawn
@@ -326,7 +334,7 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     auto coloursAndShouldDraw = std::vector<glm::vec4>(numberToDraw);
 
     // sets models, coloursAndShouldDraw from the array of instances
-    DeInterleaveInstanceDataArray(models, coloursAndShouldDraw, instances, numberToDraw);
+    DeInterleaveInstanceDataArray(positions, scales, coloursAndShouldDraw, instances, numberToDraw);
 
     m_colouredInstancedShader.use();
 
@@ -340,10 +348,10 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
 
     // setup temporary buffer that we will eventually 'glBufferData' into the ubo
     auto blockBuffer = std::vector<GLbyte>(blockSize);
-    static const int numInstanceAttributes = 2;
+    static const int numInstanceAttributes = 3;
 
     // get indices of the variables in the uniform buffer (both are arrays)
-    const GLchar* names[] = { "models", "colours" };
+    const GLchar* names[] = { "positions", "scales", "colours" };
     GLuint indices[numInstanceAttributes];
     glGetUniformIndices(programHandle, numInstanceAttributes, names, indices);
 
@@ -351,11 +359,13 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     // for use when changing the buffer during play
     GLint offset[numInstanceAttributes];
     glGetActiveUniformsiv(programHandle, numInstanceAttributes, indices, GL_UNIFORM_OFFSET, offset);
-    m_modelMatrixArrayUboOffset = offset[0];
-    m_coloursArrayUboOffset = offset[1];
+    m_positionsArrayUboOffset = offset[0];
+    m_scalesArrayUboOffset = offset[1];
+    m_coloursArrayUboOffset = offset[2];
 
     // copy the data to the staging array using the offsets we've gotten
-    memcpy(blockBuffer.data() + m_modelMatrixArrayUboOffset, models.data(), numberToDraw * sizeof(glm::mat4));
+    memcpy(blockBuffer.data() + m_positionsArrayUboOffset, positions.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_scalesArrayUboOffset, scales.data(), numberToDraw * sizeof(glm::vec4));
     memcpy(blockBuffer.data() + m_coloursArrayUboOffset, coloursAndShouldDraw.data(), numberToDraw * sizeof(glm::vec4));
 
     // generate a new buffer to be the UBO and bind it to GL_UNIFORM_BUFFER
@@ -390,16 +400,15 @@ void Renderer::SetCubeShouldRender(size_t indexCubeIsAt, bool newValue)
     );
 }
 
-void Renderer::SetCubePosAndScale(size_t indexCubeIsAt, const glm::vec3& newPos)
+void Renderer::SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos)
 {
-    const glm::vec3 newScale = glm::vec3{ BLOCK_WIDTH_UNITS, BLOCK_HEIGHT_UNITS, BLOCK_DEPTH_UNITS };
-    auto model = PositionAndScaleToModelMatrix(newPos, newScale);
+    auto newPosAsVec4 = glm::vec4(newPos, 1.0f);
     glBindBuffer(GL_UNIFORM_BUFFER, m_blockInstanceDataUboHandle);
     glBufferSubData(
         GL_UNIFORM_BUFFER,
-        m_modelMatrixArrayUboOffset + (sizeof(glm::mat4) * indexCubeIsAt), // destination offset
-        sizeof(glm::mat4),                                                 // bytes to copy
-        &model                                                             // source
+        m_positionsArrayUboOffset + (sizeof(glm::vec4) * indexCubeIsAt), // destination offset
+        sizeof(glm::vec4),                                                 // bytes to copy
+        &newPosAsVec4                                                             // source
     );
 }
 

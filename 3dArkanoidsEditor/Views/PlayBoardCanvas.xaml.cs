@@ -1,4 +1,5 @@
 ﻿using _3dArkanoidsEditor.Models;
+using _3dArkanoidsEditor.utils;
 using _3dArkanoidsEditor.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -152,23 +153,25 @@ namespace _3dArkanoidsEditor.Views
                     Canvas.SetLeft(rect, x * m_blockWidthPixels * m_canvasScale);
                     Canvas.SetTop(rect, y * m_blockHeightPixels * m_canvasScale);
 
-                    // Possible memory leak ?
-                    rect.MouseEnter += (object sender, MouseEventArgs e) =>
-                    {
-                        rect.Fill = m_blockHoveredFill;
-                    };
-                    rect.MouseLeave += (object sender, MouseEventArgs e) =>
-                    {
-                        rect.Fill = rectBrush;
-                    };
+
                     // got to do this to stop the lambda capturing by reference (i think)
                     // https://stackoverflow.com/questions/451779/how-to-tell-a-lambda-function-to-capture-a-copy-instead-of-a-reference-in-c
                     int tileX = x;
                     int tileY = y;
+                    byte byteAtCoordsCopy = byteAtCoords;
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {
                         SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, SelectedBlockCode, byteAtCoords));
 
+                    };
+                                        // Possible memory leak ?
+                    rect.MouseEnter += (object sender, MouseEventArgs e) =>
+                    {
+                        rect.Stroke = m_selectedBlockOutlineBrush;
+                    };
+                    rect.MouseLeave += (object sender, MouseEventArgs e) =>
+                    {
+                        rect.Stroke = m_blockOutlineBrush;
                     };
                     m_playBoardCanvas.Children.Add(rect);
 
@@ -241,7 +244,7 @@ namespace _3dArkanoidsEditor.Views
 
 
         private readonly SolidColorBrush m_blockOutlineBrush = new SolidColorBrush(Colors.Black);
-        private readonly SolidColorBrush m_blockHoveredFill = new SolidColorBrush(Colors.BlanchedAlmond);
+        private readonly SolidColorBrush m_selectedBlockOutlineBrush = new SolidColorBrush(Colors.Orange);
         private static readonly Color m_blockNotHoveredFillColour = Colors.Transparent;
         private Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>();
 

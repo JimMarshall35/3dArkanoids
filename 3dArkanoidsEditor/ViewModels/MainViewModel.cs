@@ -188,12 +188,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private void OnGameConnectionAquire(object sender, GameConnectionAquiredEventArgs e)
         {
-            TryingToConnect = false;
-            var board = e.GameBoardDescription;
-            PlayFieldX = board.Width;
-            PlayFieldY = board.Height;
-            PlayFieldZ = board.Depth;
-            MasterGameBoard = board;
+            
 
             BlockOptionsViewModels.Clear();
             foreach(var block in e.GameSettings.GameBlockTypes)
@@ -202,6 +197,12 @@ namespace _3dArkanoidsEditor.ViewModels
             }
             OnPropertyChange("GameBlockTypes");
 
+            TryingToConnect = false;
+            var board = e.GameBoardDescription;
+            PlayFieldX = board.Width;
+            PlayFieldY = board.Height;
+            PlayFieldZ = board.Depth;
+            MasterGameBoard = board;
 
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");

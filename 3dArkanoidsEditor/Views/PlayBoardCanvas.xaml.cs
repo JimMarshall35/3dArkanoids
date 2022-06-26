@@ -209,16 +209,7 @@ namespace _3dArkanoidsEditor.Views
         private readonly SolidColorBrush m_blockOutlineBrush = new SolidColorBrush(Colors.Black);
         private readonly SolidColorBrush m_blockHoveredFill = new SolidColorBrush(Colors.BlanchedAlmond);
         private static readonly Color m_blockNotHoveredFillColour = Colors.Transparent;
-        private Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>
-        {
-            { 0x00, m_blockNotHoveredFillColour },
-            { 0x01, Colors.DarkBlue},
-            { 0x02, Colors.Red },
-            { 0x03, Colors.Green },
-            { 0x04, Colors.LightBlue },
-            { 0x05, Colors.Yellow },
-            { 0x06, Colors.White }
-        };
+        private Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>();
 
         private double m_canvasScale = 2.0;
         private double m_blockWidthPixels = 16.0f;

@@ -98,9 +98,43 @@ namespace _3dArkanoidsEditor.Views
             }
         }
 
+        private void DrawLayerBelow()
+        {
+            for (int x = 0; x < PlayBoardTilesX; x++)
+            {
+                for (int y = 0; y < PlayBoardTilesY; y++)
+                {
+                    var byteAtCoords = PlayBoardDescription.GetAt(x, y, m_currentLayer - 1);
+                    var colourOfRect = m_byteToColourDict[byteAtCoords];
+                    if(byteAtCoords > 0)
+                    {
+                        colourOfRect.A = 125;
+                    }
+                    
+                    var rectBrush = new SolidColorBrush(colourOfRect);
+
+                    var rect = new Rectangle();
+                    rect.Stroke = m_blockOutlineBrush;
+                    rect.Fill = rectBrush;
+                    rect.Width = m_blockWidthPixels * m_canvasScale;
+                    rect.Height = m_blockHeightPixels * m_canvasScale;
+                    rect.StrokeThickness = 2;
+                    Canvas.SetLeft(rect, x * m_blockWidthPixels * m_canvasScale);
+                    Canvas.SetTop(rect, y * m_blockHeightPixels * m_canvasScale);
+
+
+                    m_playBoardCanvas.Children.Add(rect);
+
+                }
+            }
+        }
         private void UpdateGrid()
         {
             m_playBoardCanvas.Children.Clear();
+            if(m_currentLayer > 0)
+            {
+                DrawLayerBelow();
+            }
             for (int x = 0; x < PlayBoardTilesX; x++)
             {
                 for (int y = 0; y < PlayBoardTilesY; y++)

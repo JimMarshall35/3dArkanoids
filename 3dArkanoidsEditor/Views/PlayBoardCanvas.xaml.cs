@@ -58,8 +58,17 @@ namespace _3dArkanoidsEditor.Views
         DependencyProperty.Register(nameof(SingleTileEdit), typeof(ICommand), typeof(PlayBoardCanvas),
             new FrameworkPropertyMetadata(OnSingleTileEditDependencyPropertyChanged));
 
-        
+        public byte SelectedBlockCode { get; set; }
+        public static readonly DependencyProperty SelectedBlockCodeProperty =
+        DependencyProperty.Register(nameof(SelectedBlockCode), typeof(byte), typeof(PlayBoardCanvas),
+            new FrameworkPropertyMetadata(OnSelectedBlockCodeDependencyPropertyChanged));
 
+        public List<GameBlockType> GameBlockTypes { get; set; }
+        public static readonly DependencyProperty GameBlockTypesProperty =
+        DependencyProperty.Register(nameof(GameBlockTypes), typeof(List<GameBlockType>), typeof(PlayBoardCanvas),
+            new FrameworkPropertyMetadata(OnGameBlockTypesDependencyPropertyChange));
+
+        
 
         public PlayBoardCanvas()
         {
@@ -124,7 +133,7 @@ namespace _3dArkanoidsEditor.Views
                     int tileY = y;
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {
-                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, 0x04, byteAtCoords));
+                        SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, SelectedBlockCode, byteAtCoords));
 
                     };
                     m_playBoardCanvas.Children.Add(rect);
@@ -173,17 +182,34 @@ namespace _3dArkanoidsEditor.Views
 
         }
 
+        private static void OnSelectedBlockCodeDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var canvas = ((PlayBoardCanvas)d);
+            canvas.SelectedBlockCode = (byte)e.NewValue;
+        }
+
         private static void OnSingleTileEditDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var newVal = e.NewValue;
             ((PlayBoardCanvas)d).SingleTileEdit = (ICommand)e.NewValue;
         }
 
+        private static void OnGameBlockTypesDependencyPropertyChange(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var canvas = ((PlayBoardCanvas)d);
+            var list = (List<GameBlockType>)e.NewValue;
+            if (list.Count == 0)
+                return;
+            canvas.m_byteToColourDict = list.ToDictionary(x => x.GameBlockTypeCode, x => x.Colour.ToWpfColor());
+            canvas.m_byteToColourDict.Add(0x00, m_blockNotHoveredFillColour);
+            canvas.UpdateGrid();
+        }
+
 
         private readonly SolidColorBrush m_blockOutlineBrush = new SolidColorBrush(Colors.Black);
         private readonly SolidColorBrush m_blockHoveredFill = new SolidColorBrush(Colors.BlanchedAlmond);
         private static readonly Color m_blockNotHoveredFillColour = Colors.Transparent;
-        private readonly Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>
+        private Dictionary<byte, Color> m_byteToColourDict = new Dictionary<byte, Color>
         {
             { 0x00, m_blockNotHoveredFillColour },
             { 0x01, Colors.DarkBlue},

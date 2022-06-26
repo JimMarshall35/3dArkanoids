@@ -14,9 +14,5 @@ namespace _3dArkanoidsEditor.ViewModels
         {
 
         }
-        
-
-        
-
     }
 }

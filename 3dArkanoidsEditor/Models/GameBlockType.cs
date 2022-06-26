@@ -9,7 +9,7 @@ namespace _3dArkanoidsEditor.Models
     /// <summary>
     /// A type of block in the game.
     /// </summary>
-    internal class GameBlockType
+    public class GameBlockType
     {
         public GameBlockType(byte gameBlockTypeCode, float r, float g, float b)
         {

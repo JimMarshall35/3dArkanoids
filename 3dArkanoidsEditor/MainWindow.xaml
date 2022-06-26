@@ -52,12 +52,15 @@
             PlayBoardTilesY="{Binding PlayFieldY}"
             PlayBoardTilesZ="{Binding PlayFieldZ}"
             PlayBoardDescription="{Binding MasterGameBoard}"
-            SingleTileEdit="{Binding OnSingleTileEditCommand}"/>
+            SingleTileEdit="{Binding OnSingleTileEditCommand}"
+            SelectedBlockCode="{Binding SelectedBlockCode, Mode=OneWay}"
+            GameBlockTypes="{Binding GameBlockTypes}"/>
         <ListBox
             Grid.Row="2"
             Grid.Column="2"
-            ItemsSource="{Binding GameBlockTypes}"
-            ItemTemplate="{StaticResource GameBlock}">
+            ItemsSource="{Binding BlockOptionsViewModels}"
+            ItemTemplate="{StaticResource GameBlock}"
+            SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}">
             
         </ListBox>
         <t:Terminal x:Name="TerminalOutput"

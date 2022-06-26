@@ -94,6 +94,34 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        private int m_selectedBlockTypeIndex;
+        public int SelectedBlockTypeIndex
+        {
+            get
+            {
+                return m_selectedBlockTypeIndex;
+            }
+            set
+            {
+                m_selectedBlockTypeIndex = value;
+                OnPropertyChange(nameof(SelectedBlockTypeIndex));
+                OnPropertyChange(nameof(SelectedBlockCode));
+            }
+        }
+
+
+        public byte SelectedBlockCode
+        {
+            get
+            {
+                if (BlockOptionsViewModels != null)
+                    return BlockOptionsViewModels[SelectedBlockTypeIndex].GameBlockType.GameBlockTypeCode;
+                else
+                    return 1;
+                  
+            }
+        }
+
         public bool IsAllowedToTryToConnect
         {
             get
@@ -102,7 +130,17 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
-        public ObservableCollection<BlockTypeOptionViewModel> GameBlockTypes { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
+        public List<GameBlockType> GameBlockTypes
+        {
+            get
+            {
+                return BlockOptionsViewModels
+                    .Select(x => x.GameBlockType)
+                    .ToList();
+            }
+        }
+
+        public ObservableCollection<BlockTypeOptionViewModel> BlockOptionsViewModels { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
 
 
         public ITerminalViewModel GameTerminal { get; private set; }
@@ -157,11 +195,12 @@ namespace _3dArkanoidsEditor.ViewModels
             PlayFieldZ = board.Depth;
             MasterGameBoard = board;
 
-            GameBlockTypes.Clear();
+            BlockOptionsViewModels.Clear();
             foreach(var block in e.GameSettings.GameBlockTypes)
             {
-                GameBlockTypes.Add(new BlockTypeOptionViewModel(block));
+                BlockOptionsViewModels.Add(new BlockTypeOptionViewModel(block));
             }
+            OnPropertyChange("GameBlockTypes");
 
 
             Loaded = true;

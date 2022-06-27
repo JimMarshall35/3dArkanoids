@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <glm/glm.hpp>
+#include "GameBlockTypes.h"
 template<typename T>
 class Array3D;
 /*
@@ -38,9 +39,16 @@ struct EditBlockResultCPP {
 	std::string errorMessage;
 };
 
-struct BlockTypeDescription {
+struct BlockTypeDescriptionEditor {
+	BlockTypeDescription ToBlockTypeDescription() const {
+		return BlockTypeDescription{
+			BlockAppearance{
+				Rgba
+			}
+		};
+	}
 	unsigned char GameEngineBlockCode;
-	glm::vec3 Rgb;
+	glm::vec4 Rgba;
 };
 
 class ILevelEditorServerGame {
@@ -50,5 +58,6 @@ class ILevelEditorServerGame {
 		virtual EditBlockResultCode RemoveBlock(const glm::ivec3& point) = 0;
 		virtual SetBoardDescriptionResultCPP SetBoardState(const Array3D<unsigned char>& newState) = 0;
 		virtual EditBlockResultCode BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode) = 0;
-		virtual std::vector<BlockTypeDescription> GetPossibleBlocks() = 0;
+		virtual std::vector<BlockTypeDescriptionEditor> GetPossibleBlocks() = 0;
+		virtual void SetPossibleBlocks(const std::vector<BlockTypeDescriptionEditor>& possibleBlocks) = 0;
 };

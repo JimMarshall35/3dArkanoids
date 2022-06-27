@@ -190,9 +190,10 @@ void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::OnProcess()
 		for (const auto& block : blockTypes) {
 			auto output = m_reply.add_possibleblocks();
 			output->set_gameenginecode(block.GameEngineBlockCode);
-			output->set_red(block.Rgb.x);
-			output->set_green(block.Rgb.y);
-			output->set_blue(block.Rgb.z);
+			output->set_red(block.Rgba.x);
+			output->set_green(block.Rgba.y);
+			output->set_blue(block.Rgba.z);
+			output->set_alpha(block.Rgba[3]);
 		}
 		Finish();
 	});

@@ -118,7 +118,8 @@ constexpr BlockType::BlockType(
   : gameenginecode_(0)
   , red_(0)
   , green_(0)
-  , blue_(0){}
+  , blue_(0)
+  , alpha_(0){}
 struct BlockTypeDefaultTypeInternal {
   constexpr BlockTypeDefaultTypeInternal()
     : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
@@ -215,6 +216,7 @@ const uint32_t TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offse
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockType, red_),
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockType, green_),
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockType, blue_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::BlockType, alpha_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::GameSettings, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -232,7 +234,7 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 43, -1, -1, sizeof(::EditorGRPC::BoardDescription)},
   { 53, -1, -1, sizeof(::EditorGRPC::ClientInfo)},
   { 59, -1, -1, sizeof(::EditorGRPC::BlockType)},
-  { 69, -1, -1, sizeof(::EditorGRPC::GameSettings)},
+  { 70, -1, -1, sizeof(::EditorGRPC::GameSettings)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -265,26 +267,26 @@ const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2epr
   "WHD\020\001\022!\n\035FAILURE_TOO_FEW_BYTES_FOR_WHD\020\002"
   "\"\006\n\004Void\"N\n\020BoardDescription\022\r\n\005width\030\001 "
   "\001(\005\022\016\n\006height\030\002 \001(\005\022\r\n\005depth\030\003 \001(\005\022\014\n\004da"
-  "ta\030\004 \001(\014\"\014\n\nClientInfo\"M\n\tBlockType\022\026\n\016g"
+  "ta\030\004 \001(\014\"\014\n\nClientInfo\"\\\n\tBlockType\022\026\n\016g"
   "ameEngineCode\030\001 \001(\005\022\013\n\003red\030\002 \001(\002\022\r\n\005gree"
-  "n\030\003 \001(\002\022\014\n\004blue\030\004 \001(\002\"=\n\014GameSettings\022-\n"
-  "\016possibleBlocks\030\001 \003(\0132\025.EditorGRPC.Block"
-  "Type2\264\003\n\rPlayBoardEdit\022:\n\010AddBlock\022\021.Edi"
-  "torGRPC.Point\032\033.EditorGRPC.EditBlockResu"
-  "lt\022=\n\013RemoveBlock\022\021.EditorGRPC.Point\032\033.E"
-  "ditorGRPC.EditBlockResult\022A\n\013ChangeBlock"
-  "\022\025.EditorGRPC.BlockEdit\032\033.EditorGRPC.Edi"
-  "tBlockResult\022\?\n\rGetBoardState\022\020.EditorGR"
-  "PC.Void\032\034.EditorGRPC.BoardDescription\022T\n"
-  "\rSetBoardState\022\034.EditorGRPC.BoardDescrip"
-  "tion\032%.EditorGRPC.SetBoardDescriptionRes"
-  "ult\022N\n\032InitialConnectionHandshake\022\026.Edit"
-  "orGRPC.ClientInfo\032\030.EditorGRPC.GameSetti"
-  "ngsb\006proto3"
+  "n\030\003 \001(\002\022\014\n\004blue\030\004 \001(\002\022\r\n\005alpha\030\005 \001(\002\"=\n\014"
+  "GameSettings\022-\n\016possibleBlocks\030\001 \003(\0132\025.E"
+  "ditorGRPC.BlockType2\264\003\n\rPlayBoardEdit\022:\n"
+  "\010AddBlock\022\021.EditorGRPC.Point\032\033.EditorGRP"
+  "C.EditBlockResult\022=\n\013RemoveBlock\022\021.Edito"
+  "rGRPC.Point\032\033.EditorGRPC.EditBlockResult"
+  "\022A\n\013ChangeBlock\022\025.EditorGRPC.BlockEdit\032\033"
+  ".EditorGRPC.EditBlockResult\022\?\n\rGetBoardS"
+  "tate\022\020.EditorGRPC.Void\032\034.EditorGRPC.Boar"
+  "dDescription\022T\n\rSetBoardState\022\034.EditorGR"
+  "PC.BoardDescription\032%.EditorGRPC.SetBoar"
+  "dDescriptionResult\022N\n\032InitialConnectionH"
+  "andshake\022\026.EditorGRPC.ClientInfo\032\030.Edito"
+  "rGRPC.GameSettingsb\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = {
-  false, false, 1291, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
+  false, false, 1306, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
   &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 9,
   schemas, file_default_instances, TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offsets,
   file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto,
@@ -1715,16 +1717,16 @@ BlockType::BlockType(const BlockType& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&gameenginecode_, &from.gameenginecode_,
-    static_cast<size_t>(reinterpret_cast<char*>(&blue_) -
-    reinterpret_cast<char*>(&gameenginecode_)) + sizeof(blue_));
+    static_cast<size_t>(reinterpret_cast<char*>(&alpha_) -
+    reinterpret_cast<char*>(&gameenginecode_)) + sizeof(alpha_));
   // @@protoc_insertion_point(copy_constructor:EditorGRPC.BlockType)
 }
 
 inline void BlockType::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&gameenginecode_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&blue_) -
-    reinterpret_cast<char*>(&gameenginecode_)) + sizeof(blue_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&alpha_) -
+    reinterpret_cast<char*>(&gameenginecode_)) + sizeof(alpha_));
 }
 
 BlockType::~BlockType() {
@@ -1755,8 +1757,8 @@ void BlockType::Clear() {
   (void) cached_has_bits;
 
   ::memset(&gameenginecode_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&blue_) -
-      reinterpret_cast<char*>(&gameenginecode_)) + sizeof(blue_));
+      reinterpret_cast<char*>(&alpha_) -
+      reinterpret_cast<char*>(&gameenginecode_)) + sizeof(alpha_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1794,6 +1796,14 @@ const char* BlockType::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::
       case 4:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 37)) {
           blue_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float alpha = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 45)) {
+          alpha_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
@@ -1863,6 +1873,16 @@ uint8_t* BlockType::_InternalSerialize(
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(4, this->_internal_blue(), target);
   }
 
+  // float alpha = 5;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_alpha = this->_internal_alpha();
+  uint32_t raw_alpha;
+  memcpy(&raw_alpha, &tmp_alpha, sizeof(tmp_alpha));
+  if (raw_alpha != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteFloatToArray(5, this->_internal_alpha(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1908,6 +1928,15 @@ size_t BlockType::ByteSizeLong() const {
   uint32_t raw_blue;
   memcpy(&raw_blue, &tmp_blue, sizeof(tmp_blue));
   if (raw_blue != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float alpha = 5;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_alpha = this->_internal_alpha();
+  uint32_t raw_alpha;
+  memcpy(&raw_alpha, &tmp_alpha, sizeof(tmp_alpha));
+  if (raw_alpha != 0) {
     total_size += 1 + 4;
   }
 
@@ -1957,6 +1986,13 @@ void BlockType::MergeFrom(const BlockType& from) {
   if (raw_blue != 0) {
     _internal_set_blue(from._internal_blue());
   }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_alpha = from._internal_alpha();
+  uint32_t raw_alpha;
+  memcpy(&raw_alpha, &tmp_alpha, sizeof(tmp_alpha));
+  if (raw_alpha != 0) {
+    _internal_set_alpha(from._internal_alpha());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1975,8 +2011,8 @@ void BlockType::InternalSwap(BlockType* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(BlockType, blue_)
-      + sizeof(BlockType::blue_)
+      PROTOBUF_FIELD_OFFSET(BlockType, alpha_)
+      + sizeof(BlockType::alpha_)
       - PROTOBUF_FIELD_OFFSET(BlockType, gameenginecode_)>(
           reinterpret_cast<char*>(&gameenginecode_),
           reinterpret_cast<char*>(&other->gameenginecode_));

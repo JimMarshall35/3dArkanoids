@@ -25,7 +25,9 @@ namespace _3dArkanoidsEditor.utils.converters
             var r = (float)input.Color.R / 255.0f;
             var g = (float)input.Color.G / 255.0f;
             var b = (float)input.Color.B / 255.0f;
-            return new GameBlockType(0, r, g, b);
+            var a = (float)input.Color.A / 255.0f;
+
+            return new GameBlockType(0, r, g, b, a);
 
         }
     }

@@ -10,8 +10,6 @@ public:
 };
 
 /// <summary>
-/// A C# event with the same operator overloading syntax.
-/// Can't be used with member functions though
 /// </summary>
 /// <typeparam name="EventArgs">the args the event will take</typeparam>
 template<typename EventArgs>

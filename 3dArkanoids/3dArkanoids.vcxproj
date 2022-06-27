@@ -166,6 +166,7 @@
     <ClCompile Include="FallingBlockManager.cpp" />
     <ClCompile Include="FrameMemoryAllocator.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GameBlockTypes.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
@@ -191,6 +192,7 @@
     <ClInclude Include="FallingBlockManager.h" />
     <ClInclude Include="FrameMemoryAllocator.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GameBlockTypes.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="PlayboardEditAsyncImpl.h" />
     <ClInclude Include="PlayBoardEditImpl.h" />

@@ -4,6 +4,7 @@
 #include "IRenderer.h"
 #include <iostream>
 #include "ILevelEditorServer.h"
+#include <algorithm>
 //size_t Game::s_currentNumBlocks;
 //BlockInstanceRenderData Game::s_blockRenderData[MAX_POSSIBLE_BLOCKS];
 size_t m_currentNumBlocks = 0;
@@ -29,7 +30,18 @@ Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFact
 	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
 
 	//m_playFieldArray.allocate(PLAYFIELD_WIDTH_BLOCKS, PLAYFIELD_HEIGHT_BLOCKS, PLAYFIELD_DEPTH_BLOCKS);
-	
+
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.184, 0.176, 0.803, 1.0) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(1.0, 0.0, 0.0, 1.0) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.0, 1.0, 0.0, 1.0) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.094, 0.949, 0.898, 0.2) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.980, 0.878, 0, 1.0) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(1.0, 1.0, 1.0, 1.0) });
+
+	m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
+
+
+
 	//m_levelLoader->LoadLevel(m_playFieldArray, "");
 	m_playFieldArray.LoadFromFile("Level.jim");
 	InitializeRenderData();
@@ -68,29 +80,7 @@ void Game::Update(float deltaT)
 	
 }
 
-glm::vec3 GetColourFromByteValue(const unsigned char byteAt) {
-	glm::vec3 colour;
-	switch (byteAt) {
-	case DBLU:
-		colour = glm::vec3(0.184, 0.176, 0.803);
-		break;
-	case RED_:
-		colour = glm::vec3(1.0, 0.0, 0.0);
-		break;
-	case GREN:
-		colour = glm::vec3(0.0, 1.0, 0.0);
-		break;
-	case LBLU:
-		colour = glm::vec3(0.094, 0.949, 0.898);
-		break;
-	case YLW_:
-		colour = glm::vec3(0.980, 0.878, 0);
-		break;
-	case WHIT:
-		colour = glm::vec3(1.0, 1.0, 1.0);
-	}
-	return colour;
-}
+
 
 /// <summary>
 /// Initializes the rendering data from the array of
@@ -106,7 +96,7 @@ void Game::InitializeRenderData()
 			for (int x = 0; x < PLAYFIELD_WIDTH_BLOCKS; x++) {
 				const unsigned char& byteAt = m_playFieldArray[x][y][z];
 				if (byteAt == 0x00) continue;
-				auto colour = glm::vec4(GetColourFromByteValue(byteAt),1.0);
+				auto colour = glm::vec4(GetColourFromByteValue(byteAt));
 				glm::vec3 worldPos(
 					x * BLOCK_WIDTH_UNITS,
 					y * BLOCK_HEIGHT_UNITS,
@@ -122,7 +112,10 @@ void Game::InitializeRenderData()
 			}
 		}
 	}
-	m_renderer->SetInstancedBlocksUbo(m_blockRenderData, m_currentNumBlocks); // TODO rename SetInstancedBlocksUbo to something non openGL specific like InitializeInstancedBlocks
+
+	// TODO - to fix alpha blending issues sort the blocks at this point. https://learnopengl.com/Advanced-OpenGL/Blending#:~:text=Advanced%2DOpenGL%2FBlending,behind%20it%20with%20varying%20intensity.
+
+	m_renderer->SetInstancedBlocksUbo(m_blockRenderData.data(), m_currentNumBlocks); // TODO rename SetInstancedBlocksUbo to something non openGL specific like InitializeInstancedBlocks
 }
 
 /// <summary>
@@ -202,6 +195,11 @@ bool Game::LinkAndValidateBlocksRenderData()
 	return valid;
 	//int maxChildren = GetMaxNumberOfChildren(m_blockRenderData, m_currentNumBlocks);
 	//std::cout << "Highest stack of blocks is " << maxChildren + 1 << std::endl;
+}
+
+glm::vec4 Game::GetColourFromByteValue(const unsigned char byteCode)
+{
+	return m_gameBlockTypes[byteCode].Appearance.Colour;
 }
 
 
@@ -294,18 +292,26 @@ EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char
 	}
 }
 
-std::vector<BlockTypeDescription> Game::GetPossibleBlocks()
+std::vector<BlockTypeDescriptionEditor> Game::GetPossibleBlocks()
 {
-	// TEMPORARILY HARD CODED - TODO: SORT OUT WITH BLOCKS WITH TEXTURES, MATERIALS, ECT
-	return std::vector<BlockTypeDescription>{
-		BlockTypeDescription{ DBLU , glm::vec3(0.184, 0.176, 0.803) },
-		BlockTypeDescription{ RED_ , glm::vec3(1.0, 0.0, 0.0) },
-			BlockTypeDescription{ GREN , glm::vec3(0.0, 1.0, 0.0) },
-			BlockTypeDescription{ LBLU , glm::vec3(0.094, 0.949, 0.898) },
-			BlockTypeDescription{ YLW_ , glm::vec3(0.980, 0.878, 0) },
-			BlockTypeDescription{ WHIT , glm::vec3(1.0, 1.0, 1.0) },
+	std::vector<BlockTypeDescriptionEditor> returnedVector;
+	auto nextBlockTypeIndex = m_gameBlockTypes.GetNextIndexToAdd();
+	for (unsigned char i = 1; i < nextBlockTypeIndex; i++)
+	{
+		returnedVector.push_back(BlockTypeDescriptionEditor{ i, m_gameBlockTypes[i].Appearance.Colour });
+	}
+	return returnedVector;
+}
 
-	};
+void Game::SetPossibleBlocks(const std::vector<BlockTypeDescriptionEditor>& possibleBlocks)
+{
+	assert(possibleBlocks.size() <= 256);
+	m_gameBlockTypes.Clear();
+	for (const auto& block : possibleBlocks) {
+		m_gameBlockTypes.Add(
+			block.ToBlockTypeDescription()
+		);
+	}
 }
 
 

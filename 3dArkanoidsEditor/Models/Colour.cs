@@ -9,7 +9,7 @@ namespace _3dArkanoidsEditor.Models
 {
     public class Colour
     {
-        public Colour(float r, float g, float b)
+        public Colour(float r, float g, float b, float a)
         {
             Red = r;
             Green = g;
@@ -18,6 +18,7 @@ namespace _3dArkanoidsEditor.Models
         public float Red { get; private set; }
         public float Green { get; private set; }
         public float Blue { get; private set; }
+        public float Alpha { get; private set; }
         public Color ToWpfColor()
         {
             byte r = (byte)(Red * 255.0);

@@ -11,10 +11,10 @@ namespace _3dArkanoidsEditor.Models
     /// </summary>
     public class GameBlockType
     {
-        public GameBlockType(byte gameBlockTypeCode, float r, float g, float b)
+        public GameBlockType(byte gameBlockTypeCode, float r, float g, float b, float a)
         {
             GameBlockTypeCode = gameBlockTypeCode;
-            Colour = new Colour(r, g, b);
+            Colour = new Colour(r, g, b, a);
         }
 
         /// <summary>

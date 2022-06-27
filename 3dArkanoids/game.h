@@ -12,6 +12,7 @@
 #include "LevelEditorServerFactoryTypedef.h"
 #include "SizedQueue.h"
 #include "FrameMemoryAllocator.h"
+#include "GameBlockTypes.h"
 
 class ILevelLoader;
 class IRenderer;
@@ -31,9 +32,10 @@ public:
 private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();
+	glm::vec4 GetColourFromByteValue(const unsigned char byteCode);
 private:
 	SizedQueue<size_t, MAX_INSTANCES> m_deadBlockIndices;
-	BlockInstanceRenderData m_blockRenderData[MAX_INSTANCES];
+	std::vector<BlockInstanceRenderData> m_blockRenderData = std::vector<BlockInstanceRenderData>(MAX_INSTANCES);
 	size_t m_currentNumBlocks;
 	Event<EngineUpdateFrameEventArgs> m_frameUpdateEvent;
 	Event<MasterArrayUpdatedEventArgs> m_masterArrayUpdatedEvent;
@@ -43,6 +45,7 @@ private:
 	std::unique_ptr<ILevelEditorServer> m_levelEditorServer;
 	std::shared_ptr<IRenderer> m_renderer;
 	FallingBlockManager m_fallingBlockManager;
+	GameBlockTypes m_gameBlockTypes;
 
 	FrameMemoryAllocator frameAllocator;
 
@@ -63,8 +66,8 @@ public:
 
 	virtual EditBlockResultCode BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode) override;
 
+	virtual std::vector<BlockTypeDescriptionEditor> GetPossibleBlocks() override;
 
-	// Inherited via ILevelEditorServerGame
-	virtual std::vector<BlockTypeDescription> GetPossibleBlocks() override;
+	virtual void SetPossibleBlocks(const std::vector<BlockTypeDescriptionEditor>& possibleBlocks) override;
 
 };

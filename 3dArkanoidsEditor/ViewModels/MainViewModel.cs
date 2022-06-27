@@ -240,7 +240,7 @@ namespace _3dArkanoidsEditor.ViewModels
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");            
             m_gameConnectionService.Connect(cts.Token);
-            cts.CancelAfter(10000);
+            cts.CancelAfter(15000);
         }
 
         #endregion

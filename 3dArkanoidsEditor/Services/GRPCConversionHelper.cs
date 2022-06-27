@@ -59,7 +59,7 @@ namespace _3dArkanoidsEditor.Services
         public static Models.GameSettings ToModel(this EditorGRPC.GameSettings input)
         {
             var models = input.PossibleBlocks
-                .Select(x => new Models.GameBlockType((byte)x.GameEngineCode, x.Red, x.Green, x.Blue))
+                .Select(x => new Models.GameBlockType((byte)x.GameEngineCode, x.Red, x.Green, x.Blue, x.Alpha))
                 .ToList();
             return new Models.GameSettings(models);
         }

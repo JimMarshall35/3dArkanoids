@@ -1452,6 +1452,7 @@ class BlockType final :
     kRedFieldNumber = 2,
     kGreenFieldNumber = 3,
     kBlueFieldNumber = 4,
+    kAlphaFieldNumber = 5,
   };
   // int32 gameEngineCode = 1;
   void clear_gameenginecode();
@@ -1489,6 +1490,15 @@ class BlockType final :
   void _internal_set_blue(float value);
   public:
 
+  // float alpha = 5;
+  void clear_alpha();
+  float alpha() const;
+  void set_alpha(float value);
+  private:
+  float _internal_alpha() const;
+  void _internal_set_alpha(float value);
+  public:
+
   // @@protoc_insertion_point(class_scope:EditorGRPC.BlockType)
  private:
   class _Internal;
@@ -1500,6 +1510,7 @@ class BlockType final :
   float red_;
   float green_;
   float blue_;
+  float alpha_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
 };
@@ -2177,6 +2188,26 @@ inline void BlockType::_internal_set_blue(float value) {
 inline void BlockType::set_blue(float value) {
   _internal_set_blue(value);
   // @@protoc_insertion_point(field_set:EditorGRPC.BlockType.blue)
+}
+
+// float alpha = 5;
+inline void BlockType::clear_alpha() {
+  alpha_ = 0;
+}
+inline float BlockType::_internal_alpha() const {
+  return alpha_;
+}
+inline float BlockType::alpha() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.BlockType.alpha)
+  return _internal_alpha();
+}
+inline void BlockType::_internal_set_alpha(float value) {
+  
+  alpha_ = value;
+}
+inline void BlockType::set_alpha(float value) {
+  _internal_set_alpha(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.BlockType.alpha)
 }
 
 // -------------------------------------------------------------------

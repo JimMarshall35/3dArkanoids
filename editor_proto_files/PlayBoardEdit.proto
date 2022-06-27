@@ -65,6 +65,7 @@ message BlockType{
 	float red = 2;
 	float green = 3;
 	float blue = 4;
+	float alpha = 5;
 }
 
 message GameSettings{

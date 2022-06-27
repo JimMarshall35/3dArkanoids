@@ -39,20 +39,21 @@ namespace EditorGRPC {
             "X1RPT19NQU5ZX0JZVEVTX0ZPUl9XSEQQARIhCh1GQUlMVVJFX1RPT19GRVdf",
             "QllURVNfRk9SX1dIRBACIgYKBFZvaWQiTgoQQm9hcmREZXNjcmlwdGlvbhIN",
             "CgV3aWR0aBgBIAEoBRIOCgZoZWlnaHQYAiABKAUSDQoFZGVwdGgYAyABKAUS",
-            "DAoEZGF0YRgEIAEoDCIMCgpDbGllbnRJbmZvIk0KCUJsb2NrVHlwZRIWCg5n",
+            "DAoEZGF0YRgEIAEoDCIMCgpDbGllbnRJbmZvIlwKCUJsb2NrVHlwZRIWCg5n",
             "YW1lRW5naW5lQ29kZRgBIAEoBRILCgNyZWQYAiABKAISDQoFZ3JlZW4YAyAB",
-            "KAISDAoEYmx1ZRgEIAEoAiI9CgxHYW1lU2V0dGluZ3MSLQoOcG9zc2libGVC",
-            "bG9ja3MYASADKAsyFS5FZGl0b3JHUlBDLkJsb2NrVHlwZTK0AwoNUGxheUJv",
-            "YXJkRWRpdBI6CghBZGRCbG9jaxIRLkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0",
-            "b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBI9CgtSZW1vdmVCbG9jaxIRLkVkaXRv",
-            "ckdSUEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBJBCgtD",
-            "aGFuZ2VCbG9jaxIVLkVkaXRvckdSUEMuQmxvY2tFZGl0GhsuRWRpdG9yR1JQ",
-            "Qy5FZGl0QmxvY2tSZXN1bHQSPwoNR2V0Qm9hcmRTdGF0ZRIQLkVkaXRvckdS",
-            "UEMuVm9pZBocLkVkaXRvckdSUEMuQm9hcmREZXNjcmlwdGlvbhJUCg1TZXRC",
-            "b2FyZFN0YXRlEhwuRWRpdG9yR1JQQy5Cb2FyZERlc2NyaXB0aW9uGiUuRWRp",
-            "dG9yR1JQQy5TZXRCb2FyZERlc2NyaXB0aW9uUmVzdWx0Ek4KGkluaXRpYWxD",
-            "b25uZWN0aW9uSGFuZHNoYWtlEhYuRWRpdG9yR1JQQy5DbGllbnRJbmZvGhgu",
-            "RWRpdG9yR1JQQy5HYW1lU2V0dGluZ3NiBnByb3RvMw=="));
+            "KAISDAoEYmx1ZRgEIAEoAhINCgVhbHBoYRgFIAEoAiI9CgxHYW1lU2V0dGlu",
+            "Z3MSLQoOcG9zc2libGVCbG9ja3MYASADKAsyFS5FZGl0b3JHUlBDLkJsb2Nr",
+            "VHlwZTK0AwoNUGxheUJvYXJkRWRpdBI6CghBZGRCbG9jaxIRLkVkaXRvckdS",
+            "UEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRCbG9ja1Jlc3VsdBI9CgtSZW1v",
+            "dmVCbG9jaxIRLkVkaXRvckdSUEMuUG9pbnQaGy5FZGl0b3JHUlBDLkVkaXRC",
+            "bG9ja1Jlc3VsdBJBCgtDaGFuZ2VCbG9jaxIVLkVkaXRvckdSUEMuQmxvY2tF",
+            "ZGl0GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPwoNR2V0Qm9hcmRT",
+            "dGF0ZRIQLkVkaXRvckdSUEMuVm9pZBocLkVkaXRvckdSUEMuQm9hcmREZXNj",
+            "cmlwdGlvbhJUCg1TZXRCb2FyZFN0YXRlEhwuRWRpdG9yR1JQQy5Cb2FyZERl",
+            "c2NyaXB0aW9uGiUuRWRpdG9yR1JQQy5TZXRCb2FyZERlc2NyaXB0aW9uUmVz",
+            "dWx0Ek4KGkluaXRpYWxDb25uZWN0aW9uSGFuZHNoYWtlEhYuRWRpdG9yR1JQ",
+            "Qy5DbGllbnRJbmZvGhguRWRpdG9yR1JQQy5HYW1lU2V0dGluZ3NiBnByb3Rv",
+            "Mw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -63,7 +64,7 @@ namespace EditorGRPC {
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.Void), global::EditorGRPC.Void.Parser, null, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BoardDescription), global::EditorGRPC.BoardDescription.Parser, new[]{ "Width", "Height", "Depth", "Data" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.ClientInfo), global::EditorGRPC.ClientInfo.Parser, null, null, null, null, null),
-            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BlockType), global::EditorGRPC.BlockType.Parser, new[]{ "GameEngineCode", "Red", "Green", "Blue" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.BlockType), global::EditorGRPC.BlockType.Parser, new[]{ "GameEngineCode", "Red", "Green", "Blue", "Alpha" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.GameSettings), global::EditorGRPC.GameSettings.Parser, new[]{ "PossibleBlocks" }, null, null, null, null)
           }));
     }
@@ -1831,6 +1832,7 @@ namespace EditorGRPC {
       red_ = other.red_;
       green_ = other.green_;
       blue_ = other.blue_;
+      alpha_ = other.alpha_;
       _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
     }
 
@@ -1888,6 +1890,18 @@ namespace EditorGRPC {
       }
     }
 
+    /// <summary>Field number for the "alpha" field.</summary>
+    public const int AlphaFieldNumber = 5;
+    private float alpha_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public float Alpha {
+      get { return alpha_; }
+      set {
+        alpha_ = value;
+      }
+    }
+
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public override bool Equals(object other) {
@@ -1907,6 +1921,7 @@ namespace EditorGRPC {
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Red, other.Red)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Green, other.Green)) return false;
       if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Blue, other.Blue)) return false;
+      if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Alpha, other.Alpha)) return false;
       return Equals(_unknownFields, other._unknownFields);
     }
 
@@ -1918,6 +1933,7 @@ namespace EditorGRPC {
       if (Red != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Red);
       if (Green != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Green);
       if (Blue != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Blue);
+      if (Alpha != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Alpha);
       if (_unknownFields != null) {
         hash ^= _unknownFields.GetHashCode();
       }
@@ -1952,6 +1968,10 @@ namespace EditorGRPC {
         output.WriteRawTag(37);
         output.WriteFloat(Blue);
       }
+      if (Alpha != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(Alpha);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(output);
       }
@@ -1978,6 +1998,10 @@ namespace EditorGRPC {
         output.WriteRawTag(37);
         output.WriteFloat(Blue);
       }
+      if (Alpha != 0F) {
+        output.WriteRawTag(45);
+        output.WriteFloat(Alpha);
+      }
       if (_unknownFields != null) {
         _unknownFields.WriteTo(ref output);
       }
@@ -1998,6 +2022,9 @@ namespace EditorGRPC {
         size += 1 + 4;
       }
       if (Blue != 0F) {
+        size += 1 + 4;
+      }
+      if (Alpha != 0F) {
         size += 1 + 4;
       }
       if (_unknownFields != null) {
@@ -2023,6 +2050,9 @@ namespace EditorGRPC {
       }
       if (other.Blue != 0F) {
         Blue = other.Blue;
+      }
+      if (other.Alpha != 0F) {
+        Alpha = other.Alpha;
       }
       _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
     }
@@ -2055,6 +2085,10 @@ namespace EditorGRPC {
             Blue = input.ReadFloat();
             break;
           }
+          case 45: {
+            Alpha = input.ReadFloat();
+            break;
+          }
         }
       }
     #endif
@@ -2084,6 +2118,10 @@ namespace EditorGRPC {
           }
           case 37: {
             Blue = input.ReadFloat();
+            break;
+          }
+          case 45: {
+            Alpha = input.ReadFloat();
             break;
           }
         }

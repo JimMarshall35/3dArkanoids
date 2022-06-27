@@ -105,6 +105,9 @@
     <ClCompile Include="PlayBoardEdit.pb.cc">
       <Filter>Source Files\game\level editor server\grpc</Filter>
     </ClCompile>
+    <ClCompile Include="GameBlockTypes.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -205,6 +208,9 @@
     </ClInclude>
     <ClInclude Include="FrameMemoryAllocator.h">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="GameBlockTypes.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

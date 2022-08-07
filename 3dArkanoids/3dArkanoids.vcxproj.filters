@@ -108,6 +108,12 @@
     <ClCompile Include="GameBlockTypes.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -210,6 +216,15 @@
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="GameBlockTypes.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bat.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameInput.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>

@@ -2,11 +2,11 @@
 #include "ILevelLoader.h"
 #include "BlockColourDefs.h"
 #include "IRenderer.h"
-#include <iostream>
 #include "ILevelEditorServer.h"
+#include "GameInput.h"
+#include <iostream>
 #include <algorithm>
-//size_t Game::s_currentNumBlocks;
-//BlockInstanceRenderData Game::s_blockRenderData[MAX_POSSIBLE_BLOCKS];
+
 size_t m_currentNumBlocks = 0;
 
 Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFactory levelEditorServerFactory)
@@ -29,21 +29,15 @@ Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFact
 	);
 	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
 
-	//m_playFieldArray.allocate(PLAYFIELD_WIDTH_BLOCKS, PLAYFIELD_HEIGHT_BLOCKS, PLAYFIELD_DEPTH_BLOCKS);
-
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.184, 0.176, 0.803, 1.0) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(1.0, 0.0, 0.0, 1.0) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.0, 1.0, 0.0, 1.0) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.094, 0.949, 0.898, 0.2) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(0.980, 0.878, 0, 1.0) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4(1.0, 1.0, 1.0, 1.0) });
 
 	m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
 
-
-
-	//m_levelLoader->LoadLevel(m_playFieldArray, "");
 	m_playFieldArray.LoadFromFile("Level.jim");
+
+	int w = m_playFieldArray.getW();
+	
+	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f,((w  * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
+
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
 	if (!isValid) {
@@ -59,6 +53,7 @@ Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFact
 void Game::Draw(const Camera& camera)
 {
 	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
+	m_bat.Draw(m_renderer.get(), camera);
 }
 
 /// <summary>
@@ -137,6 +132,11 @@ int Game::IndexOfRenderDataAt(const glm::ivec3& coords)
 void Game::SaveLevelTest(std::string filePath)
 {
 	m_playFieldArray.SaveToFile(filePath);
+}
+
+void Game::RecieveGameInput(const GameInput& gameInput)
+{
+	m_bat.RecieveInput(gameInput);
 }
 
 /// <summary>

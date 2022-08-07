@@ -270,7 +270,7 @@ void DeInterleaveInstanceDataArray(std::vector<glm::vec4>& positionsAndShouldDra
 /// <param name="dimensions"></param>
 /// <param name="camera"></param>
 /// <param name="colour"></param>
-void Renderer::DrawCuboid(const glm::vec3& pos, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour)
+void Renderer::DrawCuboid(const glm::vec3& pos, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const
 {
     glm::mat4 model = PositionAndScaleToModelMatrix(pos, dimensions);
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)m_scrWidth / (float)m_scrHeight, 0.1f, DRAW_DISTANCE);

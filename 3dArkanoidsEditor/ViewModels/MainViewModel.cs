@@ -189,7 +189,8 @@ namespace _3dArkanoidsEditor.ViewModels
         private void OnGameConnectionAquire(object sender, GameConnectionAquiredEventArgs e)
         {
             BlockOptionsViewModels.Clear();
-            foreach(var block in e.GameSettings.GameBlockTypes)
+
+            foreach (var block in e.GameSettings.GameBlockTypes)
             {
                 BlockOptionsViewModels.Add(new BlockTypeOptionViewModel(block));
             }

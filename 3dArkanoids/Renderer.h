@@ -13,7 +13,7 @@ public:
     virtual void SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
     virtual void SetLightPos(const glm::vec3& value) override;
     virtual void SetLightColour(const glm::vec3& value) override;
-    virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) override;
+    virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const override;
     virtual void SetScreenDims(const glm::ivec2& value) override;
     virtual void SetCubeShouldRender(size_t indexCubeIsAt, bool newValue) override;
     virtual void SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos) override;

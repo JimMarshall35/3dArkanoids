@@ -3,13 +3,20 @@
 #include "Camera.h"
 #include "Renderer.h"
 #include "game.h"
+#include "GameInput.h"
 #include <iostream>
 #include "BlockInstanceRenderData.h"
 #include "MockLevelLoader.h"
 #include "GrpcLevelEditorServer.h"
 #include <functional>
+#include <thread>
+#include <timeapi.h>
+
+
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
+
+#define TARGET_MS_PER_FRAME 30
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow* window);
@@ -19,8 +26,7 @@ Camera camera("Camera.cam");
 Renderer* renderer;
 Game* gamePtr;
 
-float deltaTime = 0;
-float lastFrame = 0;
+double deltaTime = 0;
 
 static void GLAPIENTRY MessageCallback(GLenum source,
     GLenum type,
@@ -60,8 +66,9 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-    //glfwSetCursorPosCallback(window, mouse_callback);
+    glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
     // tell GLFW to capture our mouse
@@ -94,33 +101,54 @@ int main()
     //camera.Yaw = -90.0f;
     //camera.Pitch = 50.0f;
     //camera.updateCameraVectors();
+    using namespace std;
+    using namespace std::chrono;
+
 
     Game game(new MockLevelLoader(), new Renderer(), [](ILevelEditorServerGame* g) { return new GrpcLevelEditorServer(g); });
     gamePtr = &game;
+
+    auto prevClock = high_resolution_clock::now();
+
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
         // --------------------
-        float currentFrame = static_cast<float>(glfwGetTime());
-        deltaTime = currentFrame - lastFrame;
-        lastFrame = currentFrame;
+        auto nextClock = high_resolution_clock::now();
+        deltaTime = (nextClock - prevClock).count() / 1e9;
+        printf(" frame time: %.2lf ms\n", deltaTime * 1e3);
+
 
         // input
         // -----
         processInput(window);
 
+        // update
+        // ------
+        game.Update(deltaTime);
+
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        game.Update(deltaTime);
 
         game.Draw(camera);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
+
+        auto frameClock = high_resolution_clock::now();
+        double sleepSecs = 1.0 / 60 - (frameClock - nextClock).count() / 1e9;
+        if (sleepSecs > 0) {
+            timeBeginPeriod(1);
+            this_thread::sleep_for(nanoseconds((int64_t)(sleepSecs * 1e9)));
+            timeEndPeriod(1);
+        }
+
+        prevClock = nextClock;
+
     }
 
     glfwTerminate();
@@ -159,15 +187,14 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     gamePtr->SetScreenDims(glm::ivec2(width, height));
 }
 
-float lastX = SCR_WIDTH / 2.0f;
-float lastY = SCR_HEIGHT / 2.0f;
+double lastX = SCR_WIDTH / 2.0f;
+double lastY = SCR_HEIGHT / 2.0f;
 bool firstMouse = true;
 // glfw: whenever the mouse moves, this callback is called
 // -------------------------------------------------------
-void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
 {
-    float xpos = static_cast<float>(xposIn);
-    float ypos = static_cast<float>(yposIn);
+
     if (firstMouse)
     {
         lastX = xpos;
@@ -175,14 +202,17 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
         firstMouse = false;
     }
 
-    float xoffset = xpos - lastX;
-    float yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+    double xoffset = xpos - lastX;
+    double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
+
+    GameInput input = { xoffset, false };
+    gamePtr->RecieveGameInput(input);
 
     lastX = xpos;
     lastY = ypos;
 
-    camera.ProcessMouseMovement(xoffset, yoffset);
-    std::cout << "yaw: " << camera.Yaw << " pitch: " << camera.Pitch << std::endl;
+    //camera.ProcessMouseMovement(xoffset, yoffset);
+    //std::cout << "yaw: " << camera.Yaw << " pitch: " << camera.Pitch << std::endl;
 }
 
 // glfw: whenever the mouse scroll wheel scrolls, this callback is called

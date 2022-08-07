@@ -13,11 +13,15 @@
 #include "SizedQueue.h"
 #include "FrameMemoryAllocator.h"
 #include "GameBlockTypes.h"
+#include "Bat.h"
+#include "Ball.h"
 
+
+#define MAX_NUM_BALLS 50
 class ILevelLoader;
 class IRenderer;
 class Camera;
-
+class GameInput;
 
 class Game : public EventListener<FallingBlockFinishedEventArgs>,
 	public ILevelEditorServerGame
@@ -29,6 +33,7 @@ public:
 	void Update(float deltaT);
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
 	void SaveLevelTest(std::string filePath);
+	void RecieveGameInput(const GameInput& gameInput);
 private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();
@@ -39,7 +44,6 @@ private:
 	size_t m_currentNumBlocks;
 	Event<EngineUpdateFrameEventArgs> m_frameUpdateEvent;
 	Event<MasterArrayUpdatedEventArgs> m_masterArrayUpdatedEvent;
-private:
 	Array3D<unsigned char> m_playFieldArray;
 	std::unique_ptr<ILevelLoader> m_levelLoader;
 	std::unique_ptr<ILevelEditorServer> m_levelEditorServer;
@@ -47,7 +51,11 @@ private:
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
 
-	FrameMemoryAllocator frameAllocator;
+	Bat m_bat = Bat(2*BLOCK_WIDTH_UNITS);
+	Ball m_balls[MAX_NUM_BALLS];
+	int m_currentNumBalls = 0;
+
+	FrameMemoryAllocator m_frameAllocator;
 
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;

@@ -4,7 +4,7 @@ class Camera;
 class BlockInstanceRenderData;
 class IRenderer {
 public:
-	virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) = 0;
+	virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const  = 0;
 	virtual void SetLightPos(const glm::vec3& value) = 0;
 	virtual void SetLightColour(const glm::vec3& value) = 0;
 	virtual void SetScreenDims(const glm::ivec2& value) = 0;

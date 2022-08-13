@@ -51,7 +51,7 @@ private:
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
 
-	Bat m_bat = Bat(2*BLOCK_WIDTH_UNITS);
+	Bat m_bat;
 	Ball m_balls[MAX_NUM_BALLS];
 	int m_currentNumBalls = 0;
 

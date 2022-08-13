@@ -4,10 +4,11 @@
 #include <vector>
 #include <fstream>
 #include <memory>
+#include "ISerializable.h"
 
 
 template<typename T>
-class Array3D {
+class Array3D : public ISerializable{
 private:
 	T* _ptr;
 	size_t _w, _h, _d;
@@ -53,8 +54,11 @@ public:
 	xSlice operator[](int xCoord) const { return xSlice(xCoord, this); }
 	void free();
 
-	void SaveToFile(std::string filePath);
-	void LoadFromFile(std::string filePath);
+	virtual void SaveToFile(std::string filePath)const override;
+	virtual void LoadFromFile(std::string filePath) override;
+	virtual bool SetSerializableProperty(const SerializableProperty& p) override;
+	virtual int GetNumSerializableProperties() const override;
+	virtual const std::vector<SerializableProperty>& GetSerializableProperties();
 };
 
 template<typename T>
@@ -93,7 +97,7 @@ inline void Array3D<T>::free()
 }
 
 template<typename T>
-inline void Array3D<T>::SaveToFile(std::string filePath)
+inline void Array3D<T>::SaveToFile(std::string filePath) const
 {
 	// allocate buffer to be written to file, layed out as follows:
 	// width, height, depth, array data
@@ -137,4 +141,39 @@ inline void Array3D<T>::LoadFromFile(std::string filePath)
 
 	// copy array data into newly allocated array
 	memcpy(_ptr, inputBuf.get() + sizeof(size_t) * 3, sizeof(T) * w * h * d);
+}
+
+#define ARRAY3D_NUM_SERIALIZABLE_PROPERTIES 4
+template<typename T>
+inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializableProperties()
+{
+	std::vector<SerializableProperty> props(ARRAY3D_NUM_SERIALIZABLE_PROPERTIES);
+	props[0].name = "Data";
+	props[0].type = SerializablePropertyType::Bytes;
+	props[0].data.SizeIfApplicable = sizeof(T) * _w * _d * _h;
+	props[0].data.dataUnion.Bytes = (char*)_ptr;
+
+	props[1].name = "Width";
+	props[1].type = SerializablePropertyType::Uint32;
+	props[1].data.dataUnion.Uint32 = _w;
+	
+	props[2].name = "Height";
+	props[2].type = SerializablePropertyType::Uint32;
+	props[2].data.dataUnion.Uint32 = _h;
+
+	props[3].name = "Width";
+	props[3].type = SerializablePropertyType::Uint32;
+	props[3].data.dataUnion.Uint32 = _d;
+
+	return props;
+}
+template<typename T>
+inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty&) {
+	return false;
+}
+
+template<typename T>
+inline int Array3D<T>::GetNumSerializableProperties() const
+{
+	return ARRAY3D_NUM_SERIALIZABLE_PROPERTIES;
 }

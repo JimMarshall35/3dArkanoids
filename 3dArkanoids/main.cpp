@@ -11,7 +11,11 @@
 #include <functional>
 #include <thread>
 #include <timeapi.h>
+#include "AutoList.h"
 
+#include <assimp/Importer.hpp>      // C++ importer interface
+#include <assimp/scene.h>           // Output data structure
+#include <assimp/postprocess.h>     // Post processing flags
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
@@ -110,15 +114,19 @@ int main()
 
     auto prevClock = high_resolution_clock::now();
 
+    auto l = AutoList<ISerializable>::GetList();
+
+    Assimp::Importer importer;
+
     // render loop
     // -----------
-    while (!glfwWindowShouldClose(window))
+     while (!glfwWindowShouldClose(window))
     {
         // per-frame time logic
         // --------------------
         auto nextClock = high_resolution_clock::now();
         deltaTime = (nextClock - prevClock).count() / 1e9;
-        printf(" frame time: %.2lf ms\n", deltaTime * 1e3);
+        //printf(" frame time: %.2lf ms\n", deltaTime * 1e3);
 
 
         // input

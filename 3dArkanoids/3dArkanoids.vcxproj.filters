@@ -218,13 +218,19 @@
     <ClInclude Include="GameBlockTypes.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="Bat.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="GameInput.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="AutoList.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="ISerializable.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="Ball.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="GameInput.h">
+    <ClInclude Include="Bat.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>

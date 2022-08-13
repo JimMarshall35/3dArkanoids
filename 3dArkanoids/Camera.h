@@ -7,7 +7,7 @@
 
 #include <vector>
 #include <string>
-
+#include "ISerializable.h"
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
     FORWARD,
@@ -26,6 +26,7 @@ const float ZOOM = 45.0f;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera
+//    :public ISerializable
 {
 public:
     Camera(std::string positionFile);
@@ -65,8 +66,15 @@ public:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();
 
-    void SaveToFile(std::string file);
+    void SaveToFile(std::string file) const;
 
     void LoadFromFile(std::string file);
+
+    //// Inherited via ISerializable
+    //virtual const std::vector<SerializableProperty>& GetSerializableProperties() override;
+    //virtual bool SetSerializableProperty(const SerializableProperty& p) override;
+
+    //// Inherited via ISerializable
+    //virtual int GetNumSerializableProperties() const override;
 };
 #endif

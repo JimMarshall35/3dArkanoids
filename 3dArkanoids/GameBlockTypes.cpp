@@ -17,7 +17,7 @@ void GameBlockTypes::Clear()
 	m_nextIndexToAdd = 1;
 }
 
-void GameBlockTypes::SaveToFile(std::string filePath)
+void GameBlockTypes::SaveToFile(std::string filePath) const
 {
 	std::ofstream file(filePath, std::ios::out | std::ios::binary);
 	file.write(
@@ -40,4 +40,26 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 unsigned char GameBlockTypes::GetNextIndexToAdd()
 {
 	return m_nextIndexToAdd;
+}
+
+bool GameBlockTypes::SetSerializableProperty(const SerializableProperty& p)
+{
+	return false;
+}
+
+int GameBlockTypes::GetNumSerializableProperties() const
+{
+	return 1;
+}
+
+
+const std::vector<SerializableProperty>& GameBlockTypes::GetSerializableProperties()
+{
+	std::vector<SerializableProperty> properties(1);
+	properties[0].data.SizeIfApplicable = (m_nextIndexToAdd - 1) * sizeof(BlockTypeDescription);
+	properties[0].data.dataUnion.Bytes = (char*)&m_blockTypes[1];
+	properties[0].type = SerializablePropertyType::Bytes;
+	properties[0].name = "BlockTypes";
+
+	return properties;
 }

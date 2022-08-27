@@ -114,6 +114,9 @@
     <ClCompile Include="Ball.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="GameFramework.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -231,6 +234,9 @@
       <Filter>Header Files\game</Filter>
     </ClInclude>
     <ClInclude Include="Bat.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>

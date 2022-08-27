@@ -12,6 +12,7 @@
 #include <thread>
 #include <timeapi.h>
 #include "AutoList.h"
+#include <memory>
 
 #include <assimp/Importer.hpp>      // C++ importer interface
 #include <assimp/scene.h>           // Output data structure
@@ -107,14 +108,21 @@ int main()
     //camera.updateCameraVectors();
     using namespace std;
     using namespace std::chrono;
+    auto renderer = make_shared<Renderer>();
 
+    Game game(
+        renderer,
+        [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
 
-    Game game(new MockLevelLoader(), new Renderer(), [](ILevelEditorServerGame* g) { return new GrpcLevelEditorServer(g); });
     gamePtr = &game;
+
+    GameFramework::PushLayers("Gameplay",
+        GameLayerType::Draw |
+        GameLayerType::Update |
+        GameLayerType::Input);
 
     auto prevClock = high_resolution_clock::now();
 
-    auto l = AutoList<ISerializable>::GetList();
 
     Assimp::Importer importer;
 
@@ -135,14 +143,14 @@ int main()
 
         // update
         // ------
-        game.Update(deltaTime);
+        GameFramework::Update(deltaTime);
 
         // render
         // ------
         glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        game.Draw(camera);
+        GameFramework::Draw(camera);
 
         glfwSwapBuffers(window);
         glfwPollEvents();
@@ -214,7 +222,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
     GameInput input = { xoffset, false };
-    gamePtr->RecieveGameInput(input);
+    GameFramework::RecieveInput(input);
 
     lastX = xpos;
     lastY = ypos;

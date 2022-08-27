@@ -9,16 +9,14 @@
 
 size_t m_currentNumBlocks = 0;
 
-Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFactory levelEditorServerFactory)
+Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory levelEditorServerFactory)
 {
-	m_levelLoader = std::unique_ptr<ILevelLoader>(levelLoader);
-	m_renderer = std::shared_ptr<IRenderer>(renderer);
-	auto levelEditorServerRawPtr = levelEditorServerFactory(this);
-	m_levelEditorServer = std::unique_ptr<ILevelEditorServer>(levelEditorServerRawPtr);
+	m_renderer = renderer;
+	m_levelEditorServer = levelEditorServerFactory(this);
 	m_fallingBlockManager.BlockFinished += this;
 	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
 	m_frameUpdateEvent += &m_fallingBlockManager;
-	m_frameUpdateEvent += levelEditorServerRawPtr;
+	m_frameUpdateEvent += m_levelEditorServer.get();
 	
 	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
 	m_renderer->SetLightPos(
@@ -50,7 +48,7 @@ Game::Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFact
 /// 
 /// </summary>
 /// <param name="camera"></param>
-void Game::Draw(const Camera& camera)
+void Game::Draw(const Camera& camera) const
 {
 	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
@@ -134,7 +132,7 @@ void Game::SaveLevelTest(std::string filePath)
 	m_playFieldArray.SaveToFile(filePath);
 }
 
-void Game::RecieveGameInput(const GameInput& gameInput)
+void Game::ReceiveInput(const GameInput& gameInput)
 {
 	m_bat.RecieveInput(gameInput);
 }

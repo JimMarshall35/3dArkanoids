@@ -15,6 +15,7 @@
 #include "GameBlockTypes.h"
 #include "Bat.h"
 #include "Ball.h"
+#include "GameFramework.h"
 
 
 #define MAX_NUM_BALLS 50
@@ -24,16 +25,41 @@ class Camera;
 class GameInput;
 
 class Game : public EventListener<FallingBlockFinishedEventArgs>,
-	public ILevelEditorServerGame
+	public ILevelEditorServerGame,
+	public UpdateableLayerBase,
+	public DrawableLayerBase,
+	public RecieveInputLayerBase
 {
 public:
-	Game(ILevelLoader* levelLoader, IRenderer* renderer, LevelEditorServerFactory levelEditorServerFactory);
-	void Draw(const Camera& camera);
+	// implementation of IDrawableLayer
+	virtual void Draw(const Camera& camera) const override;
+	virtual bool MasksPreviousDrawableLayer() const override {
+		return true;
+	}
+	virtual std::string GetDrawableLayerName() const override {
+		return "Gameplay";
+	}
+	// implementation of IUpdateableLayer
+	virtual void Update(float deltaT) override;
+	virtual bool MasksPreviousUpdateableLayer() const override {
+		return true;
+	}
+	virtual std::string GetUpdateableLayerName() const override {
+		return "Gameplay";
+	}
+	// implementation of IRecieveInputLayer
+	virtual void ReceiveInput(const GameInput& gameInput) override;
+	virtual bool MasksPreviousInputLayer() const override {
+		return true;
+	}
+	virtual std::string GetInputLayerName() const override {
+		return "Gameplay";
+	}
+
+	Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory levelEditorServerFactory);
 	void SetScreenDims(const glm::ivec2& screenDims);
-	void Update(float deltaT);
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
 	void SaveLevelTest(std::string filePath);
-	void RecieveGameInput(const GameInput& gameInput);
 private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();

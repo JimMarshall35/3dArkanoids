@@ -17,6 +17,9 @@ size_t GameFramework::m_updateableStackSize;
 
 void GameFramework::Update(double deltaT)
 {
+	if (m_updateableStackSize == 0) {
+		return;
+	}
 	auto topOfStackIndex = m_updateableStackSize - 1;
 	do {
 		m_updateableStack[topOfStackIndex]->Update(deltaT);
@@ -25,6 +28,9 @@ void GameFramework::Update(double deltaT)
 
 void GameFramework::Draw(const Camera& camera)
 {
+	if (m_drawableStackSize == 0) {
+		return;
+	}
 	auto topOfStackIndex = m_drawableStackSize - 1;
 	do {
 		m_drawableStack[topOfStackIndex]->Draw(camera);
@@ -33,6 +39,9 @@ void GameFramework::Draw(const Camera& camera)
 
 void GameFramework::RecieveInput(const GameInput& input)
 {
+	if (m_inputStackSize == 0) {
+		return;
+	}
 	auto topOfStackIndex = m_inputStackSize - 1;
 	do {
 		m_inputStack[topOfStackIndex]->ReceiveInput(input);
@@ -123,32 +132,56 @@ bool GameFramework::PopLayers(GameLayerType whichLayers)
 
 RecieveInputLayerBase* GameFramework::PopInputLayer()
 {
+	if (m_inputStackSize == 0) {
+		std::cerr << "m_inputStackSize is zero - can't pop\n";
+		return nullptr;
+	}
 	auto top = m_inputStack[--m_inputStackSize];
 	return top;
 }
 
 const DrawableLayerBase* GameFramework::PopDrawableLayer()
 {
+	if (m_drawableStackSize == 0) {
+		std::cerr << "m_drawableStackSize is zero - can't pop\n";
+		return nullptr;
+	}
 	auto top = m_drawableStack[--m_drawableStackSize];
 	return top;
 }
 
 UpdateableLayerBase* GameFramework::PopUpdatableLayer()
 {
+	if (m_updateableStack == 0) {
+		std::cerr << "m_updateableStack is zero - can't pop\n";
+		return nullptr;
+	}
 	auto top = m_updateableStack[--m_updateableStackSize];
 	return top;
 }
 void GameFramework::PushInputLayer(RecieveInputLayerBase* input)
 {
+	if (m_inputStackSize >= FRAMEWORK_STACKS_SIZE) {
+		std::cerr << "FRAMEWORK_STACKS_SIZE exceeded - can't push\n";
+		return;
+	}
 	m_inputStack[m_inputStackSize++] = input;
 }
 
 void GameFramework::PushDrawableLayer(DrawableLayerBase* drawable)
 {
+	if (m_inputStackSize >= FRAMEWORK_STACKS_SIZE) {
+		std::cerr << "FRAMEWORK_STACKS_SIZE exceeded - can't push\n";
+		return;
+	}
 	m_drawableStack[m_drawableStackSize++] = drawable;
 }
 
 void GameFramework::PushUpdatableLayer(UpdateableLayerBase* updatable)
 {
+	if (m_inputStackSize >= FRAMEWORK_STACKS_SIZE) {
+		std::cerr << "FRAMEWORK_STACKS_SIZE exceeded - can't push\n";
+		return;
+	}
 	m_updateableStack[m_updateableStackSize++] = updatable;
 }

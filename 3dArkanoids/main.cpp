@@ -119,7 +119,7 @@ int main()
 
     GameUiOverlay ui(renderer);
     GameToUiMessage msg{ 420 };
-    GameFramework::SendFrameworkMessage<GameToUiMessage>(msg);
+    GameFramework::SendFrameworkMessage(msg);
     const auto& l = AutoList<DrawableLayerBase>::GetList();
 
     gamePtr = &game;
@@ -203,6 +203,7 @@ void processInput(GLFWwindow* window)
         camera.SaveToFile("Camera.cam");
         std::cout << "Saving " << std::endl;
     }
+
         //camera.SaveToFile("Camera.cam");
 }
 

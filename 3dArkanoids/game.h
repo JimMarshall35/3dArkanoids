@@ -76,13 +76,9 @@ private:
 	std::shared_ptr<IRenderer> m_renderer;
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
-
 	Bat m_bat;
 	Ball m_balls[MAX_NUM_BALLS];
 	int m_currentNumBalls = 0;
-
-	FrameMemoryAllocator m_frameAllocator;
-
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;
 

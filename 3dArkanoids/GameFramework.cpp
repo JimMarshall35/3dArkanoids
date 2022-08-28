@@ -43,7 +43,7 @@ void GameFramework::RecieveInput(const GameInput& input)
 bool GameFramework::PushLayers(std::string name, GameLayerType whichLayers)
 {
 	// TODO: refactor to reduce duplication
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Input) > 0) {
+	if (whichLayers & GameLayerType::Input) {
 		bool hasFoundName = false;
 		const auto& list = AutoList<RecieveInputLayerBase>::GetList();
 		for (const auto layer : list) {
@@ -63,7 +63,7 @@ bool GameFramework::PushLayers(std::string name, GameLayerType whichLayers)
 			return false;
 		}
 	}
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Draw) > 0) {
+	if (whichLayers & GameLayerType::Draw) {
 		bool hasFoundName = false;
 		const auto& list = AutoList<DrawableLayerBase>::GetList();
 		for (const auto layer : list) {
@@ -83,7 +83,7 @@ bool GameFramework::PushLayers(std::string name, GameLayerType whichLayers)
 			return false;
 		}
 	}
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Update) > 0) {
+	if (whichLayers & GameLayerType::Update) {
 		bool hasFoundName = false;
 		const auto& list = AutoList<UpdateableLayerBase>::GetList();
 		for (const auto layer : list) {
@@ -109,13 +109,13 @@ bool GameFramework::PushLayers(std::string name, GameLayerType whichLayers)
 bool GameFramework::PopLayers(GameLayerType whichLayers)
 {
 	// TODO: refactor to reduce duplication
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Input) > 0) {
+	if (whichLayers & GameLayerType::Input) {
 		PopInputLayer();
 	}
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Draw) > 0) {
+	if (whichLayers & GameLayerType::Draw) {
 		PopDrawableLayer();
 	}
-	if (((unsigned int)whichLayers & (unsigned int)GameLayerType::Update) > 0) {
+	if (whichLayers & GameLayerType::Update) {
 		PopUpdatableLayer();
 	}
 	return true;

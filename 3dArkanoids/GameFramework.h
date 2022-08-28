@@ -16,6 +16,11 @@ inline GameLayerType operator|(GameLayerType a, GameLayerType b)
 {
 	return static_cast<GameLayerType>(static_cast<unsigned int>(a) | static_cast<unsigned int>(b));
 }
+inline unsigned int operator&(GameLayerType a, GameLayerType b)
+{
+	return static_cast<unsigned int>(a) & static_cast<unsigned int>(b);
+}
+
 
 class RecieveInputLayerBase
 	:public AutoList<RecieveInputLayerBase>{

@@ -16,6 +16,8 @@ public:
     virtual void DrawInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual void DrawTextAnchoredToBottomLeft(std::string text, float x, float y, float scale, glm::vec3 colour) const override;
     virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
+    virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
+    virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
 
     virtual void SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
     virtual void SetLightPos(const glm::vec3& value) override;

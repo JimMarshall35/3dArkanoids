@@ -488,6 +488,17 @@ void Renderer::DrawTextAnchoredToTopLeft(std::string text, float xOffset, float 
     DrawTextAnchoredToBottomLeft(text, xOffset, m_scrHeight - m_baseTextSize * scale - yOffset, scale, colour);
 }
 
+void Renderer::DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
+{
+    // TODO - implement
+}
+
+void Renderer::DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
+{
+    // TODO - implement
+}
+
+
 /// <summary>
 /// Sets an initial openGL uniform buffer of instanced rendering data for
 /// the blocks that will be drawn when DrawInstancedBlocks is called.

@@ -16,5 +16,6 @@ public:
 	virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) = 0;
 	virtual void DrawTextAnchoredToBottomLeft(std::string text, float x, float y, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
-
+	virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
+	virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 };

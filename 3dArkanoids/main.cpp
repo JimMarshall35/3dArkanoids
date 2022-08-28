@@ -18,6 +18,8 @@
 #include <assimp/scene.h>           // Output data structure
 #include <assimp/postprocess.h>     // Post processing flags
 
+#include "GameUiOverlay.h"
+
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
 
@@ -114,12 +116,20 @@ int main()
         renderer,
         [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
 
+    GameUiOverlay ui(renderer);
+
+    const auto& l = AutoList<DrawableLayerBase>::GetList();
+
     gamePtr = &game;
+    
 
     GameFramework::PushLayers("Gameplay",
         GameLayerType::Draw |
         GameLayerType::Update |
         GameLayerType::Input);
+
+    GameFramework::PushLayers("GameplayUI",
+        GameLayerType::Draw);
 
     auto prevClock = high_resolution_clock::now();
 

@@ -35,6 +35,7 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	int w = m_playFieldArray.getW();
 	
 	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f,((w  * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
+	m_ballManager.Init(this, m_frameUpdateEvent);
 
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
@@ -52,7 +53,7 @@ void Game::Draw(const Camera& camera) const
 {
 	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
-	
+
 }
 
 /// <summary>
@@ -136,6 +137,7 @@ void Game::SaveLevelTest(std::string filePath)
 void Game::ReceiveInput(const GameInput& gameInput)
 {
 	m_bat.RecieveInput(gameInput);
+
 }
 
 /// <summary>

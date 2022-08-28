@@ -14,9 +14,8 @@
 #include "FrameMemoryAllocator.h"
 #include "GameBlockTypes.h"
 #include "Bat.h"
-#include "Ball.h"
 #include "GameFramework.h"
-
+#include "BallManager.h"
 
 #define MAX_NUM_BALLS 50
 class ILevelLoader;
@@ -76,9 +75,8 @@ private:
 	std::shared_ptr<IRenderer> m_renderer;
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
+	BallManager m_ballManager;
 	Bat m_bat;
-	Ball m_balls[MAX_NUM_BALLS];
-	int m_currentNumBalls = 0;
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;
 

@@ -111,14 +111,14 @@
     <ClCompile Include="Bat.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="GameUiOverlay.cpp">
       <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="BallManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -233,9 +233,6 @@
     <ClInclude Include="ISerializable.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="Ball.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
@@ -247,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="GameToUiMessage.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="BallManager.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

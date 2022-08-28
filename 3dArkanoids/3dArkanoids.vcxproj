@@ -159,7 +159,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="BallManager.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BlockInstanceRenderData.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -185,7 +185,7 @@
     <ClInclude Include="Array3d.h" />
     <ClInclude Include="Array3DMap.h" />
     <ClInclude Include="AutoList.h" />
-    <ClInclude Include="Ball.h" />
+    <ClInclude Include="BallManager.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BlockColourDefs.h" />
     <ClInclude Include="BlockInstanceRenderData.h" />

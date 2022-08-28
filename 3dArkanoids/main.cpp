@@ -19,6 +19,7 @@
 #include <assimp/postprocess.h>     // Post processing flags
 
 #include "GameUiOverlay.h"
+#include "GameToUiMessage.h"
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
@@ -117,7 +118,8 @@ int main()
         [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
 
     GameUiOverlay ui(renderer);
-
+    GameToUiMessage msg{ 420 };
+    GameFramework::SendFrameworkMessage<GameToUiMessage>(msg);
     const auto& l = AutoList<DrawableLayerBase>::GetList();
 
     gamePtr = &game;

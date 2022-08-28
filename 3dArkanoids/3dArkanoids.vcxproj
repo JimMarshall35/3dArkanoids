@@ -202,6 +202,7 @@
     <ClInclude Include="GameBlockTypes.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="GameInput.h" />
+    <ClInclude Include="GameToUiMessage.h" />
     <ClInclude Include="GameUiOverlay.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="ISerializable.h" />

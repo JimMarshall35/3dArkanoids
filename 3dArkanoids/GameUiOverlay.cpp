@@ -1,3 +1,4 @@
+#include <iostream>
 #include "GameUiOverlay.h"
 #include "IRenderer.h"
 
@@ -19,4 +20,9 @@ bool GameUiOverlay::MasksPreviousDrawableLayer() const
 std::string GameUiOverlay::GetDrawableLayerName() const
 {
     return "GameplayUI";
+}
+
+void GameUiOverlay::RecieveMessage(const GameToUiMessage& message)
+{
+    std::cout << "ui recieved message: " << message.newScore << "\n";
 }

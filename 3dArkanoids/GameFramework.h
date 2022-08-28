@@ -47,6 +47,13 @@ public:
 
 };
 
+template<typename MessageT>
+class GameFrameworkMessageRecipientBase
+	:public AutoList<GameFrameworkMessageRecipientBase<MessageT>>{
+public:
+	virtual void RecieveMessage(const MessageT& message) = 0;
+};
+
 
 #define FRAMEWORK_STACKS_SIZE 100
 static class GameFramework {
@@ -58,6 +65,9 @@ public:
 	static bool PushLayers(std::string name, GameLayerType whichLayers);
 
 	static bool PopLayers(GameLayerType whichLayers);
+
+	template<typename MessageT>
+	static void SendFrameworkMessage(const MessageT& message);
 	
 private:
 	static void PushInputLayer(RecieveInputLayerBase* input);
@@ -76,3 +86,11 @@ private:
 	static DrawableLayerBase* m_drawableStack[FRAMEWORK_STACKS_SIZE];
 	static UpdateableLayerBase* m_updateableStack[FRAMEWORK_STACKS_SIZE];
 };
+
+template<typename MessageT>
+inline void GameFramework::SendFrameworkMessage(const MessageT& message)
+{
+	for (auto ptr : AutoList<GameFrameworkMessageRecipientBase<MessageT>>::GetList()) {
+		ptr->RecieveMessage(message);
+	}
+}

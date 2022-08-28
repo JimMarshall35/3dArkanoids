@@ -245,5 +245,8 @@
     <ClInclude Include="GameUiOverlay.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
+    <ClInclude Include="GameToUiMessage.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

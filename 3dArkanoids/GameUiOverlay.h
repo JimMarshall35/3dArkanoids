@@ -1,10 +1,12 @@
 #pragma once
-#include "GameFramework.h"
 #include <memory>
+#include "GameFramework.h"
+#include "GameToUiMessage.h"
 
 class IRenderer;
 class GameUiOverlay
-	:public DrawableLayerBase
+	:public DrawableLayerBase,
+	public GameFrameworkMessageRecipientBase<GameToUiMessage>
 {
 public:
 	GameUiOverlay(const std::shared_ptr<IRenderer>& renderer);
@@ -14,5 +16,8 @@ public:
 	virtual std::string GetDrawableLayerName() const override;
 private:
 	std::shared_ptr<IRenderer> m_renderer;
+
+	// Inherited via GameFrameworkMessageRecipientBase
+	virtual void RecieveMessage(const GameToUiMessage& message) override;
 };
 

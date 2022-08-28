@@ -52,6 +52,7 @@ void Game::Draw(const Camera& camera) const
 {
 	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
+	m_renderer->DrawTextAnchoredToTopLeft("Jim Marshall", 0, 0, 0.5, { 0,0,0 });
 }
 
 /// <summary>

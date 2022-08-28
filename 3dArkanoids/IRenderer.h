@@ -1,5 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
+#include <string>
 class Camera;
 class BlockInstanceRenderData;
 class IRenderer {
@@ -13,4 +14,7 @@ public:
 	virtual void SetCubeShouldRender(size_t indexCubeIsAt, bool newValue) = 0;
 	virtual void SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos) = 0;
 	virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) = 0;
+	virtual void DrawTextAnchoredToBottomLeft(std::string text, float x, float y, float scale, glm::vec3 colour) const = 0;
+	virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
+
 };

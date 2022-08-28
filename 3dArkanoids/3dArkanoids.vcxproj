@@ -170,6 +170,7 @@
     <ClCompile Include="game.cpp" />
     <ClCompile Include="GameBlockTypes.cpp" />
     <ClCompile Include="GameFramework.cpp" />
+    <ClCompile Include="GameUiOverlay.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
@@ -201,6 +202,7 @@
     <ClInclude Include="GameBlockTypes.h" />
     <ClInclude Include="GameFramework.h" />
     <ClInclude Include="GameInput.h" />
+    <ClInclude Include="GameUiOverlay.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="PlayboardEditAsyncImpl.h" />

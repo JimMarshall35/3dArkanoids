@@ -117,6 +117,9 @@
     <ClCompile Include="GameFramework.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
+    <ClCompile Include="GameUiOverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -238,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="GameFramework.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUiOverlay.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

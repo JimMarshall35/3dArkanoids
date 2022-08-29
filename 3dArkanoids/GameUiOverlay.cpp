@@ -10,6 +10,8 @@ GameUiOverlay::GameUiOverlay(const std::shared_ptr<IRenderer>& renderer)
 void GameUiOverlay::Draw(const Camera& camera) const
 {
     m_renderer->DrawTextAnchoredToTopLeft("Jim Marshall", 0, 0, 0.5, { 0,0,0 });
+    //m_renderer->DrawTextAnchoredToTopRight("Editor Connected", 0, 0, 0.5, { 0,0,0 });
+
 }
 
 bool GameUiOverlay::MasksPreviousDrawableLayer() const

@@ -40,6 +40,9 @@ private:
 	void RemoveBallAtListIndex(int index);
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
 public:
+	//void TestRemoveFunc(int index) {
+	//	RemoveBallAtListIndex(index);
+	//}
 	// Inherited via EventListener
 	virtual void OnEvent(EngineUpdateFrameEventArgs e) override;
 };

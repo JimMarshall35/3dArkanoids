@@ -40,7 +40,8 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	//m_ballManager.AddBall({ 1,2,3 }, { 420,0,0 }, false);
 	//m_ballManager.AddBall({ 4,5,6 }, { 0,60,0 }, true);
 	//m_ballManager.AddBall({ 7,8,9 }, { 0,0,13 }, false);
-	//m_ballManager.TestRemoveFunc(2);
+	//m_ballManager.TestRemoveFunc(1);
+	//m_ballManager.AddBall({ 10,11,12 }, { 0,69,0 }, true);
 
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
@@ -142,7 +143,7 @@ void Game::SaveLevelTest(std::string filePath)
 void Game::ReceiveInput(const GameInput& gameInput)
 {
 	m_bat.RecieveInput(gameInput);
-
+	m_ballManager.ReceiveInput(gameInput);
 }
 
 /// <summary>

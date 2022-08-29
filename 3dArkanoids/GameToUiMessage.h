@@ -3,4 +3,5 @@
 
 struct GameToUiMessage {
 	int newScore;
+	bool editorConnected = false;
 };

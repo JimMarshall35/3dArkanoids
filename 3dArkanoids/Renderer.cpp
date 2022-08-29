@@ -490,12 +490,22 @@ void Renderer::DrawTextAnchoredToTopLeft(std::string text, float xOffset, float 
 
 void Renderer::DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
 {
-    // TODO - implement
+    unsigned int totalAdvance = 0;
+    for (char c : text) {
+        const auto& character = m_characters[c];
+        totalAdvance += character.Advance >> 6;
+    }
+    DrawTextAnchoredToTopLeft(text, m_scrWidth - totalAdvance * scale, 0, scale, colour);
 }
 
 void Renderer::DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
 {
-    // TODO - implement
+    unsigned int totalAdvance = 0;
+    for (char c : text) {
+        const auto& character = m_characters[c];
+        totalAdvance += character.Advance >> 6;
+    }
+    DrawTextAnchoredToBottomLeft(text, m_scrWidth - totalAdvance * scale, 0, scale, colour);
 }
 
 

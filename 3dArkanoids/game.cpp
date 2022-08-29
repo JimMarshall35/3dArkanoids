@@ -1,11 +1,13 @@
 #include "game.h"
+#include <iostream>
+#include <algorithm>
+
 #include "ILevelLoader.h"
 #include "BlockColourDefs.h"
 #include "IRenderer.h"
 #include "ILevelEditorServer.h"
 #include "GameInput.h"
-#include <iostream>
-#include <algorithm>
+#include "GameToUiMessage.h"
 
 size_t m_currentNumBlocks = 0;
 
@@ -237,6 +239,8 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 
 const Array3D<unsigned char>& Game::GetBoardState()
 {
+	// this function is only called by editor server and is the first thing called
+	GameFramework::SendFrameworkMessage(GameToUiMessage{ 420,true });
 	return m_playFieldArray;
 }
 

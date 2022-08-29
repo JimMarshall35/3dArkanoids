@@ -16,7 +16,7 @@ public:
 	virtual std::string GetDrawableLayerName() const override;
 private:
 	std::shared_ptr<IRenderer> m_renderer;
-
+	bool m_editorConnected = false;
 	// Inherited via GameFrameworkMessageRecipientBase
 	virtual void RecieveMessage(const GameToUiMessage& message) override;
 };

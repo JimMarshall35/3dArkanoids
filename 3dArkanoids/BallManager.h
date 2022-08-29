@@ -3,11 +3,13 @@
 #include "Event.h"
 #include "EngineUpdateFrameEventArgs.h"
 #include <glm/glm.hpp>
+#include <functional>
+
+
 
 class Game;
 class GameInput;
 #define MAX_NUM_BALLS 128
-
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>
 {
@@ -24,6 +26,7 @@ private:
 		Ball* nextBall = nullptr;
 		
 	};
+	using BallIteratorFunctionWithCurrentAndPrevious = std::function<bool(Ball*, Ball*, int)>; // return value signals continue / don't continue
 	Game* m_game;
 	Ball* m_ballListHead = nullptr;
 	Ball m_balls[MAX_NUM_BALLS];
@@ -34,6 +37,8 @@ private:
 	void PushRecylcedIndex(size_t index);
 	size_t PopRecycledIndex();
 	Ball& GetNextFreeBall();
+	void RemoveBallAtListIndex(int index);
+	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
 public:
 	// Inherited via EventListener
 	virtual void OnEvent(EngineUpdateFrameEventArgs e) override;

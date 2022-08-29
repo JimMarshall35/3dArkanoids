@@ -37,6 +37,11 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f,((w  * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
 	m_ballManager.Init(this, m_frameUpdateEvent);
 
+	//m_ballManager.AddBall({ 1,2,3 }, { 420,0,0 }, false);
+	//m_ballManager.AddBall({ 4,5,6 }, { 0,60,0 }, true);
+	//m_ballManager.AddBall({ 7,8,9 }, { 0,0,13 }, false);
+	//m_ballManager.TestRemoveFunc(2);
+
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
 	if (!isValid) {

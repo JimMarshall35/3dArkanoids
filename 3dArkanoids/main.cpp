@@ -122,6 +122,8 @@ int main()
     GameFramework::SendFrameworkMessage(msg);
     const auto& l = AutoList<DrawableLayerBase>::GetList();
 
+
+
     gamePtr = &game;
     
 

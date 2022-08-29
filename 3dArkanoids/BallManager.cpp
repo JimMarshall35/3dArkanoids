@@ -15,7 +15,7 @@ void BallManager::AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckT
 	ball.direction = direction;
 	ball.nextBall = nullptr;
 	Ball** endOfBallList = &m_ballListHead;
-	if (endOfBallList == nullptr) {
+	if (*endOfBallList == nullptr) {
 		*endOfBallList = &ball;
 	}
 	else {
@@ -35,6 +35,7 @@ void BallManager::PushRecylcedIndex(size_t index)
 	if (m_numRecycledBallIndices < MAX_NUM_BALLS) {
 		m_recycledBallIndices[m_numRecycledBallIndices++] = index;
 	}
+	m_numBalls--;
 }
 
 size_t BallManager::PopRecycledIndex()
@@ -54,6 +55,45 @@ BallManager::Ball& BallManager::GetNextFreeBall()
 	else {
 		return m_balls[m_numBalls++];
 	}
+}
+
+
+void BallManager::RemoveBallAtListIndex(int index)
+{
+	IterateBallList([this, index](Ball* thisBall, Ball* lastBall, int onIteration) {
+		auto previousListNodePtr = &m_ballListHead;
+		if (onIteration == index) {
+			if (lastBall == nullptr) {
+				m_ballListHead = thisBall->nextBall;
+			}
+			else {
+				lastBall->nextBall = thisBall->nextBall;
+			}
+			auto indexInArray = thisBall - m_balls;
+			PushRecylcedIndex(index);
+			return false;
+		}
+		return true;
+	});
+}
+
+void BallManager::IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction)
+{
+	if (m_ballListHead->nextBall == nullptr) {
+		return;
+	}
+	Ball* lastBall = nullptr;
+	Ball* thisBall = m_ballListHead;
+	int onIteration = 0;
+	do {
+		if (!iterationFunction(thisBall, lastBall, onIteration++)) {
+			return;
+		}
+
+		lastBall = thisBall;
+		thisBall = thisBall->nextBall;
+	} while (thisBall != nullptr);
+	
 }
 
 void BallManager::OnEvent(EngineUpdateFrameEventArgs e)

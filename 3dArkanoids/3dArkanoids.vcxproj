@@ -180,6 +180,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MockLevelLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Sphere.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array3d.h" />
@@ -222,6 +223,7 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SizedQueue.h" />
+    <ClInclude Include="Sphere.h" />
     <ClInclude Include="TSQueue.h" />
     <ClInclude Include="typedefs.h" />
   </ItemGroup>

@@ -1,9 +1,12 @@
 #pragma once
-#include "IRenderer.h"
-#include "Shader.h"
+
 #include <string>
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#include "IRenderer.h"
+#include "Shader.h"
+#include "Sphere.h"
 
 class Renderer :
     public IRenderer
@@ -13,6 +16,7 @@ public:
     Renderer(int screenWidth, int screenHeight);
     // Inherited via IRenderer
     virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const override;
+    virtual void DrawSphere(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const override;
     virtual void DrawInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual void DrawTextAnchoredToBottomLeft(std::string text, float x, float y, float scale, glm::vec3 colour) const override;
     virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
@@ -31,6 +35,7 @@ private:
     void Initialize();
     void InitFT();
     void LoadFont(std::string ttfFilePath);
+    void InitializeSphereVertices();
 
 private:
     /// Holds all state information relevant to a character as loaded using FreeType
@@ -42,11 +47,16 @@ private:
     };
 
 private:
+    Sphere m_sphere; // code stolen from http://www.songho.ca/opengl/gl_sphere.html
+
     const unsigned int m_baseTextSize = 48;
     unsigned int m_freeTypeVAO;
     unsigned int m_freeTypeVBO;
 
     unsigned int m_unitCubeVAO;
+    unsigned int m_unitSphereVAO;
+    unsigned int m_unitSphereEBO;
+
     Shader m_colouredShader;
     Shader m_colouredInstancedShader;
     Shader m_textShader;

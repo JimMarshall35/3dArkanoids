@@ -175,7 +175,10 @@ Renderer::Renderer(int screenWidth, int screenHeight)
 }
 
 
-
+/// <summary>
+/// should be called by screen sized change callback
+/// </summary>
+/// <param name="value"></param>
 void Renderer::SetScreenDims(const glm::ivec2& value)
 {
     m_scrWidth = value.x;
@@ -197,6 +200,9 @@ void PrintInfo() {
 
 }
 
+/// <summary>
+/// get ready to render!
+/// </summary>
 void Renderer::Initialize()
 {
     PrintInfo();
@@ -259,6 +265,8 @@ void Renderer::Initialize()
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
 
+    InitializeSphereVertices();
+
     // load all shaders
     m_colouredShader.LoadFromString(colourVertGlsl, colourFragGlsl);
     m_colouredInstancedShader.LoadFromString(instancedColourVertGlsl, instancedColourFragGlsl);
@@ -273,6 +281,10 @@ void Renderer::Initialize()
     SetScreenDims({ m_scrWidth, m_scrHeight });
 }
 
+/// <summary>
+/// initialise freetype library and vertices used
+/// for text drawing.
+/// </summary>
 void Renderer::InitFT()
 {
     if (FT_Init_FreeType(&m_ft))
@@ -294,6 +306,10 @@ void Renderer::InitFT()
     
 }
 
+/// <summary>
+/// load a ttf format font
+/// </summary>
+/// <param name="ttfFilePath">path to font</param>
 void Renderer::LoadFont(std::string ttfFilePath)
 {
     FT_Face face;
@@ -353,6 +369,38 @@ void Renderer::LoadFont(std::string ttfFilePath)
     FT_Done_FreeType(m_ft);
 }
 
+/// <summary>
+/// Load the sphere vertices into openGL memory
+/// and set m_unitSphereVAO in the process.
+/// </summary>
+void Renderer::InitializeSphereVertices()
+{
+    unsigned int VBO;
+    glGenVertexArrays(1, &m_unitSphereVAO);
+    glGenBuffers(1, &VBO);
+
+    glGenBuffers(1, &m_unitSphereEBO);
+
+
+    glBindVertexArray(m_unitSphereVAO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, m_sphere.getInterleavedVertexSize(), m_sphere.getInterleavedVertices(), GL_STATIC_DRAW);
+    
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_unitSphereEBO);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_sphere.getIndexSize(), m_sphere.getIndices(), GL_STATIC_DRAW);
+
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, m_sphere.getInterleavedStride(), (void*)0);
+    glEnableVertexAttribArray(0);
+    // normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, m_sphere.getInterleavedStride(), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+
+}
+
 glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& dimensions) {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, pos);
@@ -408,6 +456,28 @@ void Renderer::DrawCuboid(const glm::vec3& pos, const glm::vec3& dimensions, con
 
     glBindVertexArray(m_unitCubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
+}
+
+void Renderer::DrawSphere(const glm::vec3& pos, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const
+{
+    glm::mat4 model = PositionAndScaleToModelMatrix(pos, dimensions);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)m_scrWidth / (float)m_scrHeight, 0.1f, DRAW_DISTANCE);
+
+    // vert
+    m_colouredShader.use();
+    m_colouredShader.setMat4("model", model);
+    m_colouredShader.setMat4("view", camera.GetViewMatrix());
+    m_colouredShader.setMat4("projection", projection);
+
+    // frag
+    m_colouredShader.setVec3("viewPos", camera.Position);
+    m_colouredShader.setVec3("lightPos", m_lightPos);
+    m_colouredShader.setVec3("lightColor", m_lightColour);
+    m_colouredShader.setVec3("objectColor", colour);
+
+    glBindVertexArray(m_unitSphereVAO);
+    glDrawElements(GL_TRIANGLES, m_sphere.getIndexCount(), GL_UNSIGNED_INT, 0);
+
 }
 
 /// <summary>

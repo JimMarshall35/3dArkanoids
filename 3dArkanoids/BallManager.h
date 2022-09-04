@@ -5,21 +5,24 @@
 #include <glm/glm.hpp>
 #include <functional>
 
-
-
 class Game;
+class IRenderer;
 class GameInput;
+class Camera;
 #define MAX_NUM_BALLS 128
+
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>
 {
 public:
 	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent);
-	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat);
-	void ReceiveInput(const GameInput& gameInput);
+	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius);
+	void ReceiveInput(double changeInBatX);
+	void Draw(const IRenderer* renderer, const Camera& camera) const;
 private:
 	struct Ball {
 		glm::vec3 pos;
+		float radius;
 		glm::vec3 direction;
 		bool stuckToBat;
 
@@ -38,7 +41,7 @@ private:
 	size_t PopRecycledIndex();
 	Ball& GetNextFreeBall();
 	void RemoveBallAtListIndex(int index);
-	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
+	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
 public:
 	//void TestRemoveFunc(int index) {
 	//	RemoveBallAtListIndex(index);

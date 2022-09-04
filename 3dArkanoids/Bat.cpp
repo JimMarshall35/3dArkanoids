@@ -12,8 +12,9 @@ Bat::Bat()
 	LoadFromFile("bat.jim");
 }
 
-void Bat::RecieveInput(const GameInput& input)
+double Bat::RecieveInput(const GameInput& input)
 {
+	auto oldX = m_xPos;
 	m_xPos += input.XChange * m_sensitivity;
 	if (m_xPos > m_xMaxPos) {
 		m_xPos = m_xMaxPos;
@@ -21,6 +22,7 @@ void Bat::RecieveInput(const GameInput& input)
 	else if (m_xPos < m_xMinPos) {
 		m_xPos = m_xMinPos;
 	}
+	return m_xPos - oldX;
 }
 
 void Bat::SetMinAndMaxXPos(double xMin, double xMax)
@@ -34,7 +36,7 @@ void Bat::Draw(const IRenderer* renderer, const Camera& cam) const
 {
 	renderer->DrawCuboid(
 		{ m_xPos,-(m_distanceFromFirstRow + BLOCK_WIDTH_UNITS * 0.5f),0 },
-		{ m_batWidth,3,3 },
+		{ m_batWidth,m_batDepthAndHeight.x,m_batDepthAndHeight.y },
 		cam,
 		{ 0,0,0 });
 }

@@ -117,11 +117,11 @@
     <ClCompile Include="GameUiOverlay.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="BallManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="BallManager.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,11 +248,11 @@
     <ClInclude Include="GameToUiMessage.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="BallManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="BallManager.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

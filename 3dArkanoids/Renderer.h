@@ -47,7 +47,7 @@ private:
     };
 
 private:
-    Sphere m_sphere; // code stolen from http://www.songho.ca/opengl/gl_sphere.html
+    Sphere m_sphere = Sphere(1.0f); // class stolen from http://www.songho.ca/opengl/gl_sphere.html
 
     const unsigned int m_baseTextSize = 48;
     unsigned int m_freeTypeVAO;

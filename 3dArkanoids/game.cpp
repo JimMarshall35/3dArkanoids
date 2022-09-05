@@ -33,10 +33,9 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
 
 	m_playFieldArray.LoadFromFile("Level.jim");
-
+	 
 	int w = m_playFieldArray.getW();
 
-	const auto ballRadius = 2.0f;
 	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f,((w  * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
 
 	m_ballManager.Init(
@@ -44,13 +43,12 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 		m_frameUpdateEvent);
 
 	const auto ballStartingY = 
-		-(m_bat.GetDistanceFromFirstRow() + BLOCK_WIDTH_UNITS * 0.5f) + ballRadius + (m_bat.GetDepthAndHeight().x * 0.5f);
+		-(m_bat.GetDistanceFromFirstRow() + BLOCK_WIDTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
 	
 	m_ballManager.AddBall(
 		{ m_bat.GetXPos() , ballStartingY, 0 },
 		{ 0,1,0 },
-		true,
-		ballRadius);
+		true);
 
 	//m_ballManager.AddBall({ 1,2,3 }, { 420,0,0 }, false);
 	//m_ballManager.AddBall({ 4,5,6 }, { 0,60,0 }, true);
@@ -157,6 +155,9 @@ void Game::SaveLevelTest(std::string filePath)
 
 void Game::ReceiveInput(const GameInput& gameInput)
 {
+	if (gameInput.Firing) {
+		m_ballManager.ReleaseBalls();
+	}
 	m_ballManager.ReceiveInput(m_bat.RecieveInput(gameInput));
 }
 

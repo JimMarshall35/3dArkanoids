@@ -10,19 +10,23 @@ class IRenderer;
 class GameInput;
 class Camera;
 #define MAX_NUM_BALLS 128
+#define DEFAULT_BALL_RADIUS 2.0f
+#define DEFAULT_BALL_SPEED 0.5f
 
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>
 {
 public:
 	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent);
-	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius);
+	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius = DEFAULT_BALL_RADIUS, float speed = DEFAULT_BALL_SPEED);
 	void ReceiveInput(double changeInBatX);
 	void Draw(const IRenderer* renderer, const Camera& camera) const;
+	void ReleaseBalls();
 private:
 	struct Ball {
 		glm::vec3 pos;
 		float radius;
+		float speed;
 		glm::vec3 direction;
 		bool stuckToBat;
 

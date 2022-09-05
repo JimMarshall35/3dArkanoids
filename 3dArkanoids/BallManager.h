@@ -9,15 +9,16 @@ class Game;
 class IRenderer;
 class GameInput;
 class Camera;
+class Bat;
 #define MAX_NUM_BALLS 128
 #define DEFAULT_BALL_RADIUS 2.0f
-#define DEFAULT_BALL_SPEED 0.5f
+#define DEFAULT_BALL_SPEED 1.5f
 
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>
 {
 public:
-	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent);
+	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent, const Bat* bat);
 	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius = DEFAULT_BALL_RADIUS, float speed = DEFAULT_BALL_SPEED);
 	void ReceiveInput(double changeInBatX);
 	void Draw(const IRenderer* renderer, const Camera& camera) const;
@@ -35,6 +36,7 @@ private:
 	};
 	using BallIteratorFunctionWithCurrentAndPrevious = std::function<bool(Ball*, Ball*, int)>; // return value signals continue / don't continue
 	Game* m_game;
+	const Bat* m_bat;
 	Ball* m_ballListHead = nullptr;
 	Ball m_balls[MAX_NUM_BALLS];
 	size_t m_numBalls = 0;
@@ -46,6 +48,8 @@ private:
 	Ball& GetNextFreeBall();
 	void RemoveBallAtListIndex(int index);
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
+private:
+	static void ReflectBall(Ball* thisBall, const glm::vec2& newPos, const glm::vec2& nearestPoint);
 public:
 	//void TestRemoveFunc(int index) {
 	//	RemoveBallAtListIndex(index);

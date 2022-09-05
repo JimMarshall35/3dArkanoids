@@ -35,7 +35,7 @@ void Bat::SetMinAndMaxXPos(double xMin, double xMax)
 void Bat::Draw(const IRenderer* renderer, const Camera& cam) const
 {
 	renderer->DrawCuboid(
-		{ m_xPos,-(m_distanceFromFirstRow + BLOCK_WIDTH_UNITS * 0.5f),0 },
+		{ m_xPos,-(m_distanceFromFirstRow + BLOCK_HEIGHT_UNITS * 0.5f),0 },
 		{ m_batWidth,m_batDepthAndHeight.x,m_batDepthAndHeight.y },
 		cam,
 		{ 0,0,0 });

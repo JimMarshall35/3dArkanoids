@@ -205,7 +205,7 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-        //gamePtr->SaveLevelTest("Level.jim");
+        gamePtr->SaveLevelTest("Level.jim");
         camera.SaveToFile("Camera.cam");
         std::cout << "Saving " << std::endl;
     }

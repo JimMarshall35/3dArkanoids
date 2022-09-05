@@ -18,9 +18,10 @@ public:
 	void SaveToFile(std::string path) const override;
 	void LoadFromFile(std::string path) override;
 	inline double GetSensitivity() { return m_sensitivity; }
-	inline double GetXPos() { return m_xPos; }
-	inline double GetDistanceFromFirstRow() { return m_distanceFromFirstRow; }
-	inline const glm::vec2& GetDepthAndHeight() { return m_batDepthAndHeight; }
+	inline double GetXPos() const { return m_xPos; }
+	inline double GetDistanceFromFirstRow() const { return m_distanceFromFirstRow; }
+	inline const glm::vec2& GetDepthAndHeight() const { return m_batDepthAndHeight; }
+	inline double GetWidth() const { return m_batWidth; }
 public:
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() override;
 	virtual bool SetSerializableProperty(const SerializableProperty& p);

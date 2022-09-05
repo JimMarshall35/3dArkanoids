@@ -40,14 +40,15 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 
 	m_ballManager.Init(
 		this,
-		m_frameUpdateEvent);
+		m_frameUpdateEvent,
+		&m_bat);
 
 	const auto ballStartingY = 
-		-(m_bat.GetDistanceFromFirstRow() + BLOCK_WIDTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
+		-(m_bat.GetDistanceFromFirstRow() + BLOCK_DEPTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
 	
 	m_ballManager.AddBall(
 		{ m_bat.GetXPos() , ballStartingY, 0 },
-		{ 0,1,0 },
+		glm::normalize(glm::vec3{ -0.8,1,0 }),
 		true);
 
 	//m_ballManager.AddBall({ 1,2,3 }, { 420,0,0 }, false);

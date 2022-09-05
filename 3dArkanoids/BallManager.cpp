@@ -6,10 +6,14 @@
 #include "Camera.h"
 #include "PlayfieldDefs.h"
 #include "game.h"
+#include "Bat.h"
 
-void BallManager::Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent)
+#include <glm/gtx/rotate_vector.hpp>
+
+void BallManager::Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent, const Bat* bat)
 {
 	m_game = game;
+	m_bat = bat;
 	updateEvent += this;
 }
 
@@ -141,36 +145,49 @@ void BallManager::IterateBallList(BallIteratorFunctionWithCurrentAndPrevious ite
 	
 }
 
+
+
 glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter) {
 	return glm::ivec3{
-			std::round((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
-			std::round((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
-			std::round((ballCenter.z + ((float)BLOCK_DEPTH_UNITS / 2.0f)) / (float)BLOCK_DEPTH_UNITS)
+		std::round((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
+		std::round((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
+		std::round((ballCenter.z + ((float)BLOCK_DEPTH_UNITS / 2.0f)) / (float)BLOCK_DEPTH_UNITS)
 	};
 }
 
 glm::ivec3 WorldSpaceToTileCoordsFloor(const glm::vec3& ballCenter) {
 	return glm::ivec3{
-			std::floor((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
-			std::floor((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
-			std::floor((ballCenter.z + ((float)BLOCK_DEPTH_UNITS / 2.0f)) / (float)BLOCK_DEPTH_UNITS)
+		std::floor((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
+		std::floor((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
+		std::floor((ballCenter.z + ((float)BLOCK_DEPTH_UNITS / 2.0f)) / (float)BLOCK_DEPTH_UNITS)
 	};
 }
 
-inline glm::ivec2 IVec3ToIVec2(const glm::ivec3& vec3) {
+static inline glm::ivec2 IVec3ToIVec2(const glm::ivec3& vec3) {
 	return glm::ivec2(vec3.x, vec3.y);
 }
 
-inline glm::vec2 Vec3ToVec2(const glm::vec3& vec3) {
+static inline glm::vec2 Vec3ToVec2(const glm::vec3& vec3) {
 	return glm::vec2(vec3.x, vec3.y);
 }
 
-inline glm::vec2 AdjustTileCoordsToWorld(const glm::ivec2& vCell) {
+static inline glm::vec2 AdjustTileCoordsToWorld(const glm::ivec2& vCell) {
 	return glm::vec2{
 		float(vCell.x) * BLOCK_WIDTH_UNITS - ((float)BLOCK_WIDTH_UNITS / 2.0f),
 		float(vCell.y) * BLOCK_HEIGHT_UNITS - ((float)BLOCK_HEIGHT_UNITS / 2.0f)
 	};
 }
+
+void BallManager::ReflectBall(Ball* thisBall, const glm::vec2& newPos, const glm::vec2& nearestPoint)
+{
+	auto vec2Relected = glm::reflect(
+		Vec3ToVec2(thisBall->direction),
+		glm::normalize(newPos - nearestPoint)
+	);
+	thisBall->direction.x = vec2Relected.x;
+	thisBall->direction.y = vec2Relected.y;
+}
+
 
 void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 {
@@ -179,18 +196,69 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 			return true;
 		}
 
-		// see https://github.com/OneLoneCoder/olcPixelGameEngine/blob/master/Videos/OneLoneCoder_PGE_CircleVsRect.cpp for collision detection algorithm
 
+		// refactor from here
+
+		auto oldBallCenter = thisBall->pos;
 		auto& ballCenter = thisBall->pos;
 
-		auto currentCellTileCoords = WorldSpaceToTileCoordsFloor(thisBall->pos);
 
 		glm::vec3 vPotentialPosition = {
 			thisBall->pos.x + thisBall->direction.x * thisBall->speed,
 			thisBall->pos.y + thisBall->direction.y * thisBall->speed,
 			thisBall->pos.z + thisBall->direction.z * thisBall->speed,
-
 		};
+
+		if (thisBall->pos.x < -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius) {
+			thisBall->pos.x = -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius;
+			thisBall->direction.x *= -1.0f;
+			return true;
+		}
+		if (thisBall->pos.x > (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS) {
+			thisBall->pos.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS;
+			thisBall->direction.x *= -1.0f;
+			return true;
+		}
+		if (thisBall->pos.y > (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS + (float)BLOCK_HEIGHT_UNITS * 0.5f) {
+			thisBall->pos.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS + (float)BLOCK_HEIGHT_UNITS * 0.5f;
+			thisBall->direction.y *= -1.0f;
+			return true;
+		}
+
+
+		auto batX = m_bat->GetXPos();
+		auto batDistanceFromFirstRow = m_bat->GetDistanceFromFirstRow();
+		const auto& batDepthAndHeight = m_bat->GetDepthAndHeight();
+		auto batWidth = m_bat->GetWidth();
+
+		auto topOfBat = -(batDistanceFromFirstRow + BLOCK_DEPTH_UNITS / 2.0f) + batDepthAndHeight.x * 0.5f + thisBall->radius;
+
+		if (vPotentialPosition.y < topOfBat && vPotentialPosition.y > topOfBat - batDepthAndHeight.x) {
+			bool collidingWithBat = (vPotentialPosition.x <= batX + batWidth / 2.0f + thisBall->radius)
+				&& (vPotentialPosition.x >= batX - batWidth / 2.0f + thisBall->radius);
+			if (collidingWithBat) {
+				thisBall->pos.y = topOfBat;
+				thisBall->pos.x = vPotentialPosition.x;
+				thisBall->direction.y *= -1.0f;
+
+				auto rotationMagnitude = (thisBall->pos.x - batX) / (batWidth/2 + thisBall->radius);
+
+				auto rotatedVec = glm::rotate(Vec3ToVec2(thisBall->direction), -(float)rotationMagnitude * glm::radians(20.0f));
+				thisBall->direction.x = rotatedVec.x;
+				thisBall->direction.y = rotatedVec.y;
+
+				return true;
+			}
+			
+		}
+		
+		// to here
+
+
+		// see https://github.com/OneLoneCoder/olcPixelGameEngine/blob/master/Videos/OneLoneCoder_PGE_CircleVsRect.cpp for collision detection algorithm
+
+
+		auto currentCellTileCoords = WorldSpaceToTileCoordsFloor(thisBall->pos);
 
 		auto targetCellTileCoords = WorldSpaceToTileCoordsRound(vPotentialPosition);
 
@@ -238,11 +306,18 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 						auto newPos = Vec3ToVec2(vPotentialPosition) - glm::normalize(vRayToNearest) * fOverlap;
 						vPotentialPosition.x = newPos.x;
 						vPotentialPosition.y = newPos.y;
+
+						ReflectBall(thisBall, newPos, vNearestPoint);
+
+						// delete block (will have more sophisiticated handling for different blocks)
+						unsigned char oldval;
+						m_game->AddOrChangeBlock({ vCell.x,vCell.y,0 }, 0, oldval);
+						//goto loop_end;
 					}
 				}
 			}
 		}
-
+loop_end:
 		thisBall->pos = vPotentialPosition;
 
 		return true;

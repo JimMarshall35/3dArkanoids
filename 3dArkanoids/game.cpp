@@ -303,7 +303,14 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
-	
+	if (point.x < 0
+		|| point.x >= m_playFieldArray.getW()
+		|| point.y < 0
+		|| point.y >= m_playFieldArray.getH()
+		|| point.z < 0
+		|| point.z >= m_playFieldArray.getD()) {
+		return FAILURE_POINT_OUT_OF_BOUNDS;
+	}
 	m_playFieldArray[point] = 0x00;
 	int index = IndexOfRenderDataAt(point);
 	auto& renderData = m_blockRenderData[index];

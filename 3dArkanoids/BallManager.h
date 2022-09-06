@@ -34,7 +34,17 @@ private:
 		Ball* nextBall = nullptr;
 		
 	};
+	enum class BallAdvanceResult {
+		HIT_NOTHING,
+		HIT_LEFT_SIDE,
+		HIT_RIGHT_SIDE,
+		HIT_TOP_SIDE,
+		OUT_OF_PLAY,
+		HIT_BAT,
+		HIT_BLOCK
+	};
 	using BallIteratorFunctionWithCurrentAndPrevious = std::function<bool(Ball*, Ball*, int)>; // return value signals continue / don't continue
+private:
 	Game* m_game;
 	const Bat* m_bat;
 	Ball* m_ballListHead = nullptr;
@@ -42,14 +52,16 @@ private:
 	size_t m_numBalls = 0;
 	size_t m_recycledBallIndices[MAX_NUM_BALLS];
 	size_t m_numRecycledBallIndices = 0;
+	
 private:
 	void PushRecylcedIndex(size_t index);
 	size_t PopRecycledIndex();
 	Ball& GetNextFreeBall();
 	void RemoveBallAtListIndex(int index);
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
+	BallAdvanceResult AdvanceBall(const Ball* ball, glm::vec3& posToChange, glm::vec3& dirToChange, bool deleteBlock = true);
 private:
-	static void ReflectBall(Ball* thisBall, const glm::vec2& newPos, const glm::vec2& nearestPoint);
+	static void ReflectBall(glm::vec3& directionToChange, const glm::vec2& newPos, const glm::vec2& nearestPoint, const glm::vec3& oldDirection);
 public:
 	//void TestRemoveFunc(int index) {
 	//	RemoveBallAtListIndex(index);

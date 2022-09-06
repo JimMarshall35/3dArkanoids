@@ -7,6 +7,8 @@
 #include <grpcpp/server_context.h>
 #include <thread>
 #include "BlockColourDefs.h"
+#include "GameFramework.h"
+#include "GameToUiMessage.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;
@@ -195,6 +197,7 @@ void GrpcLevelEditorServer::InitialConnectionHandshakeCallData::OnProcess()
 			output->set_blue(block.Rgba.z);
 			output->set_alpha(block.Rgba[3]);
 		}
+		GameFramework::SendFrameworkMessage(GameToUiMessage{ 420,true });
 		Finish();
 	});
 }

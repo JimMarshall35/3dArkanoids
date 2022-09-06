@@ -48,14 +48,8 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	
 	m_ballManager.AddBall(
 		{ m_bat.GetXPos() , ballStartingY, 0 },
-		glm::normalize(glm::vec3{ -0.8,1,0 }),
+		glm::normalize(glm::vec3{ -0.5,1,0 }),
 		true);
-
-	//m_ballManager.AddBall({ 1,2,3 }, { 420,0,0 }, false);
-	//m_ballManager.AddBall({ 4,5,6 }, { 0,60,0 }, true);
-	//m_ballManager.AddBall({ 7,8,9 }, { 0,0,13 }, false);
-	//m_ballManager.TestRemoveFunc(1);
-	//m_ballManager.AddBall({ 10,11,12 }, { 0,69,0 }, true);
 
 	InitializeRenderData();
 	bool isValid = LinkAndValidateBlocksRenderData();
@@ -71,6 +65,20 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 /// <param name="camera"></param>
 void Game::Draw(const Camera& camera) const
 {
+	m_renderer->DrawCuboid( 
+		{ 
+			(m_playFieldArray.getW() * BLOCK_WIDTH_UNITS) / 2.0f - BLOCK_WIDTH_UNITS * 0.5f, 
+			((m_playFieldArray.getH() * BLOCK_HEIGHT_UNITS) / 2.0f - BLOCK_HEIGHT_UNITS * 0.5f) - m_bat.GetDistanceFromFirstRow()*0.5f, 
+			-(BLOCK_DEPTH_UNITS * 0.5f) - 1.0f 
+		},
+		{ 
+			m_playFieldArray.getW() * BLOCK_WIDTH_UNITS ,
+			(m_playFieldArray.getH() * BLOCK_HEIGHT_UNITS) + m_bat.GetDistanceFromFirstRow() ,
+			1.0f
+		},
+		camera,
+		{ 0.3,0.3,0.3 }
+	);
 	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
 	m_ballManager.Draw(m_renderer.get(), camera);
@@ -254,7 +262,7 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 const Array3D<unsigned char>& Game::GetBoardState()
 {
 	// this function is only called by editor server and is the first thing called
-	GameFramework::SendFrameworkMessage(GameToUiMessage{ 420,true });
+	
 	return m_playFieldArray;
 }
 
@@ -295,9 +303,14 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
+	
 	m_playFieldArray[point] = 0x00;
 	int index = IndexOfRenderDataAt(point);
-	m_blockRenderData[index].SetShouldRender(false);
+	auto& renderData = m_blockRenderData[index];
+	renderData.SetShouldRender(false);
+	if (renderData.child != nullptr) {
+		m_fallingBlockManager.StartBlockFalling(renderData.child, m_playFieldArray);
+	}
 	return BLOCK_AT_SPACE;
 }
 

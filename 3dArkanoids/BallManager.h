@@ -12,7 +12,7 @@ class Camera;
 class Bat;
 #define MAX_NUM_BALLS 128
 #define DEFAULT_BALL_RADIUS 2.0f
-#define DEFAULT_BALL_SPEED 1.5f
+#define DEFAULT_BALL_SPEED 2.0f
 
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>

@@ -6,7 +6,7 @@
 #include "FallingBlockFinishedEventArgs.h"
 
 // 9.8 m/s^2 <- actual gravity
-#define GRAVITY 19.6 * 2
+#define GRAVITY 19.6 * 4
 #define GRAVITYHALVED (GRAVITY * 0.5)
 
 FallingBlockColumn::FallingBlockColumn()

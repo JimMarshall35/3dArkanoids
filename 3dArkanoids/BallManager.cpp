@@ -214,13 +214,13 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 			thisBall->direction.x *= -1.0f;
 			return true;
 		}
-		if (thisBall->pos.x > (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS) {
-			thisBall->pos.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS;
+		if (thisBall->pos.x > (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f) {
+			thisBall->pos.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f;
 			thisBall->direction.x *= -1.0f;
 			return true;
 		}
-		if (thisBall->pos.y > (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS + (float)BLOCK_HEIGHT_UNITS * 0.5f) {
-			thisBall->pos.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS + (float)BLOCK_HEIGHT_UNITS * 0.5f;
+		if (thisBall->pos.y > (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f) {
+			thisBall->pos.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f;
 			thisBall->direction.y *= -1.0f;
 			return true;
 		}
@@ -264,6 +264,10 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 
 		auto vAreaTL = glm::min(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) - glm::ivec2(1,1);
 		auto vAreaBR = glm::max(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) + glm::ivec2(1,1);
+
+
+		glm::ivec2 coordsHit;
+		bool blockHit = false;
 		
 		glm::vec2 vRayToNearest;
 
@@ -311,13 +315,23 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 
 						// delete block (will have more sophisiticated handling for different blocks)
 						unsigned char oldval;
-						m_game->AddOrChangeBlock({ vCell.x,vCell.y,0 }, 0, oldval);
+
+						//if (!blockHit) {
+						//	blockHit = true;
+						//	coordsHit = vCell;
+						//}
+						m_game->RemoveBlock({ vCell.x,vCell.y,0 });
+
 						//goto loop_end;
 					}
 				}
 			}
 		}
-loop_end:
+	loop_end:
+		//if (blockHit) {
+		//	m_game->RemoveBlock({ coordsHit.x,coordsHit.y,0 });
+
+		//}
 		thisBall->pos = vPotentialPosition;
 
 		return true;

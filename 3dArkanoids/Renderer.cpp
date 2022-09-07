@@ -69,6 +69,8 @@ std::string colourFragGlsl =
 
 #pragma region instanced colour shader
 
+#pragma region vert
+
 std::string instancedColourVertGlsl =
 "#version 460 core\n"
 "layout(location = 0) in vec3 aPos;\n"
@@ -108,6 +110,10 @@ std::string instancedColourVertGlsl =
 "    }\n"
 "}\n";
 
+#pragma endregion
+
+#pragma region frag
+
 std::string instancedColourFragGlsl =
 "#version 330 core\n"
 "out vec4 FragColor;\n"
@@ -143,7 +149,12 @@ std::string instancedColourFragGlsl =
 
 #pragma endregion
 
+
+#pragma endregion
+
 #pragma region instanced textured shader
+
+#pragma region vert
 
 std::string instancedTexturedVertGlsl =
 "#version 460 core\n"
@@ -185,6 +196,10 @@ std::string instancedTexturedVertGlsl =
 "    }\n"
 "}\n";
 
+#pragma endregion
+
+#pragma region frag
+
 std::string instancedTexturedFragGlsl =
 "#version 330 core\n"
 "out vec4 FragColor;\n"
@@ -217,6 +232,8 @@ std::string instancedTexturedFragGlsl =
 "    vec4 colour = texture(diffuseAtlas, Uv);\n"
 "    FragColor = vec4((ambient + diffuse + specular),1.0) * colour;\n"
 "}\n";
+
+#pragma endregion
 
 #pragma endregion
 
@@ -639,7 +656,7 @@ glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& d
 /// <param name="colours"></param>
 /// <param name="instances"></param>
 /// <param name="numberToDraw"></param>
-void DeInterleaveInstanceDataArray(std::vector<glm::vec4>& positionsAndShouldDraw, std::vector<glm::vec4>& scales, std::vector<glm::vec4>& colours, const BlockInstanceRenderData* instances, const size_t numberToDraw) {
+void DeInterleaveInstanceDataArrayForColouredShader(std::vector<glm::vec4>& positionsAndShouldDraw, std::vector<glm::vec4>& scales, std::vector<glm::vec4>& colours, const BlockInstanceRenderData* instances, const size_t numberToDraw) {
     for (size_t i = 0; i < numberToDraw; i++) {
         const auto& instance = instances[i];
         positionsAndShouldDraw[i] = glm::vec4(instance.worldPos, instance.shouldRender ? 1.0 : -1.0);
@@ -647,6 +664,17 @@ void DeInterleaveInstanceDataArray(std::vector<glm::vec4>& positionsAndShouldDra
         // use the fourth element of the colour vector as a boolean 
         // for the shader to save adding an extra element to the uniform block
         colours[i] = instance.colour;
+    }
+}
+
+void DeInterleaveInstanceDataArrayForTexturexShader(std::vector<glm::vec4>& positionsAndShouldDraw, std::vector<glm::vec4>& scales, std::vector<glm::vec4>& uvOffsets, const BlockInstanceRenderData* instances, const size_t numberToDraw) {
+    for (size_t i = 0; i < numberToDraw; i++) {
+        const auto& instance = instances[i];
+        positionsAndShouldDraw[i] = glm::vec4(instance.worldPos, instance.shouldRender ? 1.0 : -1.0);
+        scales[i] = glm::vec4(instance.dims, 1.0);
+        // use the fourth element of the colour vector as a boolean 
+        // for the shader to save adding an extra element to the uniform block
+        uvOffsets[i] = glm::vec4(instance.uvOffset, 0,0);
     }
 }
 
@@ -816,7 +844,7 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     auto colours = std::vector<glm::vec4>(numberToDraw);
 
     // sets models, coloursAndShouldDraw from the array of instances
-    DeInterleaveInstanceDataArray(positionsAndShouldDraw, scales, colours, instances, numberToDraw);
+    DeInterleaveInstanceDataArrayForColouredShader(positionsAndShouldDraw, scales, colours, instances, numberToDraw);
 
     m_colouredInstancedShader.use();
 
@@ -841,14 +869,14 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     // for use when changing the buffer during play
     GLint offset[numInstanceAttributes];
     glGetActiveUniformsiv(programHandle, numInstanceAttributes, indices, GL_UNIFORM_OFFSET, offset);
-    m_positionsArrayUboOffset = offset[0];
-    m_scalesArrayUboOffset = offset[1];
-    m_coloursArrayUboOffset = offset[2];
+    m_instancedColouredPositionsArrayUboOffset = offset[0];
+    m_instancedColouredScalesArrayUboOffset = offset[1];
+    m_instancedColouredColoursArrayUboOffset = offset[2];
 
     // copy the data to the staging array using the offsets we've gotten
-    memcpy(blockBuffer.data() + m_positionsArrayUboOffset, positionsAndShouldDraw.data(), numberToDraw * sizeof(glm::vec4));
-    memcpy(blockBuffer.data() + m_scalesArrayUboOffset, scales.data(), numberToDraw * sizeof(glm::vec4));
-    memcpy(blockBuffer.data() + m_coloursArrayUboOffset, colours.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_instancedColouredPositionsArrayUboOffset, positionsAndShouldDraw.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_instancedColouredScalesArrayUboOffset, scales.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_instancedColouredPositionsArrayUboOffset, colours.data(), numberToDraw * sizeof(glm::vec4));
 
     // generate a new buffer to be the UBO and bind it to GL_UNIFORM_BUFFER
     if (!glIsBuffer(m_blockInstanceDataUboHandle)) {
@@ -859,6 +887,62 @@ void Renderer::SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, c
     // glBufferData the data from the staging array to the UBO 
     glBufferData(GL_UNIFORM_BUFFER, blockSize, blockBuffer.data(), GL_DYNAMIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_blockInstanceDataUboHandle);
+}
+
+void Renderer::SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToDraw)
+{
+    // position and scale for each block, to be set by DeInterleaveInstanceDataArray.
+    // Fourth element of positions is whether the block should be drawn. If so it is > 0 else < 0.
+    auto positionsAndShouldDraw = std::vector<glm::vec4>(numberToDraw);
+    auto scales = std::vector<glm::vec4>(numberToDraw);
+
+
+    auto uvOffsets = std::vector<glm::vec4>(numberToDraw);
+
+    // sets models, coloursAndShouldDraw from the array of instances
+    DeInterleaveInstanceDataArrayForTexturexShader(positionsAndShouldDraw, scales, uvOffsets, instances, numberToDraw);
+
+    m_texturedInstancedShader.use();
+
+    // ideally this ubo setting process would be a helper method in the Shader class... one day
+    auto programHandle = m_texturedInstancedShader.ID;
+
+    // get the total size of the InstanceData uniform block
+    GLuint blockIndex = glGetUniformBlockIndex(programHandle, "InstanceData");
+    GLint blockSize;
+    glGetActiveUniformBlockiv(programHandle, blockIndex, GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+
+    // setup temporary buffer that we will eventually 'glBufferData' into the ubo
+    auto blockBuffer = std::vector<GLbyte>(blockSize);
+    static const int numInstanceAttributes = 3;
+
+    // get indices of the variables in the uniform buffer (both are arrays)
+    const GLchar* names[] = { "positions", "scales", "uvOffsets" };
+    GLuint indices[numInstanceAttributes];
+    glGetUniformIndices(programHandle, numInstanceAttributes, names, indices);
+
+    // get the starting offset for each array in the uniform buffer and cache
+    // for use when changing the buffer during play
+    GLint offset[numInstanceAttributes];
+    glGetActiveUniformsiv(programHandle, numInstanceAttributes, indices, GL_UNIFORM_OFFSET, offset);
+    m_instancedTexturedPositionsArrayUboOffset = offset[0];
+    m_instancedTexturedScalesArrayUboOffset = offset[1];
+    m_instancedTexturedUvOffsetsArrayUboOffset = offset[2];
+
+    // copy the data to the staging array using the offsets we've gotten
+    memcpy(blockBuffer.data() + m_instancedTexturedPositionsArrayUboOffset, positionsAndShouldDraw.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_instancedTexturedScalesArrayUboOffset, scales.data(), numberToDraw * sizeof(glm::vec4));
+    memcpy(blockBuffer.data() + m_instancedTexturedUvOffsetsArrayUboOffset, uvOffsets.data(), numberToDraw * sizeof(glm::vec4));
+
+    // generate a new buffer to be the UBO and bind it to GL_UNIFORM_BUFFER
+    if (!glIsBuffer(m_texturedBlockInstanceDataUboHandle)) {
+        glGenBuffers(1, &m_texturedBlockInstanceDataUboHandle);
+    }
+    glBindBuffer(GL_UNIFORM_BUFFER, m_texturedBlockInstanceDataUboHandle);
+
+    // glBufferData the data from the staging array to the UBO 
+    glBufferData(GL_UNIFORM_BUFFER, blockSize, blockBuffer.data(), GL_DYNAMIC_DRAW);
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_texturedBlockInstanceDataUboHandle);
 }
 
 void Renderer::SetLightPos(const glm::vec3& value)
@@ -874,9 +958,9 @@ void Renderer::SetLightColour(const glm::vec3& value)
 void Renderer::SetCubeShouldRender(size_t indexCubeIsAt, bool newValue)
 {
     float ShouldDrawFlag = newValue ? 1.0f : -1.0f;
-    glBindBuffer(GL_UNIFORM_BUFFER, m_blockInstanceDataUboHandle);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_texturedBlockInstanceDataUboHandle);
     glBufferSubData(GL_UNIFORM_BUFFER,
-        m_positionsArrayUboOffset + (sizeof(glm::vec4) * indexCubeIsAt) + sizeof(float) * 3, // destination offset
+        m_instancedTexturedPositionsArrayUboOffset + (sizeof(glm::vec4) * indexCubeIsAt) + sizeof(float) * 3, // destination offset
         sizeof(float),                                                                     // bytes to copy
         &ShouldDrawFlag                                                                    // source
     );
@@ -885,10 +969,10 @@ void Renderer::SetCubeShouldRender(size_t indexCubeIsAt, bool newValue)
 void Renderer::SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos)
 {
     auto newPosAsVec4 = glm::vec4(newPos, 1.0f);
-    glBindBuffer(GL_UNIFORM_BUFFER, m_blockInstanceDataUboHandle);
+    glBindBuffer(GL_UNIFORM_BUFFER, m_texturedBlockInstanceDataUboHandle);
     glBufferSubData(
         GL_UNIFORM_BUFFER,
-        m_positionsArrayUboOffset + (sizeof(glm::vec4) * indexCubeIsAt), // destination offset
+        m_instancedTexturedPositionsArrayUboOffset + (sizeof(glm::vec4) * indexCubeIsAt), // destination offset
         sizeof(glm::vec4),                                                 // bytes to copy
         &newPosAsVec4                                                             // source
     );
@@ -902,11 +986,39 @@ void Renderer::LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int 
 {
     int img_w, img_h;
     int n;
+    stbi_set_flip_vertically_on_load(true);
     const auto data = stbi_load(blocksTextureFilePath.c_str(), &img_w, &img_h, &n, NUM_CHANNELS);
 
     m_blocksDiffuseTextureAtlasNumberOfBlocks = numBlocks;
     OpenGlGPULoadTexture(data, img_w, img_h, &m_blocksDiffuseTextureAtlas);
 
+}
+
+void Renderer::DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera)
+{
+    GLClearErrors();
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)m_scrWidth / (float)m_scrHeight, 0.1f, DRAW_DISTANCE);
+
+    // vert
+    m_texturedInstancedShader.use();
+    m_texturedInstancedShader.setMat4("view", camera.GetViewMatrix());
+    m_texturedInstancedShader.setMat4("projection", projection);
+    // frag
+    m_texturedInstancedShader.setVec3("viewPos", camera.Position);
+    m_texturedInstancedShader.setVec3("lightPos", m_lightPos);
+    m_texturedInstancedShader.setVec3("lightColor", m_lightColour);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_blocksDiffuseTextureAtlas);
+
+    glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_texturedBlockInstanceDataUboHandle);
+    glBindVertexArray(m_oneByTwoBlockVAO);
+    glDrawArraysInstanced(GL_TRIANGLES, 0, 36, numberToDraw);
+}
+
+glm::vec2 Renderer::getUvOffsetToNextOneByTwoBlock()
+{
+    return glm::vec2(0.0f,-(1.0f/(float)m_blocksDiffuseTextureAtlasNumberOfBlocks));
 }
 
 

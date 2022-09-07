@@ -63,6 +63,7 @@ private:
 	void InitializeRenderData();
 	bool LinkAndValidateBlocksRenderData();
 	glm::vec4 GetColourFromByteValue(const unsigned char byteCode);
+	glm::vec2 GetUvOffsetFromByteValue(const unsigned char byteCode);
 private:
 	SizedQueue<size_t, MAX_INSTANCES> m_deadBlockIndices;
 	std::vector<BlockInstanceRenderData> m_blockRenderData = std::vector<BlockInstanceRenderData>(MAX_INSTANCES);

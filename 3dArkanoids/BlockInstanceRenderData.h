@@ -11,8 +11,8 @@ public:
 	BlockInstanceRenderData() {
 
 	}
-	BlockInstanceRenderData(glm::vec3 worldPos, glm::vec4 colour, bool shouldRender = true)
-		:worldPos(worldPos), colour(colour), shouldRender(shouldRender)
+	BlockInstanceRenderData(glm::vec3 worldPos, glm::vec4 colour, glm::vec2 uvOffset, bool shouldRender = true)
+		:worldPos(worldPos), colour(colour), shouldRender(shouldRender), uvOffset(uvOffset)
 	{
 
 	}
@@ -27,6 +27,7 @@ public:
 	}
 	glm::vec3 worldPos;
 	glm::vec4 colour;
+	glm::vec2 uvOffset;
 	glm::vec3 dims = { BLOCK_WIDTH_UNITS, BLOCK_HEIGHT_UNITS, BLOCK_DEPTH_UNITS };
 	glm::ivec3 atGridCoords;
 	size_t renderDataArrayIndex;

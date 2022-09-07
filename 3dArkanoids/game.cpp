@@ -79,7 +79,7 @@ void Game::Draw(const Camera& camera) const
 		camera,
 		{ 0.3,0.3,0.3 }
 	);
-	m_renderer->DrawInstancedBlocks(m_currentNumBlocks, camera);
+	m_renderer->DrawTexturedOneByTwoInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
 	m_ballManager.Draw(m_renderer.get(), camera);
 }
@@ -125,7 +125,7 @@ void Game::InitializeRenderData()
 					y * BLOCK_HEIGHT_UNITS,
 					z * BLOCK_DEPTH_UNITS
 				);
-				auto renderData = BlockInstanceRenderData(worldPos, colour);
+				auto renderData = BlockInstanceRenderData(worldPos, colour, GetUvOffsetFromByteValue(byteAt));
 				
 				renderData.atGridCoords = glm::ivec3(x, y, z);                    // this blocks position in grid coordinates
 				renderData.renderDataArrayIndex = m_currentNumBlocks;
@@ -138,7 +138,8 @@ void Game::InitializeRenderData()
 
 	// TODO - to fix alpha blending issues sort the blocks at this point. https://learnopengl.com/Advanced-OpenGL/Blending#:~:text=Advanced%2DOpenGL%2FBlending,behind%20it%20with%20varying%20intensity.
 
-	m_renderer->SetInstancedBlocksUbo(m_blockRenderData.data(), m_currentNumBlocks); // TODO rename SetInstancedBlocksUbo to something non openGL specific like InitializeInstancedBlocks
+	//m_renderer->SetInstancedBlocksUbo(m_blockRenderData.data(), m_currentNumBlocks); // TODO rename SetInstancedBlocksUbo to something non openGL specific like InitializeInstancedBlocks
+	m_renderer->SetInstancedTexturedBlocksUbo(m_blockRenderData.data(), m_currentNumBlocks);
 }
 
 /// <summary>
@@ -324,6 +325,12 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
 {
 	return SetBoardDescriptionResultCPP();
+}
+
+glm::vec2 Game::GetUvOffsetFromByteValue(const unsigned char byteCode)
+{
+
+	return m_renderer->getUvOffsetToNextOneByTwoBlock() * (float)(byteCode - 1);
 }
 
 EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode)

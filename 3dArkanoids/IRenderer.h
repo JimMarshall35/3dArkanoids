@@ -34,4 +34,8 @@ public:
 	* and then the long rectangle piece.
 	*/
 	virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) = 0;
+	virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) = 0;
+	virtual void SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) = 0;
+	virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() = 0;
+
 };

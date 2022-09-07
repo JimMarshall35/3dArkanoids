@@ -31,6 +31,8 @@ public:
     virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
 
     virtual void SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
+    virtual void SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
+
     virtual void SetLightPos(const glm::vec3& value) override;
     virtual void SetLightColour(const glm::vec3& value) override;
     virtual void SetScreenDims(const glm::ivec2& value) override;
@@ -39,7 +41,8 @@ public:
     virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) override;
 
     virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) override;
-
+    virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
+    virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() override;
 private:
     void Initialize();
     void InitFT();
@@ -81,10 +84,15 @@ private:
     unsigned int m_scrWidth = 800;
     unsigned int m_scrHeight = 1200;
     unsigned int m_blockInstanceDataUboHandle = 0;
+    unsigned int m_texturedBlockInstanceDataUboHandle = 0;
 
-    unsigned int m_coloursArrayUboOffset;
-    unsigned int m_positionsArrayUboOffset;
-    unsigned int m_scalesArrayUboOffset;
+    unsigned int m_instancedColouredColoursArrayUboOffset;
+    unsigned int m_instancedColouredPositionsArrayUboOffset;
+    unsigned int m_instancedColouredScalesArrayUboOffset;
+
+    unsigned int m_instancedTexturedUvOffsetsArrayUboOffset;
+    unsigned int m_instancedTexturedPositionsArrayUboOffset;
+    unsigned int m_instancedTexturedScalesArrayUboOffset;
 
     FT_Library m_ft;
     Character m_characters[256];

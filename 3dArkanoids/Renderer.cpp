@@ -38,7 +38,7 @@ std::string colourFragGlsl =
 "uniform vec3 lightPos;\n"
 "uniform vec3 viewPos;\n"
 "uniform vec3 lightColor;\n"
-"uniform vec3 objectColor;\n"
+"uniform vec4 objectColor;\n"
 
 "void main()\n"
 "{\n"
@@ -57,8 +57,8 @@ std::string colourFragGlsl =
 "    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);\n"
 "    vec3 specular = specularStrength * spec * lightColor;\n"
 
-"    vec3 result = (ambient + diffuse + specular) * objectColor;\n"
-"    FragColor = vec4(result, 1.0);\n"
+"    vec3 result = (ambient + diffuse + specular) * objectColor.xyz;\n"
+"    FragColor = vec4(result, objectColor[3]);\n"
 "}\n";
 
 
@@ -452,13 +452,13 @@ void Renderer::DrawCuboid(const glm::vec3& pos, const glm::vec3& dimensions, con
     m_colouredShader.setVec3("viewPos", camera.Position);
     m_colouredShader.setVec3("lightPos", m_lightPos);
     m_colouredShader.setVec3("lightColor", m_lightColour);
-    m_colouredShader.setVec3("objectColor", colour);
+    m_colouredShader.setVec4("objectColor", { colour.x, colour.y, colour.z, 1.0f });
 
     glBindVertexArray(m_unitCubeVAO);
     glDrawArrays(GL_TRIANGLES, 0, 36);
 }
 
-void Renderer::DrawSphere(const glm::vec3& pos, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const
+void Renderer::DrawSphere(const glm::vec3& pos, const glm::vec3& dimensions, const Camera& camera, const glm::vec4& colour) const
 {
     glm::mat4 model = PositionAndScaleToModelMatrix(pos, dimensions);
     glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)m_scrWidth / (float)m_scrHeight, 0.1f, DRAW_DISTANCE);
@@ -473,7 +473,7 @@ void Renderer::DrawSphere(const glm::vec3& pos, const glm::vec3& dimensions, con
     m_colouredShader.setVec3("viewPos", camera.Position);
     m_colouredShader.setVec3("lightPos", m_lightPos);
     m_colouredShader.setVec3("lightColor", m_lightColour);
-    m_colouredShader.setVec3("objectColor", colour);
+    m_colouredShader.setVec4("objectColor", colour);
 
     glBindVertexArray(m_unitSphereVAO);
     glDrawElements(GL_TRIANGLES, m_sphere.getIndexCount(), GL_UNSIGNED_INT, 0);

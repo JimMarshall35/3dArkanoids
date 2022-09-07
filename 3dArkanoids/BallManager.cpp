@@ -57,25 +57,33 @@ void BallManager::ReceiveInput(double changeInBatX)
 	});
 }
 
+
 void BallManager::Draw(const IRenderer* renderer, const Camera& camera) const
 {
-	IterateBallList([renderer, camera](Ball* thisBall, Ball* lastBall, int onIteration) {
+	static glm::vec3 lookaheadPositions[LOOKAHEAD_BUFFER_SIZE];
+	static glm::vec3 lookaheadDirections[LOOKAHEAD_BUFFER_SIZE];
+
+	IterateBallList([this,renderer, camera](Ball* thisBall, Ball* lastBall, int onIteration) {
 		auto r = thisBall->radius;
 		renderer->DrawSphere(
 			thisBall->pos,
 			{r,r,r},
 			camera,
-			{1.0,1.0,1.0}
+			{1.0,1.0,1.0, 1.0}
 		);
 
+		if (m_drawProjectedBalls) {
+			for (int i = 0; i < m_lookaheadBy; i++) {
+				renderer->DrawSphere(
+					m_lookAheadPositions[i],
+					{ r,r,r },
+					camera,
+					{ 1.0,1.0,1.0, 0.3}
 
-
-		//renderer->DrawCuboid(
-		//	thisBall->pos,
-		//	{ r * 2,200,r * 2 },
-		//	camera,
-		//	{ 1.0,0.0,1.0 }
-		//);
+				);
+			}
+		}
+		
 		return true;
 	});
 }
@@ -154,6 +162,24 @@ void BallManager::IterateBallList(BallIteratorFunctionWithCurrentAndPrevious ite
 		thisBall = thisBall->nextBall;
 	} while (thisBall != nullptr);
 	
+}
+
+void BallManager::IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction)
+{
+	if (m_ballListHead == nullptr) {
+		return;
+	}
+	Ball* lastBall = nullptr;
+	Ball* thisBall = m_ballListHead;
+	int onIteration = 0;
+	do {
+		if (!iterationFunction(thisBall, lastBall, onIteration++)) {
+			return;
+		}
+
+		lastBall = thisBall;
+		thisBall = thisBall->nextBall;
+	} while (thisBall != nullptr);
 }
 
 
@@ -251,7 +277,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 
 			auto rotationMagnitude = (thisBall->pos.x - batX) / (batWidth / 2 + thisBall->radius);
 
-			auto rotatedVec = glm::rotate(Vec3ToVec2(thisBall->direction), -(float)rotationMagnitude * glm::radians(20.0f));
+			auto rotatedVec = glm::rotate(Vec3ToVec2(thisBall->direction), -(float)rotationMagnitude * glm::radians(35.0f));
 			dirToChange.x = rotatedVec.x;
 			dirToChange.y = rotatedVec.y;
 
@@ -340,15 +366,37 @@ loop_end:
 	return returnVal;
 }
 
+void BallManager::LookAhead(const Ball* thisBall)
+{
+	auto ball = *thisBall;
+	m_drawProjectedBalls = false;
+
+	for (int i = 0; i < m_numAdvancesToCheckForBatHit; i++) {
+		if (AdvanceBall(&ball, ball.pos, ball.direction, false) == BallAdvanceResult::HIT_BAT) {
+			m_drawProjectedBalls = true;
+			break;
+		}
+
+	}
+	if (m_drawProjectedBalls) {
+		for (int i = 0; i < m_lookaheadBy; i++) {
+			AdvanceBall(&ball, ball.pos, ball.direction, false);
+			m_lookAheadPositions[i] = ball.pos;
+
+		}
+	}
+}
+
 void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 {
 	IterateBallList([this](Ball* thisBall, Ball* lastBall, int onIteration) {
-		if (thisBall->stuckToBat) { 
+		if (thisBall->stuckToBat) {
 			return true;
 		}
 
 		AdvanceBall(thisBall, thisBall->pos, thisBall->direction);
-		
+
+		LookAhead(thisBall);
 
 		return true;
 	});

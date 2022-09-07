@@ -13,6 +13,7 @@ class Bat;
 #define MAX_NUM_BALLS 128
 #define DEFAULT_BALL_RADIUS 2.0f
 #define DEFAULT_BALL_SPEED 2.0f
+#define LOOKAHEAD_BUFFER_SIZE 300
 
 class BallManager
 	:public EventListener<EngineUpdateFrameEventArgs>
@@ -53,13 +54,21 @@ private:
 	size_t m_recycledBallIndices[MAX_NUM_BALLS];
 	size_t m_numRecycledBallIndices = 0;
 	
+	size_t m_lookaheadBy = 75;
+	size_t m_numAdvancesToCheckForBatHit = 100;
+	glm::vec3 m_lookAheadPositions[LOOKAHEAD_BUFFER_SIZE];
+	bool m_drawProjectedBalls = false;
+	
 private:
 	void PushRecylcedIndex(size_t index);
 	size_t PopRecycledIndex();
 	Ball& GetNextFreeBall();
 	void RemoveBallAtListIndex(int index);
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
+	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
+
 	BallAdvanceResult AdvanceBall(const Ball* ball, glm::vec3& posToChange, glm::vec3& dirToChange, bool deleteBlock = true);
+	void LookAhead(const Ball* thisBall);
 private:
 	static void ReflectBall(glm::vec3& directionToChange, const glm::vec2& newPos, const glm::vec2& nearestPoint, const glm::vec3& oldDirection);
 public:

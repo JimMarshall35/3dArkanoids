@@ -5,8 +5,12 @@
 #include "BlockInstanceRenderData.h"
 #include "ErrorHandling.h"
 #define DRAW_DISTANCE 10000.0f
+#define NUM_CHANNELS 4
 #include "PlayfieldDefs.h"
+#include "stb_image.h"
+#include "GLTextureHelper.h"
 
+#pragma region colour shader
 
 std::string colourVertGlsl =
 "#version 330 core\n"
@@ -61,9 +65,11 @@ std::string colourFragGlsl =
 "    FragColor = vec4(result, objectColor[3]);\n"
 "}\n";
 
+#pragma endregion
 
+#pragma region instanced colour shader
 
-std::string instancedColourVertGlsl = 
+std::string instancedColourVertGlsl =
 "#version 460 core\n"
 "layout(location = 0) in vec3 aPos;\n"
 "layout(location = 1) in vec3 aNormal;\n"
@@ -135,6 +141,87 @@ std::string instancedColourFragGlsl =
 "    FragColor = vec4(result, Colour.a);\n"
 "}\n";
 
+#pragma endregion
+
+#pragma region instanced textured shader
+
+std::string instancedTexturedVertGlsl =
+"#version 460 core\n"
+"layout(location = 0) in vec3 aPos;\n"
+"layout(location = 1) in vec3 aNormal;\n"
+"layout(location = 2) in vec2 aUv;\n"
+"#define MAX_INSTANCES " MAX_INSTANCES_STRING "\n"
+
+"out vec3 FragPos;\n"
+"out vec3 Normal;\n"
+"out vec2 Uv;\n"
+
+"layout(binding = 0) uniform InstanceData\n"
+"{\n"
+"    vec4 positions[MAX_INSTANCES];\n"
+"    vec4 scales[MAX_INSTANCES];\n"
+"    vec4 uvOffsets[MAX_INSTANCES];\n"
+"};\n"
+"uniform mat4 view;\n"
+"uniform mat4 projection;\n"
+
+"void main()\n"
+"{\n"
+"   vec3 pos = positions[gl_InstanceID].xyz;\n"
+"   vec3 scale = scales[gl_InstanceID].xyz;\n"
+"   mat4 model = mat4(scale.x, 0.0,     0.0,     pos.x,  // 1. column\n"
+"                     0.0,     scale.y, 0.0,     pos.y,  // 2. column\n"
+"                     0.0,     0.0,     scale.z, pos.z,  // 3. column\n"
+"                     0.0,     0.0,     0.0,     1.0);   // 4. column\n"
+
+"    FragPos = vec3((scales[gl_InstanceID] * vec4(aPos, 1.0)) + positions[gl_InstanceID]);\n"
+"    Normal = mat3(transpose(inverse(model))) * aNormal;\n"
+"    Uv = aUv + uvOffsets[gl_InstanceID].xy;\n"
+"    // use the fourth element of the colour vector as a flag, if < 0 then draw outside the screen\n"
+"    if(positions[gl_InstanceID][3] < 0.0f){\n"
+"       gl_Position = vec4(2.0, 2.0, 2.0, 1.0);\n"
+"    }else{\n"
+"       gl_Position = projection * view * vec4(FragPos, 1.0);\n"
+"    }\n"
+"}\n";
+
+std::string instancedTexturedFragGlsl =
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+
+"in vec3 Normal;\n"
+"in vec3 FragPos;\n"
+"in vec2 Uv;\n"
+
+"uniform vec3 lightPos;\n"
+"uniform vec3 viewPos;\n"
+"uniform vec3 lightColor;\n"
+"uniform sampler2D diffuseAtlas;\n"
+
+"void main()\n"
+"{\n"
+"    // ambient\n"
+"    float ambientStrength = 0.1;\n"
+"    vec3 ambient = ambientStrength * lightColor;\n"
+"    // diffuse\n"
+"    vec3 norm = normalize(Normal);\n"
+"    vec3 lightDir = normalize(lightPos - FragPos);\n"
+"    float diff = max(dot(norm, lightDir), 0.0);\n"
+"    vec3 diffuse = diff * lightColor;\n"
+"    // specular\n"
+"    float specularStrength = 0.5;\n"
+"    vec3 viewDir = normalize(viewPos - FragPos);\n"
+"    vec3 reflectDir = reflect(-lightDir, norm);\n"
+"    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 32);\n"
+"    vec3 specular = specularStrength * spec * lightColor;\n"
+"    vec4 colour = texture(diffuseAtlas, Uv);\n"
+"    FragColor = vec4((ambient + diffuse + specular),1.0) * colour;\n"
+"}\n";
+
+#pragma endregion
+
+#pragma region text shader
+
 std::string textVertGlsl =
 "#version 330 core\n"
 "layout(location = 0) in vec4 vertex; // <vec2 pos, vec2 tex>\n"
@@ -162,15 +249,17 @@ std::string textFragGlsl =
 "    color = vec4(textColor, 1.0) * sampled;\n"
 "}\n";
 
+#pragma endregion
 
 Renderer::Renderer()
 {
     Initialize();
 }
 
-Renderer::Renderer(int screenWidth, int screenHeight)
-    :m_scrWidth(screenWidth), m_scrHeight(screenHeight)
+Renderer::Renderer(const RendererInitialisationData& initData)
+    :m_scrWidth(initData.screenWidth), m_scrHeight(initData.screenHeight)
 {
+    LoadOneByTwoBlocksTexture(initData.blocksTexturePath, initData.numBlocksInTexture);
     Initialize();
 }
 
@@ -200,78 +289,29 @@ void PrintInfo() {
 
 }
 
+struct TexturedVertex {
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec2 uv;
+};
+
 /// <summary>
 /// get ready to render!
 /// </summary>
 void Renderer::Initialize()
 {
     PrintInfo();
-    static const float vertices[] = {
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
-
-        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
-
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
-
-        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
-        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
-
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
-        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
-    };
-    unsigned int VBO;
-    glGenVertexArrays(1, &m_unitCubeVAO);
-    glGenBuffers(1, &VBO);
-
-    glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-    glBindVertexArray(m_unitCubeVAO);
-
-    // position attribute
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
-    glEnableVertexAttribArray(0);
-    // normal attribute
-    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
-    glEnableVertexAttribArray(1);
-
+    InitializeColouredCubeVertices();
     InitializeSphereVertices();
+    InitializeTexturedOneByTwoCubeVertices();
 
     // load all shaders
     m_colouredShader.LoadFromString(colourVertGlsl, colourFragGlsl);
     m_colouredInstancedShader.LoadFromString(instancedColourVertGlsl, instancedColourFragGlsl);
     m_textShader.LoadFromString(textVertGlsl, textFragGlsl);
-    
+    m_texturedInstancedShader.LoadFromString(instancedTexturedVertGlsl, instancedTexturedFragGlsl);
+
 
     // load fonts
     InitFT();
@@ -303,7 +343,7 @@ void Renderer::InitFT()
     glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 4 * sizeof(float), 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
-    
+
 }
 
 /// <summary>
@@ -386,7 +426,7 @@ void Renderer::InitializeSphereVertices()
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, m_sphere.getInterleavedVertexSize(), m_sphere.getInterleavedVertices(), GL_STATIC_DRAW);
-    
+
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_unitSphereEBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_sphere.getIndexSize(), m_sphere.getIndices(), GL_STATIC_DRAW);
 
@@ -399,6 +439,186 @@ void Renderer::InitializeSphereVertices()
     glEnableVertexAttribArray(1);
 
 
+}
+
+void Renderer::InitializeTexturedOneByTwoCubeVertices()
+{
+    const auto smallSquareTopLeftU = 0.0f;
+    const auto smallSquareTopLeftV = 1.0f;
+
+    const auto smallSquareTopRightU = 1.0f / 3.0f;
+    const auto smallSquareTopRightV = 1.0f;
+
+    const auto smallSquareBottomLeftU = 0.0f;
+    const auto smallSquareBottomLeftV = 1.0f - (1.0f / (float)m_blocksDiffuseTextureAtlasNumberOfBlocks);
+
+    const auto smallSquareBottomRightU = 1.0f / 3.0f;
+    const auto smallSquareBottomRightV = 1.0f - (1.0f / (float)m_blocksDiffuseTextureAtlasNumberOfBlocks);
+
+    const auto largeSquareTopLeftU = smallSquareTopRightU;
+    const auto largeSquareTopLeftV = smallSquareTopRightV;
+
+    const auto largeSquareBottomLeftU = smallSquareBottomRightU;
+    const auto largeSquareBottomLeftV = smallSquareBottomRightV;
+
+    const auto largeSquareTopRightU = 1.0f;
+    const auto largeSquareTopRightV = 1.0f;
+
+    const auto largeSquareBottomRightU = 1.0f;
+    const auto largeSquareBottomRightV = 1.0f - (1.0f / (float)m_blocksDiffuseTextureAtlasNumberOfBlocks);
+
+
+
+
+
+    static const TexturedVertex texturedVerts[] = {
+        /*
+        *  (texture)                                     front
+        *                                                top
+        *                    ______ ____________         ^
+        *                   |      |            |  front |       back
+        *                   |      |            |   left |       right
+        *                   |______|____________|        |______>
+        *                                             bottom
+        *                                             back
+        */
+        // bottom face
+        {{-0.5f, -0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},  // left,  back,  bottom
+        {{ 0.5f, -0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareBottomRightU, largeSquareBottomRightV}}, // right, back,  bottom
+        {{ 0.5f,  0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, bottom
+
+        {{ 0.5f,  0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareTopRightU,   largeSquareTopRightV}},     // right, front, bottom
+        {{-0.5f,  0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareTopLeftU,    largeSquareTopLeftV}},      // left,  front, bottom
+        {{-0.5f, -0.5f, -0.5f},  { 0.0f,  0.0f, -1.0f}, {largeSquareBottomLeftU, largeSquareBottomLeftV}},   // left,  back,  bottom
+
+        // top face
+        {{-0.5f, -0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},  // left,  back,  top
+        {{ 0.5f, -0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareBottomRightU, largeSquareBottomRightV}}, // right, back,  top
+        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
+
+        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
+        {{-0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopLeftU,     largeSquareTopLeftV}},      // left,  front, top
+        {{-0.5f, -0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},   // left,  back,  top
+
+        // left face
+        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // left,  front, top
+        {{-0.5f,  0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}}, // left,  front, bottom
+        {{-0.5f, -0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // left,  back,  bottom
+
+        {{-0.5f, -0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // left,  back,  bottom
+        {{-0.5f, -0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}}, // left,  back,  top
+        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // left,  front, top
+
+        // right face
+        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // right, front, top
+        {{ 0.5f,  0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}}, // right, front, bottom
+        {{ 0.5f, -0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // right, back,  bottom
+
+        {{ 0.5f, -0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // right, back,  bottom
+        {{ 0.5f, -0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}}, // right, back,  top
+        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // right, front, top
+
+        // back face
+        {{-0.5f, -0.5f, -0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},  // left,  back,  bottom
+        {{ 0.5f, -0.5f, -0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareBottomRightU, largeSquareBottomRightV}}, // right, back,  bottom
+        {{ 0.5f, -0.5f,  0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, back, top
+
+        {{ 0.5f, -0.5f,  0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, back, top
+        {{-0.5f, -0.5f,  0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareTopLeftU,     largeSquareTopLeftV}},     // left,  back, top
+        {{-0.5f, -0.5f, -0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareBottomLeftU, largeSquareBottomLeftV}},   // left,  back, bottom
+
+        // front face
+        {{-0.5f,  0.5f, -0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},  // left,  front, bottom
+        {{ 0.5f,  0.5f, -0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareBottomRightU, largeSquareBottomRightV}}, // right, front, bottom
+        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
+
+        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
+        {{-0.5f,  0.5f,  0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareTopLeftU,     largeSquareTopLeftV}},     // left,  front, top
+        {{-0.5f,  0.5f, -0.5f},  { 0.0f,  1.0f,  0.0f}, {largeSquareBottomLeftU, largeSquareBottomLeftV}},   // left,  front, bottom
+    };
+
+    //m_oneByTwoBlockVBO
+    glGenVertexArrays(1, &m_oneByTwoBlockVAO);
+    glGenBuffers(1, &m_oneByTwoBlockVBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_oneByTwoBlockVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(texturedVerts), texturedVerts, GL_STATIC_DRAW);
+
+    glBindVertexArray(m_oneByTwoBlockVAO);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void*)offsetof(TexturedVertex, position));
+    glEnableVertexAttribArray(0);
+
+    // normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void*)offsetof(TexturedVertex, normal));
+    glEnableVertexAttribArray(1);
+
+    // uv attribute
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(TexturedVertex), (void*)offsetof(TexturedVertex, uv));
+    glEnableVertexAttribArray(2);
+}
+
+void Renderer::InitializeColouredCubeVertices()
+{
+    static const float vertices[] = {
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
+
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  1.0f,
+
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,
+
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f,
+
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+         0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,
+        -0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,
+
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+         0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,
+        -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
+    };
+    unsigned int VBO;
+    glGenVertexArrays(1, &m_unitCubeVAO);
+    glGenBuffers(1, &VBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, VBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    glBindVertexArray(m_unitCubeVAO);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // normal attribute
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
 }
 
 glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& dimensions) {
@@ -550,7 +770,7 @@ void Renderer::DrawTextAnchoredToBottomLeft(std::string text, float x, float y, 
     }
     glBindVertexArray(0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    
+
 }
 
 void Renderer::DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
@@ -676,6 +896,17 @@ void Renderer::SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos)
 
 void Renderer::SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour)
 {
+}
+
+void Renderer::LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks)
+{
+    int img_w, img_h;
+    int n;
+    const auto data = stbi_load(blocksTextureFilePath.c_str(), &img_w, &img_h, &n, NUM_CHANNELS);
+
+    m_blocksDiffuseTextureAtlasNumberOfBlocks = numBlocks;
+    OpenGlGPULoadTexture(data, img_w, img_h, &m_blocksDiffuseTextureAtlas);
+
 }
 
 

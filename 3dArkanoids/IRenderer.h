@@ -19,4 +19,19 @@ public:
 	virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
+	
+	// load a texture for 1x2 blocks 
+	/*
+	* 
+	* assumes the textures for the blocks are laid out like this:
+	*  _ __
+	* |_|__|
+	* |_|__|
+	* |_|__|
+	* |_|__|
+	* 
+	* ie one type of block per row of the texture with first the square end piece
+	* and then the long rectangle piece.
+	*/
+	virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) = 0;
 };

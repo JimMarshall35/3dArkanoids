@@ -38,7 +38,7 @@ void Bat::Draw(const IRenderer* renderer, const Camera& cam) const
 		{ m_xPos,-(m_distanceFromFirstRow + BLOCK_HEIGHT_UNITS * 0.5f),0 },
 		{ m_batWidth,m_batDepthAndHeight.x,m_batDepthAndHeight.y },
 		cam,
-		{ 0,0,0 });
+		{ 1.0,0.4,1.0 });
 }
 
 

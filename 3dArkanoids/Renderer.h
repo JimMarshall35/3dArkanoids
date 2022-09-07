@@ -8,12 +8,19 @@
 #include "Shader.h"
 #include "Sphere.h"
 
+struct RendererInitialisationData {
+    int screenWidth;
+    int screenHeight;
+    std::string blocksTexturePath;
+    int numBlocksInTexture;
+};
+
 class Renderer :
     public IRenderer
 {
 public:
     Renderer();
-    Renderer(int screenWidth, int screenHeight);
+    Renderer(const RendererInitialisationData& initData);
     // Inherited via IRenderer
     virtual void DrawCuboid(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec3& colour) const override;
     virtual void DrawSphere(const glm::vec3& centeredAt, const glm::vec3& dimensions, const Camera& camera, const glm::vec4& colour) const override;
@@ -31,11 +38,15 @@ public:
     virtual void SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos) override;
     virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) override;
 
+    virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) override;
+
 private:
     void Initialize();
     void InitFT();
     void LoadFont(std::string ttfFilePath);
     void InitializeSphereVertices();
+    void InitializeTexturedOneByTwoCubeVertices();
+    void InitializeColouredCubeVertices();
 
 private:
     /// Holds all state information relevant to a character as loaded using FreeType
@@ -57,9 +68,14 @@ private:
     unsigned int m_unitSphereVAO;
     unsigned int m_unitSphereEBO;
 
+    unsigned int m_oneByTwoBlockVBO;
+    unsigned int m_oneByTwoBlockVAO;
+
     Shader m_colouredShader;
     Shader m_colouredInstancedShader;
+    Shader m_texturedInstancedShader;
     Shader m_textShader;
+
     glm::vec3 m_lightPos;
     glm::vec3 m_lightColour;
     unsigned int m_scrWidth = 800;
@@ -69,9 +85,13 @@ private:
     unsigned int m_coloursArrayUboOffset;
     unsigned int m_positionsArrayUboOffset;
     unsigned int m_scalesArrayUboOffset;
+
     FT_Library m_ft;
     Character m_characters[256];
     glm::mat4 m_uiProjectionMatrix;
+
+    unsigned int m_blocksDiffuseTextureAtlas;
+    unsigned int m_blocksDiffuseTextureAtlasNumberOfBlocks;
 
 };
 

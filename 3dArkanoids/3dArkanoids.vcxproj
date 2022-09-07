@@ -172,6 +172,7 @@
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="GameUiOverlay.cpp" />
     <ClCompile Include="glad.c" />
+    <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
     <ClCompile Include="PlayBoardEdit.pb.cc" />
@@ -181,6 +182,7 @@
     <ClCompile Include="MockLevelLoader.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Sphere.cpp" />
+    <ClCompile Include="stbi_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array3d.h" />
@@ -205,6 +207,7 @@
     <ClInclude Include="GameInput.h" />
     <ClInclude Include="GameToUiMessage.h" />
     <ClInclude Include="GameUiOverlay.h" />
+    <ClInclude Include="GLTextureHelper.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="PlayboardEditAsyncImpl.h" />
@@ -224,6 +227,9 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SizedQueue.h" />
     <ClInclude Include="Sphere.h" />
+    <ClInclude Include="stb_image.h" />
+    <ClInclude Include="stb_image_resize.h" />
+    <ClInclude Include="stb_image_write.h" />
     <ClInclude Include="TSQueue.h" />
     <ClInclude Include="typedefs.h" />
   </ItemGroup>

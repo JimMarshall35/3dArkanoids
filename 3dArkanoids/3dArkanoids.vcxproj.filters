@@ -55,6 +55,12 @@
     <Filter Include="Source Files\game\level editor server\grpc">
       <UniqueIdentifier>{eaaed2e9-e37c-4985-bcca-120a50026d1e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utils\third party">
+      <UniqueIdentifier>{9efd3a9d-a296-4f75-9d89-9bea69515d38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils\third party">
+      <UniqueIdentifier>{6867d13f-9b2b-4d9e-8d2d-c40abacffb3d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -122,6 +128,12 @@
     </ClCompile>
     <ClCompile Include="BallManager.cpp">
       <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="stbi_image.cpp">
+      <Filter>Source Files\utils\third party</Filter>
+    </ClCompile>
+    <ClCompile Include="GLTextureHelper.cpp">
+      <Filter>Source Files\graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -253,6 +265,18 @@
     </ClInclude>
     <ClInclude Include="BallManager.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_write.h">
+      <Filter>Header Files\utils\third party</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>Header Files\utils\third party</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image_resize.h">
+      <Filter>Header Files\utils\third party</Filter>
+    </ClInclude>
+    <ClInclude Include="GLTextureHelper.h">
+      <Filter>Header Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

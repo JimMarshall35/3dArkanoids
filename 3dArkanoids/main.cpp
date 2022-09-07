@@ -115,7 +115,8 @@ int main()
     //camera.updateCameraVectors();
     using namespace std;
     using namespace std::chrono;
-    auto renderer = make_shared<Renderer>();
+    RendererInitialisationData d = { SCR_WIDTH, SCR_HEIGHT, "BlocksTexture.png", 6 };
+    auto renderer = make_shared<Renderer>(d);
 
     Game game(
         renderer,

@@ -328,6 +328,14 @@ SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& n
 
 EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode)
 {
+	if (point.x < 0
+		|| point.x >= m_playFieldArray.getW()
+		|| point.y < 0
+		|| point.y >= m_playFieldArray.getH()
+		|| point.z < 0
+		|| point.z >= m_playFieldArray.getD()) {
+		return EditBlockResultCode::FAILURE_POINT_OUT_OF_BOUNDS;
+	}
 	blockCode = m_playFieldArray[point];
 	if (blockCode == 0x00) {
 		return EditBlockResultCode::SPACE_EMPTY;

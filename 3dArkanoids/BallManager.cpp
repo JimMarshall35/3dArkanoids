@@ -303,10 +303,12 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 	glm::vec2 vRayToNearest;
 
 	glm::ivec2 vCell;
+	int numcellsChecked = 0;
 	for (vCell.y = vAreaTL.y; vCell.y <= vAreaBR.y; vCell.y++)
 	{
 		for (vCell.x = vAreaTL.x; vCell.x <= vAreaBR.x; vCell.x++)
 		{
+			numcellsChecked++;
 			unsigned char blockCode;
 			// Check if the cell is actually solid...
 			if (vCell.x < 0 || vCell.y < 0) {
@@ -357,6 +359,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 			}
 		}
 	}
+	//std::cout << numcellsChecked << std::endl;
 loop_end:
 	//if (blockHit) {
 	//	m_game->RemoveBlock({ coordsHit.x,coordsHit.y,0 });

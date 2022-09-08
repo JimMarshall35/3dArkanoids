@@ -9,6 +9,7 @@ class BlockAppearance
 {
 public:
 	glm::vec4 Colour;
+	glm::vec2 AtlasUvOffset;
 };
 
 class BlockTypeDescription{

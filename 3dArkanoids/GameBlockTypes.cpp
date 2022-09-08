@@ -17,6 +17,7 @@ void GameBlockTypes::Clear()
 	m_nextIndexToAdd = 1;
 }
 
+#include <iostream>
 void GameBlockTypes::SaveToFile(std::string filePath) const
 {
 	std::ofstream file(filePath, std::ios::out | std::ios::binary);
@@ -35,6 +36,11 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 	assert(fileLength <= sizeof(m_blockTypes));
 	is.read((char*)&m_blockTypes[1], fileLength);
 	m_nextIndexToAdd = (fileLength/ sizeof(BlockTypeDescription)) + 1;
+
+	for (int i = 1; i < m_nextIndexToAdd; i++) {
+		const auto& colour = m_blockTypes[i].Appearance.Colour;
+		std::cout << "{ " << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << " },\n";
+	}
 }
 
 unsigned char GameBlockTypes::GetNextIndexToAdd()

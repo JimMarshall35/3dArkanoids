@@ -29,8 +29,17 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	);
 	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
 
-
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.184f, 0.176f, 0.803f, 1.0f }, glm::vec2{ 0.0f,0.0f } });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 0, 0, 1 }, GetUvOffsetFromByteValue(2) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0, 1, 0, 1 }, GetUvOffsetFromByteValue(3) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.094, 0.949, 0.898, 0.2 }, GetUvOffsetFromByteValue(4) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.98, 0.878, 0, 1 }, GetUvOffsetFromByteValue(5) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 1, 1, 1 }, GetUvOffsetFromByteValue(6) });
 	m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
+
+
+	//m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
+
 
 	m_playFieldArray.LoadFromFile("Level.jim");
 	 
@@ -330,7 +339,7 @@ SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& n
 glm::vec2 Game::GetUvOffsetFromByteValue(const unsigned char byteCode)
 {
 
-	return m_renderer->getUvOffsetToNextOneByTwoBlock() * (float)(byteCode - 1);
+	return m_gameBlockTypes[byteCode].Appearance.AtlasUvOffset;
 }
 
 EditBlockResultCode Game::BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode)

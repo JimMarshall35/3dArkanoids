@@ -513,27 +513,27 @@ void Renderer::InitializeTexturedOneByTwoCubeVertices()
         {{ 0.5f, -0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareBottomRightU, largeSquareBottomRightV}}, // right, back,  top
         {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
 
-        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},    // right, front, top
+        {{ 0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopRightU,    largeSquareTopRightV}},     // right, front, top
         {{-0.5f,  0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareTopLeftU,     largeSquareTopLeftV}},      // left,  front, top
         {{-0.5f, -0.5f,  0.5f},  { 0.0f,  0.0f,  1.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},   // left,  back,  top
 
         // left face
-        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // left,  front, top
-        {{-0.5f,  0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}}, // left,  front, bottom
+        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}},     // left,  front, top
+        {{-0.5f,  0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}},  // left,  front, bottom
         {{-0.5f, -0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // left,  back,  bottom
 
         {{-0.5f, -0.5f, -0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // left,  back,  bottom
-        {{-0.5f, -0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}}, // left,  back,  top
-        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // left,  front, top
+        {{-0.5f, -0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}},    // left,  back,  top
+        {{-0.5f,  0.5f,  0.5f},  {-1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}},     // left,  front, top
 
         // right face
-        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // right, front, top
-        {{ 0.5f,  0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}}, // right, front, bottom
+        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}},     // right, front, top
+        {{ 0.5f,  0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomLeftU,  smallSquareBottomLeftV}},  // right, front, bottom
         {{ 0.5f, -0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // right, back,  bottom
 
         {{ 0.5f, -0.5f, -0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareBottomRightU, smallSquareBottomRightV}}, // right, back,  bottom
-        {{ 0.5f, -0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}}, // right, back,  top
-        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}}, // right, front, top
+        {{ 0.5f, -0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopRightU,    smallSquareTopRightV}},    // right, back,  top
+        {{ 0.5f,  0.5f,  0.5f},  { 1.0f,  0.0f,  0.0f}, {smallSquareTopLeftU,     smallSquareTopLeftV}},     // right, front, top
 
         // back face
         {{-0.5f, -0.5f, -0.5f},  { 0.0f, -1.0f,  0.0f}, {largeSquareBottomLeftU,  largeSquareBottomLeftV}},  // left,  back,  bottom
@@ -1018,6 +1018,9 @@ void Renderer::DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, co
 
 glm::vec2 Renderer::getUvOffsetToNextOneByTwoBlock()
 {
+    // this is needed because the renderer knows the number of blocks in the 
+    // texture atlas and this is needed by the game class in the form
+    // of an offset that when added to a uv coord sets it exactly one block down
     return glm::vec2(0.0f,-(1.0f/(float)m_blocksDiffuseTextureAtlasNumberOfBlocks));
 }
 

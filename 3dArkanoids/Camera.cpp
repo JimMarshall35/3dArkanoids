@@ -1,12 +1,7 @@
 #include "Camera.h"
 #include <iostream>
 #include <fstream>
-Camera::Camera(std::string positionFile)
-{
-    //LoadFromFile(positionFile);
-    //SaveToFile("NewFormatCamera.cam");
-    updateCameraVectors();
-}
+
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
 {
     Position = position;

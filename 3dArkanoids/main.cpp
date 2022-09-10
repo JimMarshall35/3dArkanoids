@@ -32,7 +32,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
-Camera camera("Camera.cam");
+Camera camera = Camera();
 Renderer* renderer;
 Game* gamePtr;
 
@@ -214,8 +214,7 @@ void processInput(GLFWwindow* window)
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         camera.ProcessKeyboard(RIGHT, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_C) == GLFW_PRESS) {
-        gamePtr->SaveLevelTest("Level.jim");
-        camera.SaveToFile("Camera.cam");
+        SaveSerializableToSingleBigBinary("level.big");
         std::cout << "Saving " << std::endl;
     }
 

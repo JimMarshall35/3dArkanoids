@@ -33,7 +33,6 @@ class Camera
     :public ISerializable
 {
 public:
-    Camera(std::string positionFile);
     // camera Attributes
     glm::vec3 Position;
     glm::vec3 Front;

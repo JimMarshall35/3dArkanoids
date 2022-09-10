@@ -35,10 +35,9 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.094, 0.949, 0.898, 0.2 }, GetUvOffsetFromByteValue(4) });
 	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.98, 0.878, 0, 1 }, GetUvOffsetFromByteValue(5) });
 	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 1, 1, 1 }, GetUvOffsetFromByteValue(6) });
-	m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
+	m_gameBlockTypes.LoadFromFile("GameBlockTypesNew.jim");
 
-
-	//m_gameBlockTypes.LoadFromFile("GameBlockTypes.jim");
+	//m_gameBlockTypes.SaveToFile("GameBlockTypesNew.jim");
 
 
 	m_playFieldArray.LoadFromFile("Level.jim");

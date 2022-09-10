@@ -75,6 +75,10 @@ class ISerializable :public ISerializablePropertiesNode, public AutoList<ISerial
 public:
 	virtual void SaveToFile(std::string filePath) const = 0;
 	virtual void LoadFromFile(std::string filePath) = 0;
+	virtual char* SaveToBuffer(char* destinaion) const = 0;
+	virtual const char* LoadFromBuffer(const char* source) = 0;
+	virtual size_t GetBinaryFileNumBytes() const = 0;
+
 protected:
 	ISerializable()
 		:AutoList<ISerializable>() {

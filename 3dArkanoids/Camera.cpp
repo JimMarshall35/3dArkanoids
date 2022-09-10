@@ -91,27 +91,7 @@ void Camera::updateCameraVectors()
 void Camera::SaveToFile(std::string path) const
 {
     char stagingBuffer[CAMERA_SAVED_BINARY_SIZE];
-    int writePos = 0;
-    memcpy(stagingBuffer + writePos, &Position, sizeof(glm::vec3));
-    writePos += sizeof(glm::vec3);
-    memcpy(stagingBuffer + writePos, &Front, sizeof(glm::vec3));
-    writePos += sizeof(glm::vec3);
-    memcpy(stagingBuffer + writePos, &Up, sizeof(glm::vec3));
-    writePos += sizeof(glm::vec3);
-    memcpy(stagingBuffer + writePos, &Right, sizeof(glm::vec3));
-    writePos += sizeof(glm::vec3);
-    memcpy(stagingBuffer + writePos, &WorldUp, sizeof(glm::vec3));
-    writePos += sizeof(glm::vec3);
-    memcpy(stagingBuffer + writePos, &Yaw, sizeof(float));
-    writePos += sizeof(float);
-    memcpy(stagingBuffer + writePos, &Pitch, sizeof(float));
-    writePos += sizeof(float);
-    memcpy(stagingBuffer + writePos, &MovementSpeed, sizeof(float));
-    writePos += sizeof(float);
-    memcpy(stagingBuffer + writePos, &MouseSensitivity, sizeof(float));
-    writePos += sizeof(float);
-    memcpy(stagingBuffer + writePos, &Zoom, sizeof(float));
-    writePos += sizeof(float);
+    SaveToBuffer(stagingBuffer);
 
     std::ofstream file(path, std::ios::out | std::ios::binary);
 
@@ -129,27 +109,7 @@ void Camera::LoadFromFile(std::string file)
     char stagingBuffer[CAMERA_SAVED_BINARY_SIZE];
     is.read(stagingBuffer, CAMERA_SAVED_BINARY_SIZE);
 
-    int readPos = 0;
-    Position = *((glm::vec3*)(stagingBuffer + readPos));
-    readPos += sizeof(glm::vec3);
-    Front = *((glm::vec3*)(stagingBuffer + readPos));
-    readPos += sizeof(glm::vec3);
-    Up = *((glm::vec3*)(stagingBuffer + readPos));
-    readPos += sizeof(glm::vec3);
-    Right = *((glm::vec3*)(stagingBuffer + readPos));
-    readPos += sizeof(glm::vec3);
-    WorldUp = *((glm::vec3*)(stagingBuffer + readPos));
-    readPos += sizeof(glm::vec3);
-    Yaw = *((float*)(stagingBuffer + readPos));
-    readPos += sizeof(float);
-    Pitch = *((float*)(stagingBuffer + readPos));
-    readPos += sizeof(float);
-    MovementSpeed = *((float*)(stagingBuffer + readPos));
-    readPos += sizeof(float);
-    MouseSensitivity = *((float*)(stagingBuffer + readPos));
-    readPos += sizeof(float);
-    Zoom = *((float*)(stagingBuffer + readPos));
-    readPos += sizeof(float);
+    LoadFromBuffer(stagingBuffer);
 }
 
 const std::vector<SerializableProperty>& Camera::GetSerializableProperties() const
@@ -252,4 +212,62 @@ int Camera::GetNumSerializableProperties() const
 std::string Camera::GetSerializableNodeName() const
 {
     return "Camera";
+}
+
+char* Camera::SaveToBuffer(char* destination) const
+{
+    int writePos = 0;
+    memcpy(destination + writePos, &Position, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(destination + writePos, &Front, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(destination + writePos, &Up, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(destination + writePos, &Right, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(destination + writePos, &WorldUp, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(destination + writePos, &Yaw, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(destination + writePos, &Pitch, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(destination + writePos, &MovementSpeed, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(destination + writePos, &MouseSensitivity, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(destination + writePos, &Zoom, sizeof(float));
+    writePos += sizeof(float);
+    return destination + writePos;
+}
+
+const char* Camera::LoadFromBuffer(const char* source)
+{
+    int readPos = 0;
+    Position = *((glm::vec3*)(source + readPos));
+    readPos += sizeof(glm::vec3);
+    Front = *((glm::vec3*)(source + readPos));
+    readPos += sizeof(glm::vec3);
+    Up = *((glm::vec3*)(source + readPos));
+    readPos += sizeof(glm::vec3);
+    Right = *((glm::vec3*)(source + readPos));
+    readPos += sizeof(glm::vec3);
+    WorldUp = *((glm::vec3*)(source + readPos));
+    readPos += sizeof(glm::vec3);
+    Yaw = *((float*)(source + readPos));
+    readPos += sizeof(float);
+    Pitch = *((float*)(source + readPos));
+    readPos += sizeof(float);
+    MovementSpeed = *((float*)(source + readPos));
+    readPos += sizeof(float);
+    MouseSensitivity = *((float*)(source + readPos));
+    readPos += sizeof(float);
+    Zoom = *((float*)(source + readPos));
+    readPos += sizeof(float);
+    return source + readPos;
+
+}
+
+size_t Camera::GetBinaryFileNumBytes() const
+{
+    return sizeof(glm::vec3) * 5 + sizeof(float) * 5;
 }

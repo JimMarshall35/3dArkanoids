@@ -48,9 +48,7 @@ void Bat::SaveToFile(std::string path) const
 
 	std::ofstream file(path, std::ios::out | std::ios::binary);
 	char stagingBuffer[fileSize];
-	memcpy(stagingBuffer, &m_batWidth, sizeof(float));
-	memcpy(stagingBuffer + sizeof(float), &m_distanceFromFirstRow, sizeof(float));
-	memcpy(stagingBuffer + 2 * sizeof(float), &m_sensitivity, sizeof(double));
+	SaveToBuffer(stagingBuffer);
 
 	file.write(stagingBuffer, sizeof(stagingBuffer));
 }
@@ -68,9 +66,23 @@ void Bat::LoadFromFile(std::string path)
 	char stagingBuffer[expectedFileSize];
 	is.read(stagingBuffer, expectedFileSize);
 
-	m_batWidth = *((float*)stagingBuffer);
-	m_distanceFromFirstRow = *((float*)&stagingBuffer[sizeof(float)]);
-	m_sensitivity = *((double*)&stagingBuffer[2 * sizeof(float)]);
+	LoadFromBuffer(stagingBuffer);
+}
+
+char* Bat::SaveToBuffer(char* destination) const
+{
+	memcpy(destination, &m_batWidth, sizeof(float));
+	memcpy(destination + sizeof(float), &m_distanceFromFirstRow, sizeof(float));
+	memcpy(destination + 2 * sizeof(float), &m_sensitivity, sizeof(double));
+	return destination + 3 * sizeof(float);
+}
+
+const char* Bat::LoadFromBuffer(const char* source)
+{
+	m_batWidth = *((float*)source);
+	m_distanceFromFirstRow = *((float*)&source[sizeof(float)]);
+	m_sensitivity = *((double*)&source[2 * sizeof(float)]);
+	return source + 3 * sizeof(float);
 }
 
 const std::vector<SerializableProperty>& Bat::GetSerializableProperties() const
@@ -117,4 +129,9 @@ int Bat::GetNumSerializableProperties() const
 std::string Bat::GetSerializableNodeName() const
 {
 	return "Bat";
+}
+
+size_t Bat::GetBinaryFileNumBytes() const
+{
+	return size_t();
 }

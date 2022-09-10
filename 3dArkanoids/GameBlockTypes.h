@@ -31,6 +31,7 @@ public:
 	virtual int GetNumSerializableProperties() const override;
 	virtual std::string GetSerializableNodeName() const override;
 
+
 private:
 	std::vector<SerializableProperty> m_properties;
 	std::function<void(const glm::vec4&)> m_setColourFunc;
@@ -45,10 +46,14 @@ public:
 	void Clear();
 	virtual void SaveToFile(std::string filePath) const override;
 	virtual void LoadFromFile(std::string filePath) override;
+	virtual char* SaveToBuffer(char* destination)const override;
+	virtual const char* LoadFromBuffer(const char* source) override;
+
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
 	// Inherited via ISerializable
 	virtual int GetNumSerializableProperties() const override;
 	virtual std::string GetSerializableNodeName() const override;
+	virtual size_t GetBinaryFileNumBytes() const override;
 
 	unsigned char GetNextIndexToAdd();
 	void InitialiseSerializablePropertiesArray();
@@ -57,8 +62,6 @@ private:
 	BlockTypeDescription m_blockTypes[256];
 	std::vector<SerializableProperty> m_serializableProperties;
 	std::vector<BlockTypeSerializableNode> m_blockTypeSerializableNodes;
-
-
 
 	// Inherited via ISerializable
 	virtual bool SetSerializableProperty(const SerializableProperty& p) override;

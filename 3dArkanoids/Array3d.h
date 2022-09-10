@@ -56,10 +56,13 @@ public:
 
 	virtual void SaveToFile(std::string filePath)const override;
 	virtual void LoadFromFile(std::string filePath) override;
+	virtual char* SaveToBuffer(char* destination)const override;
+	virtual const char* LoadFromBuffer(const char* source) override;
 	virtual bool SetSerializableProperty(const SerializableProperty& p) override;
 	virtual int GetNumSerializableProperties() const override;
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const;
 	virtual std::string GetSerializableNodeName() const override;
+	virtual size_t GetBinaryFileNumBytes() const override;
 
 };
 
@@ -106,11 +109,7 @@ inline void Array3D<T>::SaveToFile(std::string filePath) const
 	const auto outputBufferSize = (sizeof(size_t) * 3) + (sizeof(T) * _w * _d * _h);
 	auto outputBuffer = std::make_unique<char>(outputBufferSize);
 
-	// copy class data to the staging buffer
-	memcpy(outputBuffer.get()                     , &_w, sizeof(size_t));
-	memcpy(outputBuffer.get() + sizeof(size_t)    , &_h, sizeof(size_t));
-	memcpy(outputBuffer.get() + sizeof(size_t) * 2, &_d, sizeof(size_t));
-	memcpy(outputBuffer.get() + sizeof(size_t) * 3, _ptr, sizeof(T) * _w * _d * _h);
+	SaveToBuffer(outputBuffer.get());
 
 	// write to file
 	std::ofstream file(filePath, std::ios::out | std::ios::binary);
@@ -132,17 +131,7 @@ inline void Array3D<T>::LoadFromFile(std::string filePath)
 	auto inputBuf = std::make_unique<char[]>(fileLength);
 	is.read(inputBuf.get(), fileLength);
 
-	// read width, height and depth, from the file into local vars
-	size_t w, h, d;
-	memcpy(&w, inputBuf.get()                     , sizeof(size_t));
-	memcpy(&h, inputBuf.get() + sizeof(size_t)    , sizeof(size_t));
-	memcpy(&d, inputBuf.get() + sizeof(size_t) * 2, sizeof(size_t));
-
-	// allocate using the w, h and d obtained from the file
-	allocate(w, h, d);
-
-	// copy array data into newly allocated array
-	memcpy(_ptr, inputBuf.get() + sizeof(size_t) * 3, sizeof(T) * w * h * d);
+	LoadFromBuffer(inputBuf.get());
 }
 
 #define ARRAY3D_NUM_SERIALIZABLE_PROPERTIES 4
@@ -199,4 +188,39 @@ inline int Array3D<T>::GetNumSerializableProperties() const
 template<typename T>
 std::string Array3D<T>::GetSerializableNodeName() const {
 	return "Array3D";
+}
+
+template<typename T>
+inline char* Array3D<T>::SaveToBuffer(char* destination) const
+{
+	// copy class data to the staging buffer
+	memcpy(destination, &_w, sizeof(size_t));
+	memcpy(destination + sizeof(size_t), &_h, sizeof(size_t));
+	memcpy(destination + sizeof(size_t) * 2, &_d, sizeof(size_t));
+	memcpy(destination + sizeof(size_t) * 3, _ptr, sizeof(T) * _w * _d * _h);
+	return destination + sizeof(size_t) * 4;
+}
+
+template<typename T>
+inline const char* Array3D<T>::LoadFromBuffer(const char* source)
+{
+	// read width, height and depth, from the file into local vars
+	size_t w, h, d;
+	memcpy(&w, source, sizeof(size_t));
+	memcpy(&h, source + sizeof(size_t), sizeof(size_t));
+	memcpy(&d, source + sizeof(size_t) * 2, sizeof(size_t));
+
+	// allocate using the w, h and d obtained from the file
+	allocate(w, h, d);
+
+	// copy array data into newly allocated array
+	memcpy(_ptr, source + sizeof(size_t) * 3, sizeof(T) * w * h * d);
+
+	return source + sizeof(size_t) * 3 + sizeof(T) * w * h * d;
+
+}
+
+template<typename T>
+inline size_t Array3D<T>::GetBinaryFileNumBytes() const {
+	return 0;
 }

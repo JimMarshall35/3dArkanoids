@@ -81,6 +81,8 @@ public:
     virtual bool SetSerializableProperty(const SerializableProperty& p) override;
     virtual int GetNumSerializableProperties() const override;
     virtual std::string GetSerializableNodeName() const override;
-
+    virtual char* SaveToBuffer(char* destinaion) const override;
+    virtual const char* LoadFromBuffer(const char* source) override;
+    virtual size_t GetBinaryFileNumBytes() const override;
 };
 #endif

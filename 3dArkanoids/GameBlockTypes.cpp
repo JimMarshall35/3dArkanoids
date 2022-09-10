@@ -21,9 +21,12 @@ void GameBlockTypes::Clear()
 void GameBlockTypes::SaveToFile(std::string filePath) const
 {
 	std::ofstream file(filePath, std::ios::out | std::ios::binary);
+	auto bufferSize = (m_nextIndexToAdd - 1) * sizeof(BlockTypeDescription) + sizeof(int); // + sizeof(int) for an int at the start signifying the number of game block types
+	auto fileBuffer = std::make_unique<char[]>(bufferSize);
+	SaveToBuffer(fileBuffer.get());
 	file.write(
-		(const char*)&m_blockTypes[1], // start at index 1 as index 0 is no block
-		(m_nextIndexToAdd-1)*sizeof(BlockTypeDescription));
+		fileBuffer.get(), // start at index 1 as index 0 is no block
+		bufferSize);
 }
 
 void GameBlockTypes::LoadFromFile(std::string filePath)
@@ -31,28 +34,40 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 	std::ifstream is(filePath, std::ios::in | std::ios::binary);
 	// get length
 	is.seekg(0, is.end);
-	int fileLength = is.tellg();
+	auto fileLen = is.tellg();
 	is.seekg(0, is.beg);
-	assert(fileLength <= sizeof(m_blockTypes));
-	is.read((char*)&m_blockTypes[1], fileLength);
-	m_nextIndexToAdd = (fileLength/ sizeof(BlockTypeDescription)) + 1;
+	assert(fileLen <= sizeof(m_blockTypes));
 
-	//for (int i = 1; i < m_nextIndexToAdd; i++) {
-	//	const auto& colour = m_blockTypes[i].Appearance.Colour;
-	//	std::cout << "{ " << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << " },\n";
-	//}
+	auto fileBuffer = std::make_unique<char[]>(fileLen);
+
+	is.read(fileBuffer.get(), fileLen);
+
+	
+	LoadFromBuffer(fileBuffer.get());
+
 	InitialiseSerializablePropertiesArray();
 	
 	const auto& blockTypes = GetSerializableProperties()[0];
-	//auto numBlockTypes = blockTypes.data.SizeIfApplicable;
-	//for (int i = 0; i < numBlockTypes; i++) {
-	//	const auto blockType = blockTypes.data.dataUnion.childNodes[i];
-	//	const auto& props = blockType->GetSerializableProperties();
-	//	for (const auto& prop : props) {
-	//		std::cout << prop.name << " type: " << (int)prop.type << "\n";
-	//	}
-	//	//const auto& blockTypeProps = blockType.GetSerializableProperties();
-	//}
+
+}
+
+char* GameBlockTypes::SaveToBuffer(char* destination) const
+{
+	auto numBlockTypes = m_nextIndexToAdd - 1;
+	auto writePtr = destination;
+	memcpy(writePtr, &numBlockTypes, sizeof(int));
+	writePtr += sizeof(int);
+	memcpy(writePtr, (const char*)&m_blockTypes[1], numBlockTypes * sizeof(BlockTypeDescription));
+	writePtr += numBlockTypes * sizeof(BlockTypeDescription);
+	return writePtr;
+}
+
+const char* GameBlockTypes::LoadFromBuffer(const char* source)
+{
+	auto numBlockTypes = *((int*)source);
+	m_nextIndexToAdd = numBlockTypes + 1;
+	memcpy(&m_blockTypes[1], source + sizeof(int), numBlockTypes * sizeof(BlockTypeDescription));
+	return source + sizeof(int) + numBlockTypes * sizeof(BlockTypeDescription);
 }
 
 unsigned char GameBlockTypes::GetNextIndexToAdd()
@@ -99,6 +114,11 @@ int GameBlockTypes::GetNumSerializableProperties() const
 std::string GameBlockTypes::GetSerializableNodeName() const
 {
 	return "GameBlockTypes";
+}
+
+size_t GameBlockTypes::GetBinaryFileNumBytes() const
+{
+	return size_t();
 }
 
 

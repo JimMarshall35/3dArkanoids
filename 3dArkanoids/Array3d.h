@@ -163,14 +163,30 @@ inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializablePrope
 	props[2].type = SerializablePropertyType::Uint32;
 	props[2].data.dataUnion.Uint32 = _h;
 
-	props[3].name = "Width";
+	props[3].name = "Depth";
 	props[3].type = SerializablePropertyType::Uint32;
 	props[3].data.dataUnion.Uint32 = _d;
 
 	return props;
 }
 template<typename T>
-inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty&) {
+inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty& p) {
+	if (p.name == "Data") {
+		_ptr = p.data.dataUnion.Bytes;
+		return true;
+	}
+	else if (p.name == "Width") {
+		_w = p.data.dataUnion.Uint32;
+		return true;
+	}
+	else if (p.name == "Height") {
+		_h = p.data.dataUnion.Uint32;
+		return true;
+	}
+	else if (p.name == "Depth") {
+		_d = p.data.dataUnion.Uint32;
+		return true;
+	}
 	return false;
 }
 

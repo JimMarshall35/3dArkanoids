@@ -38,13 +38,13 @@ void DebugPrintSerializablePropertiesNode(const ISerializablePropertiesNode* nod
 			std::cout << prop.data.dataUnion.Uint8 << "\n";
 			break;
 		case SerializablePropertyType::Vec2:
-			std::cout << "x: " << prop.data.dataUnion.Vec2.x << " y: " << prop.data.dataUnion.Vec2.y << "\n";
+			std::cout << "{ x: " << prop.data.dataUnion.Vec2.x << " y: " << prop.data.dataUnion.Vec2.y << " }\n";
 			break;
 		case SerializablePropertyType::Vec3:
-			std::cout << "x: " << prop.data.dataUnion.Vec3.x << " y: " << prop.data.dataUnion.Vec3.y << " z: " << prop.data.dataUnion.Vec3.z << "\n";
+			std::cout << "{ x: " << prop.data.dataUnion.Vec3.x << " y: " << prop.data.dataUnion.Vec3.y << " z: " << prop.data.dataUnion.Vec3.z << " }\n";
 			break;
 		case SerializablePropertyType::Vec4:
-			std::cout << "x: " << prop.data.dataUnion.Vec4.x << " y: " << prop.data.dataUnion.Vec4.y << " z: " << prop.data.dataUnion.Vec4.z << " a: " << prop.data.dataUnion.Vec4.a << "\n";
+			std::cout << "{ x: " << prop.data.dataUnion.Vec4.x << " y: " << prop.data.dataUnion.Vec4.y << " z: " << prop.data.dataUnion.Vec4.z << " a: " << prop.data.dataUnion.Vec4.a << " }\n";
 			break;
 		case SerializablePropertyType::Bytes:
 			std::cout << "[bytes]\n";

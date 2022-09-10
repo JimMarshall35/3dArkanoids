@@ -118,7 +118,7 @@ std::string GameBlockTypes::GetSerializableNodeName() const
 
 size_t GameBlockTypes::GetBinaryFileNumBytes() const
 {
-	return size_t();
+	return (m_nextIndexToAdd - 1) * sizeof(BlockTypeDescription) + sizeof(int);
 }
 
 

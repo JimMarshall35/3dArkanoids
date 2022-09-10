@@ -15,55 +15,7 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 {
 	m_renderer = renderer;
 	m_levelEditorServer = levelEditorServerFactory(this);
-	m_fallingBlockManager.BlockFinished += this;
-	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
-	m_frameUpdateEvent += &m_fallingBlockManager;
-	m_frameUpdateEvent += m_levelEditorServer.get();
 	
-	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
-	m_renderer->SetLightPos(
-		glm::vec3(
-		((float)PLAYFIELD_WIDTH_BLOCKS / 2.0f) * (float)BLOCK_WIDTH_UNITS,
-		((float)PLAYFIELD_HEIGHT_BLOCKS / 2.0f) * (float)BLOCK_HEIGHT_UNITS,
-		(((float)PLAYFIELD_DEPTH_BLOCKS / 2.0f) * (float)BLOCK_DEPTH_UNITS) * LightPosZMultiplier)
-	);
-	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
-
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.184f, 0.176f, 0.803f, 1.0f }, glm::vec2{ 0.0f,0.0f } });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 0, 0, 1 }, GetUvOffsetFromByteValue(2) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0, 1, 0, 1 }, GetUvOffsetFromByteValue(3) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.094, 0.949, 0.898, 0.2 }, GetUvOffsetFromByteValue(4) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.98, 0.878, 0, 1 }, GetUvOffsetFromByteValue(5) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 1, 1, 1 }, GetUvOffsetFromByteValue(6) });
-	m_gameBlockTypes.LoadFromFile("GameBlockTypesNew.jim");
-
-	//m_gameBlockTypes.SaveToFile("GameBlockTypesNew.jim");
-
-
-	m_playFieldArray.LoadFromFile("Level.jim");
-	 
-	int w = m_playFieldArray.getW();
-
-	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f,((w  * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
-
-	m_ballManager.Init(
-		this,
-		m_frameUpdateEvent,
-		&m_bat);
-
-	const auto ballStartingY = 
-		-(m_bat.GetDistanceFromFirstRow() + BLOCK_DEPTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
-	
-	m_ballManager.AddBall(
-		{ m_bat.GetXPos() , ballStartingY, 0 },
-		glm::normalize(glm::vec3{ -0.5,1,0 }),
-		true);
-
-	InitializeRenderData();
-	bool isValid = LinkAndValidateBlocksRenderData();
-	if (!isValid) {
-
-	}
 	
 }
 
@@ -333,6 +285,58 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
 {
 	return SetBoardDescriptionResultCPP();
+}
+
+void Game::Init()
+{
+	m_fallingBlockManager.BlockFinished += this;
+	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
+	m_frameUpdateEvent += &m_fallingBlockManager;
+	m_frameUpdateEvent += m_levelEditorServer.get();
+
+	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
+	m_renderer->SetLightPos(
+		glm::vec3(
+			((float)PLAYFIELD_WIDTH_BLOCKS / 2.0f) * (float)BLOCK_WIDTH_UNITS,
+			((float)PLAYFIELD_HEIGHT_BLOCKS / 2.0f) * (float)BLOCK_HEIGHT_UNITS,
+			(((float)PLAYFIELD_DEPTH_BLOCKS / 2.0f) * (float)BLOCK_DEPTH_UNITS) * LightPosZMultiplier)
+	);
+	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
+
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.184f, 0.176f, 0.803f, 1.0f }, glm::vec2{ 0.0f,0.0f } });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 0, 0, 1 }, GetUvOffsetFromByteValue(2) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0, 1, 0, 1 }, GetUvOffsetFromByteValue(3) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.094, 0.949, 0.898, 0.2 }, GetUvOffsetFromByteValue(4) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.98, 0.878, 0, 1 }, GetUvOffsetFromByteValue(5) });
+	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 1, 1, 1 }, GetUvOffsetFromByteValue(6) });
+	//m_gameBlockTypes.LoadFromFile("GameBlockTypesNew.jim");
+
+
+
+	//m_playFieldArray.LoadFromFile("Level.jim");
+
+	int w = m_playFieldArray.getW();
+
+	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f, ((w * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
+
+	m_ballManager.Init(
+		this,
+		m_frameUpdateEvent,
+		&m_bat);
+
+	const auto ballStartingY =
+		-(m_bat.GetDistanceFromFirstRow() + BLOCK_DEPTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
+
+	m_ballManager.AddBall(
+		{ m_bat.GetXPos() , ballStartingY, 0 },
+		glm::normalize(glm::vec3{ -0.5,1,0 }),
+		true);
+
+	InitializeRenderData();
+	bool isValid = LinkAndValidateBlocksRenderData();
+	if (!isValid) {
+
+	}
 }
 
 glm::vec2 Game::GetUvOffsetFromByteValue(const unsigned char byteCode)

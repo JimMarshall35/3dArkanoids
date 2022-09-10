@@ -198,7 +198,7 @@ inline char* Array3D<T>::SaveToBuffer(char* destination) const
 	memcpy(destination + sizeof(size_t), &_h, sizeof(size_t));
 	memcpy(destination + sizeof(size_t) * 2, &_d, sizeof(size_t));
 	memcpy(destination + sizeof(size_t) * 3, _ptr, sizeof(T) * _w * _d * _h);
-	return destination + sizeof(size_t) * 4;
+	return destination + sizeof(size_t) * 3 + sizeof(T) * _w * _d * _h;
 }
 
 template<typename T>
@@ -222,5 +222,5 @@ inline const char* Array3D<T>::LoadFromBuffer(const char* source)
 
 template<typename T>
 inline size_t Array3D<T>::GetBinaryFileNumBytes() const {
-	return 0;
+	return sizeof(size_t) * 3 + sizeof(T) * _w * _d * _h;
 }

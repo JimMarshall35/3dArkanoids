@@ -145,8 +145,14 @@ int main()
 
     Assimp::Importer importer;
 
-    DebugPrintAllSerializableThings();
+    
+    //SaveSerializableToSingleBigBinary("level.big");
+    LoadSerializableFromSingleBigBinary("level.big");
+    game.Init();
+    //DebugPrintAllSerializableThings();
 
+
+    //SaveSerializableToSingleBigBinary("Level.big");
     // render loop
     // -----------
      while (!glfwWindowShouldClose(window))

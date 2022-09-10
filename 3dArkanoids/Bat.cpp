@@ -9,7 +9,7 @@
 
 Bat::Bat()
 {
-	LoadFromFile("bat.jim");
+	//LoadFromFile("bat.jim");
 }
 
 double Bat::RecieveInput(const GameInput& input)
@@ -133,5 +133,5 @@ std::string Bat::GetSerializableNodeName() const
 
 size_t Bat::GetBinaryFileNumBytes() const
 {
-	return size_t();
+	return 2 * sizeof(float) + sizeof(double);
 }

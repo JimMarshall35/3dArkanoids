@@ -3,7 +3,7 @@
 #include <fstream>
 Camera::Camera(std::string positionFile)
 {
-    LoadFromFile(positionFile);
+    //LoadFromFile(positionFile);
     //SaveToFile("NewFormatCamera.cam");
     updateCameraVectors();
 }

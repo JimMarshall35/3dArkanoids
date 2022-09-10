@@ -1,5 +1,6 @@
 #include "ISerializable.h"
 #include <iostream>
+#include <fstream>
 
 
 void DebugPrintSerializablePropertiesNode(const ISerializablePropertiesNode* node, int numTabs = 0) {
@@ -73,4 +74,58 @@ void DebugPrintAllSerializableThings()
 		//std::cout << "serializable thing " << item->GetSerializableNodeName() << "\n";
 		DebugPrintSerializablePropertiesNode(item);
 	}
+}
+
+size_t getBigFileRequiredSize() {
+	size_t size = 0;
+	const auto& list = AutoList<ISerializable>::GetList();
+	for (const auto item : list) {
+		//std::cout << "serializable thing " << item->GetSerializableNodeName() << "\n";
+		size += item->GetBinaryFileNumBytes();
+	}
+	return size;
+}
+
+void SaveSerializableToSingleBigBinary(std::string filePath)
+{
+	auto bufferSize = getBigFileRequiredSize();
+
+	auto stagingBuffer = std::make_unique<char[]>(bufferSize);
+
+	auto writePtr = stagingBuffer.get();
+
+	const auto& list = AutoList<ISerializable>::GetList();
+	for (const auto item : list) {
+		writePtr = item->SaveToBuffer(writePtr);
+	}
+
+	std::ofstream file(filePath, std::ios::out | std::ios::binary);
+	file.write(stagingBuffer.get(), bufferSize);
+
+
+}
+
+
+void LoadSerializableFromSingleBigBinary(std::string filePath)
+{
+
+	// open file
+	std::ifstream is(filePath, std::ios::in | std::ios::binary);
+
+	// get length
+	is.seekg(0, is.end);
+	int fileLength = is.tellg();
+	is.seekg(0, is.beg);
+
+	// allocate buffer for the entire files contents and write files contents into it
+	auto inputBuf = std::make_unique<char[]>(fileLength);
+	is.read(inputBuf.get(), fileLength);
+
+	const char* readPtr = inputBuf.get();
+	const auto& list = AutoList<ISerializable>::GetList();
+	for (auto item : list) {
+		readPtr = item->LoadFromBuffer(readPtr);
+	}
+
+
 }

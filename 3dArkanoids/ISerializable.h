@@ -90,3 +90,7 @@ protected:
 };
 
 void DebugPrintAllSerializableThings();
+
+void SaveSerializableToSingleBigBinary(std::string filePath);
+
+void LoadSerializableFromSingleBigBinary(std::string filePath);

@@ -68,6 +68,7 @@ public:
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const = 0;
 	virtual bool SetSerializableProperty(const SerializableProperty& p) =  0;
 	virtual int GetNumSerializableProperties() const = 0;
+	virtual std::string GetSerializableNodeName() const = 0;
 };
 
 class ISerializable :public ISerializablePropertiesNode, public AutoList<ISerializable> {

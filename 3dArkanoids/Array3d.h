@@ -59,6 +59,8 @@ public:
 	virtual bool SetSerializableProperty(const SerializableProperty& p) override;
 	virtual int GetNumSerializableProperties() const override;
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const;
+	virtual std::string GetSerializableNodeName() const override;
+
 };
 
 template<typename T>
@@ -147,7 +149,7 @@ inline void Array3D<T>::LoadFromFile(std::string filePath)
 template<typename T>
 inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializableProperties() const
 {
-	std::vector<SerializableProperty> props(ARRAY3D_NUM_SERIALIZABLE_PROPERTIES);
+	static std::vector<SerializableProperty> props(ARRAY3D_NUM_SERIALIZABLE_PROPERTIES);
 	props[0].name = "Data";
 	props[0].type = SerializablePropertyType::Bytes;
 	props[0].data.SizeIfApplicable = sizeof(T) * _w * _d * _h;
@@ -176,4 +178,9 @@ template<typename T>
 inline int Array3D<T>::GetNumSerializableProperties() const
 {
 	return ARRAY3D_NUM_SERIALIZABLE_PROPERTIES;
+}
+
+template<typename T>
+std::string Array3D<T>::GetSerializableNodeName() const {
+	return "Array3D";
 }

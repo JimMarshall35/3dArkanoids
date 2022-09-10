@@ -75,7 +75,7 @@ void Bat::LoadFromFile(std::string path)
 
 const std::vector<SerializableProperty>& Bat::GetSerializableProperties() const
 {
-	std::vector<SerializableProperty> props(NUM_BAT_SERIALIZABLE_PROPERTIES);
+	static std::vector<SerializableProperty> props(NUM_BAT_SERIALIZABLE_PROPERTIES);
 	props[0].name = "BatWidth";
 	props[0].type = SerializablePropertyType::Float;
 	props[0].data.dataUnion.Float = m_batWidth;
@@ -84,9 +84,9 @@ const std::vector<SerializableProperty>& Bat::GetSerializableProperties() const
 	props[1].type = SerializablePropertyType::Float;
 	props[1].data.dataUnion.Float = m_distanceFromFirstRow;
 
-	props[1].name = "Sensitivity";
-	props[1].type = SerializablePropertyType::Double;
-	props[1].data.dataUnion.Float = m_sensitivity;
+	props[2].name = "Sensitivity";
+	props[2].type = SerializablePropertyType::Double;
+	props[2].data.dataUnion.Float = m_sensitivity;
 
 	return props;
 
@@ -100,4 +100,9 @@ bool Bat::SetSerializableProperty(const SerializableProperty& p)
 int Bat::GetNumSerializableProperties() const
 {
 	return NUM_BAT_SERIALIZABLE_PROPERTIES;
+}
+
+std::string Bat::GetSerializableNodeName() const
+{
+	return "Bat";
 }

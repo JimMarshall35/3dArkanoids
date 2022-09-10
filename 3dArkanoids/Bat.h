@@ -26,6 +26,7 @@ public:
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
 	virtual bool SetSerializableProperty(const SerializableProperty& p);
 	virtual int GetNumSerializableProperties() const override;
+	virtual std::string GetSerializableNodeName() const override;
 private:
 	double m_xPos;
 	double m_xMinPos;

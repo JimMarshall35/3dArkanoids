@@ -29,6 +29,8 @@ public:
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
 	virtual bool SetSerializableProperty(const SerializableProperty& p) override;
 	virtual int GetNumSerializableProperties() const override;
+	virtual std::string GetSerializableNodeName() const override;
+
 private:
 	std::vector<SerializableProperty> m_properties;
 	std::function<void(const glm::vec4&)> m_setColourFunc;
@@ -46,6 +48,7 @@ public:
 	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
 	// Inherited via ISerializable
 	virtual int GetNumSerializableProperties() const override;
+	virtual std::string GetSerializableNodeName() const override;
 
 	unsigned char GetNextIndexToAdd();
 	void InitialiseSerializablePropertiesArray();

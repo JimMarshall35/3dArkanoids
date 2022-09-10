@@ -37,22 +37,22 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 	is.read((char*)&m_blockTypes[1], fileLength);
 	m_nextIndexToAdd = (fileLength/ sizeof(BlockTypeDescription)) + 1;
 
-	for (int i = 1; i < m_nextIndexToAdd; i++) {
-		const auto& colour = m_blockTypes[i].Appearance.Colour;
-		std::cout << "{ " << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << " },\n";
-	}
+	//for (int i = 1; i < m_nextIndexToAdd; i++) {
+	//	const auto& colour = m_blockTypes[i].Appearance.Colour;
+	//	std::cout << "{ " << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << " },\n";
+	//}
 	InitialiseSerializablePropertiesArray();
 	
 	const auto& blockTypes = GetSerializableProperties()[0];
-	auto numBlockTypes = blockTypes.data.SizeIfApplicable;
-	for (int i = 0; i < numBlockTypes; i++) {
-		const auto blockType = blockTypes.data.dataUnion.childNodes[i];
-		const auto& props = blockType->GetSerializableProperties();
-		for (const auto& prop : props) {
-			std::cout << prop.name << " type: " << (int)prop.type << "\n";
-		}
-		//const auto& blockTypeProps = blockType.GetSerializableProperties();
-	}
+	//auto numBlockTypes = blockTypes.data.SizeIfApplicable;
+	//for (int i = 0; i < numBlockTypes; i++) {
+	//	const auto blockType = blockTypes.data.dataUnion.childNodes[i];
+	//	const auto& props = blockType->GetSerializableProperties();
+	//	for (const auto& prop : props) {
+	//		std::cout << prop.name << " type: " << (int)prop.type << "\n";
+	//	}
+	//	//const auto& blockTypeProps = blockType.GetSerializableProperties();
+	//}
 }
 
 unsigned char GameBlockTypes::GetNextIndexToAdd()
@@ -94,6 +94,11 @@ bool GameBlockTypes::SetSerializableProperty(const SerializableProperty& p)
 int GameBlockTypes::GetNumSerializableProperties() const
 {
 	return 1;
+}
+
+std::string GameBlockTypes::GetSerializableNodeName() const
+{
+	return "GameBlockTypes";
 }
 
 
@@ -147,4 +152,9 @@ bool BlockTypeSerializableNode::SetSerializableProperty(const SerializableProper
 int BlockTypeSerializableNode::GetNumSerializableProperties() const
 {
 	return 2;
+}
+
+std::string BlockTypeSerializableNode::GetSerializableNodeName() const
+{
+	return "BlockTypeSerializableNode";
 }

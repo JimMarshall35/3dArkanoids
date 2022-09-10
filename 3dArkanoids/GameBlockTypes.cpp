@@ -41,11 +41,49 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 		const auto& colour = m_blockTypes[i].Appearance.Colour;
 		std::cout << "{ " << colour.r << ", " << colour.g << ", " << colour.b << ", " << colour.a << " },\n";
 	}
+	InitialiseSerializablePropertiesArray();
+	
+	const auto& blockTypes = GetSerializableProperties()[0];
+	auto numBlockTypes = blockTypes.data.SizeIfApplicable;
+	for (int i = 0; i < numBlockTypes; i++) {
+		const auto blockType = blockTypes.data.dataUnion.childNodes[i];
+		const auto& props = blockType->GetSerializableProperties();
+		for (const auto& prop : props) {
+			std::cout << prop.name << " type: " << (int)prop.type << "\n";
+		}
+		//const auto& blockTypeProps = blockType.GetSerializableProperties();
+	}
 }
 
 unsigned char GameBlockTypes::GetNextIndexToAdd()
 {
 	return m_nextIndexToAdd;
+}
+
+void GameBlockTypes::InitialiseSerializablePropertiesArray()
+{
+	for (int i = 0; i < m_nextIndexToAdd - 1; i++) {
+		auto& type = m_blockTypes[i + 1];
+		auto node = BlockTypeSerializableNode(type.Appearance.Colour,type.Appearance.AtlasUvOffset,
+			[this, i](const auto& vec) {m_blockTypes[i + 1].Appearance.Colour = vec; },
+			[this, i](const auto& vec) {m_blockTypes[i + 1].Appearance.AtlasUvOffset = vec; });
+		m_blockTypeSerializableNodes.push_back(node);
+	}
+
+	SerializableProperty prop;
+	m_serializableProperties.push_back(prop);
+	auto& p = m_serializableProperties.back();
+	p.name = "block types";
+	p.type = SerializablePropertyType::SerializableNodesArray;
+	p.data.SizeIfApplicable = m_blockTypeSerializableNodes.size();
+	auto alloced = new ISerializablePropertiesNode * [p.data.SizeIfApplicable];
+	p.data.dataUnion.childNodes = alloced;
+	for (int i = 0; i < p.data.SizeIfApplicable; i++) {
+		p.data.dataUnion.childNodes[i] = &m_blockTypeSerializableNodes[i];
+	}
+
+
+
 }
 
 bool GameBlockTypes::SetSerializableProperty(const SerializableProperty& p)
@@ -59,13 +97,54 @@ int GameBlockTypes::GetNumSerializableProperties() const
 }
 
 
-const std::vector<SerializableProperty>& GameBlockTypes::GetSerializableProperties()
+const std::vector<SerializableProperty>& GameBlockTypes::GetSerializableProperties() const
 {
-	std::vector<SerializableProperty> properties(1);
-	properties[0].data.SizeIfApplicable = (m_nextIndexToAdd - 1) * sizeof(BlockTypeDescription);
-	properties[0].data.dataUnion.Bytes = (char*)&m_blockTypes[1];
-	properties[0].type = SerializablePropertyType::Bytes;
-	properties[0].name = "BlockTypes";
 
-	return properties;
+	return m_serializableProperties;
+}
+
+
+const std::vector<SerializableProperty>& BlockTypeSerializableNode::GetSerializableProperties() const
+{
+	return m_properties;
+}
+
+BlockTypeSerializableNode::BlockTypeSerializableNode(const glm::vec4& colour, const glm::vec2& uvOffset, SetColourFunc setColourFunc, SetUvOffsetFunc setUvOffsetFunc)
+{
+	m_setColourFunc = setColourFunc;
+	m_setUvOffsetFunc = setUvOffsetFunc;
+
+	m_properties = std::vector<SerializableProperty>(2);
+	m_properties[0].name = "colour";
+	m_properties[0].type = SerializablePropertyType::Vec4;
+	m_properties[0].data.dataUnion.Vec4 = colour;
+
+	m_properties[1].name = "uv offset";
+	m_properties[1].type = SerializablePropertyType::Vec2;
+	m_properties[1].data.dataUnion.Vec2 = uvOffset;
+}
+
+bool BlockTypeSerializableNode::SetSerializableProperty(const SerializableProperty& p)
+{
+	if (p.name == "colour") {
+		if (p.type != SerializablePropertyType::Vec4) {
+			return false;
+		}
+		m_setColourFunc(p.data.dataUnion.Vec4);
+		return true;
+	}
+	else if (p.name == "uv offset") {
+		if (p.type != SerializablePropertyType::Vec2) {
+			return false;
+		}
+		m_setUvOffsetFunc(p.data.dataUnion.Vec2);
+		return true;
+	}
+
+	return false;
+}
+
+int BlockTypeSerializableNode::GetNumSerializableProperties() const
+{
+	return 2;
 }

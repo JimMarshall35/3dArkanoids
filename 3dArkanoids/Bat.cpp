@@ -73,7 +73,7 @@ void Bat::LoadFromFile(std::string path)
 	m_sensitivity = *((double*)&stagingBuffer[2 * sizeof(float)]);
 }
 
-const std::vector<SerializableProperty>& Bat::GetSerializableProperties()
+const std::vector<SerializableProperty>& Bat::GetSerializableProperties() const
 {
 	std::vector<SerializableProperty> props(NUM_BAT_SERIALIZABLE_PROPERTIES);
 	props[0].name = "BatWidth";

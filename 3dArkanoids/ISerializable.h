@@ -15,6 +15,7 @@ enum class SerializablePropertyType {
 	Float,
 	Double,
 	Bytes,
+	Vec2,
 	Vec3,
 	Vec4,
 	SerializableNode,
@@ -33,9 +34,10 @@ union SerializablePropertyData {
 	float Float;
 	double Double;
 	char* Bytes;
+	glm::vec2 Vec2;
 	glm::vec3 Vec3;
 	glm::vec4 Vec4;
-	ISerializablePropertiesNode* childNodes;
+	ISerializablePropertiesNode** childNodes;
 
 };
 
@@ -49,12 +51,21 @@ struct SerializableProperty {
 	std::string name;
 	SerializablePropertyType type;
 	SizedSerializablePropertyData data;
-
+	~SerializableProperty() {
+		switch (type) {
+		case SerializablePropertyType::SerializableNode:
+			delete data.dataUnion.childNodes;
+			break;
+		case SerializablePropertyType::SerializableNodesArray:
+			delete[] data.dataUnion.childNodes;
+			break;
+		}
+	}
 };
 
 class ISerializablePropertiesNode {
 public:
-	virtual const std::vector<SerializableProperty>& GetSerializableProperties() = 0;
+	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const = 0;
 	virtual bool SetSerializableProperty(const SerializableProperty& p) =  0;
 	virtual int GetNumSerializableProperties() const = 0;
 };
@@ -72,3 +83,5 @@ protected:
 		// ctor to be used when you don't want to be auto-listed
 	}
 };
+
+void DebugPrintAllSerializableThings();

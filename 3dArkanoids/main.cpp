@@ -145,6 +145,8 @@ int main()
 
     Assimp::Importer importer;
 
+    DebugPrintAllSerializableThings();
+
     // render loop
     // -----------
      while (!glfwWindowShouldClose(window))

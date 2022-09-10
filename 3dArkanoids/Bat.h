@@ -23,7 +23,7 @@ public:
 	inline const glm::vec2& GetDepthAndHeight() const { return m_batDepthAndHeight; }
 	inline double GetWidth() const { return m_batWidth; }
 public:
-	virtual const std::vector<SerializableProperty>& GetSerializableProperties() override;
+	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
 	virtual bool SetSerializableProperty(const SerializableProperty& p);
 	virtual int GetNumSerializableProperties() const override;
 private:

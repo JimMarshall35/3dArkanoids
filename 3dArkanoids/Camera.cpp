@@ -90,7 +90,6 @@ void Camera::updateCameraVectors()
 
 void Camera::SaveToFile(std::string path) const
 {
-
     char stagingBuffer[CAMERA_SAVED_BINARY_SIZE];
     int writePos = 0;
     memcpy(stagingBuffer + writePos, &Position, sizeof(glm::vec3));
@@ -202,6 +201,46 @@ const std::vector<SerializableProperty>& Camera::GetSerializableProperties() con
 
 bool Camera::SetSerializableProperty(const SerializableProperty& p)
 {
+    if (p.name == "Position") {
+        Position = p.data.dataUnion.Vec3;
+        return true;
+    }
+    else if (p.name == "Front") {
+        Front = p.data.dataUnion.Vec3;
+        return true;
+    }
+    else if (p.name == "Up") {
+        Up = p.data.dataUnion.Vec3;
+        return true;
+    }
+    else if (p.name == "Right") {
+        Right = p.data.dataUnion.Vec3;
+        return true;
+    }
+    else if (p.name == "WorldUp") {
+        WorldUp = p.data.dataUnion.Vec3;
+        return true;
+    }
+    else if (p.name == "Yaw") {
+        Yaw = p.data.dataUnion.Float;
+        return true;
+    }
+    else if (p.name == "Pitch") {
+        Pitch = p.data.dataUnion.Float;
+        return true;
+    }
+    else if (p.name == "MovementSpeed") {
+        MovementSpeed = p.data.dataUnion.Float;
+        return true;
+    }
+    else if (p.name == "MouseSensitivity") {
+        MouseSensitivity = p.data.dataUnion.Float;
+        return true;
+    }
+    else if (p.name == "Zoom") {
+        Zoom = p.data.dataUnion.Float;
+        return true;
+    }
     return false;
 }
 

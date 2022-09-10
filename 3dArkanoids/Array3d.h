@@ -172,7 +172,7 @@ inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializablePrope
 template<typename T>
 inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty& p) {
 	if (p.name == "Data") {
-		_ptr = p.data.dataUnion.Bytes;
+		_ptr = (T*)p.data.dataUnion.Bytes;
 		return true;
 	}
 	else if (p.name == "Width") {

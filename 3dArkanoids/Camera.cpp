@@ -2,13 +2,12 @@
 #include <iostream>
 #include <fstream>
 Camera::Camera(std::string positionFile)
-//    :ISerializable()
 {
     LoadFromFile(positionFile);
+    //SaveToFile("NewFormatCamera.cam");
     updateCameraVectors();
 }
 Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
-//    :ISerializable(), Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
 {
     Position = position;
     WorldUp = up;
@@ -18,7 +17,6 @@ Camera::Camera(glm::vec3 position, glm::vec3 up, float yaw, float pitch)
 }
 
 Camera::Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch)
-//    :ISerializable(), Front(glm::vec3(0.0f, 0.0f, -1.0f)), MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM)
 {
     Position = glm::vec3(posX, posY, posZ);
     WorldUp = glm::vec3(upX, upY, upZ);
@@ -88,73 +86,131 @@ void Camera::updateCameraVectors()
     Up = glm::normalize(glm::cross(Right, Front));
 }
 
-void Camera::SaveToFile(std::string file) const
+#define CAMERA_SAVED_BINARY_SIZE (sizeof(glm::vec3) * 5 + sizeof(float) * 5)
+
+void Camera::SaveToFile(std::string path) const
 {
-    std::ofstream camFile(file, std::ios::out | std::ios::binary);
-    camFile.write(reinterpret_cast<const char*>(this), sizeof(Camera));
+
+    char stagingBuffer[CAMERA_SAVED_BINARY_SIZE];
+    int writePos = 0;
+    memcpy(stagingBuffer + writePos, &Position, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(stagingBuffer + writePos, &Front, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(stagingBuffer + writePos, &Up, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(stagingBuffer + writePos, &Right, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(stagingBuffer + writePos, &WorldUp, sizeof(glm::vec3));
+    writePos += sizeof(glm::vec3);
+    memcpy(stagingBuffer + writePos, &Yaw, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(stagingBuffer + writePos, &Pitch, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(stagingBuffer + writePos, &MovementSpeed, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(stagingBuffer + writePos, &MouseSensitivity, sizeof(float));
+    writePos += sizeof(float);
+    memcpy(stagingBuffer + writePos, &Zoom, sizeof(float));
+    writePos += sizeof(float);
+
+    std::ofstream file(path, std::ios::out | std::ios::binary);
+
+    file.write(stagingBuffer, sizeof(stagingBuffer));
 }
 
 void Camera::LoadFromFile(std::string file)
 {
-    std::ifstream camFile(file, std::ios::in | std::ios::binary);
-    camFile.read(reinterpret_cast<char*>(this), sizeof(Camera));
+    std::ifstream is(file, std::ios::in | std::ios::binary);
+    // get length
+    is.seekg(0, is.end);
+    int fileLength = is.tellg();
+    is.seekg(0, is.beg);
+    assert(fileLength == CAMERA_SAVED_BINARY_SIZE);
+    char stagingBuffer[CAMERA_SAVED_BINARY_SIZE];
+    is.read(stagingBuffer, CAMERA_SAVED_BINARY_SIZE);
+
+    int readPos = 0;
+    Position = *((glm::vec3*)(stagingBuffer + readPos));
+    readPos += sizeof(glm::vec3);
+    Front = *((glm::vec3*)(stagingBuffer + readPos));
+    readPos += sizeof(glm::vec3);
+    Up = *((glm::vec3*)(stagingBuffer + readPos));
+    readPos += sizeof(glm::vec3);
+    Right = *((glm::vec3*)(stagingBuffer + readPos));
+    readPos += sizeof(glm::vec3);
+    WorldUp = *((glm::vec3*)(stagingBuffer + readPos));
+    readPos += sizeof(glm::vec3);
+    Yaw = *((float*)(stagingBuffer + readPos));
+    readPos += sizeof(float);
+    Pitch = *((float*)(stagingBuffer + readPos));
+    readPos += sizeof(float);
+    MovementSpeed = *((float*)(stagingBuffer + readPos));
+    readPos += sizeof(float);
+    MouseSensitivity = *((float*)(stagingBuffer + readPos));
+    readPos += sizeof(float);
+    Zoom = *((float*)(stagingBuffer + readPos));
+    readPos += sizeof(float);
 }
 
-//
-//#define NUM_CAMERA_SERIALIZABLE_PROPERTIES 10
-//const std::vector<SerializableProperty>& Camera::GetSerializableProperties()
-//{
-//    std::vector<SerializableProperty> props(NUM_CAMERA_SERIALIZABLE_PROPERTIES);
-//
-//    props[0].name = "Position";
-//    props[0].type = SerializablePropertyType::Vec3;
-//    props[0].data.dataUnion.Vec3 = Position;
-//
-//    props[1].name = "Front";
-//    props[1].type = SerializablePropertyType::Vec3;
-//    props[1].data.dataUnion.Vec3 = Front;
-//
-//    props[2].name = "Up";
-//    props[2].type = SerializablePropertyType::Vec3;
-//    props[2].data.dataUnion.Vec3 = Up;
-//
-//    props[3].name = "Right";
-//    props[3].type = SerializablePropertyType::Vec3;
-//    props[3].data.dataUnion.Vec3 = Right;
-//
-//    props[4].name = "WorldUp";
-//    props[4].type = SerializablePropertyType::Vec3;
-//    props[4].data.dataUnion.Vec3 = WorldUp;
-//
-//    props[5].name = "Yaw";
-//    props[5].type = SerializablePropertyType::Float;
-//    props[5].data.dataUnion.Float = Yaw;
-//
-//    props[6].name = "Pitch";
-//    props[6].type = SerializablePropertyType::Float;
-//    props[6].data.dataUnion.Float = Pitch;
-//
-//    props[7].name = "MovementSpeed";
-//    props[7].type = SerializablePropertyType::Float;
-//    props[7].data.dataUnion.Float = MovementSpeed;
-//
-//    props[8].name = "MouseSensitivity";
-//    props[8].type = SerializablePropertyType::Float;
-//    props[8].data.dataUnion.Float = MouseSensitivity;
-//
-//    props[9].name = "Zoom";
-//    props[9].type = SerializablePropertyType::Float;
-//    props[9].data.dataUnion.Float = Zoom;
-//
-//    return props;
-//}
-//
-//bool Camera::SetSerializableProperty(const SerializableProperty& p)
-//{
-//    return false;
-//}
-//
-//int Camera::GetNumSerializableProperties() const
-//{
-//    return NUM_CAMERA_SERIALIZABLE_PROPERTIES;
-//}
+const std::vector<SerializableProperty>& Camera::GetSerializableProperties() const
+{
+    static std::vector<SerializableProperty> props(NUM_CAMERA_SERIALIZABLE_PROPERTIES);
+
+    props[0].name = "Position";
+    props[0].type = SerializablePropertyType::Vec3;
+    props[0].data.dataUnion.Vec3 = Position;
+
+    props[1].name = "Front";
+    props[1].type = SerializablePropertyType::Vec3;
+    props[1].data.dataUnion.Vec3 = Front;
+
+    props[2].name = "Up";
+    props[2].type = SerializablePropertyType::Vec3;
+    props[2].data.dataUnion.Vec3 = Up;
+
+    props[3].name = "Right";
+    props[3].type = SerializablePropertyType::Vec3;
+    props[3].data.dataUnion.Vec3 = Right;
+
+    props[4].name = "WorldUp";
+    props[4].type = SerializablePropertyType::Vec3;
+    props[4].data.dataUnion.Vec3 = WorldUp;
+
+    props[5].name = "Yaw";
+    props[5].type = SerializablePropertyType::Float;
+    props[5].data.dataUnion.Float = Yaw;
+
+    props[6].name = "Pitch";
+    props[6].type = SerializablePropertyType::Float;
+    props[6].data.dataUnion.Float = Pitch;
+
+    props[7].name = "MovementSpeed";
+    props[7].type = SerializablePropertyType::Float;
+    props[7].data.dataUnion.Float = MovementSpeed;
+
+    props[8].name = "MouseSensitivity";
+    props[8].type = SerializablePropertyType::Float;
+    props[8].data.dataUnion.Float = MouseSensitivity;
+
+    props[9].name = "Zoom";
+    props[9].type = SerializablePropertyType::Float;
+    props[9].data.dataUnion.Float = Zoom;
+
+    return props;
+}
+
+bool Camera::SetSerializableProperty(const SerializableProperty& p)
+{
+    return false;
+}
+
+int Camera::GetNumSerializableProperties() const
+{
+    return NUM_CAMERA_SERIALIZABLE_PROPERTIES;
+}
+
+std::string Camera::GetSerializableNodeName() const
+{
+    return "Camera";
+}

@@ -8,6 +8,10 @@
 #include <vector>
 #include <string>
 #include "ISerializable.h"
+
+#define NUM_CAMERA_SERIALIZABLE_PROPERTIES 10
+
+
 // Defines several possible options for camera movement. Used as abstraction to stay away from window-system specific input methods
 enum Camera_Movement {
     FORWARD,
@@ -26,7 +30,7 @@ const float ZOOM = 45.0f;
 
 // An abstract camera class that processes input and calculates the corresponding Euler Angles, Vectors and Matrices for use in OpenGL
 class Camera
-//    :public ISerializable
+    :public ISerializable
 {
 public:
     Camera(std::string positionFile);
@@ -66,15 +70,17 @@ public:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();
 
-    void SaveToFile(std::string file) const;
+    /*void SaveToFile(std::string file) const;
+    void LoadFromFile(std::string file);*/
 
-    void LoadFromFile(std::string file);
+    virtual void SaveToFile(std::string file) const override;
 
-    //// Inherited via ISerializable
-    //virtual const std::vector<SerializableProperty>& GetSerializableProperties() override;
-    //virtual bool SetSerializableProperty(const SerializableProperty& p) override;
+    virtual void LoadFromFile(std::string file) override;
 
-    //// Inherited via ISerializable
-    //virtual int GetNumSerializableProperties() const override;
+    virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
+    virtual bool SetSerializableProperty(const SerializableProperty& p) override;
+    virtual int GetNumSerializableProperties() const override;
+    virtual std::string GetSerializableNodeName() const override;
+
 };
 #endif

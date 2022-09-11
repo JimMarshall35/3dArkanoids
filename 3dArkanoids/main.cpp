@@ -140,7 +140,6 @@ int main()
     GameFramework::PushLayers("GameplayUI",
         GameLayerType::Draw);
 
-    auto prevClock = high_resolution_clock::now();
 
 
     Assimp::Importer importer;
@@ -151,6 +150,7 @@ int main()
     game.Init();
     DebugPrintAllSerializableThings();
 
+    auto prevClock = high_resolution_clock::now();
 
     //SaveSerializableToSingleBigBinary("Level.big");
     // render loop

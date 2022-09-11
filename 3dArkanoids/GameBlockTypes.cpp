@@ -57,8 +57,15 @@ char* GameBlockTypes::SaveToBuffer(char* destination) const
 	auto writePtr = destination;
 	memcpy(writePtr, &numBlockTypes, sizeof(int));
 	writePtr += sizeof(int);
-	memcpy(writePtr, (const char*)&m_blockTypes[1], numBlockTypes * sizeof(BlockTypeDescription));
-	writePtr += numBlockTypes * sizeof(BlockTypeDescription);
+	for (int i = 1; i <= numBlockTypes; i++) {
+		const BlockTypeDescription& type = m_blockTypes[i];
+		memcpy(writePtr, &type.Appearance.AtlasUvOffset, sizeof(glm::vec2));
+		writePtr += sizeof(glm::vec2);
+		memcpy(writePtr, &type.Appearance.Colour, sizeof(glm::vec4));
+		writePtr += sizeof(glm::vec4);
+	}
+	//memcpy(writePtr, (const char*)&m_blockTypes[1], numBlockTypes * sizeof(BlockTypeDescription));
+	//writePtr += numBlockTypes * sizeof(BlockTypeDescription);
 	return writePtr;
 }
 
@@ -66,8 +73,15 @@ const char* GameBlockTypes::LoadFromBuffer(const char* source)
 {
 	auto numBlockTypes = *((int*)source);
 	m_nextIndexToAdd = numBlockTypes + 1;
-	memcpy(&m_blockTypes[1], source + sizeof(int), numBlockTypes * sizeof(BlockTypeDescription));
-	return source + sizeof(int) + numBlockTypes * sizeof(BlockTypeDescription);
+	auto readPtr = source + sizeof(int);
+	for (int i = 1; i <= numBlockTypes; i++) {
+		const BlockTypeDescription& type = *((BlockTypeDescription*)readPtr);
+		m_blockTypes[i].Appearance.AtlasUvOffset = type.Appearance.AtlasUvOffset;
+		m_blockTypes[i].Appearance.Colour = type.Appearance.Colour;
+		readPtr += sizeof(BlockTypeDescription);
+	}
+	//memcpy(&m_blockTypes[1], source + sizeof(int), numBlockTypes * sizeof(BlockTypeDescription));
+	return readPtr;
 }
 
 unsigned char GameBlockTypes::GetNextIndexToAdd()

@@ -149,7 +149,7 @@ int main()
     //SaveSerializableToSingleBigBinary("level.big");
     LoadSerializableFromSingleBigBinary("level.big");
     game.Init();
-    //DebugPrintAllSerializableThings();
+    DebugPrintAllSerializableThings();
 
 
     //SaveSerializableToSingleBigBinary("Level.big");

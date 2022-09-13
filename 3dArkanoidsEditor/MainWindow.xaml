@@ -58,7 +58,7 @@
 
         <Style x:Key="PropertiesStackPanelsStyle" TargetType="StackPanel">
             <Style.Setters>
-                <Setter Property="Orientation" Value="Horizontal"/>
+                <Setter Property="Orientation" Value="Vertical"/>
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="Height" Value="auto"/>
     
@@ -70,6 +70,12 @@
                 <Setter Property="Margin" Value="0"/>
                 <Setter Property="Height" Value="auto"/>
 
+            </Style.Setters>
+        </Style>
+
+        <Style x:Key="PropertyNumberAndLabelStackPanelStyle" TargetType="StackPanel">
+            <Style.Setters>
+                <Setter Property="Orientation" Value="Horizontal"/>
             </Style.Setters>
         </Style>
 
@@ -85,108 +91,143 @@
                     <!--Uint32-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u32val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"
                                Style="{StaticResource SerializablePropertyTextBlockStyle}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                         Text="{Binding Uint32}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Uint32}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Int32-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i32val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Int32}"/>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Int32}"/>
+                        </StackPanel>
+
                     </StackPanel>
 
                     <!--Uint16-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u16val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Uint16}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Int16-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i16val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Int16}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Uint8-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u8val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Uint8}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Int8-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i8val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                         Text="{Binding Int8}"/>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                     Text="{Binding Int8}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Float-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource floatval}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Float}"/>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                     Text="{Binding Float}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <!--Double-->
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource doubleval}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Double}"/>
+                        </StackPanel>
+                        
                     </StackPanel>
 
                     <!--Vec2-->
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec2val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec2.X}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec2.Y}"/>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Vec2.X}"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Vec2.Y}"/>
+                        </StackPanel>
+
                     </StackPanel>
 
                     <!--Vec3-->
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec3val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Vec3.X}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec3.Y}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorZString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec3.Z}"/>
+                        </StackPanel>
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Vec3.Y}"/>
+                        </StackPanel>
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorZString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}" Text="{Binding Vec3.Z}"/>
+                        </StackPanel>
                     </StackPanel>
                     
                     <!--Vec4-->
-                    <StackPanel Orientation="Horizontal"
+                    <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec4val}}">
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorRString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorRString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Vec4.R}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorGString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorGString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Vec4.G}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorBString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorBString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Vec4.B}"/>
-                        <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorAString}}"/>
-                        <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorAString}}"/>
+                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
                                  Text="{Binding Vec4.A}"/>
+                            </StackPanel>
+
+
+
                     </StackPanel>
                 </Grid>
 

@@ -105,7 +105,7 @@ namespace _3dArkanoidsEditor.Views
             {
                 for (int y = 0; y < PlayBoardTilesY; y++)
                 {
-                    var byteAtCoords = PlayBoardDescription.GetAt(x, y, m_currentLayer - 1);
+                    var byteAtCoords = PlayBoardDescription.GetAt(x, PlayBoardTilesY - 1 - y, m_currentLayer - 1);//PlayBoardTilesY-1-y flips the tiles in a quick and dirty fashion - can't be arsed figuring out why they're inverted
                     var colourOfRect = m_byteToColourDict[byteAtCoords];
                     if(byteAtCoords > 0)
                     {
@@ -140,7 +140,7 @@ namespace _3dArkanoidsEditor.Views
             {
                 for (int y = 0; y < PlayBoardTilesY; y++)
                 {
-                    var byteAtCoords = PlayBoardDescription.GetAt(x, y, m_currentLayer);
+                    var byteAtCoords = PlayBoardDescription.GetAt(x, PlayBoardTilesY-1-y, m_currentLayer);//PlayBoardTilesY-1-y flips the tiles in a quick and dirty fashion - can't be arsed figuring out why they're inverted
                     var colourOfRect = m_byteToColourDict[byteAtCoords];
                     var rectBrush = new SolidColorBrush(colourOfRect);
 
@@ -157,7 +157,7 @@ namespace _3dArkanoidsEditor.Views
                     // got to do this to stop the lambda capturing by reference (i think)
                     // https://stackoverflow.com/questions/451779/how-to-tell-a-lambda-function-to-capture-a-copy-instead-of-a-reference-in-c
                     int tileX = x;
-                    int tileY = y;
+                    int tileY = PlayBoardTilesY - 1 - y; // flips the tiles in a quick and dirty fashion - can't be arsed figuring out why they're inverted
                     byte byteAtCoordsCopy = byteAtCoords;
                     rect.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
                     {

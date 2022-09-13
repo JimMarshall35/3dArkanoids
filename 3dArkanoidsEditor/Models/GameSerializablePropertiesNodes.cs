@@ -8,7 +8,7 @@ namespace _3dArkanoidsEditor.Models
     using System.Threading.Tasks;
     using System.Collections.Generic;
     using System.Numerics;
-
+    using System.Collections.ObjectModel;
 
     class SerializablePropertiesNode
     {
@@ -24,6 +24,18 @@ namespace _3dArkanoidsEditor.Models
         }
         public string Name { get; set; }
         public List<SerializableProperty> Props { get; set; }
+
+        
+
+        public IEnumerable<SerializablePropertiesNode> Children 
+        { 
+            get
+            {
+                return Props.Where(x => x.PropType == SerializablePropertyType.SerializableNodesArray)
+                    .SelectMany(x => x.SerializableNodesArray);
+            }
+        }
+
     }
 
 }

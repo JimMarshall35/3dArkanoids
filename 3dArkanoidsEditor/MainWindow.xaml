@@ -5,19 +5,173 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3dArkanoidsEditor"
         xmlns:views="clr-namespace:_3dArkanoidsEditor.Views"
+        xmlns:models="clr-namespace:_3dArkanoidsEditor.Models"
         xmlns:converters="clr-namespace:_3dArkanoidsEditor.utils.converters" 
         mc:Ignorable="d"
         xmlns:t="clr-namespace:Simple.Wpf.Terminal;assembly=Simple.Wpf.Terminal"
+        xmlns:clr="clr-namespace:System;assembly=mscorlib"
         xmlns:b="http://schemas.microsoft.com/xaml/behaviors"
         Title="MainWindow" Height="800" Width="800">
     <Window.Resources>
+        <converters:SerializablePropertyTypeEnumToStringConvertor x:Key="serializablePropertyTypeToString"></converters:SerializablePropertyTypeEnumToStringConvertor>
         <converters:GameBlockTypeToBrushConverter x:Key="gameBlockTypeToBrush"></converters:GameBlockTypeToBrushConverter>
+        <converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor x:Key="UiEnabledConverter"></converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor>
+        
         <DataTemplate x:Key="GameBlock">
             <StackPanel Orientation="Horizontal">
                 <Canvas Width="64" Height="64" Background="{Binding GameBlockType, Converter={StaticResource gameBlockTypeToBrush}}"/>
                 <Label Content="{Binding GameBlockType.GameBlockTypeCode}"></Label>
             </StackPanel>
         </DataTemplate>
+
+        <x:Static x:Key="u32val" Member="models:SerializablePropertyType.Uint32" />
+        <x:Static x:Key="i32val" Member="models:SerializablePropertyType.Int32" />
+        <x:Static x:Key="u16val" Member="models:SerializablePropertyType.Uint32" />
+        <x:Static x:Key="i16val" Member="models:SerializablePropertyType.Int16" />
+        <x:Static x:Key="u8val" Member="models:SerializablePropertyType.Uint8" />
+        <x:Static x:Key="i8val" Member="models:SerializablePropertyType.Int8" />
+        <x:Static x:Key="floatval" Member="models:SerializablePropertyType.Float" />
+        <x:Static x:Key="doubleval" Member="models:SerializablePropertyType.Double" />
+        <x:Static x:Key="vec2val" Member="models:SerializablePropertyType.Vec2"/>
+        <x:Static x:Key="vec3val" Member="models:SerializablePropertyType.Vec3"/>
+
+        <clr:String x:Key="vectorXString">x:</clr:String>
+        <clr:String x:Key="vectorYString">y:</clr:String>
+        <clr:String x:Key="vectorZString">z:</clr:String>
+
+        <clr:String x:Key="vectorRString">r:</clr:String>
+        <clr:String x:Key="vectorGString">g:</clr:String>
+        <clr:String x:Key="vectorBString">b:</clr:String>
+        <clr:String x:Key="vectorAString">a:</clr:String>
+
+
+        <Style x:Key="SerializableTextBoxStyle" TargetType="TextBox">
+            <Style.Setters>
+                <Setter Property="Width" Value="50"></Setter>
+                <Setter Property="Margin" Value="10,0,10,0"></Setter>
+            </Style.Setters>
+        </Style>
+        
+        <DataTemplate x:Key="SerializablePropertyTemplate"
+                                  DataType="{x:Type models:SerializableProperty}">
+            <TreeViewItem Header="{Binding Name}">
+                <!--Uint32-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u32val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Uint32}"/>
+                </StackPanel>
+
+                <!--Int32-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i32val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Int32}"/>
+                </StackPanel>
+
+                <!--Uint16-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u16val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Uint16}"/>
+                </StackPanel>
+                
+                <!--Int16-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i16val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Int16}"/>
+                </StackPanel>
+
+                <!--Uint8-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource u8val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Uint8}"/>
+                </StackPanel>
+
+                <!--Int8-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource i8val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Int8}"/>
+                </StackPanel>
+
+                <!--Float-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource floatval}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Float}"/>
+                </StackPanel>
+
+                <!--Double-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource doubleval}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Double}"/>
+                </StackPanel>
+
+                <!--Vec2-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec2val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Vec2.X}"/>
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Vec2.Y}"/>
+                </StackPanel>
+
+                <!--Vec3-->
+                <StackPanel
+                    Orientation="Horizontal"
+                    Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec3val}}">
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorXString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Vec3.X}"/>
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorYString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Vec3.Y}"/>
+                    <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorZString}}"/>
+                    <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                         Text="{Binding Vec3.Z}"/>
+                </StackPanel>
+
+            </TreeViewItem>
+        </DataTemplate>
+
+        <HierarchicalDataTemplate
+            x:Key="SerializablePropertiesNodeTemplate"
+            DataType="{x:Type models:SerializablePropertiesNode}"
+            ItemsSource="{Binding Path=Children}">
+
+            <TreeViewItem Header="{Binding Path=Name}">
+                <StackPanel Orientation="Vertical">
+                    <!--<TextBlock Text="{Binding Path=Name}"></TextBlock>-->
+                    <ItemsControl 
+                        ItemsSource="{Binding Path=Props}"
+                        ItemTemplate="{StaticResource SerializablePropertyTemplate}"/>
+                </StackPanel>
+
+            </TreeViewItem>
+        </HierarchicalDataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -57,12 +211,21 @@
             GameBlockTypes="{Binding GameBlockTypes}"/>
         <ListBox
             Grid.Row="2"
+            Grid.RowSpan="5"
             Grid.Column="2"
             ItemsSource="{Binding BlockOptionsViewModels}"
             ItemTemplate="{StaticResource GameBlock}"
             SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}">
-            
         </ListBox>
+        <TreeView
+            Grid.Row="2"
+            Grid.Column="3"
+            Grid.ColumnSpan="4"
+            Grid.RowSpan="5"
+            ItemsSource="{Binding SerializablePropertiesNodes}"
+            ItemTemplate="{StaticResource SerializablePropertiesNodeTemplate}"/>
+
+
         <t:Terminal x:Name="TerminalOutput"
                     IsReadOnlyCaretVisible="False"
                     VerticalScrollBarVisibility="Visible"

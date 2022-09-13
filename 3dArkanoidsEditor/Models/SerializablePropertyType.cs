@@ -21,6 +21,7 @@ namespace _3dArkanoidsEditor.Models
         Vec3 = 10,
         Vec4 = 11,
         SerializableNode = 12,
-        SerializableNodesArray = 13
+        SerializableNodesArray = 13,
+        ErrorValue = 14
     }
 }

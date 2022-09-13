@@ -152,21 +152,21 @@ namespace _3dArkanoidsEditor.Services
                 case EditorGRPC.SerializableProperty.Types.Type.Vec2:
                     returnVal = new Models.SerializableProperty()
                     {
-                        Vec2 = new System.Numerics.Vector2(prop.Data.V2.X, prop.Data.V2.Y),
+                        Vec2 = new Models.Vec2() { X=prop.Data.V2.X, Y=prop.Data.V2.Y},
                         PropType = Models.SerializablePropertyType.Vec2
                     };
                     break;
                 case EditorGRPC.SerializableProperty.Types.Type.Vec3:
                     returnVal = new Models.SerializableProperty()
                     {
-                        Vec3 = new System.Numerics.Vector3(prop.Data.V3.X, prop.Data.V3.Y, prop.Data.V3.Z),
+                        Vec3 = new Models.Vec3() { X = prop.Data.V3.X, Y = prop.Data.V3.Y, Z = prop.Data.V3.Z },
                         PropType = Models.SerializablePropertyType.Vec3
                     };
                     break;
                 case EditorGRPC.SerializableProperty.Types.Type.Vec4:
                     returnVal = new Models.SerializableProperty()
                     {
-                        Vec4 = new System.Numerics.Vector4(prop.Data.V4.R, prop.Data.V4.G, prop.Data.V4.B, prop.Data.V4.A),
+                        Vec4 = new Models.Vec4() { R = prop.Data.V4.R, G = prop.Data.V4.G, B = prop.Data.V4.B, A = prop.Data.V4.A },
                         PropType = Models.SerializablePropertyType.Vec4
                     };
                     break;

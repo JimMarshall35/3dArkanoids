@@ -142,6 +142,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         public ObservableCollection<BlockTypeOptionViewModel> BlockOptionsViewModels { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
 
+        public ObservableCollection<SerializablePropertiesNode> SerializablePropertiesNodes { get; private set; } = new ObservableCollection<SerializablePropertiesNode>();
 
         public ITerminalViewModel GameTerminal { get; private set; }
 
@@ -208,13 +209,14 @@ namespace _3dArkanoidsEditor.ViewModels
             GameTerminal.WriteLine("Connected to game");
         }
 
+
         #endregion
 
         #region Command Backing Methods
         private async void GetBlock()
         {
             MasterGameBoard = await m_gameConnectionService.Client.GetBoardStateAsync();
-            var testlist = await m_gameConnectionService.Client.GetSerializableNodesAsync();
+            
         }
 
         private async void OnSingleTileEdit(object e)
@@ -240,11 +242,26 @@ namespace _3dArkanoidsEditor.ViewModels
             cts = new CancellationTokenSource();
 
             TryingToConnect = true;
-            GameTerminal.WriteLine("Trying to connect to game...");            
-            m_gameConnectionService.Connect(cts.Token);
+            GameTerminal.WriteLine("Trying to connect to game...");
             cts.CancelAfter(15000);
+            m_gameConnectionService.Connect(cts.Token);
+            GetSerializableProperties();
+            
         }
 
+        #endregion
+
+        #region Helpers
+        private async Task GetSerializableProperties()
+        {
+            var result = await m_gameConnectionService.Client.GetSerializableNodesAsync();
+            //SerializablePropertiesNodes.Add(result);//ObservableCollection<SerializablePropertiesNode>(result);
+            SerializablePropertiesNodes.Clear();
+            foreach (var r in result)
+            {
+                SerializablePropertiesNodes.Add(r);
+            }
+        }
         #endregion
 
         #region private set only properties?!

@@ -21,6 +21,8 @@
 #include "GameUiOverlay.h"
 #include "GameToUiMessage.h"
 
+#include "Terrain.h"
+
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
 
@@ -122,15 +124,13 @@ int main()
         renderer,
         [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
 
+    Terrain t;
+
+    int nm = 512 * 512 * (128);
+
     GameUiOverlay ui(renderer);
-    GameToUiMessage msg{ 420 };
-    GameFramework::SendFrameworkMessage(msg);
-    const auto& l = AutoList<DrawableLayerBase>::GetList();
-
-
 
     gamePtr = &game;
-    
 
     GameFramework::PushLayers("Gameplay",
         GameLayerType::Draw |
@@ -140,19 +140,19 @@ int main()
     GameFramework::PushLayers("GameplayUI",
         GameLayerType::Draw);
 
-
-
     Assimp::Importer importer;
 
-    
-    //SaveSerializableToSingleBigBinary("level.big");
+    //SaveSerializableToSingleBigBinary("Level.big");
     LoadSerializableFromSingleBigBinary("level.big");
     game.Init();
     DebugPrintAllSerializableThings();
 
     auto prevClock = high_resolution_clock::now();
+    t.OpenStreamToTerrainVoxelsFile("terrain.vox");
+    t.StreamCube({ 0,0,0 });
 
-    //SaveSerializableToSingleBigBinary("Level.big");
+    //t.GenerateTerrainVoxelFieldFile("terrain.vox", 1.0, 512, 512, 128, &TestTerrainDensityFunction);
+
     // render loop
     // -----------
      while (!glfwWindowShouldClose(window))

@@ -32,6 +32,13 @@ namespace _3dArkanoidsEditor.Services
             var result = await m_client.InitialConnectionHandshakeAsync(new EditorGRPC.ClientInfo());
             return result.ToModel();
         }
+
+        public async Task<List<SerializablePropertiesNode>> GetSerializableNodesAsync()
+        {
+            var result = await m_client.GetSerializableNodesAsync(new EditorGRPC.Void());
+            return result.ToModel();
+        }
+
         private PlayBoardEditClient m_client;
     }
 }

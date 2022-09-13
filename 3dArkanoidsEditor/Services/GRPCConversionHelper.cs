@@ -63,5 +63,135 @@ namespace _3dArkanoidsEditor.Services
                 .ToList();
             return new Models.GameSettings(models);
         }
+        public static List<Models.SerializablePropertiesNode> ToModel(this EditorGRPC.SerializablePropertiesNodes nodes)
+        {
+            return
+                nodes.Nodes
+                    .Select(x => x.ToModel())
+                    .ToList();
+        }
+
+        public static Models.SerializablePropertiesNode ToModel(this EditorGRPC.SerializablePropertiesNode node)
+        {
+            return new Models.SerializablePropertiesNode(
+                        node.Name,
+                        node.Props
+                            .Select(y => y.ToModel())
+                            .ToList());
+        }
+
+        public static Models.SerializableProperty ToModel(this EditorGRPC.SerializableProperty prop)
+        {
+            Models.SerializableProperty returnVal = null;
+            
+            switch (prop.Type)
+            {
+                case EditorGRPC.SerializableProperty.Types.Type.Int8:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Int8 = (byte)prop.Data.I8,
+                        PropType = Models.SerializablePropertyType.Int8
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Int16:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Int16 = (byte)prop.Data.I16,
+                        PropType = Models.SerializablePropertyType.Int16
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Int32:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Int32 = (byte)prop.Data.I32,
+                        PropType = Models.SerializablePropertyType.Int32
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Uint8:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Uint8 = (byte)prop.Data.U8,
+                        PropType = Models.SerializablePropertyType.Uint8
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Uint16:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Uint16 = (byte)prop.Data.U16,
+                        PropType = Models.SerializablePropertyType.Uint16
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Uint32:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Uint32 = (byte)prop.Data.U32,
+                        PropType = Models.SerializablePropertyType.Uint32
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Float:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Float = (float)prop.Data.F,
+                        PropType = Models.SerializablePropertyType.Float
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Double:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Double = (float)prop.Data.D,
+                        PropType = Models.SerializablePropertyType.Double
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Bytes:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Bytes = prop.Data.B.ToString(),
+                        PropType = Models.SerializablePropertyType.Bytes
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Vec2:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Vec2 = new System.Numerics.Vector2(prop.Data.V2.X, prop.Data.V2.Y),
+                        PropType = Models.SerializablePropertyType.Vec2
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Vec3:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Vec3 = new System.Numerics.Vector3(prop.Data.V3.X, prop.Data.V3.Y, prop.Data.V3.Z),
+                        PropType = Models.SerializablePropertyType.Vec3
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.Vec4:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        Vec4 = new System.Numerics.Vector4(prop.Data.V4.R, prop.Data.V4.G, prop.Data.V4.B, prop.Data.V4.A),
+                        PropType = Models.SerializablePropertyType.Vec4
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.SerializableNode:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        SerializableNode = prop.Data.Children.Nodes.Select(x=>x.ToModel()).SingleOrDefault(),
+                        PropType = Models.SerializablePropertyType.SerializableNode
+                    };
+                    break;
+                case EditorGRPC.SerializableProperty.Types.Type.SerializableNodesArray:
+                    returnVal = new Models.SerializableProperty()
+                    {
+                        SerializableNodesArray = prop.Data.Children.Nodes.Select(x => x.ToModel()).ToList(),
+                        PropType = Models.SerializablePropertyType.SerializableNodesArray
+                    };
+                    break;
+
+            }
+
+            if(returnVal != null)
+            {
+                returnVal.Name = prop.Name;
+            }
+            return returnVal;
+        }
     }
 }

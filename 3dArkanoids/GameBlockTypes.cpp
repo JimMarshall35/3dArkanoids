@@ -45,7 +45,7 @@ void GameBlockTypes::LoadFromFile(std::string filePath)
 	
 	LoadFromBuffer(fileBuffer.get());
 
-	InitialiseSerializablePropertiesArray();
+	
 	
 	const auto& blockTypes = GetSerializableProperties()[0];
 
@@ -80,6 +80,7 @@ const char* GameBlockTypes::LoadFromBuffer(const char* source)
 		m_blockTypes[i].Appearance.Colour = type.Appearance.Colour;
 		readPtr += sizeof(BlockTypeDescription);
 	}
+	InitialiseSerializablePropertiesArray();
 	//memcpy(&m_blockTypes[1], source + sizeof(int), numBlockTypes * sizeof(BlockTypeDescription));
 	return readPtr;
 }

@@ -203,6 +203,7 @@ namespace _3dArkanoidsEditor.ViewModels
             PlayFieldZ = board.Depth;
             MasterGameBoard = board;
 
+
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
         }
@@ -210,10 +211,10 @@ namespace _3dArkanoidsEditor.ViewModels
         #endregion
 
         #region Command Backing Methods
-
         private async void GetBlock()
         {
             MasterGameBoard = await m_gameConnectionService.Client.GetBoardStateAsync();
+            var testlist = await m_gameConnectionService.Client.GetSerializableNodesAsync();
         }
 
         private async void OnSingleTileEdit(object e)

@@ -3,6 +3,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include <fstream>
+#include <iostream>
 #include <memory>
 #include "ISerializable.h"
 
@@ -41,6 +42,7 @@ public:
 	};
 
 	Array3D() {}
+	Array3D(AUTOLIST_CTOR_OPTIONS options) :ISerializable(options) {}
 	Array3D(size_t w, size_t h, size_t d);
 	~Array3D();
 	void allocate(size_t w, size_t h, size_t d);
@@ -64,6 +66,11 @@ public:
 	virtual std::string GetSerializableNodeName() const override;
 	virtual size_t GetBinaryFileNumBytes() const override;
 
+	/*
+	* pass an opened file stream that is set to the start of a saved array3d.
+	* 
+	*/
+	void StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, const glm::ivec3& originAt, unsigned int offsetOfArrayFromStartOfFile = 0);
 };
 
 template<typename T>
@@ -223,4 +230,25 @@ inline const char* Array3D<T>::LoadFromBuffer(const char* source)
 template<typename T>
 inline size_t Array3D<T>::GetBinaryFileNumBytes() const {
 	return sizeof(size_t) * 3 + sizeof(T) * _w * _d * _h;
+}
+
+template<typename T>
+void Array3D<T>::StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, const glm::ivec3& originAt, unsigned int offsetOfArrayFromStartOfFile) {
+	size_t originIndex = originAt.x * _h * _d + originAt.y * _d + originAt.z;
+	auto onVoxel = glm::ivec3();
+	for (int z = 0; z < _d; z++) {
+		for (int y = 0; y < _h; y++) {
+			for (int x = 0; x < _w; x++) {
+				onVoxel = originAt + glm::ivec3{ x,y,z };
+				size_t index = onVoxel.x * _h * _d + onVoxel.y * _d + onVoxel.z;
+				stream.seekg(
+					offsetOfArrayFromStartOfFile +
+					sizeof(size_t) * 3 + // the three fields are saved first see save to buffer function
+					index * sizeof(T),
+					std::ios::beg
+				);
+				stream.read((char*)&At(x, y, z), sizeof(T));
+			}
+		}
+	}
 }

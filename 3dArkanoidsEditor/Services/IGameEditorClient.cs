@@ -12,5 +12,6 @@ namespace _3dArkanoidsEditor.Services
         Task<GameBoardDescription> GetBoardStateAsync();
         Task<EditBlockResult> ChangeBlockAsync(SingleTileEdit edit);
         Task<GameSettings> InitialConnectionHandshakeAsync(ClientInfo info);
+        Task<List<SerializablePropertiesNode>> GetSerializableNodesAsync();
     }
 }

@@ -8,6 +8,7 @@ service PlayBoardEdit{
 	rpc GetBoardState(Void) returns(BoardDescription);
 	rpc SetBoardState(BoardDescription) returns(SetBoardDescriptionResult);
 	rpc InitialConnectionHandshake(ClientInfo) returns(GameSettings);
+	rpc GetSerializableNodes(Void) returns(SerializablePropertiesNodes);
 }
 
 message Point{
@@ -71,3 +72,80 @@ message BlockType{
 message GameSettings{
 	repeated BlockType possibleBlocks = 1;
 }
+
+message Vec2{
+	float x = 1;
+	float y = 2;
+}
+
+message Vec3{
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+
+message Vec4{
+	float r = 1;
+	float g = 2;
+	float b = 3;
+	float a = 4;
+
+}
+
+message ChildNodes{
+	repeated SerializablePropertiesNode  nodes = 1;
+}
+
+
+message SerializablePropertyData{
+	oneof data{
+		uint32 u32 = 1;
+		uint32 u16 = 2;
+		uint32 u8  = 3;
+		int32 i32  = 4;
+		int32 i16  = 5;
+		int32 i8   = 6;
+		float f    = 7;
+		double d   = 8;
+		bytes b    = 9;
+		int64 i64  = 10;
+		Vec2 v2    = 11;
+		Vec3 v3    = 12;
+		Vec4 v4    = 13;
+		ChildNodes children = 14;
+	}
+}
+
+message SerializableProperty{
+	enum Type{
+		Uint32 = 0;
+		Uint16 = 1;
+		Uint8 = 2;
+		Int32 = 3;
+		Int16 = 4;
+		Int8 = 5;
+		Float = 6;
+		Double = 7;
+		Bytes = 8;
+		Vec2 = 9;
+		Vec3 = 10;
+		Vec4 = 11;
+		SerializableNode = 12;
+		SerializableNodesArray = 13;
+	}
+
+	string name = 1;
+	Type type = 2;
+	SerializablePropertyData data = 3;
+
+}
+
+message SerializablePropertiesNode{
+	string name = 1;
+	repeated SerializableProperty props = 2;
+}
+
+message SerializablePropertiesNodes{
+	repeated SerializablePropertiesNode nodes = 1;
+}
+

@@ -28,6 +28,7 @@ static const char* PlayBoardEdit_method_names[] = {
   "/EditorGRPC.PlayBoardEdit/GetBoardState",
   "/EditorGRPC.PlayBoardEdit/SetBoardState",
   "/EditorGRPC.PlayBoardEdit/InitialConnectionHandshake",
+  "/EditorGRPC.PlayBoardEdit/GetSerializableNodes",
 };
 
 std::unique_ptr< PlayBoardEdit::Stub> PlayBoardEdit::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -43,6 +44,7 @@ PlayBoardEdit::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_GetBoardState_(PlayBoardEdit_method_names[3], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SetBoardState_(PlayBoardEdit_method_names[4], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_InitialConnectionHandshake_(PlayBoardEdit_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetSerializableNodes_(PlayBoardEdit_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   {}
 
 ::grpc::Status PlayBoardEdit::Stub::AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::EditorGRPC::EditBlockResult* response) {
@@ -183,6 +185,29 @@ void PlayBoardEdit::Stub::async::InitialConnectionHandshake(::grpc::ClientContex
   return result;
 }
 
+::grpc::Status PlayBoardEdit::Stub::GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::EditorGRPC::SerializablePropertiesNodes* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::EditorGRPC::Void, ::EditorGRPC::SerializablePropertiesNodes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_GetSerializableNodes_, context, request, response);
+}
+
+void PlayBoardEdit::Stub::async::GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::EditorGRPC::Void, ::EditorGRPC::SerializablePropertiesNodes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSerializableNodes_, context, request, response, std::move(f));
+}
+
+void PlayBoardEdit::Stub::async::GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_GetSerializableNodes_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>* PlayBoardEdit::Stub::PrepareAsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::EditorGRPC::SerializablePropertiesNodes, ::EditorGRPC::Void, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_GetSerializableNodes_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>* PlayBoardEdit::Stub::AsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncGetSerializableNodesRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
 PlayBoardEdit::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayBoardEdit_method_names[0],
@@ -244,6 +269,16 @@ PlayBoardEdit::Service::Service() {
              ::EditorGRPC::GameSettings* resp) {
                return service->InitialConnectionHandshake(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayBoardEdit_method_names[6],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayBoardEdit::Service, ::EditorGRPC::Void, ::EditorGRPC::SerializablePropertiesNodes, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](PlayBoardEdit::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::EditorGRPC::Void* req,
+             ::EditorGRPC::SerializablePropertiesNodes* resp) {
+               return service->GetSerializableNodes(ctx, req, resp);
+             }, this)));
 }
 
 PlayBoardEdit::Service::~Service() {
@@ -285,6 +320,13 @@ PlayBoardEdit::Service::~Service() {
 }
 
 ::grpc::Status PlayBoardEdit::Service::InitialConnectionHandshake(::grpc::ServerContext* context, const ::EditorGRPC::ClientInfo* request, ::EditorGRPC::GameSettings* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayBoardEdit::Service::GetSerializableNodes(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response) {
   (void) context;
   (void) request;
   (void) response;

@@ -9,10 +9,12 @@
 #include "Bat.h"
 
 #include <glm/gtx/rotate_vector.hpp>
+#define TARGET_MS_PER_FRAME 30
 
 
-glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter);
-glm::ivec3 WorldSpaceToTileCoordsFloor(const glm::vec3& ballCenter);
+// helpers
+static glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter);
+static glm::ivec3 WorldSpaceToTileCoordsFloor(const glm::vec3& ballCenter);
 static inline glm::ivec2 IVec3ToIVec2(const glm::ivec3& vec3);
 static inline glm::vec2 Vec3ToVec2(const glm::vec3& vec3);
 static inline glm::vec2 AdjustTileCoordsToWorld(const glm::ivec2& vCell);
@@ -90,9 +92,14 @@ void BallManager::Draw(const IRenderer* renderer, const Camera& camera) const
 
 void BallManager::ReleaseBalls()
 {
-	IterateBallList([](Ball* thisBall, Ball* lastBall, int onIteration) {
+	IterateBallList([this](Ball* thisBall, Ball* lastBall, int onIteration) {
 		if (thisBall->stuckToBat) {
 			thisBall->stuckToBat = false;
+		}
+		else {
+			if (!thisBall->jumping && m_numBalls == 1) {
+				thisBall->jumping = true;
+			}
 		}
 		return true;
 	});
@@ -186,7 +193,7 @@ void BallManager::IterateBallList(BallIteratorFunctionWithCurrentAndPrevious ite
 
 
 
-glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter) {
+static glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter) {
 	return glm::ivec3{
 		std::round((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
 		std::round((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
@@ -194,7 +201,7 @@ glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter) {
 	};
 }
 
-glm::ivec3 WorldSpaceToTileCoordsFloor(const glm::vec3& ballCenter) {
+static glm::ivec3 WorldSpaceToTileCoordsFloor(const glm::vec3& ballCenter) {
 	return glm::ivec3{
 		std::floor((ballCenter.x + ((float)BLOCK_WIDTH_UNITS / 2.0f)) / (float)BLOCK_WIDTH_UNITS),
 		std::floor((ballCenter.y + ((float)BLOCK_HEIGHT_UNITS / 2.0f)) / (float)BLOCK_HEIGHT_UNITS),
@@ -228,12 +235,33 @@ void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec2& new
 }
 
 
-BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, bool deleteBlock)
+BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, bool deleteBlock)
 {
+	const auto jumpAmound = 5.0;
+	const auto ballJumpFromBottomToTopTime = 1.0;
+	const auto ballJumpFromBottomToPeakTime = ballJumpFromBottomToTopTime / 2.0;
+	if (thisBall->jumping) {
+		jumpTimerToChange += (double)TARGET_MS_PER_FRAME / 1000.0f;
+		if (jumpTimerToChange >= ballJumpFromBottomToTopTime) {
+			jumpTimerToChange = 0;
+			jumpingToChange = false;
+			dirToChange.z = 0;
+			posToChange.z = 0;
+		}
+		else {
+			auto jumpProgress = (ballJumpFromBottomToPeakTime - jumpTimerToChange) / ballJumpFromBottomToPeakTime;
+			//std::cout << jumpProgress << "\n";
+			auto directionXY = glm::vec3(thisBall->direction.x, thisBall->direction.y, 0);
+			directionXY.z = jumpProgress * jumpAmound;
+			dirToChange = directionXY;
+		}
+		
+	}
 
 	// refactor from here
 
 	auto oldBallDirection = thisBall->direction;
+	
 	auto& ballCenter = thisBall->pos;
 
 
@@ -296,6 +324,8 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 
 	auto targetCellTileCoords = WorldSpaceToTileCoordsRound(vPotentialPosition);
 
+	auto zPos = targetCellTileCoords.z - 1;
+
 	auto vAreaTL = glm::min(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) - glm::ivec2(1, 1);
 	auto vAreaBR = glm::max(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) + glm::ivec2(1, 1);
 
@@ -314,7 +344,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 			if (vCell.x < 0 || vCell.y < 0) {
 				continue;
 			}
-			if (m_game->BlockAtLocation({ vCell.x, vCell.y, 0 }, blockCode) == EditBlockResultCode::BLOCK_AT_SPACE)
+			if (m_game->BlockAtLocation({ vCell.x, vCell.y, zPos }, blockCode) == EditBlockResultCode::BLOCK_AT_SPACE)
 			{
 				// ...it is! So work out nearest point to future player position, around perimeter
 				// of cell rectangle. We can test the distance to this point to see if we have
@@ -373,9 +403,11 @@ void BallManager::LookAhead(const Ball* thisBall)
 {
 	auto ball = *thisBall;
 	m_drawProjectedBalls = false;
+	double jumpTimer = ball.jumpTimer;
+	bool jumping;
 
 	for (int i = 0; i < m_numAdvancesToCheckForBatHit; i++) {
-		if (AdvanceBall(&ball, ball.pos, ball.direction, false) == BallAdvanceResult::HIT_BAT) {
+		if (AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, false) == BallAdvanceResult::HIT_BAT) {
 			m_drawProjectedBalls = true;
 			break;
 		}
@@ -383,7 +415,7 @@ void BallManager::LookAhead(const Ball* thisBall)
 	}
 	if (m_drawProjectedBalls) {
 		for (int i = 0; i < m_lookaheadBy; i++) {
-			AdvanceBall(&ball, ball.pos, ball.direction, false);
+			AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, false);
 			m_lookAheadPositions[i] = ball.pos;
 
 		}
@@ -397,7 +429,7 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 			return true;
 		}
 
-		AdvanceBall(thisBall, thisBall->pos, thisBall->direction);
+		AdvanceBall(thisBall, thisBall->pos, thisBall->direction, thisBall->jumpTimer, thisBall->jumping);
 
 		LookAhead(thisBall);
 

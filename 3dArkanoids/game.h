@@ -23,7 +23,8 @@ class IRenderer;
 class Camera;
 class GameInput;
 
-class Game : public EventListener<FallingBlockFinishedEventArgs>,
+class Game : 
+	public EventListener<FallingBlockFinishedEventArgs>,
 	public ILevelEditorServerGame,
 	public UpdateableLayerBase,
 	public DrawableLayerBase,
@@ -86,20 +87,13 @@ private:
 
 public:
 
-
 	// Inherited via ILevelEditorServerGame
 	virtual const Array3D<unsigned char>& GetBoardState() override;
-
 	virtual EditBlockResultCode AddOrChangeBlock(const glm::ivec3& point, unsigned char newVal, unsigned char& oldBlockVal) override;
-
 	virtual EditBlockResultCode RemoveBlock(const glm::ivec3& point) override;
-
 	virtual SetBoardDescriptionResultCPP SetBoardState(const Array3D<unsigned char>& newState) override;
-
 	virtual EditBlockResultCode BlockAtLocation(const glm::ivec3& point, unsigned char& blockCode) override;
-
 	virtual std::vector<BlockTypeDescriptionEditor> GetPossibleBlocks() override;
-
 	virtual void SetPossibleBlocks(const std::vector<BlockTypeDescriptionEditor>& possibleBlocks) override;
 
 };

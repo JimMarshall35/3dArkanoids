@@ -31,8 +31,9 @@ private:
 		float speed;
 		glm::vec3 direction;
 		bool stuckToBat;
-
+		bool jumping = false;
 		Ball* nextBall = nullptr;
+		double jumpTimer = 0.0;
 		
 	};
 	enum class BallAdvanceResult {
@@ -67,7 +68,7 @@ private:
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
 
-	BallAdvanceResult AdvanceBall(const Ball* ball, glm::vec3& posToChange, glm::vec3& dirToChange, bool deleteBlock = true);
+	BallAdvanceResult AdvanceBall(const Ball* ball, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, bool deleteBlock = true);
 	void LookAhead(const Ball* thisBall);
 private:
 	static void ReflectBall(glm::vec3& directionToChange, const glm::vec2& newPos, const glm::vec2& nearestPoint, const glm::vec3& oldDirection);

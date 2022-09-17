@@ -112,7 +112,7 @@ bool Bat::SetSerializableProperty(const SerializableProperty& p)
 		return true;
 	}
 	else if (p.name == "DistanceFromFirstRow") {
-		m_batWidth = p.data.dataUnion.Float;
+		m_distanceFromFirstRow = p.data.dataUnion.Float;
 		return true;
 	}
 	else if (p.name == "Sensitivity") {

@@ -178,10 +178,12 @@ bool Camera::SetSerializableProperty(const SerializableProperty& p)
     }
     else if (p.name == "Yaw") {
         Yaw = p.data.dataUnion.Float;
+        updateCameraVectors();
         return true;
     }
     else if (p.name == "Pitch") {
         Pitch = p.data.dataUnion.Float;
+        updateCameraVectors();
         return true;
     }
     else if (p.name == "MovementSpeed") {
@@ -196,6 +198,7 @@ bool Camera::SetSerializableProperty(const SerializableProperty& p)
         Zoom = p.data.dataUnion.Float;
         return true;
     }
+    
     return false;
 }
 

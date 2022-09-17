@@ -71,13 +71,14 @@ namespace _3dArkanoidsEditor.Services
                     .ToList();
         }
 
-        public static Models.SerializablePropertiesNode ToModel(this EditorGRPC.SerializablePropertiesNode node)
+        public static Models.SerializablePropertiesNode ToModel(this EditorGRPC.SerializablePropertiesNode node, string nameOfParentProperty=null)
         {
             return new Models.SerializablePropertiesNode(
                         node.Name,
                         node.Props
                             .Select(y => y.ToModel())
-                            .ToList());
+                            .ToList(),
+                        nameOfParentProperty);
         }
 
         public static Models.SerializableProperty ToModel(this EditorGRPC.SerializableProperty prop)
@@ -173,14 +174,14 @@ namespace _3dArkanoidsEditor.Services
                 case EditorGRPC.SerializableProperty.Types.Type.SerializableNode:
                     returnVal = new Models.SerializableProperty()
                     {
-                        SerializableNode = prop.Data.Children.Nodes.Select(x=>x.ToModel()).SingleOrDefault(),
+                        SerializableNode = prop.Data.Children.Nodes.Select(x=>x.ToModel(prop.Name)).SingleOrDefault(),
                         PropType = Models.SerializablePropertyType.SerializableNode
                     };
                     break;
                 case EditorGRPC.SerializableProperty.Types.Type.SerializableNodesArray:
                     returnVal = new Models.SerializableProperty()
                     {
-                        SerializableNodesArray = prop.Data.Children.Nodes.Select(x => x.ToModel()).ToList(),
+                        SerializableNodesArray = prop.Data.Children.Nodes.Select(x => x.ToModel(prop.Name)).ToList(),
                         PropType = Models.SerializablePropertyType.SerializableNodesArray
                     };
                     break;
@@ -192,6 +193,81 @@ namespace _3dArkanoidsEditor.Services
                 returnVal.Name = prop.Name;
             }
             return returnVal;
+        }
+
+        public static EditorGRPC.SetSerializablePropertyData ToGRPCSetMessage(this Models.SerializableProperty model, string path)
+        {
+            var rval = new EditorGRPC.SetSerializablePropertyData();
+            rval.NewVal = new EditorGRPC.SerializableProperty();
+            rval.NewVal.Data = new EditorGRPC.SerializablePropertyData();
+            rval.Path = path;
+            rval.NewVal.Name = model.Name;
+            switch (model.PropType)
+            {
+                case Models.SerializablePropertyType.Uint32:
+                    rval.NewVal.Data.U32 = model.Uint32;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Uint32;
+                    break;
+                case Models.SerializablePropertyType.Uint16:
+                    rval.NewVal.Data.U16 = model.Uint16;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Uint16;
+                    break;
+                case Models.SerializablePropertyType.Uint8:
+                    rval.NewVal.Data.U8 = model.Uint8;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Uint8;
+                    break;
+                case Models.SerializablePropertyType.Int32:
+                    rval.NewVal.Data.I32 = model.Int32;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Int32;
+                    break;
+                case Models.SerializablePropertyType.Int16:
+                    rval.NewVal.Data.I16 = model.Int16;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Int16;
+                    break;
+                case Models.SerializablePropertyType.Int8:
+                    rval.NewVal.Data.I8 = model.Int8;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Int8;
+                    break;
+                case Models.SerializablePropertyType.Float:
+                    rval.NewVal.Data.F = model.Float;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Float;
+                    break;
+                case Models.SerializablePropertyType.Double:
+                    rval.NewVal.Data.D = model.Double;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Double;
+                    break;
+                case Models.SerializablePropertyType.Bytes:
+                    rval.NewVal.Data.B = Google.Protobuf.ByteString.CopyFromUtf8(model.Bytes);
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Bytes;
+                    break;
+                case Models.SerializablePropertyType.Vec2:
+                    rval.NewVal.Data.V2 = new EditorGRPC.Vec2();
+                    rval.NewVal.Data.V2.X = model.Vec2.X;
+                    rval.NewVal.Data.V2.Y = model.Vec2.Y;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Vec2;
+                    break;
+                case Models.SerializablePropertyType.Vec3:
+                    rval.NewVal.Data.V3 = new EditorGRPC.Vec3();
+                    rval.NewVal.Data.V3.X = model.Vec3.X;
+                    rval.NewVal.Data.V3.Y = model.Vec3.Y;
+                    rval.NewVal.Data.V3.Z = model.Vec3.Z;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Vec3;
+                    break;
+                case Models.SerializablePropertyType.Vec4:
+                    rval.NewVal.Data.V4 = new EditorGRPC.Vec4();
+                    rval.NewVal.Data.V4.R = model.Vec4.R;
+                    rval.NewVal.Data.V4.G = model.Vec4.G;
+                    rval.NewVal.Data.V4.B = model.Vec4.B;
+                    rval.NewVal.Data.V4.A = model.Vec4.A;
+                    rval.NewVal.Type = EditorGRPC.SerializableProperty.Types.Type.Vec4;
+                    break;
+                case Models.SerializablePropertyType.SerializableNode:
+                case Models.SerializablePropertyType.SerializableNodesArray:
+                case Models.SerializablePropertyType.ErrorValue:
+                    throw new InvalidOperationException("we don't do that here");
+                    break;
+            }
+            return rval;
         }
     }
 }

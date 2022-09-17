@@ -12,10 +12,11 @@ namespace _3dArkanoidsEditor.Models
 
     class SerializablePropertiesNode
     {
-        public SerializablePropertiesNode(string name, List<SerializableProperty> props)
+        public SerializablePropertiesNode(string name, List<SerializableProperty> props, string nameOfParentProperty = null)
         {
             Name = name;
             Props = props;
+            NameOfParentProperty = nameOfParentProperty;
         }
 
         public SerializablePropertiesNode()
@@ -25,7 +26,7 @@ namespace _3dArkanoidsEditor.Models
         public string Name { get; set; }
         public List<SerializableProperty> Props { get; set; }
 
-        
+        public string NameOfParentProperty { get; private set; }
 
         public IEnumerable<SerializablePropertiesNode> Children 
         { 

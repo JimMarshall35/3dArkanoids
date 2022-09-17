@@ -61,23 +61,31 @@ namespace EditorGRPC {
             "dDMyEAASCgoGVWludDE2EAESCQoFVWludDgQAhIJCgVJbnQzMhADEgkKBUlu",
             "dDE2EAQSCAoESW50OBAFEgkKBUZsb2F0EAYSCgoGRG91YmxlEAcSCQoFQnl0",
             "ZXMQCBIICgRWZWMyEAkSCAoEVmVjMxAKEggKBFZlYzQQCxIUChBTZXJpYWxp",
-            "emFibGVOb2RlEAwSGgoWU2VyaWFsaXphYmxlTm9kZXNBcnJheRANIlsKGlNl",
-            "cmlhbGl6YWJsZVByb3BlcnRpZXNOb2RlEgwKBG5hbWUYASABKAkSLwoFcHJv",
-            "cHMYAiADKAsyIC5FZGl0b3JHUlBDLlNlcmlhbGl6YWJsZVByb3BlcnR5IlQK",
-            "G1NlcmlhbGl6YWJsZVByb3BlcnRpZXNOb2RlcxI1CgVub2RlcxgBIAMoCzIm",
-            "LkVkaXRvckdSUEMuU2VyaWFsaXphYmxlUHJvcGVydGllc05vZGUyhwQKDVBs",
-            "YXlCb2FyZEVkaXQSOgoIQWRkQmxvY2sSES5FZGl0b3JHUlBDLlBvaW50Ghsu",
-            "RWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPQoLUmVtb3ZlQmxvY2sSES5F",
-            "ZGl0b3JHUlBDLlBvaW50GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQS",
-            "QQoLQ2hhbmdlQmxvY2sSFS5FZGl0b3JHUlBDLkJsb2NrRWRpdBobLkVkaXRv",
-            "ckdSUEMuRWRpdEJsb2NrUmVzdWx0Ej8KDUdldEJvYXJkU3RhdGUSEC5FZGl0",
-            "b3JHUlBDLlZvaWQaHC5FZGl0b3JHUlBDLkJvYXJkRGVzY3JpcHRpb24SVAoN",
-            "U2V0Qm9hcmRTdGF0ZRIcLkVkaXRvckdSUEMuQm9hcmREZXNjcmlwdGlvbhol",
-            "LkVkaXRvckdSUEMuU2V0Qm9hcmREZXNjcmlwdGlvblJlc3VsdBJOChpJbml0",
-            "aWFsQ29ubmVjdGlvbkhhbmRzaGFrZRIWLkVkaXRvckdSUEMuQ2xpZW50SW5m",
-            "bxoYLkVkaXRvckdSUEMuR2FtZVNldHRpbmdzElEKFEdldFNlcmlhbGl6YWJs",
-            "ZU5vZGVzEhAuRWRpdG9yR1JQQy5Wb2lkGicuRWRpdG9yR1JQQy5TZXJpYWxp",
-            "emFibGVQcm9wZXJ0aWVzTm9kZXNiBnByb3RvMw=="));
+            "emFibGVOb2RlEAwSGgoWU2VyaWFsaXphYmxlTm9kZXNBcnJheRANIl0KG1Nl",
+            "dFNlcmlhbGl6YWJsZVByb3BlcnR5RGF0YRIwCgZuZXdWYWwYASABKAsyIC5F",
+            "ZGl0b3JHUlBDLlNlcmlhbGl6YWJsZVByb3BlcnR5EgwKBHBhdGgYAiABKAki",
+            "hQEKHVNldFNlcmlhbGl6YWJsZVByb3BlcnR5UmVzdWx0EkAKBnJlc3VsdBgB",
+            "IAEoDjIwLkVkaXRvckdSUEMuU2V0U2VyaWFsaXphYmxlUHJvcGVydHlSZXN1",
+            "bHQuUmVzdWx0IiIKBlJlc3VsdBILCgdTVUNDRVNTEAASCwoHRkFJTFVSRRAB",
+            "IlsKGlNlcmlhbGl6YWJsZVByb3BlcnRpZXNOb2RlEgwKBG5hbWUYASABKAkS",
+            "LwoFcHJvcHMYAiADKAsyIC5FZGl0b3JHUlBDLlNlcmlhbGl6YWJsZVByb3Bl",
+            "cnR5IlQKG1NlcmlhbGl6YWJsZVByb3BlcnRpZXNOb2RlcxI1CgVub2RlcxgB",
+            "IAMoCzImLkVkaXRvckdSUEMuU2VyaWFsaXphYmxlUHJvcGVydGllc05vZGUy",
+            "9gQKDVBsYXlCb2FyZEVkaXQSOgoIQWRkQmxvY2sSES5FZGl0b3JHUlBDLlBv",
+            "aW50GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPQoLUmVtb3ZlQmxv",
+            "Y2sSES5FZGl0b3JHUlBDLlBvaW50GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tS",
+            "ZXN1bHQSQQoLQ2hhbmdlQmxvY2sSFS5FZGl0b3JHUlBDLkJsb2NrRWRpdBob",
+            "LkVkaXRvckdSUEMuRWRpdEJsb2NrUmVzdWx0Ej8KDUdldEJvYXJkU3RhdGUS",
+            "EC5FZGl0b3JHUlBDLlZvaWQaHC5FZGl0b3JHUlBDLkJvYXJkRGVzY3JpcHRp",
+            "b24SVAoNU2V0Qm9hcmRTdGF0ZRIcLkVkaXRvckdSUEMuQm9hcmREZXNjcmlw",
+            "dGlvbholLkVkaXRvckdSUEMuU2V0Qm9hcmREZXNjcmlwdGlvblJlc3VsdBJO",
+            "ChpJbml0aWFsQ29ubmVjdGlvbkhhbmRzaGFrZRIWLkVkaXRvckdSUEMuQ2xp",
+            "ZW50SW5mbxoYLkVkaXRvckdSUEMuR2FtZVNldHRpbmdzElEKFEdldFNlcmlh",
+            "bGl6YWJsZU5vZGVzEhAuRWRpdG9yR1JQQy5Wb2lkGicuRWRpdG9yR1JQQy5T",
+            "ZXJpYWxpemFibGVQcm9wZXJ0aWVzTm9kZXMSbQoXU2V0U2VyaWFsaXphYmxl",
+            "UHJvcGVydHkSJy5FZGl0b3JHUlBDLlNldFNlcmlhbGl6YWJsZVByb3BlcnR5",
+            "RGF0YRopLkVkaXRvckdSUEMuU2V0U2VyaWFsaXphYmxlUHJvcGVydHlSZXN1",
+            "bHRiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {
@@ -96,6 +104,8 @@ namespace EditorGRPC {
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.ChildNodes), global::EditorGRPC.ChildNodes.Parser, new[]{ "Nodes" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SerializablePropertyData), global::EditorGRPC.SerializablePropertyData.Parser, new[]{ "U32", "U16", "U8", "I32", "I16", "I8", "F", "D", "B", "I64", "V2", "V3", "V4", "Children" }, new[]{ "Data" }, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SerializableProperty), global::EditorGRPC.SerializableProperty.Parser, new[]{ "Name", "Type", "Data" }, null, new[]{ typeof(global::EditorGRPC.SerializableProperty.Types.Type) }, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SetSerializablePropertyData), global::EditorGRPC.SetSerializablePropertyData.Parser, new[]{ "NewVal", "Path" }, null, null, null, null),
+            new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SetSerializablePropertyResult), global::EditorGRPC.SetSerializablePropertyResult.Parser, new[]{ "Result" }, null, new[]{ typeof(global::EditorGRPC.SetSerializablePropertyResult.Types.Result) }, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SerializablePropertiesNode), global::EditorGRPC.SerializablePropertiesNode.Parser, new[]{ "Name", "Props" }, null, null, null, null),
             new pbr::GeneratedClrTypeInfo(typeof(global::EditorGRPC.SerializablePropertiesNodes), global::EditorGRPC.SerializablePropertiesNodes.Parser, new[]{ "Nodes" }, null, null, null, null)
           }));
@@ -4396,6 +4406,443 @@ namespace EditorGRPC {
 
   }
 
+  public sealed partial class SetSerializablePropertyData : pb::IMessage<SetSerializablePropertyData>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SetSerializablePropertyData> _parser = new pb::MessageParser<SetSerializablePropertyData>(() => new SetSerializablePropertyData());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SetSerializablePropertyData> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[15]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyData() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyData(SetSerializablePropertyData other) : this() {
+      newVal_ = other.newVal_ != null ? other.newVal_.Clone() : null;
+      path_ = other.path_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyData Clone() {
+      return new SetSerializablePropertyData(this);
+    }
+
+    /// <summary>Field number for the "newVal" field.</summary>
+    public const int NewValFieldNumber = 1;
+    private global::EditorGRPC.SerializableProperty newVal_;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::EditorGRPC.SerializableProperty NewVal {
+      get { return newVal_; }
+      set {
+        newVal_ = value;
+      }
+    }
+
+    /// <summary>Field number for the "path" field.</summary>
+    public const int PathFieldNumber = 2;
+    private string path_ = "";
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public string Path {
+      get { return path_; }
+      set {
+        path_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SetSerializablePropertyData);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SetSerializablePropertyData other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (!object.Equals(NewVal, other.NewVal)) return false;
+      if (Path != other.Path) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (newVal_ != null) hash ^= NewVal.GetHashCode();
+      if (Path.Length != 0) hash ^= Path.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (newVal_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(NewVal);
+      }
+      if (Path.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Path);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (newVal_ != null) {
+        output.WriteRawTag(10);
+        output.WriteMessage(NewVal);
+      }
+      if (Path.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Path);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (newVal_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(NewVal);
+      }
+      if (Path.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Path);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SetSerializablePropertyData other) {
+      if (other == null) {
+        return;
+      }
+      if (other.newVal_ != null) {
+        if (newVal_ == null) {
+          NewVal = new global::EditorGRPC.SerializableProperty();
+        }
+        NewVal.MergeFrom(other.NewVal);
+      }
+      if (other.Path.Length != 0) {
+        Path = other.Path;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 10: {
+            if (newVal_ == null) {
+              NewVal = new global::EditorGRPC.SerializableProperty();
+            }
+            input.ReadMessage(NewVal);
+            break;
+          }
+          case 18: {
+            Path = input.ReadString();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 10: {
+            if (newVal_ == null) {
+              NewVal = new global::EditorGRPC.SerializableProperty();
+            }
+            input.ReadMessage(NewVal);
+            break;
+          }
+          case 18: {
+            Path = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+  }
+
+  public sealed partial class SetSerializablePropertyResult : pb::IMessage<SetSerializablePropertyResult>
+  #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      , pb::IBufferMessage
+  #endif
+  {
+    private static readonly pb::MessageParser<SetSerializablePropertyResult> _parser = new pb::MessageParser<SetSerializablePropertyResult>(() => new SetSerializablePropertyResult());
+    private pb::UnknownFieldSet _unknownFields;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pb::MessageParser<SetSerializablePropertyResult> Parser { get { return _parser; } }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static pbr::MessageDescriptor Descriptor {
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[16]; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    pbr::MessageDescriptor pb::IMessage.Descriptor {
+      get { return Descriptor; }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyResult() {
+      OnConstruction();
+    }
+
+    partial void OnConstruction();
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyResult(SetSerializablePropertyResult other) : this() {
+      result_ = other.result_;
+      _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public SetSerializablePropertyResult Clone() {
+      return new SetSerializablePropertyResult(this);
+    }
+
+    /// <summary>Field number for the "result" field.</summary>
+    public const int ResultFieldNumber = 1;
+    private global::EditorGRPC.SetSerializablePropertyResult.Types.Result result_ = global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success;
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public global::EditorGRPC.SetSerializablePropertyResult.Types.Result Result {
+      get { return result_; }
+      set {
+        result_ = value;
+      }
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override bool Equals(object other) {
+      return Equals(other as SetSerializablePropertyResult);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public bool Equals(SetSerializablePropertyResult other) {
+      if (ReferenceEquals(other, null)) {
+        return false;
+      }
+      if (ReferenceEquals(other, this)) {
+        return true;
+      }
+      if (Result != other.Result) return false;
+      return Equals(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override int GetHashCode() {
+      int hash = 1;
+      if (Result != global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success) hash ^= Result.GetHashCode();
+      if (_unknownFields != null) {
+        hash ^= _unknownFields.GetHashCode();
+      }
+      return hash;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public override string ToString() {
+      return pb::JsonFormatter.ToDiagnosticString(this);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void WriteTo(pb::CodedOutputStream output) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      output.WriteRawMessage(this);
+    #else
+      if (Result != global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Result);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(output);
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalWriteTo(ref pb::WriteContext output) {
+      if (Result != global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success) {
+        output.WriteRawTag(8);
+        output.WriteEnum((int) Result);
+      }
+      if (_unknownFields != null) {
+        _unknownFields.WriteTo(ref output);
+      }
+    }
+    #endif
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public int CalculateSize() {
+      int size = 0;
+      if (Result != global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success) {
+        size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Result);
+      }
+      if (_unknownFields != null) {
+        size += _unknownFields.CalculateSize();
+      }
+      return size;
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(SetSerializablePropertyResult other) {
+      if (other == null) {
+        return;
+      }
+      if (other.Result != global::EditorGRPC.SetSerializablePropertyResult.Types.Result.Success) {
+        Result = other.Result;
+      }
+      _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+    }
+
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public void MergeFrom(pb::CodedInputStream input) {
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+      input.ReadRawMessage(this);
+    #else
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+            break;
+          case 8: {
+            Result = (global::EditorGRPC.SetSerializablePropertyResult.Types.Result) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    #endif
+    }
+
+    #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    void pb::IBufferMessage.InternalMergeFrom(ref pb::ParseContext input) {
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, ref input);
+            break;
+          case 8: {
+            Result = (global::EditorGRPC.SetSerializablePropertyResult.Types.Result) input.ReadEnum();
+            break;
+          }
+        }
+      }
+    }
+    #endif
+
+    #region Nested types
+    /// <summary>Container for nested types declared in the SetSerializablePropertyResult message type.</summary>
+    [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+    [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
+    public static partial class Types {
+      public enum Result {
+        [pbr::OriginalName("SUCCESS")] Success = 0,
+        [pbr::OriginalName("FAILURE")] Failure = 1,
+      }
+
+    }
+    #endregion
+
+  }
+
   public sealed partial class SerializablePropertiesNode : pb::IMessage<SerializablePropertiesNode>
   #if !GOOGLE_PROTOBUF_REFSTRUCT_COMPATIBILITY_MODE
       , pb::IBufferMessage
@@ -4410,7 +4857,7 @@ namespace EditorGRPC {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[15]; }
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[17]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -4625,7 +5072,7 @@ namespace EditorGRPC {
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
     [global::System.CodeDom.Compiler.GeneratedCode("protoc", null)]
     public static pbr::MessageDescriptor Descriptor {
-      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[16]; }
+      get { return global::EditorGRPC.PlayBoardEditReflection.Descriptor.MessageTypes[18]; }
     }
 
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

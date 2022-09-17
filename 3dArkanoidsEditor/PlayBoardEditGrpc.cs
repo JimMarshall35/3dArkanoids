@@ -63,6 +63,10 @@ namespace EditorGRPC {
     static readonly grpc::Marshaller<global::EditorGRPC.GameSettings> __Marshaller_EditorGRPC_GameSettings = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.GameSettings.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.SerializablePropertiesNodes> __Marshaller_EditorGRPC_SerializablePropertiesNodes = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SerializablePropertiesNodes.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.SetSerializablePropertyData> __Marshaller_EditorGRPC_SetSerializablePropertyData = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SetSerializablePropertyData.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.SetSerializablePropertyResult> __Marshaller_EditorGRPC_SetSerializablePropertyResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SetSerializablePropertyResult.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult> __Method_AddBlock = new grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult>(
@@ -120,6 +124,14 @@ namespace EditorGRPC {
         __Marshaller_EditorGRPC_Void,
         __Marshaller_EditorGRPC_SerializablePropertiesNodes);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::EditorGRPC.SetSerializablePropertyData, global::EditorGRPC.SetSerializablePropertyResult> __Method_SetSerializableProperty = new grpc::Method<global::EditorGRPC.SetSerializablePropertyData, global::EditorGRPC.SetSerializablePropertyResult>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SetSerializableProperty",
+        __Marshaller_EditorGRPC_SetSerializablePropertyData,
+        __Marshaller_EditorGRPC_SetSerializablePropertyResult);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -168,6 +180,12 @@ namespace EditorGRPC {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.SerializablePropertiesNodes> GetSerializableNodes(global::EditorGRPC.Void request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.SetSerializablePropertyResult> SetSerializableProperty(global::EditorGRPC.SetSerializablePropertyData request, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -341,6 +359,26 @@ namespace EditorGRPC {
       {
         return CallInvoker.AsyncUnaryCall(__Method_GetSerializableNodes, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.SetSerializablePropertyResult SetSerializableProperty(global::EditorGRPC.SetSerializablePropertyData request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SetSerializableProperty(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.SetSerializablePropertyResult SetSerializableProperty(global::EditorGRPC.SetSerializablePropertyData request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SetSerializableProperty, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.SetSerializablePropertyResult> SetSerializablePropertyAsync(global::EditorGRPC.SetSerializablePropertyData request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SetSerializablePropertyAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.SetSerializablePropertyResult> SetSerializablePropertyAsync(global::EditorGRPC.SetSerializablePropertyData request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SetSerializableProperty, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override PlayBoardEditClient NewInstance(ClientBaseConfiguration configuration)
@@ -361,7 +399,8 @@ namespace EditorGRPC {
           .AddMethod(__Method_GetBoardState, serviceImpl.GetBoardState)
           .AddMethod(__Method_SetBoardState, serviceImpl.SetBoardState)
           .AddMethod(__Method_InitialConnectionHandshake, serviceImpl.InitialConnectionHandshake)
-          .AddMethod(__Method_GetSerializableNodes, serviceImpl.GetSerializableNodes).Build();
+          .AddMethod(__Method_GetSerializableNodes, serviceImpl.GetSerializableNodes)
+          .AddMethod(__Method_SetSerializableProperty, serviceImpl.SetSerializableProperty).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -378,6 +417,7 @@ namespace EditorGRPC {
       serviceBinder.AddMethod(__Method_SetBoardState, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.BoardDescription, global::EditorGRPC.SetBoardDescriptionResult>(serviceImpl.SetBoardState));
       serviceBinder.AddMethod(__Method_InitialConnectionHandshake, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.ClientInfo, global::EditorGRPC.GameSettings>(serviceImpl.InitialConnectionHandshake));
       serviceBinder.AddMethod(__Method_GetSerializableNodes, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Void, global::EditorGRPC.SerializablePropertiesNodes>(serviceImpl.GetSerializableNodes));
+      serviceBinder.AddMethod(__Method_SetSerializableProperty, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.SetSerializablePropertyData, global::EditorGRPC.SetSerializablePropertyResult>(serviceImpl.SetSerializableProperty));
     }
 
   }

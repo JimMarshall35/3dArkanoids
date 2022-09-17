@@ -39,6 +39,20 @@ namespace _3dArkanoidsEditor.Services
             return result.ToModel();
         }
 
+        public async Task<SetSerializablePropertyResult> SetSerializablePropertyAsync(SerializableProperty prop, string path)
+        {
+            var result = await m_client.SetSerializablePropertyAsync(prop.ToGRPCSetMessage(path));
+            switch (result.Result)
+            {
+                case EditorGRPC.SetSerializablePropertyResult.Types.Result.Success:
+                    return SetSerializablePropertyResult.Success;
+                case EditorGRPC.SetSerializablePropertyResult.Types.Result.Failure:
+                    return SetSerializablePropertyResult.Failure;
+                default:
+                    return SetSerializablePropertyResult.Failure;
+            }
+        }
+
         private PlayBoardEditClient m_client;
     }
 }

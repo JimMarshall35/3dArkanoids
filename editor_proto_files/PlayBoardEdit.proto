@@ -9,6 +9,7 @@ service PlayBoardEdit{
 	rpc SetBoardState(BoardDescription) returns(SetBoardDescriptionResult);
 	rpc InitialConnectionHandshake(ClientInfo) returns(GameSettings);
 	rpc GetSerializableNodes(Void) returns(SerializablePropertiesNodes);
+	rpc SetSerializableProperty(SetSerializablePropertyData) returns(SetSerializablePropertyResult);
 }
 
 message Point{
@@ -138,6 +139,19 @@ message SerializableProperty{
 	Type type = 2;
 	SerializablePropertyData data = 3;
 
+}
+
+message SetSerializablePropertyData{
+	SerializableProperty newVal = 1;
+	string path = 2;
+}
+
+message SetSerializablePropertyResult{
+	enum Result{
+		SUCCESS = 0;
+		FAILURE = 1;
+	}
+	Result result = 1;	
 }
 
 message SerializablePropertiesNode{

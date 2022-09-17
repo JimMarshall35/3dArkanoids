@@ -84,6 +84,13 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SerializablePropertiesNodes>> PrepareAsyncGetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SerializablePropertiesNodes>>(PrepareAsyncGetSerializableNodesRaw(context, request, cq));
     }
+    virtual ::grpc::Status SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::EditorGRPC::SetSerializablePropertyResult* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>> AsyncSetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>>(AsyncSetSerializablePropertyRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>> PrepareAsyncSetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>>(PrepareAsyncSetSerializablePropertyRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -101,6 +108,8 @@ class PlayBoardEdit final {
       virtual void InitialConnectionHandshake(::grpc::ClientContext* context, const ::EditorGRPC::ClientInfo* request, ::EditorGRPC::GameSettings* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, std::function<void(::grpc::Status)>) = 0;
       virtual void GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -120,6 +129,8 @@ class PlayBoardEdit final {
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::GameSettings>* PrepareAsyncInitialConnectionHandshakeRaw(::grpc::ClientContext* context, const ::EditorGRPC::ClientInfo& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SerializablePropertiesNodes>* AsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
     virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SerializablePropertiesNodes>* PrepareAsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>* AsyncSetSerializablePropertyRaw(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::SetSerializablePropertyResult>* PrepareAsyncSetSerializablePropertyRaw(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -173,6 +184,13 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>> PrepareAsyncGetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>>(PrepareAsyncGetSerializableNodesRaw(context, request, cq));
     }
+    ::grpc::Status SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::EditorGRPC::SetSerializablePropertyResult* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>> AsyncSetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>>(AsyncSetSerializablePropertyRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>> PrepareAsyncSetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>>(PrepareAsyncSetSerializablePropertyRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -190,6 +208,8 @@ class PlayBoardEdit final {
       void InitialConnectionHandshake(::grpc::ClientContext* context, const ::EditorGRPC::ClientInfo* request, ::EditorGRPC::GameSettings* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, std::function<void(::grpc::Status)>) override;
       void GetSerializableNodes(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, std::function<void(::grpc::Status)>) override;
+      void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, ::grpc::ClientUnaryReactor* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -215,6 +235,8 @@ class PlayBoardEdit final {
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::GameSettings>* PrepareAsyncInitialConnectionHandshakeRaw(::grpc::ClientContext* context, const ::EditorGRPC::ClientInfo& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>* AsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
     ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SerializablePropertiesNodes>* PrepareAsyncGetSerializableNodesRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>* AsyncSetSerializablePropertyRaw(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::SetSerializablePropertyResult>* PrepareAsyncSetSerializablePropertyRaw(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AddBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_ChangeBlock_;
@@ -222,6 +244,7 @@ class PlayBoardEdit final {
     const ::grpc::internal::RpcMethod rpcmethod_SetBoardState_;
     const ::grpc::internal::RpcMethod rpcmethod_InitialConnectionHandshake_;
     const ::grpc::internal::RpcMethod rpcmethod_GetSerializableNodes_;
+    const ::grpc::internal::RpcMethod rpcmethod_SetSerializableProperty_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -236,6 +259,7 @@ class PlayBoardEdit final {
     virtual ::grpc::Status SetBoardState(::grpc::ServerContext* context, const ::EditorGRPC::BoardDescription* request, ::EditorGRPC::SetBoardDescriptionResult* response);
     virtual ::grpc::Status InitialConnectionHandshake(::grpc::ServerContext* context, const ::EditorGRPC::ClientInfo* request, ::EditorGRPC::GameSettings* response);
     virtual ::grpc::Status GetSerializableNodes(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response);
+    virtual ::grpc::Status SetSerializableProperty(::grpc::ServerContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response);
   };
   template <class BaseClass>
   class WithAsyncMethod_AddBlock : public BaseClass {
@@ -377,7 +401,27 @@ class PlayBoardEdit final {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_ChangeBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<WithAsyncMethod_InitialConnectionHandshake<WithAsyncMethod_GetSerializableNodes<Service > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodAsync(7);
+    }
+    ~WithAsyncMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetSerializableProperty(::grpc::ServerContext* context, ::EditorGRPC::SetSerializablePropertyData* request, ::grpc::ServerAsyncResponseWriter< ::EditorGRPC::SetSerializablePropertyResult>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_ChangeBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<WithAsyncMethod_InitialConnectionHandshake<WithAsyncMethod_GetSerializableNodes<WithAsyncMethod_SetSerializableProperty<Service > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_AddBlock : public BaseClass {
    private:
@@ -567,7 +611,34 @@ class PlayBoardEdit final {
     virtual ::grpc::ServerUnaryReactor* GetSerializableNodes(
       ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::EditorGRPC::SerializablePropertiesNodes* /*response*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_ChangeBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<WithCallbackMethod_InitialConnectionHandshake<WithCallbackMethod_GetSerializableNodes<Service > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::SetSerializablePropertyData, ::EditorGRPC::SetSerializablePropertyResult>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response) { return this->SetSerializableProperty(context, request, response); }));}
+    void SetMessageAllocatorFor_SetSerializableProperty(
+        ::grpc::MessageAllocator< ::EditorGRPC::SetSerializablePropertyData, ::EditorGRPC::SetSerializablePropertyResult>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(7);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::SetSerializablePropertyData, ::EditorGRPC::SetSerializablePropertyResult>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetSerializableProperty(
+      ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_ChangeBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<WithCallbackMethod_InitialConnectionHandshake<WithCallbackMethod_GetSerializableNodes<WithCallbackMethod_SetSerializableProperty<Service > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AddBlock : public BaseClass {
@@ -684,6 +755,23 @@ class PlayBoardEdit final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetSerializableNodes(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::EditorGRPC::SerializablePropertiesNodes* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodGeneric(7);
+    }
+    ~WithGenericMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -826,6 +914,26 @@ class PlayBoardEdit final {
     }
     void RequestGetSerializableNodes(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncUnary(6, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodRaw(7);
+    }
+    ~WithRawMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSetSerializableProperty(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(7, context, request, response, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -980,6 +1088,28 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerUnaryReactor* GetSerializableNodes(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodRawCallback(7,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SetSerializableProperty(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SetSerializableProperty(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1171,9 +1301,36 @@ class PlayBoardEdit final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedGetSerializableNodes(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::Void,::EditorGRPC::SerializablePropertiesNodes>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<Service > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SetSerializableProperty : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SetSerializableProperty() {
+      ::grpc::Service::MarkMethodStreamed(7,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::EditorGRPC::SetSerializablePropertyData, ::EditorGRPC::SetSerializablePropertyResult>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::EditorGRPC::SetSerializablePropertyData, ::EditorGRPC::SetSerializablePropertyResult>* streamer) {
+                       return this->StreamedSetSerializableProperty(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SetSerializableProperty() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SetSerializableProperty(::grpc::ServerContext* /*context*/, const ::EditorGRPC::SetSerializablePropertyData* /*request*/, ::EditorGRPC::SetSerializablePropertyResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSetSerializableProperty(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::SetSerializablePropertyData,::EditorGRPC::SetSerializablePropertyResult>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<Service > > > > > > > > StreamedUnaryService;
   typedef Service SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<Service > > > > > > > StreamedService;
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<Service > > > > > > > > StreamedService;
 };
 
 }  // namespace EditorGRPC

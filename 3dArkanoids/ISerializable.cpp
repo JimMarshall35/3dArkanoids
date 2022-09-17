@@ -202,8 +202,8 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 
 
 	if (pathLength == 0) {
-		std::cout << "passed a string with no length\n";
-		return nullptr;
+		errorString = "passed a string with no length";
+		state = Error;
 	}
 	std::string pathPart = "";
 	using CharReaderFunction = std::function<ParserState(void)>;
@@ -213,7 +213,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 		pathPart += character;
 		if (onChar + 1 >= pathLength) {
 			// a property wasn't specified - the path ended on a node
-			errorString = "No property was specified. Path was " + path+"\n";
+			errorString = "No property was specified.";
 			return Error;
 		}
 		character = path[++onChar];
@@ -229,7 +229,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				node = TryFindNodeInArrayOfChildren(childNodesBeingSearched, numChildNodesBeingSearched, pathPart);
 			}
 			if (node == nullptr) {
-				errorString = "Node "+pathPart+" not found. Path was " + path + "\n";
+				errorString = "Node "+pathPart+" not found.";
 				return Error;
 			}
 			returnVal = node;
@@ -241,7 +241,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 			return ReadingNameOfPropertiesNode;
 		}
 			
-		errorString = "Unknown error. Path was " + path + "\n";
+		errorString = "Unknown error.";
 		return Error;
 	};
 
@@ -263,7 +263,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 		else {
 			return ReadingNameOfProperty;
 		}
-		errorString = "Unknown error. Path was " + path + "\n";
+		errorString = "Unknown error.";
 
 		return Error;
 	};
@@ -273,7 +273,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 		pathPart += character;
 		if (onChar + 1 >= pathLength) {
 			// do something with the word, check it exists
-			errorString = "The path ended unexpectedly part way through a number. path given was: " + path + "\n";
+			errorString = "The path ended unexpectedly part way through a number.";
 
 			return Error;
 		}
@@ -282,14 +282,14 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 		if (path[onChar] == ']') {
 			onChar++;
 			if (path[onChar] != '.') {
-				errorString = "A closing square bracket must be followed by a full stop (.). path given was: " + path + "\n";
+				errorString = "A closing square bracket must be followed by a full stop (.).";
 				return Error;
 			}
 			onChar++;
 			
 			int numberParsed = std::stoi(pathPart);
 			if (numberParsed >= numChildNodesBeingSearched || numberParsed < 0) {
-				errorString = "Specified index that was out of range: " + std::to_string(numberParsed) + " path given was: " + path + "\n";
+				errorString = "Specified index that was out of range: " + std::to_string(numberParsed);
 				return Error;
 			}
 			returnVal = childNodesBeingSearched[numberParsed];
@@ -314,7 +314,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				state = ReadInCharOfProperty();
 			}
 			else {
-				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart + " full path was " + path + "\n";
+				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart;
 				state = Error;
 			}
 			break;
@@ -323,7 +323,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				state = ReadInCharOfProperty();
 			}
 			else {
-				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart + " full path was " + path + "\n";
+				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart;
 
 				state = Error;
 			}
@@ -334,7 +334,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				state = ReadInCharOfPropertiesNode();
 			}
 			else {
-				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart + " full path was " + path + "\n";
+				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart;
 
 				state = Error;
 			}
@@ -344,7 +344,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				state = ReadInCharOfPropertiesNode();
 			}
 			else {
-				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart + " full path was " + path + "\n";
+				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart;
 
 				state = Error;
 			}
@@ -354,7 +354,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 				state = ReadInCharOfNumber();
 			}
 			else {
-				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart + " full path was " + path + "\n";
+				errorString = "invalid character " + std::to_string(character) + " in part " + pathPart;
 
 				state = Error;
 			}
@@ -363,7 +363,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 			parseShouldContinue = false;
 			break;
 		case Error:
-			std::cerr << "[Serializable Path Parser Error] " << errorString;
+			std::cerr << "[Serializable Path Parser Error] " << errorString << " Path given was: " + path + "\n";
 			parseShouldContinue = false;
 			break;
 		}

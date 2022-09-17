@@ -19,9 +19,9 @@
         public float Float { get; set; }
         public double Double { get; set; }
         public string Bytes { get; set; }
-        public Vec2 Vec2 { get; set; }
-        public Vec3 Vec3 { get; set; }
-        public Vec4 Vec4 { get; set; }
+        public Vec2 Vec2 { get; set; } = new Vec2();
+        public Vec3 Vec3 { get; set; } = new Vec3();
+        public Vec4 Vec4 { get; set; } = new Vec4();
         public SerializablePropertiesNode SerializableNode { get; set; }
         public List<SerializablePropertiesNode> SerializableNodesArray { get; set; }
         public SerializablePropertyType PropType { get; set; }

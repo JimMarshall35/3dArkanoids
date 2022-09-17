@@ -16,6 +16,8 @@ using EditorGRPC::Point;
 using EditorGRPC::EditBlockResult;
 using EditorGRPC::GameSettings;
 using EditorGRPC::ClientInfo;
+using EditorGRPC::SetSerializablePropertyData;
+using EditorGRPC::SetSerializablePropertyResult;
 
 using ProtoBufSerializablePropertiesNode = EditorGRPC::SerializablePropertiesNode;
 using ProtoBufSerializablePropertiesNodes = EditorGRPC::SerializablePropertiesNodes;
@@ -216,6 +218,30 @@ private:
         virtual void OnProcess() override;
     };
 
+    class SetSerializablePropertyCallData : public CallData {
+    public:
+        SetSerializablePropertyCallData(EditorGRPC::PlayBoardEdit::AsyncService* service, ServerCompletionQueue* cq, ILevelEditorServerGame* game, GrpcLevelEditorServer* server)
+            :CallData(service, cq, game), m_responder(&m_ctx), m_server(server)
+        {
+            Proceed();
+        }
+    public:
+        // What we get from the client.
+        SetSerializablePropertyData m_request;
+        // What we send back to the client.
+        SetSerializablePropertyResult m_reply;
+
+    private:
+        // The means to get back to the client.
+        ServerAsyncResponseWriter<SetSerializablePropertyResult> m_responder;
+
+        GrpcLevelEditorServer* m_server;
+    protected:
+        // Inherited via CallData
+        virtual void Finish() override;
+        virtual void RequestOnCreate() override;
+        virtual void OnProcess() override;
+    };
 
 
     // Inherited via ILevelEditorServer

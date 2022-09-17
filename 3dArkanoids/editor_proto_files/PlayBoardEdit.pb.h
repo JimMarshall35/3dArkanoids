@@ -48,7 +48,7 @@ struct TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[17]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[19]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -95,6 +95,12 @@ extern SerializablePropertyDataDefaultTypeInternal _SerializablePropertyData_def
 class SetBoardDescriptionResult;
 struct SetBoardDescriptionResultDefaultTypeInternal;
 extern SetBoardDescriptionResultDefaultTypeInternal _SetBoardDescriptionResult_default_instance_;
+class SetSerializablePropertyData;
+struct SetSerializablePropertyDataDefaultTypeInternal;
+extern SetSerializablePropertyDataDefaultTypeInternal _SetSerializablePropertyData_default_instance_;
+class SetSerializablePropertyResult;
+struct SetSerializablePropertyResultDefaultTypeInternal;
+extern SetSerializablePropertyResultDefaultTypeInternal _SetSerializablePropertyResult_default_instance_;
 class Vec2;
 struct Vec2DefaultTypeInternal;
 extern Vec2DefaultTypeInternal _Vec2_default_instance_;
@@ -122,6 +128,8 @@ template<> ::EditorGRPC::SerializablePropertiesNodes* Arena::CreateMaybeMessage<
 template<> ::EditorGRPC::SerializableProperty* Arena::CreateMaybeMessage<::EditorGRPC::SerializableProperty>(Arena*);
 template<> ::EditorGRPC::SerializablePropertyData* Arena::CreateMaybeMessage<::EditorGRPC::SerializablePropertyData>(Arena*);
 template<> ::EditorGRPC::SetBoardDescriptionResult* Arena::CreateMaybeMessage<::EditorGRPC::SetBoardDescriptionResult>(Arena*);
+template<> ::EditorGRPC::SetSerializablePropertyData* Arena::CreateMaybeMessage<::EditorGRPC::SetSerializablePropertyData>(Arena*);
+template<> ::EditorGRPC::SetSerializablePropertyResult* Arena::CreateMaybeMessage<::EditorGRPC::SetSerializablePropertyResult>(Arena*);
 template<> ::EditorGRPC::Vec2* Arena::CreateMaybeMessage<::EditorGRPC::Vec2>(Arena*);
 template<> ::EditorGRPC::Vec3* Arena::CreateMaybeMessage<::EditorGRPC::Vec3>(Arena*);
 template<> ::EditorGRPC::Vec4* Arena::CreateMaybeMessage<::EditorGRPC::Vec4>(Arena*);
@@ -218,6 +226,31 @@ inline bool SerializableProperty_Type_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SerializableProperty_Type* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SerializableProperty_Type>(
     SerializableProperty_Type_descriptor(), name, value);
+}
+enum SetSerializablePropertyResult_Result : int {
+  SetSerializablePropertyResult_Result_SUCCESS = 0,
+  SetSerializablePropertyResult_Result_FAILURE = 1,
+  SetSerializablePropertyResult_Result_SetSerializablePropertyResult_Result_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  SetSerializablePropertyResult_Result_SetSerializablePropertyResult_Result_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool SetSerializablePropertyResult_Result_IsValid(int value);
+constexpr SetSerializablePropertyResult_Result SetSerializablePropertyResult_Result_Result_MIN = SetSerializablePropertyResult_Result_SUCCESS;
+constexpr SetSerializablePropertyResult_Result SetSerializablePropertyResult_Result_Result_MAX = SetSerializablePropertyResult_Result_FAILURE;
+constexpr int SetSerializablePropertyResult_Result_Result_ARRAYSIZE = SetSerializablePropertyResult_Result_Result_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SetSerializablePropertyResult_Result_descriptor();
+template<typename T>
+inline const std::string& SetSerializablePropertyResult_Result_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, SetSerializablePropertyResult_Result>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function SetSerializablePropertyResult_Result_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    SetSerializablePropertyResult_Result_descriptor(), enum_t_value);
+}
+inline bool SetSerializablePropertyResult_Result_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SetSerializablePropertyResult_Result* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SetSerializablePropertyResult_Result>(
+    SetSerializablePropertyResult_Result_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3048,6 +3081,353 @@ class SerializableProperty final :
 };
 // -------------------------------------------------------------------
 
+class SetSerializablePropertyData final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.SetSerializablePropertyData) */ {
+ public:
+  inline SetSerializablePropertyData() : SetSerializablePropertyData(nullptr) {}
+  ~SetSerializablePropertyData() override;
+  explicit constexpr SetSerializablePropertyData(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetSerializablePropertyData(const SetSerializablePropertyData& from);
+  SetSerializablePropertyData(SetSerializablePropertyData&& from) noexcept
+    : SetSerializablePropertyData() {
+    *this = ::std::move(from);
+  }
+
+  inline SetSerializablePropertyData& operator=(const SetSerializablePropertyData& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetSerializablePropertyData& operator=(SetSerializablePropertyData&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetSerializablePropertyData& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetSerializablePropertyData* internal_default_instance() {
+    return reinterpret_cast<const SetSerializablePropertyData*>(
+               &_SetSerializablePropertyData_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    15;
+
+  friend void swap(SetSerializablePropertyData& a, SetSerializablePropertyData& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetSerializablePropertyData* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetSerializablePropertyData* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetSerializablePropertyData* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetSerializablePropertyData>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetSerializablePropertyData& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SetSerializablePropertyData& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetSerializablePropertyData* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.SetSerializablePropertyData";
+  }
+  protected:
+  explicit SetSerializablePropertyData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPathFieldNumber = 2,
+    kNewValFieldNumber = 1,
+  };
+  // string path = 2;
+  void clear_path();
+  const std::string& path() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_path(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_path();
+  PROTOBUF_NODISCARD std::string* release_path();
+  void set_allocated_path(std::string* path);
+  private:
+  const std::string& _internal_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_path(const std::string& value);
+  std::string* _internal_mutable_path();
+  public:
+
+  // .EditorGRPC.SerializableProperty newVal = 1;
+  bool has_newval() const;
+  private:
+  bool _internal_has_newval() const;
+  public:
+  void clear_newval();
+  const ::EditorGRPC::SerializableProperty& newval() const;
+  PROTOBUF_NODISCARD ::EditorGRPC::SerializableProperty* release_newval();
+  ::EditorGRPC::SerializableProperty* mutable_newval();
+  void set_allocated_newval(::EditorGRPC::SerializableProperty* newval);
+  private:
+  const ::EditorGRPC::SerializableProperty& _internal_newval() const;
+  ::EditorGRPC::SerializableProperty* _internal_mutable_newval();
+  public:
+  void unsafe_arena_set_allocated_newval(
+      ::EditorGRPC::SerializableProperty* newval);
+  ::EditorGRPC::SerializableProperty* unsafe_arena_release_newval();
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.SetSerializablePropertyData)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr path_;
+  ::EditorGRPC::SerializableProperty* newval_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class SetSerializablePropertyResult final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.SetSerializablePropertyResult) */ {
+ public:
+  inline SetSerializablePropertyResult() : SetSerializablePropertyResult(nullptr) {}
+  ~SetSerializablePropertyResult() override;
+  explicit constexpr SetSerializablePropertyResult(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  SetSerializablePropertyResult(const SetSerializablePropertyResult& from);
+  SetSerializablePropertyResult(SetSerializablePropertyResult&& from) noexcept
+    : SetSerializablePropertyResult() {
+    *this = ::std::move(from);
+  }
+
+  inline SetSerializablePropertyResult& operator=(const SetSerializablePropertyResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline SetSerializablePropertyResult& operator=(SetSerializablePropertyResult&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const SetSerializablePropertyResult& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const SetSerializablePropertyResult* internal_default_instance() {
+    return reinterpret_cast<const SetSerializablePropertyResult*>(
+               &_SetSerializablePropertyResult_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    16;
+
+  friend void swap(SetSerializablePropertyResult& a, SetSerializablePropertyResult& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(SetSerializablePropertyResult* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(SetSerializablePropertyResult* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  SetSerializablePropertyResult* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<SetSerializablePropertyResult>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const SetSerializablePropertyResult& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const SetSerializablePropertyResult& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(SetSerializablePropertyResult* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.SetSerializablePropertyResult";
+  }
+  protected:
+  explicit SetSerializablePropertyResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef SetSerializablePropertyResult_Result Result;
+  static constexpr Result SUCCESS =
+    SetSerializablePropertyResult_Result_SUCCESS;
+  static constexpr Result FAILURE =
+    SetSerializablePropertyResult_Result_FAILURE;
+  static inline bool Result_IsValid(int value) {
+    return SetSerializablePropertyResult_Result_IsValid(value);
+  }
+  static constexpr Result Result_MIN =
+    SetSerializablePropertyResult_Result_Result_MIN;
+  static constexpr Result Result_MAX =
+    SetSerializablePropertyResult_Result_Result_MAX;
+  static constexpr int Result_ARRAYSIZE =
+    SetSerializablePropertyResult_Result_Result_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Result_descriptor() {
+    return SetSerializablePropertyResult_Result_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Result_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Result>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Result_Name.");
+    return SetSerializablePropertyResult_Result_Name(enum_t_value);
+  }
+  static inline bool Result_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
+      Result* value) {
+    return SetSerializablePropertyResult_Result_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kResultFieldNumber = 1,
+  };
+  // .EditorGRPC.SetSerializablePropertyResult.Result result = 1;
+  void clear_result();
+  ::EditorGRPC::SetSerializablePropertyResult_Result result() const;
+  void set_result(::EditorGRPC::SetSerializablePropertyResult_Result value);
+  private:
+  ::EditorGRPC::SetSerializablePropertyResult_Result _internal_result() const;
+  void _internal_set_result(::EditorGRPC::SetSerializablePropertyResult_Result value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.SetSerializablePropertyResult)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int result_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
 class SerializablePropertiesNode final :
     public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.SerializablePropertiesNode) */ {
  public:
@@ -3096,7 +3476,7 @@ class SerializablePropertiesNode final :
                &_SerializablePropertiesNode_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    15;
+    17;
 
   friend void swap(SerializablePropertiesNode& a, SerializablePropertiesNode& b) {
     a.Swap(&b);
@@ -3267,7 +3647,7 @@ class SerializablePropertiesNodes final :
                &_SerializablePropertiesNodes_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
-    16;
+    18;
 
   friend void swap(SerializablePropertiesNodes& a, SerializablePropertiesNodes& b) {
     a.Swap(&b);
@@ -5093,6 +5473,175 @@ inline void SerializableProperty::set_allocated_data(::EditorGRPC::SerializableP
 
 // -------------------------------------------------------------------
 
+// SetSerializablePropertyData
+
+// .EditorGRPC.SerializableProperty newVal = 1;
+inline bool SetSerializablePropertyData::_internal_has_newval() const {
+  return this != internal_default_instance() && newval_ != nullptr;
+}
+inline bool SetSerializablePropertyData::has_newval() const {
+  return _internal_has_newval();
+}
+inline void SetSerializablePropertyData::clear_newval() {
+  if (GetArenaForAllocation() == nullptr && newval_ != nullptr) {
+    delete newval_;
+  }
+  newval_ = nullptr;
+}
+inline const ::EditorGRPC::SerializableProperty& SetSerializablePropertyData::_internal_newval() const {
+  const ::EditorGRPC::SerializableProperty* p = newval_;
+  return p != nullptr ? *p : reinterpret_cast<const ::EditorGRPC::SerializableProperty&>(
+      ::EditorGRPC::_SerializableProperty_default_instance_);
+}
+inline const ::EditorGRPC::SerializableProperty& SetSerializablePropertyData::newval() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.SetSerializablePropertyData.newVal)
+  return _internal_newval();
+}
+inline void SetSerializablePropertyData::unsafe_arena_set_allocated_newval(
+    ::EditorGRPC::SerializableProperty* newval) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(newval_);
+  }
+  newval_ = newval;
+  if (newval) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:EditorGRPC.SetSerializablePropertyData.newVal)
+}
+inline ::EditorGRPC::SerializableProperty* SetSerializablePropertyData::release_newval() {
+  
+  ::EditorGRPC::SerializableProperty* temp = newval_;
+  newval_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::EditorGRPC::SerializableProperty* SetSerializablePropertyData::unsafe_arena_release_newval() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.SetSerializablePropertyData.newVal)
+  
+  ::EditorGRPC::SerializableProperty* temp = newval_;
+  newval_ = nullptr;
+  return temp;
+}
+inline ::EditorGRPC::SerializableProperty* SetSerializablePropertyData::_internal_mutable_newval() {
+  
+  if (newval_ == nullptr) {
+    auto* p = CreateMaybeMessage<::EditorGRPC::SerializableProperty>(GetArenaForAllocation());
+    newval_ = p;
+  }
+  return newval_;
+}
+inline ::EditorGRPC::SerializableProperty* SetSerializablePropertyData::mutable_newval() {
+  ::EditorGRPC::SerializableProperty* _msg = _internal_mutable_newval();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.SetSerializablePropertyData.newVal)
+  return _msg;
+}
+inline void SetSerializablePropertyData::set_allocated_newval(::EditorGRPC::SerializableProperty* newval) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete newval_;
+  }
+  if (newval) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::EditorGRPC::SerializableProperty>::GetOwningArena(newval);
+    if (message_arena != submessage_arena) {
+      newval = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, newval, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  newval_ = newval;
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.SetSerializablePropertyData.newVal)
+}
+
+// string path = 2;
+inline void SetSerializablePropertyData::clear_path() {
+  path_.ClearToEmpty();
+}
+inline const std::string& SetSerializablePropertyData::path() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.SetSerializablePropertyData.path)
+  return _internal_path();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void SetSerializablePropertyData::set_path(ArgT0&& arg0, ArgT... args) {
+ 
+ path_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:EditorGRPC.SetSerializablePropertyData.path)
+}
+inline std::string* SetSerializablePropertyData::mutable_path() {
+  std::string* _s = _internal_mutable_path();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.SetSerializablePropertyData.path)
+  return _s;
+}
+inline const std::string& SetSerializablePropertyData::_internal_path() const {
+  return path_.Get();
+}
+inline void SetSerializablePropertyData::_internal_set_path(const std::string& value) {
+  
+  path_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* SetSerializablePropertyData::_internal_mutable_path() {
+  
+  return path_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* SetSerializablePropertyData::release_path() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.SetSerializablePropertyData.path)
+  return path_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void SetSerializablePropertyData::set_allocated_path(std::string* path) {
+  if (path != nullptr) {
+    
+  } else {
+    
+  }
+  path_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), path,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (path_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    path_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.SetSerializablePropertyData.path)
+}
+
+// -------------------------------------------------------------------
+
+// SetSerializablePropertyResult
+
+// .EditorGRPC.SetSerializablePropertyResult.Result result = 1;
+inline void SetSerializablePropertyResult::clear_result() {
+  result_ = 0;
+}
+inline ::EditorGRPC::SetSerializablePropertyResult_Result SetSerializablePropertyResult::_internal_result() const {
+  return static_cast< ::EditorGRPC::SetSerializablePropertyResult_Result >(result_);
+}
+inline ::EditorGRPC::SetSerializablePropertyResult_Result SetSerializablePropertyResult::result() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.SetSerializablePropertyResult.result)
+  return _internal_result();
+}
+inline void SetSerializablePropertyResult::_internal_set_result(::EditorGRPC::SetSerializablePropertyResult_Result value) {
+  
+  result_ = value;
+}
+inline void SetSerializablePropertyResult::set_result(::EditorGRPC::SetSerializablePropertyResult_Result value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.SetSerializablePropertyResult.result)
+}
+
+// -------------------------------------------------------------------
+
 // SerializablePropertiesNode
 
 // string name = 1;
@@ -5265,6 +5814,10 @@ SerializablePropertiesNodes::nodes() const {
 
 // -------------------------------------------------------------------
 
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 
 // @@protoc_insertion_point(namespace_scope)
 
@@ -5286,6 +5839,11 @@ template <> struct is_proto_enum< ::EditorGRPC::SerializableProperty_Type> : ::s
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::EditorGRPC::SerializableProperty_Type>() {
   return ::EditorGRPC::SerializableProperty_Type_descriptor();
+}
+template <> struct is_proto_enum< ::EditorGRPC::SetSerializablePropertyResult_Result> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::EditorGRPC::SetSerializablePropertyResult_Result>() {
+  return ::EditorGRPC::SetSerializablePropertyResult_Result_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

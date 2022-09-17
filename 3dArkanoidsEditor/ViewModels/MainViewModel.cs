@@ -270,7 +270,7 @@ namespace _3dArkanoidsEditor.ViewModels
             SerializablePropertiesNodeViewModels.Clear();
             foreach (var r in result)
             {
-                SerializablePropertiesNodeViewModels.Add(new SerializablePropertiesNodeViewModel(r));
+                SerializablePropertiesNodeViewModels.Add(new SerializablePropertiesNodeViewModel(r,m_gameConnectionService.Client));
             }
         }
         #endregion

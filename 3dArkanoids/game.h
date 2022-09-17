@@ -75,7 +75,6 @@ private:
 	Event<EngineUpdateFrameEventArgs> m_frameUpdateEvent;
 	Event<MasterArrayUpdatedEventArgs> m_masterArrayUpdatedEvent;
 	Array3D<unsigned char> m_playFieldArray;
-	std::unique_ptr<ILevelLoader> m_levelLoader;
 	std::unique_ptr<ILevelEditorServer> m_levelEditorServer;
 	std::shared_ptr<IRenderer> m_renderer;
 	FallingBlockManager m_fallingBlockManager;

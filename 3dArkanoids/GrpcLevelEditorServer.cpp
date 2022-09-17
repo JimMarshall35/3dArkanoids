@@ -9,7 +9,8 @@
 #include "BlockColourDefs.h"
 #include "GameFramework.h"
 #include "GameToUiMessage.h"
-#include "ISerializable.h"
+#include "SerializationFunctions.h"
+#include "SerializableProperty.h"
 
 using grpc::Server;
 using grpc::ServerBuilder;

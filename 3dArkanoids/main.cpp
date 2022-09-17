@@ -6,7 +6,6 @@
 #include "GameInput.h"
 #include <iostream>
 #include "BlockInstanceRenderData.h"
-#include "MockLevelLoader.h"
 #include "GrpcLevelEditorServer.h"
 #include <functional>
 #include <thread>
@@ -22,6 +21,7 @@
 #include "GameToUiMessage.h"
 
 #include "Terrain.h"
+#include "SerializationFunctions.h"
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200

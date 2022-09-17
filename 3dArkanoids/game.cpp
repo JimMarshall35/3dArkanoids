@@ -2,7 +2,6 @@
 #include <iostream>
 #include <algorithm>
 
-#include "ILevelLoader.h"
 #include "BlockColourDefs.h"
 #include "IRenderer.h"
 #include "ILevelEditorServer.h"

@@ -25,20 +25,11 @@
     <Filter Include="Header Files\game">
       <UniqueIdentifier>{9d92b01e-46cd-4ba1-93f5-326d14293435}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\game\level loading">
-      <UniqueIdentifier>{71d3d6b3-6770-4c03-8495-fc3769e035aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level loading\interfaces">
-      <UniqueIdentifier>{e8c83b7c-1d81-41c0-baf3-bbc2003cfc59}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\game">
       <UniqueIdentifier>{3cdd17f3-effd-4ad5-9a09-b9d8a6bc55d5}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{affac581-a71a-489a-a012-48cdf48e2c14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\level loading">
-      <UniqueIdentifier>{5587a557-4795-4e00-a150-911a38f08bf8}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{c8af2025-618e-4241-b7be-e972826d71f2}</UniqueIdentifier>
@@ -61,6 +52,12 @@
     <Filter Include="Source Files\utils\third party">
       <UniqueIdentifier>{6867d13f-9b2b-4d9e-8d2d-c40abacffb3d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game\serialization framework">
+      <UniqueIdentifier>{eedc3987-416c-41e9-a71f-b7094f49c4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\serialization framework">
+      <UniqueIdentifier>{4e63cf45-8600-4be5-a546-1c55f399f5bc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -77,9 +74,6 @@
     </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="MockLevelLoader.cpp">
-      <Filter>Source Files\game\level loading</Filter>
     </ClCompile>
     <ClCompile Include="FallingBlock.cpp">
       <Filter>Source Files\game</Filter>
@@ -141,8 +135,8 @@
     <ClCompile Include="SimplexNoise.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ISerializable.cpp">
-      <Filter>Source Files\game</Filter>
+    <ClCompile Include="SerializationFunctions.cpp">
+      <Filter>Source Files\game\serialization framework</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -167,20 +161,11 @@
     <ClInclude Include="PlayfieldDefs.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
-    <ClInclude Include="ILevelLoader.h">
-      <Filter>Header Files\game\level loading\interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="Array3d.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="ErrorHandling.h">
       <Filter>Header Files\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="MockLevelLoader.h">
-      <Filter>Header Files\game\level loading</Filter>
-    </ClInclude>
-    <ClInclude Include="MockLoaderLevelData.h">
-      <Filter>Header Files\game\level loading</Filter>
     </ClInclude>
     <ClInclude Include="FallingBlock.h">
       <Filter>Header Files\game</Filter>
@@ -254,9 +239,6 @@
     <ClInclude Include="AutoList.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="ISerializable.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
     <ClInclude Include="Bat.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
@@ -295,6 +277,21 @@
     </ClInclude>
     <ClInclude Include="transvoxel.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ISerializable.h">
+      <Filter>Header Files\game\serialization framework</Filter>
+    </ClInclude>
+    <ClInclude Include="SerializablePropertyType.h">
+      <Filter>Header Files\game\serialization framework</Filter>
+    </ClInclude>
+    <ClInclude Include="SerializableProperty.h">
+      <Filter>Header Files\game\serialization framework</Filter>
+    </ClInclude>
+    <ClInclude Include="ISerializablePropertiesNode.h">
+      <Filter>Header Files\game\serialization framework</Filter>
+    </ClInclude>
+    <ClInclude Include="SerializationFunctions.h">
+      <Filter>Header Files\game\serialization framework</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

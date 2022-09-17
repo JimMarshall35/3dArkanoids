@@ -1,3 +1,4 @@
+#include "SerializationFunctions.h"
 #include "ISerializable.h"
 #include <iostream>
 #include <fstream>

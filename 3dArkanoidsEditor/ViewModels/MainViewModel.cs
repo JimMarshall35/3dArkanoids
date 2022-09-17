@@ -94,7 +94,7 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
-        private int m_selectedBlockTypeIndex;
+        private int m_selectedBlockTypeIndex = 0;
         public int SelectedBlockTypeIndex
         {
             get
@@ -115,10 +115,14 @@ namespace _3dArkanoidsEditor.ViewModels
             get
             {
                 if (BlockOptionsViewModels != null)
+                {
                     return BlockOptionsViewModels[SelectedBlockTypeIndex].GameBlockType.GameBlockTypeCode;
+                }
+
                 else
+                {
                     return 1;
-                  
+                }
             }
         }
 
@@ -134,9 +138,11 @@ namespace _3dArkanoidsEditor.ViewModels
         {
             get
             {
-                return BlockOptionsViewModels
+                var r = BlockOptionsViewModels
                     .Select(x => x.GameBlockType)
                     .ToList();
+                //r.Prepend(new GameBlockType(0, 0, 0, 0, 0));
+                return r;
             }
         }
 
@@ -190,7 +196,6 @@ namespace _3dArkanoidsEditor.ViewModels
         private void OnGameConnectionAquire(object sender, GameConnectionAquiredEventArgs e)
         {
             BlockOptionsViewModels.Clear();
-
             foreach (var block in e.GameSettings.GameBlockTypes)
             {
                 BlockOptionsViewModels.Add(new BlockTypeOptionViewModel(block));

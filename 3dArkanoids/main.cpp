@@ -150,6 +150,13 @@ int main()
     auto prevClock = high_resolution_clock::now();
     t.OpenStreamToTerrainVoxelsFile("terrain.vox");
     t.StreamCube({ 0,0,0 });
+    SerializableProperty p;
+    p.name = "uvoffset";
+    p.type = SerializablePropertyType::Vec2;
+    p.data.dataUnion.Vec2.x = 0;
+    p.data.dataUnion.Vec2.y = 0;
+
+    SetSerializableProperty("GameBlockTypes.blocktypes[3].uvoffset",p);
 
     //t.GenerateTerrainVoxelFieldFile("terrain.vox", 1.0, 512, 512, 128, &TestTerrainDensityFunction);
 

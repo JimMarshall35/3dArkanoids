@@ -96,14 +96,15 @@ void GameBlockTypes::InitialiseSerializablePropertiesArray()
 		auto& type = m_blockTypes[i + 1];
 		auto node = BlockTypeSerializableNode(type.Appearance.Colour,type.Appearance.AtlasUvOffset,
 			[this, i](const auto& vec) {m_blockTypes[i + 1].Appearance.Colour = vec; },
-			[this, i](const auto& vec) {m_blockTypes[i + 1].Appearance.AtlasUvOffset = vec; });
+			[this, i](const auto& vec) {
+				m_blockTypes[i + 1].Appearance.AtlasUvOffset = vec; });
 		m_blockTypeSerializableNodes.push_back(node);
 	}
 
 	SerializableProperty prop;
 	m_serializableProperties.push_back(prop);
 	auto& p = m_serializableProperties.back();
-	p.name = "block types";
+	p.name = "blocktypes";
 	p.type = SerializablePropertyType::SerializableNodesArray;
 	p.data.SizeIfApplicable = m_blockTypeSerializableNodes.size();
 	auto alloced = new ISerializablePropertiesNode * [p.data.SizeIfApplicable];
@@ -159,7 +160,7 @@ BlockTypeSerializableNode::BlockTypeSerializableNode(const glm::vec4& colour, co
 	m_properties[0].type = SerializablePropertyType::Vec4;
 	m_properties[0].data.dataUnion.Vec4 = colour;
 
-	m_properties[1].name = "uv offset";
+	m_properties[1].name = "uvoffset";
 	m_properties[1].type = SerializablePropertyType::Vec2;
 	m_properties[1].data.dataUnion.Vec2 = uvOffset;
 }
@@ -170,13 +171,16 @@ bool BlockTypeSerializableNode::SetSerializableProperty(const SerializableProper
 		if (p.type != SerializablePropertyType::Vec4) {
 			return false;
 		}
+		
+		m_properties[0].data.dataUnion.Vec4 = p.data.dataUnion.Vec4;
 		m_setColourFunc(p.data.dataUnion.Vec4);
 		return true;
 	}
-	else if (p.name == "uv offset") {
+	else if (p.name == "uvoffset") {
 		if (p.type != SerializablePropertyType::Vec2) {
 			return false;
 		}
+		m_properties[1].data.dataUnion.Vec2 = p.data.dataUnion.Vec2;
 		m_setUvOffsetFunc(p.data.dataUnion.Vec2);
 		return true;
 	}

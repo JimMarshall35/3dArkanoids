@@ -163,7 +163,7 @@ ISerializablePropertiesNode* TryFindNodeInArrayOfChildren(ISerializablePropertie
 }
 
 
-ISerializablePropertiesNode** TryFindSerializableChildren(ISerializablePropertiesNode* node, std::string name, int& outNumNodes) {
+ISerializablePropertiesNode** FindSerializableChildren(ISerializablePropertiesNode* node, std::string name, int& outNumNodes) {
 	for (const auto& node : node->GetSerializableProperties()) {
 		if (node.name == name) {
 			outNumNodes = node.data.SizeIfApplicable;
@@ -256,7 +256,7 @@ ISerializablePropertiesNode* ParsePath(std::string path) {
 
 		if (character == '[') {
 			onChar++; // skip the square bracket
-			childNodesBeingSearched = TryFindSerializableChildren(returnVal, pathPart, numChildNodesBeingSearched);
+			childNodesBeingSearched = FindSerializableChildren(returnVal, pathPart, numChildNodesBeingSearched);
 			pathPart = "";
 			return ReadingNumber;
 		}

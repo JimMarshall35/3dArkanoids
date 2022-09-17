@@ -107,11 +107,12 @@ const std::vector<SerializableProperty>& Bat::GetSerializableProperties() const
 bool Bat::SetSerializableProperty(const SerializableProperty& p)
 {
 	if (p.name == "BatWidth") {
-		m_batWidth == p.data.dataUnion.Float;
+		m_batWidth = p.data.dataUnion.Float;
+		//SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f, ((w * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
 		return true;
 	}
 	else if (p.name == "DistanceFromFirstRow") {
-		m_batWidth == p.data.dataUnion.Float;
+		m_batWidth = p.data.dataUnion.Float;
 		return true;
 	}
 	else if (p.name == "Sensitivity") {

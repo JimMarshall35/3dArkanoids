@@ -142,21 +142,25 @@ int main()
 
     Assimp::Importer importer;
 
-    //SaveSerializableToSingleBigBinary("Level.big");
-    LoadSerializableFromSingleBigBinary("level.big");
-    game.Init();
-    DebugPrintAllSerializableThings();
-
-    auto prevClock = high_resolution_clock::now();
-    t.OpenStreamToTerrainVoxelsFile("terrain.vox");
-    t.StreamCube({ 0,0,0 });
     SerializableProperty p;
     p.name = "uvoffset";
     p.type = SerializablePropertyType::Vec2;
     p.data.dataUnion.Vec2.x = 0;
     p.data.dataUnion.Vec2.y = 0;
 
-    SetSerializableProperty("GameBlockTypes.blocktypes[3].uvoffset",p);
+    //SaveSerializableToSingleBigBinary("Level.big");
+    LoadSerializableFromSingleBigBinary("level.big");
+   // SetSerializableProperty("GameBlockTypes.blocktypes[5].uvoffset", p);
+    game.Init();
+    DebugPrintAllSerializableThings();
+
+    auto prevClock = high_resolution_clock::now();
+    t.OpenStreamToTerrainVoxelsFile("terrain.vox");
+    t.StreamCube({ 0,0,0 });
+    
+
+    
+    //game.Init();
 
     //t.GenerateTerrainVoxelFieldFile("terrain.vox", 1.0, 512, 512, 128, &TestTerrainDensityFunction);
 

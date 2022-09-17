@@ -148,7 +148,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         public ObservableCollection<BlockTypeOptionViewModel> BlockOptionsViewModels { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
 
-        public ObservableCollection<SerializablePropertiesNode> SerializablePropertiesNodes { get; private set; } = new ObservableCollection<SerializablePropertiesNode>();
+        public ObservableCollection<SerializablePropertiesNodeViewModel> SerializablePropertiesNodeViewModels { get; private set; } = new ObservableCollection<SerializablePropertiesNodeViewModel>();
 
         public ITerminalViewModel GameTerminal { get; private set; }
 
@@ -156,6 +156,12 @@ namespace _3dArkanoidsEditor.ViewModels
         #endregion
 
         #region ctor
+
+        ~MainViewModel()
+        {
+            m_gameConnectionService.GameConnectionAquired -= OnGameConnectionAquire;
+            m_gameConnectionService.GameConnectionLost -= OnGameConnectionLost;
+        }
 
         public MainViewModel(IGameConnectionService gameConnectionService, ITerminalViewModel terminal)
         {
@@ -261,10 +267,10 @@ namespace _3dArkanoidsEditor.ViewModels
         {
             var result = await m_gameConnectionService.Client.GetSerializableNodesAsync();
             //SerializablePropertiesNodes.Add(result);//ObservableCollection<SerializablePropertiesNode>(result);
-            SerializablePropertiesNodes.Clear();
+            SerializablePropertiesNodeViewModels.Clear();
             foreach (var r in result)
             {
-                SerializablePropertiesNodes.Add(r);
+                SerializablePropertiesNodeViewModels.Add(new SerializablePropertiesNodeViewModel(r));
             }
         }
         #endregion

@@ -61,10 +61,10 @@ public:
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
 	void SaveLevelTest(std::string filePath);
 	void Init();
-
+	void InitializeRenderData();
 private:
 	bool LinkAndValidateBlocksRenderData();
-	void InitializeRenderData();
+	
 
 	glm::vec4 GetColourFromByteValue(const unsigned char byteCode);
 	glm::vec2 GetUvOffsetFromByteValue(const unsigned char byteCode);

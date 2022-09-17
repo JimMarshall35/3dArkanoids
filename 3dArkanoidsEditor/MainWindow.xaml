@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3dArkanoidsEditor"
         xmlns:views="clr-namespace:_3dArkanoidsEditor.Views"
+        xmlns:viewmodels="clr-namespace:_3dArkanoidsEditor.ViewModels"
         xmlns:models="clr-namespace:_3dArkanoidsEditor.Models"
         xmlns:converters="clr-namespace:_3dArkanoidsEditor.utils.converters" 
         mc:Ignorable="d"
@@ -80,7 +81,7 @@
         </Style>
 
         <DataTemplate x:Key="SerializablePropertyTemplate"
-                                  DataType="{x:Type models:SerializableProperty}">
+                                  DataType="{x:Type viewmodels:SerializablePropertyViewModel}">
             
             <TreeViewItem Grid.Row="0" Header="{Binding Name}" Padding="0" Margin="0" Height="auto">
                 <Grid>
@@ -205,28 +206,26 @@
                     <!--Vec4-->
                     <StackPanel Style="{StaticResource PropertiesStackPanelsStyle}"
                                 Visibility="{Binding PropType, Converter={StaticResource UiEnabledConverter}, ConverterParameter={StaticResource vec4val}}">
-                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
-                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorRString}}"/>
-                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec4.R}"/>
-                            </StackPanel>
-                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
-                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorGString}}"/>
-                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec4.G}"/>
-                            </StackPanel>
-                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
-                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorBString}}"/>
-                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec4.B}"/>
-                            </StackPanel>
-                            <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
-                                <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorAString}}"/>
-                                <TextBox Style="{StaticResource SerializableTextBoxStyle}"
-                                 Text="{Binding Vec4.A}"/>
-                            </StackPanel>
-
-
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorRString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                Text="{Binding Vec4.R}"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorGString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                Text="{Binding Vec4.G}"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorBString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                Text="{Binding Vec4.B}"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource PropertyNumberAndLabelStackPanelStyle}">
+                            <TextBlock Text="{Binding PropType, Converter={StaticResource serializablePropertyTypeToString},ConverterParameter={StaticResource vectorAString}}"/>
+                            <TextBox Style="{StaticResource SerializableTextBoxStyle}"
+                                Text="{Binding Vec4.A}"/>
+                        </StackPanel>
 
                     </StackPanel>
                 </Grid>
@@ -239,7 +238,7 @@
 
         <HierarchicalDataTemplate
             x:Key="SerializablePropertiesNodeTemplate"
-            DataType="{x:Type models:SerializablePropertiesNode}"
+            DataType="{x:Type viewmodels:SerializablePropertiesNodeViewModel}"
             ItemsSource="{Binding Path=Children}">
 
             <TreeViewItem Header="{Binding Path=Name}">
@@ -303,7 +302,7 @@
             Grid.Column="3"
             Grid.ColumnSpan="4"
             Grid.RowSpan="5"
-            ItemsSource="{Binding SerializablePropertiesNodes}"
+            ItemsSource="{Binding SerializablePropertiesNodeViewModels}"
             ItemTemplate="{StaticResource SerializablePropertiesNodeTemplate}"/>
 
 

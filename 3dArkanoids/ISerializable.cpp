@@ -176,14 +176,16 @@ ISerializablePropertiesNode** TryFindSerializableChildren(ISerializablePropertie
 
 
 ISerializablePropertiesNode* ParsePath(std::string path) {
-	/*                                      s  s
-	                                         s s
-	                                          s s
-	                                           s s
-	                           __________________s
-	                          (_____(____________@
+	/*                   _________                              
+	                    //////////|                     s  s  s
+	                   | JSON    ||                       s  s
+	                   | MENTHOL ||                       s s
+	                   |_________||                      s s
+	                   | PARSING ||                       s s
+	                   |  KILLS  ||      __________________s
+	                   |_________|/     (_____(____________@
 
-	a hand rolled parser - not one of these ^
+	a hand rolled parser (so it's more healthy) - not like these ^
 	
 	*/
 	auto state = ReadingFirstCharacterOfPropertiesNode;

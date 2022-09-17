@@ -1,5 +1,7 @@
 A work in progress 3d arkanoids game.
-It has a level editor which is a separate process that connects to the game via GRPC 
+It has a level editor which is a separate process that connects to the game via GRPC
+
+Has a generalised framework for serializing properties in classes and exposing them to the editor. To be worked on more so i can use in other games.
 
 possible mechanics will include:
 - ramps that launches the ball upwards

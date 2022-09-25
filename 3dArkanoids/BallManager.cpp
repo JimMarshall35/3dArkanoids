@@ -11,7 +11,7 @@
 #include <glm/gtx/rotate_vector.hpp>
 #define TARGET_MS_PER_FRAME 30
 
-||#define BIG_JUMP_TIME 1.0
+#define BIG_JUMP_TIME 1.0
 #define BIG_JUMP_AMOUNT 5.0
 
 #define SMALL_JUMP_TIME 0.4
@@ -236,10 +236,10 @@ static inline glm::vec3 AdjustTileCoordsToWorld(const glm::ivec3& vCell) {
 
 void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec3& newPos, const glm::vec3& nearestPoint, const glm::vec3& oldDirection)
 {
-	auto vec2Relected = glm::reflect(
+	auto vec2Relected = glm::normalize(glm::reflect(
 		oldDirection,
 		glm::normalize(newPos - nearestPoint)
-	);
+	));
 	directionToChange.x = vec2Relected.x;
 	directionToChange.y = vec2Relected.y;
 	//directionToChange = glm::normalize(directionToChange);
@@ -256,6 +256,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 			jumpingToChange = false;
 			dirToChange.z = 0;
 			posToChange.z = 0;
+			dirToChange = glm::normalize(thisBall->direction);
 		}
 		else {
 			const auto ballJumpFromBottomToPeakTime = thisBall->jumpTime / 2.0;
@@ -270,7 +271,6 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 
 	// refactor from here
 
-	auto oldBallDirection = thisBall->direction;
 	
 	auto& ballCenter = thisBall->pos;
 
@@ -325,6 +325,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 	}
 
 	// to here
+	auto oldBallDirection = thisBall->direction;
 
 
 	// see https://github.com/OneLoneCoder/olcPixelGameEngine/blob/master/Videos/OneLoneCoder_PGE_CircleVsRect.cpp for collision detection algorithm

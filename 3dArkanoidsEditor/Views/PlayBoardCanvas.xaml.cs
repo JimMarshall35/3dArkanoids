@@ -131,6 +131,7 @@ namespace _3dArkanoidsEditor.Views
         }
         private void UpdateGrid()
         {
+
             m_playBoardCanvas.Children.Clear();
             if(m_currentLayer > 0)
             {
@@ -164,14 +165,22 @@ namespace _3dArkanoidsEditor.Views
                         SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, SelectedBlockCode, byteAtCoords));
 
                     };
-                                        // Possible memory leak ?
+                    // Possible memory leak ?
                     rect.MouseEnter += (object sender, MouseEventArgs e) =>
                     {
                         rect.Stroke = m_selectedBlockOutlineBrush;
+                        if (m_isMouseDown)
+                        {
+                            SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, SelectedBlockCode, byteAtCoords));
+                        }
                     };
                     rect.MouseLeave += (object sender, MouseEventArgs e) =>
                     {
                         rect.Stroke = m_blockOutlineBrush;
+                        if (m_isMouseDown)
+                        {
+                            SingleTileEdit.Execute(new SingleTileEdit(tileX, tileY, m_currentLayer, SelectedBlockCode, byteAtCoords));
+                        }
                     };
                     m_playBoardCanvas.Children.Add(rect);
 
@@ -254,5 +263,23 @@ namespace _3dArkanoidsEditor.Views
         private CoordsSetFlags m_coordsSetFlags = CoordsSetFlags.None;
         private int m_currentLayer = 0;
         private CanvasZLayerChangerViewModel m_canvasZLayerChangerVm;
+        private bool m_isMouseDown = false;
+
+        private void UserControl_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            m_isMouseDown = true;
+        }
+
+        private void UserControl_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            m_isMouseDown = false;
+
+        }
+
+        private void UserControl_MouseLeave(object sender, MouseEventArgs e)
+        {
+            m_isMouseDown = false;
+
+        }
     }
 }

@@ -19,9 +19,26 @@ namespace _3dArkanoidsEditor.ViewModels
     {
         #region Bindable properties
 
+
+
         public ICommand OnSingleTileEditCommand { get; private set; }
         public ICommand GetBlockCommand { get; private set; }
         public ICommand ConnectCommand { get; private set; }
+        public ICommand ChangeToolCommand { get; private set; }
+
+        private BoardEditorToolType m_selectedTool = BoardEditorToolType.Erase;
+        public BoardEditorToolType SelectedTool
+        {
+            get
+            {
+                return m_selectedTool;
+            }
+            private set
+            {
+                m_selectedTool = value;
+                OnPropertyChange(nameof(SelectedTool));
+            }
+        }
 
         private GameBoardDescription m_gameBoardDescription;
         public GameBoardDescription MasterGameBoard
@@ -180,6 +197,11 @@ namespace _3dArkanoidsEditor.ViewModels
                     _ => TryConnectToGame(),
                     null
                 );
+
+            ChangeToolCommand = new RelayCommand(
+                    obj => TryChangeTool((BoardEditorToolType)obj),
+                    null
+                );
             
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
@@ -224,6 +246,30 @@ namespace _3dArkanoidsEditor.ViewModels
         #endregion
 
         #region Command Backing Methods
+
+        void TryChangeTool(BoardEditorToolType newToolTypeSelection)
+        {
+            
+            switch (newToolTypeSelection)
+            {
+                case BoardEditorToolType.Erase:
+                    SelectedBlockTypeIndex = -1;
+                    SelectedTool = newToolTypeSelection;
+                    break;
+                case BoardEditorToolType.Draw:
+                    SelectedBlockTypeIndex = 1;
+                    SelectedTool = newToolTypeSelection;
+                    break;
+                case BoardEditorToolType.Fill:
+                    break;
+                case BoardEditorToolType.Select:
+                    break;
+                default:
+                    throw new InvalidOperationException($"invalid tool type {newToolTypeSelection}");
+                    break;
+            }
+        }
+
         private async void GetBlock()
         {
             MasterGameBoard = await m_gameConnectionService.Client.GetBoardStateAsync();

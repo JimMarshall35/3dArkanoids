@@ -17,7 +17,10 @@
         <converters:SerializablePropertyTypeEnumToStringConvertor x:Key="serializablePropertyTypeToString"></converters:SerializablePropertyTypeEnumToStringConvertor>
         <converters:GameBlockTypeToBrushConverter x:Key="gameBlockTypeToBrush"></converters:GameBlockTypeToBrushConverter>
         <converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor x:Key="UiEnabledConverter"></converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor>
-        
+        <converters:BoolToVisibilityConvertor x:Key="BoolToVisConvertor"></converters:BoolToVisibilityConvertor>
+        <converters:BoardEditorToolTypeToIsButtonEnabledConvertor x:Key="BoardEditorToolToButtonEnabledConvertor"></converters:BoardEditorToolTypeToIsButtonEnabledConvertor>
+
+
         <DataTemplate x:Key="GameBlock">
             <StackPanel Orientation="Horizontal">
                 <Canvas Width="64" Height="64" Background="{Binding GameBlockType, Converter={StaticResource gameBlockTypeToBrush}}"/>
@@ -36,6 +39,9 @@
         <x:Static x:Key="vec2val" Member="models:SerializablePropertyType.Vec2"/>
         <x:Static x:Key="vec3val" Member="models:SerializablePropertyType.Vec3"/>
         <x:Static x:Key="vec4val" Member="models:SerializablePropertyType.Vec4"/>
+
+        <x:Static x:Key="EraseVal" Member="viewmodels:BoardEditorToolType.Erase"/>
+        <x:Static x:Key="DrawVal" Member="viewmodels:BoardEditorToolType.Draw"/>
 
 
         <clr:String x:Key="vectorXString">x:</clr:String>
@@ -278,9 +284,11 @@
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
             <Button Command="{Binding ConnectCommand}" IsEnabled="{Binding IsAllowedToTryToConnect}">Connect</Button>
         </StackPanel>
-        <views:PlayBoardCanvas 
-            Grid.Row="2"
-            Grid.Column="1"
+        <StackPanel Orientation="Vertical"
+                    Grid.Row="2"
+                    Grid.Column="1">
+            <views:PlayBoardCanvas 
+            
             PlayBoardTilesX="{Binding PlayFieldX}"
             PlayBoardTilesY="{Binding PlayFieldY}"
             PlayBoardTilesZ="{Binding PlayFieldZ}"
@@ -288,13 +296,30 @@
             SingleTileEdit="{Binding OnSingleTileEditCommand}"
             SelectedBlockCode="{Binding SelectedBlockCode, Mode=OneWay}"
             GameBlockTypes="{Binding GameBlockTypes}"/>
+            <StackPanel Orientation="Horizontal">
+                <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
+                        IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}"
+                        Command="{Binding ChangeToolCommand}"
+                        CommandParameter="{StaticResource EraseVal}">
+                    Erase
+                </Button>
+                <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
+                        IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource DrawVal}}"
+                        Command="{Binding ChangeToolCommand}"
+                        CommandParameter="{StaticResource DrawVal}">
+                    Draw
+                </Button>
+            </StackPanel>
+        </StackPanel>
+        
         <ListBox
             Grid.Row="2"
             Grid.RowSpan="5"
             Grid.Column="2"
             ItemsSource="{Binding BlockOptionsViewModels}"
             ItemTemplate="{StaticResource GameBlock}"
-            SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}">
+            SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}"
+            IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}">
         </ListBox>
         <TreeView
             Padding="0"

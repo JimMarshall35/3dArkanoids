@@ -275,7 +275,11 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 	}
 	m_playFieldArray[point] = 0x00;
 	int index = IndexOfRenderDataAt(point);
+	if (index < 0) {
+		return OTHER_FAILURE;
+	}
 	auto& renderData = m_blockRenderData[index];
+
 	renderData.SetShouldRender(false);
 	if (renderData.child != nullptr) {
 		m_fallingBlockManager.StartBlockFalling(renderData.child, m_playFieldArray);

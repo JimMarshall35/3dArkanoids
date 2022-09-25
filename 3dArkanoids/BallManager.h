@@ -33,8 +33,10 @@ private:
 		bool stuckToBat;
 		bool jumping = false;
 		Ball* nextBall = nullptr;
+
+		double jumpAmount = 5.0;
 		double jumpTimer = 0.0;
-		
+		double jumpTime = 1.0;
 	};
 	enum class BallAdvanceResult {
 		HIT_NOTHING,
@@ -68,10 +70,11 @@ private:
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction) const;
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
 
-	BallAdvanceResult AdvanceBall(const Ball* ball, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, bool deleteBlock = true);
+	// todo: just change this to not take a const Ball ptr and get rid of other params except deleteblock
+	BallAdvanceResult AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, double& jumpAmountToChange, double& jumpTimeToChange, bool deleteBlock=true);
 	void LookAhead(const Ball* thisBall);
 private:
-	static void ReflectBall(glm::vec3& directionToChange, const glm::vec2& newPos, const glm::vec2& nearestPoint, const glm::vec3& oldDirection);
+	static void ReflectBall(glm::vec3& directionToChange, const glm::vec3& newPos, const glm::vec3& nearestPoint, const glm::vec3& oldDirection);
 public:
 	//void TestRemoveFunc(int index) {
 	//	RemoveBallAtListIndex(index);

@@ -11,6 +11,12 @@
 #include <glm/gtx/rotate_vector.hpp>
 #define TARGET_MS_PER_FRAME 30
 
+||#define BIG_JUMP_TIME 1.0
+#define BIG_JUMP_AMOUNT 5.0
+
+#define SMALL_JUMP_TIME 0.4
+#define SMALL_JUMP_AMOUNT 2.0
+
 
 // helpers
 static glm::ivec3 WorldSpaceToTileCoordsRound(const glm::vec3& ballCenter);
@@ -99,6 +105,8 @@ void BallManager::ReleaseBalls()
 		else {
 			if (!thisBall->jumping && m_numBalls == 1) {
 				thisBall->jumping = true;
+				thisBall->jumpTime = BIG_JUMP_TIME;
+				thisBall->jumpAmount = BIG_JUMP_AMOUNT;
 			}
 		}
 		return true;
@@ -217,42 +225,44 @@ static inline glm::vec2 Vec3ToVec2(const glm::vec3& vec3) {
 	return glm::vec2(vec3.x, vec3.y);
 }
 
-static inline glm::vec2 AdjustTileCoordsToWorld(const glm::ivec2& vCell) {
-	return glm::vec2{
+static inline glm::vec3 AdjustTileCoordsToWorld(const glm::ivec3& vCell) {
+	return glm::vec3{
 		float(vCell.x) * BLOCK_WIDTH_UNITS - ((float)BLOCK_WIDTH_UNITS / 2.0f),
-		float(vCell.y) * BLOCK_HEIGHT_UNITS - ((float)BLOCK_HEIGHT_UNITS / 2.0f)
+		float(vCell.y) * BLOCK_HEIGHT_UNITS - ((float)BLOCK_HEIGHT_UNITS / 2.0f),
+		float(vCell.z) * BLOCK_DEPTH_UNITS - ((float)BLOCK_DEPTH_UNITS / 2.0f)
+
 	};
 }
 
-void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec2& newPos, const glm::vec2& nearestPoint, const glm::vec3& oldDirection)
+void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec3& newPos, const glm::vec3& nearestPoint, const glm::vec3& oldDirection)
 {
 	auto vec2Relected = glm::reflect(
-		Vec3ToVec2(oldDirection),
+		oldDirection,
 		glm::normalize(newPos - nearestPoint)
 	);
 	directionToChange.x = vec2Relected.x;
 	directionToChange.y = vec2Relected.y;
+	//directionToChange = glm::normalize(directionToChange);
+	//directionToChange.z = vec2Relected.z;
 }
 
 
-BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, bool deleteBlock)
+BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, double& jumpAmountToChange, double& jumpTimeToChange, bool deleteBlock)
 {
-	const auto jumpAmound = 5.0;
-	const auto ballJumpFromBottomToTopTime = 1.0;
-	const auto ballJumpFromBottomToPeakTime = ballJumpFromBottomToTopTime / 2.0;
 	if (thisBall->jumping) {
 		jumpTimerToChange += (double)TARGET_MS_PER_FRAME / 1000.0f;
-		if (jumpTimerToChange >= ballJumpFromBottomToTopTime) {
+		if (jumpTimerToChange >= thisBall->jumpTime) {
 			jumpTimerToChange = 0;
 			jumpingToChange = false;
 			dirToChange.z = 0;
 			posToChange.z = 0;
 		}
 		else {
+			const auto ballJumpFromBottomToPeakTime = thisBall->jumpTime / 2.0;
 			auto jumpProgress = (ballJumpFromBottomToPeakTime - jumpTimerToChange) / ballJumpFromBottomToPeakTime;
 			//std::cout << jumpProgress << "\n";
 			auto directionXY = glm::vec3(thisBall->direction.x, thisBall->direction.y, 0);
-			directionXY.z = jumpProgress * jumpAmound;
+			directionXY.z = jumpProgress * thisBall->jumpAmount;
 			dirToChange = directionXY;
 		}
 		
@@ -326,69 +336,89 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 
 	auto zPos = targetCellTileCoords.z - 1;
 
-	auto vAreaTL = glm::min(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) - glm::ivec2(1, 1);
-	auto vAreaBR = glm::max(IVec3ToIVec2(currentCellTileCoords), IVec3ToIVec2(targetCellTileCoords)) + glm::ivec2(1, 1);
+	auto vAreaTL = glm::min(currentCellTileCoords, targetCellTileCoords) - glm::ivec3(1, 1, 1);
+	auto vAreaBR = glm::max(currentCellTileCoords, targetCellTileCoords) + glm::ivec3(1, 1, 1);
 
 	auto returnVal = BallAdvanceResult::HIT_NOTHING;
 	glm::vec2 vRayToNearest;
 
-	glm::ivec2 vCell;
+	glm::ivec3 vCell;
 	int numcellsChecked = 0;
-	for (vCell.y = vAreaTL.y; vCell.y <= vAreaBR.y; vCell.y++)
-	{
-		for (vCell.x = vAreaTL.x; vCell.x <= vAreaBR.x; vCell.x++)
+	for (vCell.z = vAreaTL.z; vCell.z <= vAreaBR.z; vCell.z++) {
+		for (vCell.y = vAreaTL.y; vCell.y <= vAreaBR.y; vCell.y++)
 		{
-			numcellsChecked++;
-			unsigned char blockCode;
-			// Check if the cell is actually solid...
-			if (vCell.x < 0 || vCell.y < 0) {
-				continue;
-			}
-			if (m_game->BlockAtLocation({ vCell.x, vCell.y, zPos }, blockCode) == EditBlockResultCode::BLOCK_AT_SPACE)
+			for (vCell.x = vAreaTL.x; vCell.x <= vAreaBR.x; vCell.x++)
 			{
-				// ...it is! So work out nearest point to future player position, around perimeter
-				// of cell rectangle. We can test the distance to this point to see if we have
-				// collided. 
-				auto adjustedCellXY = AdjustTileCoordsToWorld(vCell);
-
-				auto adjustedCellPlusOneXY = AdjustTileCoordsToWorld(vCell + glm::ivec2{ 1,1 });
-
-				glm::vec2 vNearestPoint;
-				vNearestPoint.x = std::max(adjustedCellXY.x, std::min(vPotentialPosition.x, adjustedCellPlusOneXY.x));
-				vNearestPoint.y = std::max(adjustedCellXY.y, std::min(vPotentialPosition.y, adjustedCellPlusOneXY.y));
-
-				glm::vec2 vRayToNearest = vNearestPoint - Vec3ToVec2(vPotentialPosition);
-				auto len = glm::length(vRayToNearest);
-				float fOverlap = thisBall->radius - len;
-				if (std::isnan(fOverlap)) {
-					fOverlap = 0;
+				numcellsChecked++;
+				unsigned char blockCode;
+				// Check if the cell is actually solid...
+				if (vCell.x < 0 || vCell.y < 0) {
+					continue;
 				}
-
-				// If overlap is positive, then a collision has occurred, so we displace backwards by the 
-				// overlap amount. The potential position is then tested against other tiles in the area
-				// therefore "statically" resolving the collision
-				if (fOverlap > 0)
+				if (m_game->BlockAtLocation({ vCell.x, vCell.y, vCell.z }, blockCode) == EditBlockResultCode::BLOCK_AT_SPACE)
 				{
-					returnVal = BallAdvanceResult::HIT_BLOCK;
-					// Statically resolve the collision
-					auto newPos = Vec3ToVec2(vPotentialPosition) - glm::normalize(vRayToNearest) * fOverlap;
-					vPotentialPosition.x = newPos.x;
-					vPotentialPosition.y = newPos.y;
+					// ...it is! So work out nearest point to future player position, around perimeter
+					// of cell rectangle. We can test the distance to this point to see if we have
+					// collided. 
+					auto adjustedCellXY = AdjustTileCoordsToWorld(vCell);
 
-					ReflectBall(dirToChange, newPos, vNearestPoint, oldBallDirection);
+					auto adjustedCellPlusOneXY = AdjustTileCoordsToWorld(vCell + glm::ivec3{ 1,1,1 });
 
-					// delete block (will have more sophisiticated handling for different blocks)
-					unsigned char oldval;
+					glm::vec3 vNearestPoint;
+					vNearestPoint.x = std::max(adjustedCellXY.x, std::min(vPotentialPosition.x, adjustedCellPlusOneXY.x));
+					vNearestPoint.y = std::max(adjustedCellXY.y, std::min(vPotentialPosition.y, adjustedCellPlusOneXY.y));
+					vNearestPoint.z = std::max(adjustedCellXY.z, std::min(vPotentialPosition.z, adjustedCellPlusOneXY.z));
 
-					if (deleteBlock) {
-						m_game->RemoveBlock({ vCell.x,vCell.y,0 });
+
+					glm::vec3 vRayToNearest = vNearestPoint - vPotentialPosition;
+					auto len = glm::length(vRayToNearest);
+					float fOverlap = thisBall->radius - len;
+					if (std::isnan(fOverlap)) {
+						fOverlap = 0;
+					}
+
+					// If overlap is positive, then a collision has occurred, so we displace backwards by the 
+					// overlap amount. The potential position is then tested against other tiles in the area
+					// therefore "statically" resolving the collision
+					if (fOverlap > 0)
+					{
+						returnVal = BallAdvanceResult::HIT_BLOCK;
+						// Statically resolve the collision
+						auto newPos = vPotentialPosition - glm::normalize(vRayToNearest) * fOverlap;
+						vPotentialPosition.x = newPos.x;
+						vPotentialPosition.y = newPos.y;
+
+						ReflectBall(dirToChange, newPos, vNearestPoint, oldBallDirection);
+
+						// delete block (will have more sophisiticated handling for different blocks)
+						unsigned char oldval;
+
+						if (deleteBlock) {
+							m_game->RemoveBlock({ vCell.x,vCell.y,0 });
+						}
+						if (thisBall->direction.z < 0) {
+							// do mini jump
+							dirToChange.z = 0;
+							jumpingToChange = true;
+							jumpTimerToChange = 0;
+							jumpAmountToChange = SMALL_JUMP_AMOUNT;
+							jumpTimeToChange = SMALL_JUMP_TIME;
+						}
 					}
 				}
 			}
 		}
 	}
+	
+	if(!std::isnan(vPotentialPosition.x) && !std::isnan(vPotentialPosition.y) && !std::isnan(vPotentialPosition.z)){
+		posToChange = vPotentialPosition;
+		
+	}
+	else {
+		dirToChange = oldBallDirection;
+	}
+	
 
-	posToChange = vPotentialPosition;
 	return returnVal;
 }
 
@@ -398,9 +428,11 @@ void BallManager::LookAhead(const Ball* thisBall)
 	m_drawProjectedBalls = false;
 	double jumpTimer = ball.jumpTimer;
 	bool jumping;
+	double jumpAmount = 5.0;
+	double jumpTime = 0.0;
 
 	for (int i = 0; i < m_numAdvancesToCheckForBatHit; i++) {
-		if (AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, false) == BallAdvanceResult::HIT_BAT) {
+		if (AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, jumpAmount, jumpTime, false) == BallAdvanceResult::HIT_BAT) {
 			m_drawProjectedBalls = true;
 			break;
 		}
@@ -408,7 +440,7 @@ void BallManager::LookAhead(const Ball* thisBall)
 	}
 	if (m_drawProjectedBalls) {
 		for (int i = 0; i < m_lookaheadBy; i++) {
-			AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, false);
+			AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, jumpAmount, jumpTime, false);
 			m_lookAheadPositions[i] = ball.pos;
 
 		}
@@ -422,7 +454,7 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 			return true;
 		}
 
-		AdvanceBall(thisBall, thisBall->pos, thisBall->direction, thisBall->jumpTimer, thisBall->jumping);
+		AdvanceBall(thisBall, thisBall->pos, thisBall->direction, thisBall->jumpTimer, thisBall->jumping, thisBall->jumpAmount, thisBall->jumpTime);
 
 		LookAhead(thisBall);
 

@@ -155,6 +155,7 @@ int main()
     DebugPrintAllSerializableThings();
 
     auto prevClock = high_resolution_clock::now();
+    //t.GenerateTerrainVoxelFieldFile("terrain.vox",)
     t.OpenStreamToTerrainVoxelsFile("terrain.vox");
     t.StreamCube({ 0,0,0 });
     

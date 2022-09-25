@@ -19,7 +19,7 @@ namespace _3dArkanoidsEditor.ViewModels
     {
         #region Bindable properties
 
-        public ICommand OnSingleTileEditCommand { get; set; }
+        public ICommand OnSingleTileEditCommand { get; private set; }
         public ICommand GetBlockCommand { get; private set; }
         public ICommand ConnectCommand { get; private set; }
 
@@ -247,15 +247,14 @@ namespace _3dArkanoidsEditor.ViewModels
                 + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: " + result.BlockCode : ""));
         }
 
-        CancellationTokenSource cts;
         public void TryConnectToGame()
         {
-            cts = new CancellationTokenSource();
+            m_connectionCts = new CancellationTokenSource();
 
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");
-            cts.CancelAfter(15000);
-            m_gameConnectionService.Connect(cts.Token);
+            m_connectionCts.CancelAfter(15000);
+            m_gameConnectionService.Connect(m_connectionCts.Token);
             GetSerializableProperties();
             
         }
@@ -291,5 +290,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
         private bool m_getBlockCommandRunning = false;
         private IGameConnectionService m_gameConnectionService;
+        private CancellationTokenSource m_connectionCts;
+
     }
 }

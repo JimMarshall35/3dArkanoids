@@ -52,7 +52,7 @@ void BallManager::ReceiveInput(double changeInBatX)
 {
 	IterateBallList([this, changeInBatX](Ball* thisBall, Ball* lastBall, int onIteration) {
 		if (!thisBall->stuckToBat) {
-			return true;
+			return true; // this is the same as continue
 		}
 		thisBall->pos.x += changeInBatX;
 		return true;
@@ -383,18 +383,11 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 					if (deleteBlock) {
 						m_game->RemoveBlock({ vCell.x,vCell.y,0 });
 					}
-
-					//goto loop_end;
 				}
 			}
 		}
 	}
-	//std::cout << numcellsChecked << std::endl;
-loop_end:
-	//if (blockHit) {
-	//	m_game->RemoveBlock({ coordsHit.x,coordsHit.y,0 });
 
-	//}
 	posToChange = vPotentialPosition;
 	return returnVal;
 }

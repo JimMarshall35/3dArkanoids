@@ -188,7 +188,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array3d.h" />
-    <ClInclude Include="Array3DMap.h" />
     <ClInclude Include="AutoList.h" />
     <ClInclude Include="BallManager.h" />
     <ClInclude Include="Bat.h" />

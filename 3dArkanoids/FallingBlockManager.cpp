@@ -47,7 +47,7 @@ StartBlockFallingResult FallingBlockManager::StartBlockFalling(BlockInstanceRend
 bool FallingBlockManager::ValidateFall(const BlockInstanceRenderData* fallingColumnHead, const Array3D<unsigned char>& blocksArray)
 {
 	using namespace glm;
-	const var& gridCoords = fallingColumnHead->atGridCoords;
+	const auto& gridCoords = fallingColumnHead->atGridCoords;
 	auto blockBelow = blocksArray[gridCoords + ivec3(0, 0, -1)];
 	if (blockBelow != 0x00) {
 		return false; // there is a block directly underneath 

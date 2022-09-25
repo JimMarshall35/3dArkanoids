@@ -1,6 +1,5 @@
 #pragma once
 #include "Array3d.h"
-#include "Array3DMap.h"
 #include <glm/glm.hpp>
 #include "BlockInstanceRenderData.h"
 #include <memory>
@@ -65,7 +64,6 @@ public:
 private:
 	bool LinkAndValidateBlocksRenderData();
 	
-
 	glm::vec4 GetColourFromByteValue(const unsigned char byteCode);
 	glm::vec2 GetUvOffsetFromByteValue(const unsigned char byteCode);
 private:

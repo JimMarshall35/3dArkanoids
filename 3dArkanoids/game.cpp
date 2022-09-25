@@ -124,6 +124,8 @@ void Game::SaveLevelTest(std::string filePath)
 
 void Game::ReceiveInput(const GameInput& gameInput)
 {
+	// todo : sort this weirdness out. this function should just be the last line
+	// this if check should go in m_ballManager.RecieveInput
 	if (gameInput.Firing) {
 		m_ballManager.ReleaseBalls();
 	}

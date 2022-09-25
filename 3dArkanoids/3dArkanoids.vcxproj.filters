@@ -108,9 +108,6 @@
     <ClCompile Include="GameBlockTypes.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
-    <ClCompile Include="Bat.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameFramework.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
@@ -137,6 +134,9 @@
     </ClCompile>
     <ClCompile Include="SerializationFunctions.cpp">
       <Filter>Source Files\game\serialization framework</Filter>
+    </ClCompile>
+    <ClCompile Include="Bat.cpp">
+      <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -175,9 +175,6 @@
     </ClInclude>
     <ClInclude Include="BlockColourDefs.h">
       <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="Array3DMap.h">
-      <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Header Files\utils</Filter>
@@ -269,15 +266,6 @@
     <ClInclude Include="GLTextureHelper.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
-    <ClInclude Include="Terrain.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SimplexNoise.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="transvoxel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ISerializable.h">
       <Filter>Header Files\game\serialization framework</Filter>
     </ClInclude>
@@ -292,6 +280,15 @@
     </ClInclude>
     <ClInclude Include="SerializationFunctions.h">
       <Filter>Header Files\game\serialization framework</Filter>
+    </ClInclude>
+    <ClInclude Include="Terrain.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="transvoxel.h">
+      <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="SimplexNoise.h">
+      <Filter>Header Files\graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

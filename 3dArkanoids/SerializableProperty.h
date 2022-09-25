@@ -26,11 +26,25 @@ struct SizedSerializablePropertyData {
 	int SizeIfApplicable;
 };
 
+enum class EditorUIElementType {
+	None = 0,
+	TextBox = 1,
+	Slider = 2,
+	ColourPicker = 4,
+};
+
+struct EditorUISpecification {
+	EditorUIElementType type = EditorUIElementType::None;
+	double minSliderValue;
+	double maxSliderValue;
+	double stepSize;
+};
 
 struct SerializableProperty {
 	std::string name;
 	SerializablePropertyType type;
 	SizedSerializablePropertyData data;
+	EditorUISpecification uiElementSpec;
 	~SerializableProperty() {
 		switch (type) {
 		case SerializablePropertyType::SerializableNode:

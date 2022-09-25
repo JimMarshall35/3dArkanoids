@@ -103,7 +103,8 @@ void Terrain::TriangulateCube(std::vector<float>& output, const glm::ivec3& whic
 					const unsigned short* vertData = regularVertexData[caseCode];
 					u8 edgeCodes[12];
 					u8 cornerIndices[12];
-					for (int i = 0; i < cellData.GetVertexCount(); i++) {
+					auto vertCount = cellData.GetVertexCount();
+					for (int i = 0; i < vertCount; i++) {
 						edgeCodes[i] = vertData[i] >> 8;
 						cornerIndices[i] = vertData[i] & 0xff;
 					}
@@ -121,7 +122,7 @@ void Terrain::StreamCube(const glm::ivec3& index)
 
 i8 TestTerrainDensityFunction(f64 x, f64 y, f64 z)
 {
-	SimplexNoise noise(64);
+	static SimplexNoise noise(64);
 	using namespace glm;
 
 	f32 density = -z + 64;

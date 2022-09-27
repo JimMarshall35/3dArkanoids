@@ -9,6 +9,7 @@
 #include "Bat.h"
 
 #include <glm/gtx/rotate_vector.hpp>
+#include "GameToUiMessage.h"
 #define TARGET_MS_PER_FRAME 30
 
 #define BIG_JUMP_TIME 1.0
@@ -240,15 +241,39 @@ void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec3& new
 		oldDirection,
 		glm::normalize(newPos - nearestPoint)
 	));
+
 	directionToChange.x = vec2Relected.x;
 	directionToChange.y = vec2Relected.y;
 	//directionToChange = glm::normalize(directionToChange);
 	//directionToChange.z = vec2Relected.z;
 }
 
+static float ClampDirection(glm::vec3& dirToChange, double mostObtuseAngleAllowed){
+	// returns angle against y axis
+	const double Pi = 3.14159265358979323846264;
+	const double toRadians = Pi / 180.0;
+	const double toDegrees = 180.0 / Pi;
+	auto angle = (atan2(abs(dirToChange.y), dirToChange.x) - (90.0 * toRadians)) * toDegrees;
+	auto absAngle = abs(angle);
+	if (absAngle > mostObtuseAngleAllowed) {
+		auto rotated = glm::rotate(Vec3ToVec2(dirToChange), ((float)(angle / absAngle) * (float)(mostObtuseAngleAllowed - absAngle)) * (float)toRadians);
+		dirToChange.x = rotated.x;
+		dirToChange.y = rotated.y;
+	}
+	return angle;
+}
 
 BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, double& jumpAmountToChange, double& jumpTimeToChange, bool deleteBlock)
 {
+	auto angle = ClampDirection(dirToChange, m_mostObtuseAngleAllowed);
+	if (deleteBlock) {
+		GameToUiMessage m;
+		m.ballAngleWithYAxis = angle;
+		GameFramework::SendFrameworkMessage(m);
+	}
+	
+
+
 	if (thisBall->jumping) {
 		jumpTimerToChange += (double)TARGET_MS_PER_FRAME / 1000.0f;
 		if (jumpTimerToChange >= thisBall->jumpTime) {
@@ -464,4 +489,79 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 
 		return true;
 	});
+}
+
+const std::vector<SerializableProperty>& BallManager::GetSerializableProperties() const
+{
+	static SerializablePropertyData lookAheadByData;
+	static SerializablePropertyData mostObtuseAllowedData;
+	mostObtuseAllowedData.Double = m_mostObtuseAngleAllowed;
+	lookAheadByData.Uint32 = m_lookaheadBy;
+	static const std::vector<SerializableProperty> props = {
+		{"MostObtuseAngleAllowed", SerializablePropertyType::Double, {mostObtuseAllowedData}},
+		{"LookAheadBy", SerializablePropertyType::Uint32, {lookAheadByData}}
+	};
+	return props;
+	// TODO: insert return statement here
+}
+
+bool BallManager::SetSerializableProperty(const SerializableProperty& p)
+{
+	if (p.name == "MostObtuseAngleAllowed") {
+		if (p.type != SerializablePropertyType::Double) {
+			return false;
+		}
+		m_mostObtuseAngleAllowed = p.data.dataUnion.Double;
+		return true;
+	}
+	else if (p.name == "LookAheadBy") {
+		if (p.type != SerializablePropertyType::Uint32) {
+			return false;
+		}
+		m_lookaheadBy = p.data.dataUnion.Uint32;
+		return true;
+	}
+	return false;
+}
+
+int BallManager::GetNumSerializableProperties() const
+{
+	return 2;
+}
+
+std::string BallManager::GetSerializableNodeName() const
+{
+	return "BallManager";
+}
+
+void BallManager::SaveToFile(std::string filePath) const
+{
+	// not implemented
+}
+
+void BallManager::LoadFromFile(std::string filePath)
+{
+	// not implemented
+
+}
+
+char* BallManager::SaveToBuffer(char* destinaion) const
+{
+	// not implemented
+
+	return nullptr;
+}
+
+const char* BallManager::LoadFromBuffer(const char* source)
+{
+	// not implemented
+
+	return nullptr;
+}
+
+size_t BallManager::GetBinaryFileNumBytes() const
+{
+	// not implemented
+
+	return size_t();
 }

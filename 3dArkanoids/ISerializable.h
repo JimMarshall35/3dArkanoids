@@ -16,6 +16,7 @@ public:
 	virtual char* SaveToBuffer(char* destinaion) const = 0;
 	virtual const char* LoadFromBuffer(const char* source) = 0;
 	virtual size_t GetBinaryFileNumBytes() const = 0;
+	virtual bool ShouldLoadAndSaveFromBigFile() const { return true; }
 
 protected:
 	ISerializable()

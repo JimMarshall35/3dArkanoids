@@ -2,6 +2,7 @@
 
 #include "Event.h"
 #include "EngineUpdateFrameEventArgs.h"
+#include "ISerializable.h"
 #include <glm/glm.hpp>
 #include <functional>
 
@@ -16,7 +17,8 @@ class Bat;
 #define LOOKAHEAD_BUFFER_SIZE 300
 
 class BallManager
-	:public EventListener<EngineUpdateFrameEventArgs>
+	:public EventListener<EngineUpdateFrameEventArgs>,
+	public ISerializable
 {
 public:
 	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent, const Bat* bat);
@@ -61,6 +63,7 @@ private:
 	size_t m_numAdvancesToCheckForBatHit = 100;
 	glm::vec3 m_lookAheadPositions[LOOKAHEAD_BUFFER_SIZE];
 	bool m_drawProjectedBalls = false;
+	double m_mostObtuseAngleAllowed = 70.0;
 	
 private:
 	void PushRecylcedIndex(size_t index);
@@ -81,5 +84,17 @@ public:
 	//}
 	// Inherited via EventListener
 	virtual void OnEvent(EngineUpdateFrameEventArgs e) override;
+
+	// Inherited via ISerializable
+	virtual const std::vector<SerializableProperty>& GetSerializableProperties() const override;
+	virtual bool SetSerializableProperty(const SerializableProperty& p) override;
+	virtual int GetNumSerializableProperties() const override;
+	virtual std::string GetSerializableNodeName() const override;
+	virtual void SaveToFile(std::string filePath) const override;
+	virtual void LoadFromFile(std::string filePath) override;
+	virtual char* SaveToBuffer(char* destinaion) const override;
+	virtual const char* LoadFromBuffer(const char* source) override;
+	virtual size_t GetBinaryFileNumBytes() const override;
+	virtual bool ShouldLoadAndSaveFromBigFile()const override { return false; }
 };
 

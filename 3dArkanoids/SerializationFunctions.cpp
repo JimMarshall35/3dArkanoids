@@ -98,13 +98,13 @@ void SaveSerializableToSingleBigBinary(std::string filePath)
 
 	const auto& list = AutoList<ISerializable>::GetList();
 	for (const auto item : list) {
-		writePtr = item->SaveToBuffer(writePtr);
+		if (item->ShouldLoadAndSaveFromBigFile()) {
+			writePtr = item->SaveToBuffer(writePtr);
+		}
 	}
 
 	std::ofstream file(filePath, std::ios::out | std::ios::binary);
 	file.write(stagingBuffer.get(), bufferSize);
-
-
 }
 
 
@@ -126,10 +126,10 @@ void LoadSerializableFromSingleBigBinary(std::string filePath)
 	const char* readPtr = inputBuf.get();
 	const auto& list = AutoList<ISerializable>::GetList();
 	for (auto item : list) {
-		readPtr = item->LoadFromBuffer(readPtr);
+		if (item->ShouldLoadAndSaveFromBigFile()) {
+			readPtr = item->LoadFromBuffer(readPtr);
+		}
 	}
-
-
 }
 
 enum ParserState {

@@ -53,6 +53,25 @@ namespace _3dArkanoidsEditor.Services
             }
         }
 
+        public async Task<SetNewBoardStateResult> SetBoardStateAsync(GameBoardDescription description)
+        {
+            var result = await m_client.SetBoardStateAsync(description.ToGRPCMessage());
+            switch (result.Result)
+            {
+                case EditorGRPC.SetBoardDescriptionResult.Types.Result.Success:
+                    return SetNewBoardStateResult.SUCCESS;
+                    break;
+                case EditorGRPC.SetBoardDescriptionResult.Types.Result.FailureTooManyBytesForWhd:
+                    return SetNewBoardStateResult.FAILURE_TOO_MANY_BYTES_FOR_WHD;
+                    break;
+                case EditorGRPC.SetBoardDescriptionResult.Types.Result.FailureTooFewBytesForWhd:
+                    return SetNewBoardStateResult.FAILURE_TOO_FEW_BYTES_FOR_WHD;
+                    break;
+
+            }
+            return SetNewBoardStateResult.OTHER_FAILURE;
+        }
+
         private PlayBoardEditClient m_client;
     }
 }

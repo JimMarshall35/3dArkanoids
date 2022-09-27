@@ -13,7 +13,7 @@ class Array3D : public ISerializable{
 private:
 	T* _ptr;
 	size_t _w, _h, _d;
-
+	bool _copied = false;
 	
 public:
 	class xySlice {
@@ -42,6 +42,14 @@ public:
 	};
 
 	Array3D() {}
+	Array3D(const Array3D& old_obj) {
+		_w = old_obj._w;
+		_h = old_obj._h;
+		_d = old_obj._d;
+		_ptr = old_obj._ptr;
+		old_obj._copied = true;
+		
+	}
 	Array3D(AUTOLIST_CTOR_OPTIONS options) :ISerializable(options) {}
 	Array3D(size_t w, size_t h, size_t d);
 	~Array3D();
@@ -82,7 +90,7 @@ inline Array3D<T>::Array3D(size_t w, size_t h, size_t d)
 template<typename T>
 inline Array3D<T>::~Array3D()
 {
-	if(_ptr != nullptr)
+	if(_ptr != nullptr && !_copied)
 		free();
 }
 

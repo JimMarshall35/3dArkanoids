@@ -269,6 +269,9 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 		
 	}
 
+	auto vec2Dir = glm::vec2(thisBall->direction.x, thisBall->direction.y);
+
+
 	// refactor from here
 
 	

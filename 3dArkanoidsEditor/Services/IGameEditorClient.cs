@@ -14,5 +14,6 @@ namespace _3dArkanoidsEditor.Services
         Task<GameSettings> InitialConnectionHandshakeAsync(ClientInfo info);
         Task<List<SerializablePropertiesNode>> GetSerializableNodesAsync();
         Task<SetSerializablePropertyResult> SetSerializablePropertyAsync(SerializableProperty prop, string path);
+        Task<SetNewBoardStateResult> SetBoardStateAsync(GameBoardDescription description);
     }
 }

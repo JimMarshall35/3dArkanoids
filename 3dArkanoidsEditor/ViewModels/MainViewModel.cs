@@ -279,18 +279,42 @@ namespace _3dArkanoidsEditor.ViewModels
         private async void OnSingleTileEdit(object e)
         {
             SingleTileEdit edit = (SingleTileEdit)e;
-            var result = await m_gameConnectionService.Client.ChangeBlockAsync(edit);
-            if (result.EditResult != Result.FAILURE_POINT_OUT_OF_BOUNDS && result.EditResult != Result.OTHER_FAILURE)
+            switch (SelectedTool)
             {
-                // had to make SetAt return a new copy and set MasterGameBoardAgain to get the edits to appear on the
-                // WPF canvas.
-                // having SetAt returning void and calling OnPropertyChange(nameof(MasterGameBoard))
-                // didn't work. A weird and suspect solution
-                MasterGameBoard = MasterGameBoard.SetAt(edit.XPos, edit.YPos, edit.ZPos, edit.NewValue);
-            }
+                case BoardEditorToolType.Draw:
+                case BoardEditorToolType.Erase:
+                    var result = await m_gameConnectionService.Client.ChangeBlockAsync(edit);
+                    if (result.EditResult != Result.FAILURE_POINT_OUT_OF_BOUNDS && result.EditResult != Result.OTHER_FAILURE)
+                    {
+                        // had to make SetAt return a new copy and set MasterGameBoardAgain to get the edits to appear on the
+                        // WPF canvas.
+                        // having SetAt returning void and calling OnPropertyChange(nameof(MasterGameBoard))
+                        // didn't work. A weird and suspect solution
+                        MasterGameBoard = MasterGameBoard.SetAt(edit.XPos, edit.YPos, edit.ZPos, edit.NewValue);
+                    }
 
-            GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " " + result.ErrorMessage
-                + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: " + result.BlockCode : ""));
+                    GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " " + result.ErrorMessage
+                        + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: " + result.BlockCode : ""));
+                    break;
+
+                case BoardEditorToolType.Fill:
+                    var fillResult = await m_gameConnectionService.Client.SetBoardStateAsync(MasterGameBoard);
+                    if (fillResult == SetNewBoardStateResult.SUCCESS)
+                    {
+                        // had to make SetAt return a new copy and set MasterGameBoardAgain to get the edits to appear on the
+                        // WPF canvas.
+                        // having SetAt returning void and calling OnPropertyChange(nameof(MasterGameBoard))
+                        // didn't work. A weird and suspect solution
+                        MasterGameBoard = MasterGameBoard.FloodFill(edit.XPos, edit.YPos, edit.ZPos, edit.NewValue);
+                    }
+
+                    //GameTerminal.WriteLine(Enum.GetName(typeof(Result), result.EditResult) + " " + result.ErrorMessage
+                    //    + ((result.EditResult == Result.BLOCK_AT_SPACE) ? " old block was type: " + result.BlockCode : ""));
+                    break;
+                case BoardEditorToolType.Select:
+                    break;
+            }
+            
         }
 
         public void TryConnectToGame()

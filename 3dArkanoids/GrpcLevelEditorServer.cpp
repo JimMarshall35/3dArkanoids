@@ -56,6 +56,7 @@ void GrpcLevelEditorServer::Run()
 		new InitialConnectionHandshakeCallData(&m_service, cq.get(), m_game, this);
 		new GetSerializableNodesCallData(&m_service, cq.get(), m_game, this);
 		new SetSerializablePropertyCallData(&m_service, cq.get(), m_game, this);
+		new SetBoardStateCallData(&m_service, cq.get(), m_game, this);
 		
 		void* tag;  // uniquely identifies a request.
 		bool ok;
@@ -457,6 +458,42 @@ void GrpcLevelEditorServer::SetSerializablePropertyCallData::OnProcess()
 		}
 		SetSerializableProperty(path, newValCpp);
 
+		Finish();
+	});
+}
+
+void GrpcLevelEditorServer::SetBoardStateCallData::Finish()
+{
+	m_responder.Finish(m_reply, Status::OK, this);
+	m_status = FINISH;
+}
+
+void GrpcLevelEditorServer::SetBoardStateCallData::RequestOnCreate()
+{
+	m_service->RequestSetBoardState(&m_ctx, &m_request, &m_responder, m_cq, m_cq, this);
+}
+
+void GrpcLevelEditorServer::SetBoardStateCallData::OnProcess()
+{
+	new SetBoardStateCallData(m_service, m_cq, m_game, m_server);
+	m_server->m_editorQueue.Push([this]() {
+		int w, d, h;
+		w = m_request.width();
+		h = m_request.height();
+		d = m_request.depth();
+		auto newArray = Array3D<unsigned char>(w,h,d);
+		if (m_request.data().length() > w * h * d) {
+			m_reply.set_result(EditorGRPC::SetBoardDescriptionResult_Result::SetBoardDescriptionResult_Result_FAILURE_TOO_MANY_BYTES_FOR_WHD);
+			Finish();
+			return;
+		}
+		else if (m_request.data().length() > w * h * d) {
+			m_reply.set_result(EditorGRPC::SetBoardDescriptionResult_Result::SetBoardDescriptionResult_Result_FAILURE_TOO_FEW_BYTES_FOR_WHD);
+			Finish();
+			return;
+		}
+		memcpy(newArray.getPtr(), m_request.data().c_str(), w * h * d);
+		m_game->SetBoardState(newArray);
 		Finish();
 	});
 }

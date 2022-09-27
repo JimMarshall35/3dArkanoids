@@ -289,7 +289,11 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
 {
-	return SetBoardDescriptionResultCPP();
+	m_playFieldArray = newState;
+	InitializeRenderData();
+	LinkAndValidateBlocksRenderData();
+
+	return SUCCESS();
 }
 
 void Game::Init()

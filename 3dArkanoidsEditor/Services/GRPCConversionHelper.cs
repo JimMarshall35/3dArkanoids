@@ -269,5 +269,15 @@ namespace _3dArkanoidsEditor.Services
             }
             return rval;
         }
+
+        public static EditorGRPC.BoardDescription ToGRPCSetMessage(this Models.GameBoardDescription description)
+        {
+            var rval = new EditorGRPC.BoardDescription();
+            rval.Data = ByteString.CopyFrom(description.PlayfieldArray.ToArray());//new ByteString(description.PlayfieldArray);
+            rval.Width = description.Width;
+            rval.Height = description.Height;
+            rval.Depth = description.Depth;
+            return rval;
+        }
     }
 }

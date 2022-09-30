@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using PlayBoardEditClient = EditorGRPC.PlayBoardEdit.PlayBoardEditClient;
 
@@ -70,6 +71,19 @@ namespace _3dArkanoidsEditor.Services
 
             }
             return SetNewBoardStateResult.OTHER_FAILURE;
+        }
+
+        public async Task GameBoardStream(CancellationToken ct, SetNewDescription setNewDescription)
+        {
+            
+            using (var call = m_client.GetUpdatedBoardStream(new EditorGRPC.Void()))
+            {
+                while (await call.ResponseStream.MoveNext(ct))
+                {
+                    var board = call.ResponseStream.Current;
+                    setNewDescription(board.ToModel());
+                }
+            }
         }
 
         private PlayBoardEditClient m_client;

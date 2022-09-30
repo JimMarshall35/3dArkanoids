@@ -30,6 +30,7 @@ void InitialConnectionHandshakeCallData::OnProcess()
 			output->set_alpha(block.Rgba[3]);
 		}
 		GameFramework::SendFrameworkMessage(GameToUiMessage{ 420,true });
+		m_server->SetConnectedFlag();
 		Finish();
 	});
 }

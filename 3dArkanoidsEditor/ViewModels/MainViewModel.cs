@@ -240,6 +240,7 @@ namespace _3dArkanoidsEditor.ViewModels
 
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
+            m_gameConnectionService.Client.GameBoardStream(m_upateStreamCts.Token, newDescription => MasterGameBoard = newDescription);
         }
 
 
@@ -320,6 +321,7 @@ namespace _3dArkanoidsEditor.ViewModels
         public void TryConnectToGame()
         {
             m_connectionCts = new CancellationTokenSource();
+            m_upateStreamCts = new CancellationTokenSource();
 
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");
@@ -361,6 +363,7 @@ namespace _3dArkanoidsEditor.ViewModels
         private bool m_getBlockCommandRunning = false;
         private IGameConnectionService m_gameConnectionService;
         private CancellationTokenSource m_connectionCts;
+        private CancellationTokenSource m_upateStreamCts;
 
     }
 }

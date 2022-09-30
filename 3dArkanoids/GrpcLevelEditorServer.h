@@ -7,6 +7,8 @@
 #include "Array3d.h"
 #include "TSQueue.h"
 #include <functional>
+#include <atomic>
+
 
 
 using EditorGRPC::Void;
@@ -50,7 +52,11 @@ public:
     GrpcLevelEditorServer(ILevelEditorServerGame* game);
     void Run();
     TSQueue<std::function<void()>>& GetEditorQueue() { return m_editorQueue; };
+    void SetConnectedFlag() { m_editorConnected = true; }
+    bool GetConnectedFlag() { return m_editorConnected; }
+
 private:
+    bool m_editorConnected = false;
     ILevelEditorServerGame* m_game;
     std::unique_ptr<grpc::Server> m_server;
     ServerCompletionQueue* m_cq;
@@ -59,13 +65,17 @@ private:
     TSQueue<std::function<void()>> m_editorQueue;
 
 
-    
-
+    std::atomic<bool> m_newBoardStateFlag = false;
+    const Array3D<unsigned char>* m_newBoardState;
     
 
 
     // Inherited via ILevelEditorServer
     virtual void OnEvent(EngineUpdateFrameEventArgs e) override;
+
+
+    // Inherited via ILevelEditorServer
+    virtual void NotifyNewBoardState(const Array3D<unsigned char>& newState) override;
 
 };
 

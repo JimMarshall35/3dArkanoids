@@ -219,6 +219,7 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 
 		});
 	m_masterArrayUpdatedEvent(MasterArrayUpdatedEventArgs(&m_playFieldArray, e.ManagerBlockArrayIndex));
+	m_levelEditorServer->NotifyNewBoardState(m_playFieldArray);
 }
 
 const Array3D<unsigned char>& Game::GetBoardState()
@@ -297,7 +298,7 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 	if (renderData.child != nullptr) {
 		m_fallingBlockManager.StartBlockFalling(renderData.child, m_playFieldArray);
 	}
-
+	m_levelEditorServer->NotifyNewBoardState(m_playFieldArray);
 	return BLOCK_AT_SPACE;
 }
 

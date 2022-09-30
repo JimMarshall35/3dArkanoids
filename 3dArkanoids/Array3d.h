@@ -12,7 +12,7 @@ template<typename ResponseT>
 class Array3D : public ISerializable{
 private:
 	ResponseT* _ptr;
-	size_t _w, _h, _d;
+	size_t _w=0, _h=0, _d=0;
 	bool _copied = false;
 	
 public:

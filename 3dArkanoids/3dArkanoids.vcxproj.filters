@@ -70,6 +70,9 @@
     <Filter Include="Header Files\game\level editor server\grpc\auto generated">
       <UniqueIdentifier>{bae4d316-07fd-446c-a2ca-88194e43ca50}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game\level editor server\grpc\call datas\base classes">
+      <UniqueIdentifier>{9adbba7b-35f6-44ed-994d-a37662027fde}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -163,6 +166,9 @@
       <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="SetBoardStateCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="GetUpdatedBoardStreamCallData.cpp">
       <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,13 +335,19 @@
     <ClInclude Include="PlayBoardEdit.grpc.pb.h">
       <Filter>Header Files\game\level editor server\grpc\auto generated</Filter>
     </ClInclude>
-    <ClInclude Include="GRPCCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
-    </ClInclude>
     <ClInclude Include="SetSerializablePropertyCallData.h">
       <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="SetBoardStateCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="GRPCStreamingCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas\base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GRPCCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas\base classes</Filter>
+    </ClInclude>
+    <ClInclude Include="GetUpdatedBoardStreamCallData.h">
       <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
     </ClInclude>
   </ItemGroup>

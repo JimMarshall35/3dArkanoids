@@ -423,7 +423,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 						unsigned char oldval;
 
 						if (deleteBlock) {
-							m_game->RemoveBlock({ vCell.x,vCell.y,0 });
+							m_game->RemoveBlock({ vCell.x,vCell.y,vCell.z });
 						}
 						if (thisBall->direction.z < 0) {
 							// do mini jump

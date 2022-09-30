@@ -279,10 +279,15 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 		return OTHER_FAILURE;
 	}
 
-	// set the block below to null
+	// set the block below's child to null
 	if (point.z > 0) {
 		int below = IndexOfRenderDataAt(point - glm::ivec3{ 0, 0, 1 });
-		m_blockRenderData[below].child = nullptr;
+		if (below >= 0) {
+			m_blockRenderData[below].child = nullptr;
+		}
+		else {
+			std::cout << "breakpoint\n";
+		}
 	}
 	 
 	auto& renderData = m_blockRenderData[index];

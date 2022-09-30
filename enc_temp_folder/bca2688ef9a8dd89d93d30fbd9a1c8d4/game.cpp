@@ -275,24 +275,22 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 	}
 	m_playFieldArray[point] = 0x00;
 	int index = IndexOfRenderDataAt(point);
-	if (index < 0) {
-		return OTHER_FAILURE;
-	}
-
-	// set the block below to null
 	if (point.z > 0) {
 		int below = IndexOfRenderDataAt(point - glm::ivec3{ 0, 0, 1 });
 		m_blockRenderData[below].child = nullptr;
 	}
-	 
-	auto& renderData = m_blockRenderData[index];
-	renderData.SetShouldRender(false);
+	
 
-	// start the block above falling
+	if (index < 0) {
+		return OTHER_FAILURE;
+	}
+	auto& renderData = m_blockRenderData[index];
+	
+
+	renderData.SetShouldRender(false);
 	if (renderData.child != nullptr) {
 		m_fallingBlockManager.StartBlockFalling(renderData.child, m_playFieldArray);
 	}
-
 	return BLOCK_AT_SPACE;
 }
 

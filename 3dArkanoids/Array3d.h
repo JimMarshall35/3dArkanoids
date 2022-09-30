@@ -8,10 +8,10 @@
 #include "ISerializable.h"
 
 
-template<typename T>
+template<typename ResponseT>
 class Array3D : public ISerializable{
 private:
-	T* _ptr;
+	ResponseT* _ptr;
 	size_t _w, _h, _d;
 	bool _copied = false;
 	
@@ -21,7 +21,7 @@ public:
 		xySlice(int x, int y, const Array3D* array3d)
 			:m_array3D(array3d), m_x(x), m_y(y){}
 
-		T& operator[](size_t z) {
+		ResponseT& operator[](size_t z) {
 			return m_array3D->At(m_x, m_y, z);
 		}
 	private:
@@ -54,13 +54,13 @@ public:
 	Array3D(size_t w, size_t h, size_t d);
 	~Array3D();
 	void allocate(size_t w, size_t h, size_t d);
-	T* getPtr() const { return _ptr; }
+	ResponseT* getPtr() const { return _ptr; }
 	size_t getW() const { return _w; }
 	size_t getH() const { return _h; }
 	size_t getD() const { return _d; }
-	T& At(size_t x, size_t y, size_t z) const;
-	T& At(const glm::ivec3& at) const { return At(at.x, at.y, at.z); }
-	T& operator [](const glm::ivec3& at) const { return At(at.x, at.y, at.z);}
+	ResponseT& At(size_t x, size_t y, size_t z) const;
+	ResponseT& At(const glm::ivec3& at) const { return At(at.x, at.y, at.z); }
+	ResponseT& operator [](const glm::ivec3& at) const { return At(at.x, at.y, at.z);}
 	xSlice operator[](int xCoord) const { return xSlice(xCoord, this); }
 	void free();
 
@@ -81,47 +81,47 @@ public:
 	void StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, const glm::ivec3& originAt, unsigned int offsetOfArrayFromStartOfFile = 0);
 };
 
-template<typename T>
-inline Array3D<T>::Array3D(size_t w, size_t h, size_t d)
+template<typename ResponseT>
+inline Array3D<ResponseT>::Array3D(size_t w, size_t h, size_t d)
 {
 	allocate(w, h, d);
 }
 
-template<typename T>
-inline Array3D<T>::~Array3D()
+template<typename ResponseT>
+inline Array3D<ResponseT>::~Array3D()
 {
 	if(_ptr != nullptr && !_copied)
 		free();
 }
 
-template<typename T>
-inline void Array3D<T>::allocate(size_t w, size_t h, size_t d)
+template<typename ResponseT>
+inline void Array3D<ResponseT>::allocate(size_t w, size_t h, size_t d)
 {
 	if (_ptr != nullptr) free();
 	_w = w; _h = h; _d = d;
-	_ptr = new T[w * h * d];
-	memset(_ptr, 0x00, w * h * d * sizeof(T));
+	_ptr = new ResponseT[w * h * d];
+	memset(_ptr, 0x00, w * h * d * sizeof(ResponseT));
 }
 
-template<typename T>
-inline T& Array3D<T>::At(size_t x, size_t y, size_t z) const
+template<typename ResponseT>
+inline ResponseT& Array3D<ResponseT>::At(size_t x, size_t y, size_t z) const
 {
 	size_t index = x * _h * _d + y * _d + z;
 	return _ptr[index];
 }
 
-template<typename T>
-inline void Array3D<T>::free()
+template<typename ResponseT>
+inline void Array3D<ResponseT>::free()
 {
 	delete[] _ptr;
 }
 
-template<typename T>
-inline void Array3D<T>::SaveToFile(std::string filePath) const
+template<typename ResponseT>
+inline void Array3D<ResponseT>::SaveToFile(std::string filePath) const
 {
 	// allocate buffer to be written to file, layed out as follows:
 	// width, height, depth, array data
-	const auto outputBufferSize = (sizeof(size_t) * 3) + (sizeof(T) * _w * _d * _h);
+	const auto outputBufferSize = (sizeof(size_t) * 3) + (sizeof(ResponseT) * _w * _d * _h);
 	auto outputBuffer = std::make_unique<char>(outputBufferSize);
 
 	SaveToBuffer(outputBuffer.get());
@@ -131,8 +131,8 @@ inline void Array3D<T>::SaveToFile(std::string filePath) const
 	file.write(outputBuffer.get(), outputBufferSize);
 }
 
-template<typename T>
-inline void Array3D<T>::LoadFromFile(std::string filePath)
+template<typename ResponseT>
+inline void Array3D<ResponseT>::LoadFromFile(std::string filePath)
 {
 	// open file
 	std::ifstream is(filePath, std::ios::in | std::ios::binary);
@@ -150,13 +150,13 @@ inline void Array3D<T>::LoadFromFile(std::string filePath)
 }
 
 #define ARRAY3D_NUM_SERIALIZABLE_PROPERTIES 4
-template<typename T>
-inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializableProperties() const
+template<typename ResponseT>
+inline const std::vector<SerializableProperty>& Array3D<ResponseT>::GetSerializableProperties() const
 {
 	static std::vector<SerializableProperty> props(ARRAY3D_NUM_SERIALIZABLE_PROPERTIES);
 	props[0].name = "Data";
 	props[0].type = SerializablePropertyType::Bytes;
-	props[0].data.SizeIfApplicable = sizeof(T) * _w * _d * _h;
+	props[0].data.SizeIfApplicable = sizeof(ResponseT) * _w * _d * _h;
 	props[0].data.dataUnion.Bytes = (char*)_ptr;
 
 	props[1].name = "Width";
@@ -173,10 +173,10 @@ inline const std::vector<SerializableProperty>& Array3D<T>::GetSerializablePrope
 
 	return props;
 }
-template<typename T>
-inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty& p) {
+template<typename ResponseT>
+inline bool Array3D<ResponseT>::SetSerializableProperty(const SerializableProperty& p) {
 	if (p.name == "Data") {
-		_ptr = (T*)p.data.dataUnion.Bytes;
+		_ptr = (ResponseT*)p.data.dataUnion.Bytes;
 		return true;
 	}
 	else if (p.name == "Width") {
@@ -194,30 +194,30 @@ inline bool Array3D<T>::SetSerializableProperty(const SerializableProperty& p) {
 	return false;
 }
 
-template<typename T>
-inline int Array3D<T>::GetNumSerializableProperties() const
+template<typename ResponseT>
+inline int Array3D<ResponseT>::GetNumSerializableProperties() const
 {
 	return ARRAY3D_NUM_SERIALIZABLE_PROPERTIES;
 }
 
-template<typename T>
-std::string Array3D<T>::GetSerializableNodeName() const {
+template<typename ResponseT>
+std::string Array3D<ResponseT>::GetSerializableNodeName() const {
 	return "Array3D";
 }
 
-template<typename T>
-inline char* Array3D<T>::SaveToBuffer(char* destination) const
+template<typename ResponseT>
+inline char* Array3D<ResponseT>::SaveToBuffer(char* destination) const
 {
 	// copy class data to the staging buffer
 	memcpy(destination, &_w, sizeof(size_t));
 	memcpy(destination + sizeof(size_t), &_h, sizeof(size_t));
 	memcpy(destination + sizeof(size_t) * 2, &_d, sizeof(size_t));
-	memcpy(destination + sizeof(size_t) * 3, _ptr, sizeof(T) * _w * _d * _h);
-	return destination + sizeof(size_t) * 3 + sizeof(T) * _w * _d * _h;
+	memcpy(destination + sizeof(size_t) * 3, _ptr, sizeof(ResponseT) * _w * _d * _h);
+	return destination + sizeof(size_t) * 3 + sizeof(ResponseT) * _w * _d * _h;
 }
 
-template<typename T>
-inline const char* Array3D<T>::LoadFromBuffer(const char* source)
+template<typename ResponseT>
+inline const char* Array3D<ResponseT>::LoadFromBuffer(const char* source)
 {
 	// read width, height and depth, from the file into local vars
 	size_t w, h, d;
@@ -229,19 +229,19 @@ inline const char* Array3D<T>::LoadFromBuffer(const char* source)
 	allocate(w, h, d);
 
 	// copy array data into newly allocated array
-	memcpy(_ptr, source + sizeof(size_t) * 3, sizeof(T) * w * h * d);
+	memcpy(_ptr, source + sizeof(size_t) * 3, sizeof(ResponseT) * w * h * d);
 
-	return source + sizeof(size_t) * 3 + sizeof(T) * w * h * d;
+	return source + sizeof(size_t) * 3 + sizeof(ResponseT) * w * h * d;
 
 }
 
-template<typename T>
-inline size_t Array3D<T>::GetBinaryFileNumBytes() const {
-	return sizeof(size_t) * 3 + sizeof(T) * _w * _d * _h;
+template<typename ResponseT>
+inline size_t Array3D<ResponseT>::GetBinaryFileNumBytes() const {
+	return sizeof(size_t) * 3 + sizeof(ResponseT) * _w * _d * _h;
 }
 
-template<typename T>
-void Array3D<T>::StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, const glm::ivec3& originAt, unsigned int offsetOfArrayFromStartOfFile) {
+template<typename ResponseT>
+void Array3D<ResponseT>::StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, const glm::ivec3& originAt, unsigned int offsetOfArrayFromStartOfFile) {
 	size_t originIndex = originAt.x * _h * _d + originAt.y * _d + originAt.z;
 	auto onVoxel = glm::ivec3();
 	for (int z = 0; z < _d; z++) {
@@ -252,10 +252,10 @@ void Array3D<T>::StreamAlreadyAllocatedArrayFromFile(std::ifstream& stream, cons
 				stream.seekg(
 					offsetOfArrayFromStartOfFile +
 					sizeof(size_t) * 3 + // the three fields are saved first see save to buffer function
-					index * sizeof(T),
+					index * sizeof(ResponseT),
 					std::ios::beg
 				);
-				stream.read((char*)&At(x, y, z), sizeof(T));
+				stream.read((char*)&At(x, y, z), sizeof(ResponseT));
 			}
 		}
 	}

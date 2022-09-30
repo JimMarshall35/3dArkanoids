@@ -58,6 +58,18 @@
     <Filter Include="Source Files\game\serialization framework">
       <UniqueIdentifier>{4e63cf45-8600-4be5-a546-1c55f399f5bc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\game\level editor server\grpc\call datas">
+      <UniqueIdentifier>{e41809d9-273f-4b47-8b72-a400b53aa65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game\level editor server\grpc\auto generated">
+      <UniqueIdentifier>{439e77d3-bd17-4d90-9e78-c6707a922c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level editor server\grpc\call datas">
+      <UniqueIdentifier>{0fb9d63f-b0e7-4f46-9558-8b8345c442c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game\level editor server\grpc\auto generated">
+      <UniqueIdentifier>{bae4d316-07fd-446c-a2ca-88194e43ca50}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -81,9 +93,6 @@
     <ClCompile Include="BlockInstanceRenderData.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="PlayBoardEditImpl.cpp">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
-    </ClCompile>
     <ClCompile Include="GrpcLevelEditorServer.cpp">
       <Filter>Source Files\game\level editor server\grpc</Filter>
     </ClCompile>
@@ -98,12 +107,6 @@
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayBoardEdit.grpc.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayBoardEdit.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
     </ClCompile>
     <ClCompile Include="GameBlockTypes.cpp">
       <Filter>Source Files\game</Filter>
@@ -137,6 +140,30 @@
     </ClCompile>
     <ClCompile Include="Bat.cpp">
       <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="GetSerializableNodesCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangeBlockCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="GetBoardStateCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="InitialConnectionHandshakeCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.grpc.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc\auto generated</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayBoardEdit.pb.cc">
+      <Filter>Source Files\game\level editor server\grpc\auto generated</Filter>
+    </ClCompile>
+    <ClCompile Include="SetSerializablePropertyCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="SetBoardStateCallData.cpp">
+      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -209,15 +236,6 @@
     <ClInclude Include="TSQueue.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="PlayBoardEditImpl.h">
-      <Filter>Header Files\game\level editor server\grpc</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayBoardEdit.pb.h">
-      <Filter>Header Files\game\level editor server\grpc</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayBoardEdit.grpc.pb.h">
-      <Filter>Header Files\game\level editor server\grpc</Filter>
-    </ClInclude>
     <ClInclude Include="PlayboardEditAsyncImpl.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -289,6 +307,36 @@
     </ClInclude>
     <ClInclude Include="SimplexNoise.h">
       <Filter>Header Files\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="IProceed.h">
+      <Filter>Header Files\game\level editor server\grpc</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangeBlockCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="GetBoardStateCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="GetSerializableNodesCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="InitialConnectionHandshakeCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBoardEdit.pb.h">
+      <Filter>Header Files\game\level editor server\grpc\auto generated</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayBoardEdit.grpc.pb.h">
+      <Filter>Header Files\game\level editor server\grpc\auto generated</Filter>
+    </ClInclude>
+    <ClInclude Include="GRPCCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="SetSerializablePropertyCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="SetBoardStateCallData.h">
+      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

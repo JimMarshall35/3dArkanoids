@@ -71,7 +71,7 @@ namespace EditorGRPC {
             "LwoFcHJvcHMYAiADKAsyIC5FZGl0b3JHUlBDLlNlcmlhbGl6YWJsZVByb3Bl",
             "cnR5IlQKG1NlcmlhbGl6YWJsZVByb3BlcnRpZXNOb2RlcxI1CgVub2RlcxgB",
             "IAMoCzImLkVkaXRvckdSUEMuU2VyaWFsaXphYmxlUHJvcGVydGllc05vZGUy",
-            "9gQKDVBsYXlCb2FyZEVkaXQSOgoIQWRkQmxvY2sSES5FZGl0b3JHUlBDLlBv",
+            "wQUKDVBsYXlCb2FyZEVkaXQSOgoIQWRkQmxvY2sSES5FZGl0b3JHUlBDLlBv",
             "aW50GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tSZXN1bHQSPQoLUmVtb3ZlQmxv",
             "Y2sSES5FZGl0b3JHUlBDLlBvaW50GhsuRWRpdG9yR1JQQy5FZGl0QmxvY2tS",
             "ZXN1bHQSQQoLQ2hhbmdlQmxvY2sSFS5FZGl0b3JHUlBDLkJsb2NrRWRpdBob",
@@ -85,7 +85,8 @@ namespace EditorGRPC {
             "ZXJpYWxpemFibGVQcm9wZXJ0aWVzTm9kZXMSbQoXU2V0U2VyaWFsaXphYmxl",
             "UHJvcGVydHkSJy5FZGl0b3JHUlBDLlNldFNlcmlhbGl6YWJsZVByb3BlcnR5",
             "RGF0YRopLkVkaXRvckdSUEMuU2V0U2VyaWFsaXphYmxlUHJvcGVydHlSZXN1",
-            "bHRiBnByb3RvMw=="));
+            "bHQSSQoVR2V0VXBkYXRlZEJvYXJkU3RyZWFtEhAuRWRpdG9yR1JQQy5Wb2lk",
+            "GhwuRWRpdG9yR1JQQy5Cb2FyZERlc2NyaXB0aW9uMAFiBnByb3RvMw=="));
       descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
           new pbr::FileDescriptor[] { },
           new pbr::GeneratedClrTypeInfo(null, null, new pbr::GeneratedClrTypeInfo[] {

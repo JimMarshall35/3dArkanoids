@@ -30,6 +30,7 @@ static const char* PlayBoardEdit_method_names[] = {
   "/EditorGRPC.PlayBoardEdit/InitialConnectionHandshake",
   "/EditorGRPC.PlayBoardEdit/GetSerializableNodes",
   "/EditorGRPC.PlayBoardEdit/SetSerializableProperty",
+  "/EditorGRPC.PlayBoardEdit/GetUpdatedBoardStream",
 };
 
 std::unique_ptr< PlayBoardEdit::Stub> PlayBoardEdit::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -47,6 +48,7 @@ PlayBoardEdit::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_InitialConnectionHandshake_(PlayBoardEdit_method_names[5], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetSerializableNodes_(PlayBoardEdit_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SetSerializableProperty_(PlayBoardEdit_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetUpdatedBoardStream_(PlayBoardEdit_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status PlayBoardEdit::Stub::AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::EditorGRPC::EditBlockResult* response) {
@@ -233,6 +235,22 @@ void PlayBoardEdit::Stub::async::SetSerializableProperty(::grpc::ClientContext* 
   return result;
 }
 
+::grpc::ClientReader< ::EditorGRPC::BoardDescription>* PlayBoardEdit::Stub::GetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) {
+  return ::grpc::internal::ClientReaderFactory< ::EditorGRPC::BoardDescription>::Create(channel_.get(), rpcmethod_GetUpdatedBoardStream_, context, request);
+}
+
+void PlayBoardEdit::Stub::async::GetUpdatedBoardStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::BoardDescription>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::EditorGRPC::BoardDescription>::Create(stub_->channel_.get(), stub_->rpcmethod_GetUpdatedBoardStream_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>* PlayBoardEdit::Stub::AsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::EditorGRPC::BoardDescription>::Create(channel_.get(), cq, rpcmethod_GetUpdatedBoardStream_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>* PlayBoardEdit::Stub::PrepareAsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::EditorGRPC::BoardDescription>::Create(channel_.get(), cq, rpcmethod_GetUpdatedBoardStream_, context, request, false, nullptr);
+}
+
 PlayBoardEdit::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayBoardEdit_method_names[0],
@@ -314,6 +332,16 @@ PlayBoardEdit::Service::Service() {
              ::EditorGRPC::SetSerializablePropertyResult* resp) {
                return service->SetSerializableProperty(ctx, req, resp);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayBoardEdit_method_names[8],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< PlayBoardEdit::Service, ::EditorGRPC::Void, ::EditorGRPC::BoardDescription>(
+          [](PlayBoardEdit::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::EditorGRPC::Void* req,
+             ::grpc::ServerWriter<::EditorGRPC::BoardDescription>* writer) {
+               return service->GetUpdatedBoardStream(ctx, req, writer);
+             }, this)));
 }
 
 PlayBoardEdit::Service::~Service() {
@@ -372,6 +400,13 @@ PlayBoardEdit::Service::~Service() {
   (void) context;
   (void) request;
   (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayBoardEdit::Service::GetUpdatedBoardStream(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::grpc::ServerWriter< ::EditorGRPC::BoardDescription>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
   return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
 }
 

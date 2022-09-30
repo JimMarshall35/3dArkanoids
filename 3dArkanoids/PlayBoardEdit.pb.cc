@@ -548,7 +548,7 @@ const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2epr
   "sNode\022\014\n\004name\030\001 \001(\t\022/\n\005props\030\002 \003(\0132 .Edi"
   "torGRPC.SerializableProperty\"T\n\033Serializ"
   "ablePropertiesNodes\0225\n\005nodes\030\001 \003(\0132&.Edi"
-  "torGRPC.SerializablePropertiesNode2\366\004\n\rP"
+  "torGRPC.SerializablePropertiesNode2\301\005\n\rP"
   "layBoardEdit\022:\n\010AddBlock\022\021.EditorGRPC.Po"
   "int\032\033.EditorGRPC.EditBlockResult\022=\n\013Remo"
   "veBlock\022\021.EditorGRPC.Point\032\033.EditorGRPC."
@@ -564,11 +564,13 @@ const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2epr
   "itorGRPC.SerializablePropertiesNodes\022m\n\027"
   "SetSerializableProperty\022\'.EditorGRPC.Set"
   "SerializablePropertyData\032).EditorGRPC.Se"
-  "tSerializablePropertyResultb\006proto3"
+  "tSerializablePropertyResult\022I\n\025GetUpdate"
+  "dBoardStream\022\020.EditorGRPC.Void\032\034.EditorG"
+  "RPC.BoardDescription0\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = {
-  false, false, 2755, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
+  false, false, 2830, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
   &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 19,
   schemas, file_default_instances, TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offsets,
   file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto,

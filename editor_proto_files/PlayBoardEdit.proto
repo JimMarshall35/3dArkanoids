@@ -10,6 +10,7 @@ service PlayBoardEdit{
 	rpc InitialConnectionHandshake(ClientInfo) returns(GameSettings);
 	rpc GetSerializableNodes(Void) returns(SerializablePropertiesNodes);
 	rpc SetSerializableProperty(SetSerializablePropertyData) returns(SetSerializablePropertyResult);
+	rpc GetUpdatedBoardStream(Void) returns(stream BoardDescription);
 }
 
 message Point{

@@ -268,6 +268,19 @@ std::string textFragGlsl =
 
 #pragma endregion
 
+#pragma region BillBoardShader
+
+std::string billboardVertGlsl =
+"#version 330 core\n"
+"in vec2 TexCoords;\n"
+"in vec3 Position;\n"
+;
+
+std::string billboardFragGlsl =
+"#version 330 core\n"
+;
+#pragma endregion
+
 Renderer::Renderer()
 {
     Initialize();

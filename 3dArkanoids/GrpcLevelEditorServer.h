@@ -61,10 +61,10 @@ private:
     std::unique_ptr<grpc::Server> m_server;
     ServerCompletionQueue* m_cq;
     EditorGRPC::PlayBoardEdit::AsyncService m_service;
-    std::thread* m_serverThread = nullptr;
+    std::unique_ptr<std::thread> m_serverThread;
     TSQueue<std::function<void()>> m_editorQueue;
 
-
+    std::atomic<bool> m_shouldServerContinue = true;
     std::atomic<bool> m_newBoardStateFlag = false;
     const Array3D<unsigned char>* m_newBoardState;
     

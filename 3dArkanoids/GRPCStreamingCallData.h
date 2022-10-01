@@ -22,7 +22,8 @@ by Hong Hai Chu & Stefans Mezulis
 
 */
 template<class RequestT, class ResponseT>
-class GRPCStreamingCallData : IProceed {
+class GRPCStreamingCallData 
+: public IProceed {
 public:
     // Take in the "service" instance (in this case representing an asynchronous
     // server) and the completion queue "cq" used for asynchronous communication
@@ -47,11 +48,6 @@ public:
             {
                 AllocateNew(m_service, m_cq, m_game, m_server);
             }
-            //if (times_++ >= 3) // we want to send the response 3 times (for whatever reason)
-            //{
-            //    status_ = FINISH;
-            //    responder_.Finish(Status::OK, this);
-            //}
             OnProcess();
             m_status = PUSH_TO_BACK;
         }

@@ -27,11 +27,10 @@ using std::chrono::system_clock;
 
 GrpcLevelEditorServer::~GrpcLevelEditorServer()
 {
-	if (m_server != nullptr) {
-		m_server->Shutdown();
-	}
+
 	if (m_serverThread != nullptr) {
-		delete m_serverThread;
+		m_shouldServerContinue = false;
+		m_serverThread->join();
 	}
 }
 
@@ -43,7 +42,7 @@ GrpcLevelEditorServer::GrpcLevelEditorServer(ILevelEditorServerGame* game)
 
 void GrpcLevelEditorServer::Run()
 {
-	m_serverThread = new std::thread([this]() {
+	m_serverThread = std::make_unique<std::thread>([this]() {
 		std::string server_address("127.0.0.1:50051");
 		//PlayBoardEditImpl service(m_game);
 		ServerBuilder builder;
@@ -64,7 +63,7 @@ void GrpcLevelEditorServer::Run()
 		
 		void* tag;  // uniquely identifies a request.
 		bool ok;
-		while (true) {
+		while (m_shouldServerContinue) {
 			if (m_newBoardStateFlag == true) {
 				m_newBoardStateFlag = false;
 				EditorGRPC::BoardDescription description;
@@ -83,8 +82,10 @@ void GrpcLevelEditorServer::Run()
 			GPR_ASSERT(ok);
 			static_cast<IProceed*>(tag)->Proceed();
 		}
-		});
-	
+		m_server->Shutdown();
+		// Always shutdown the completion queue after the server.
+		cq->Shutdown();
+	});
 }
 
 

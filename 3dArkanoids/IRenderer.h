@@ -38,4 +38,6 @@ public:
 	virtual void SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) = 0;
 	virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() = 0;
 
+	virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) = 0;
+
 };

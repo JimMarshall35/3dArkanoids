@@ -43,6 +43,8 @@ public:
     virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) override;
     virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() override;
+    virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) override;
+
 private:
     void Initialize();
     void InitFT();
@@ -50,6 +52,7 @@ private:
     void InitializeSphereVertices();
     void InitializeTexturedOneByTwoCubeVertices();
     void InitializeColouredCubeVertices();
+    void InitialiseBillboardVertices();
 
 private:
     /// Holds all state information relevant to a character as loaded using FreeType
@@ -74,10 +77,14 @@ private:
     unsigned int m_oneByTwoBlockVBO;
     unsigned int m_oneByTwoBlockVAO;
 
+    unsigned int m_billboardVBO;
+    unsigned int m_billboardVAO;
+
     Shader m_colouredShader;
     Shader m_colouredInstancedShader;
     Shader m_texturedInstancedShader;
     Shader m_textShader;
+    Shader m_billboardShader;
 
     glm::vec3 m_lightPos;
     glm::vec3 m_lightColour;
@@ -100,6 +107,9 @@ private:
 
     unsigned int m_blocksDiffuseTextureAtlas;
     unsigned int m_blocksDiffuseTextureAtlasNumberOfBlocks;
+
+    unsigned int m_testTexture;
+
 
 };
 

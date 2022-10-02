@@ -41,7 +41,7 @@ void Game::Draw(const Camera& camera) const
 	m_renderer->DrawTexturedOneByTwoInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
 	m_ballManager.Draw(m_renderer.get(), camera);
-	//m_renderer->DrawBillboard({ 0,0,0 }, { 16,16 }, camera);
+	m_renderer->DrawBillboard({ 0,0,0 }, { 16,16 }, camera);
 }
 
 /// <summary>

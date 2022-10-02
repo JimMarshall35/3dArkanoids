@@ -272,13 +272,42 @@ std::string textFragGlsl =
 
 std::string billboardVertGlsl =
 "#version 330 core\n"
-"in vec2 TexCoords;\n"
-"in vec3 Position;\n"
+"layout(location = 0) in vec3 aPos;\n"
+"layout(location = 1) in vec2 aUv;\n"
+
+"out vec2 Uv;\n"
+
+"uniform vec3 CameraRight_worldspace;\n"
+"uniform vec3 CameraUp_worldspace;\n"
+"uniform vec3 particleCenter_wordspace;\n"
+"uniform vec2 BillboardSize;\n"
+"uniform mat4 VP; // Model-View-Projection matrix, but without the Model (the position is in BillboardPos; the orientation depends on the camera)\n"
+
+"void main()\n"
+"{\n"
+    "vec4 vertexPosWorldSpace =\n"
+    "vec4(particleCenter_wordspace\n"
+    "+ CameraRight_worldspace * aPos.x * BillboardSize.x\n"
+    "+ CameraUp_worldspace * aPos.y * BillboardSize.y, 1.0);\n"
+    "gl_Position = VP * vertexPosWorldSpace;"
+    "Uv = aUv;\n"
+"}\n"
 ;
 
 std::string billboardFragGlsl =
 "#version 330 core\n"
+"in vec2 Uv;\n"
+"out vec4 color;\n"
+
+"uniform sampler2D texture;\n"
+
+"void main()\n"
+"{\n"
+"    vec4 sampled = vec4(texture(texture, Uv));\n"
+"    color = vec4(sampled);\n"
+"}\n"
 ;
+
 #pragma endregion
 
 Renderer::Renderer()
@@ -335,12 +364,14 @@ void Renderer::Initialize()
     InitializeColouredCubeVertices();
     InitializeSphereVertices();
     InitializeTexturedOneByTwoCubeVertices();
+    InitialiseBillboardVertices();
 
     // load all shaders
     m_colouredShader.LoadFromString(colourVertGlsl, colourFragGlsl);
     m_colouredInstancedShader.LoadFromString(instancedColourVertGlsl, instancedColourFragGlsl);
     m_textShader.LoadFromString(textVertGlsl, textFragGlsl);
     m_texturedInstancedShader.LoadFromString(instancedTexturedVertGlsl, instancedTexturedFragGlsl);
+    m_billboardShader.LoadFromString(billboardVertGlsl, billboardFragGlsl);
 
 
     // load fonts
@@ -649,6 +680,71 @@ void Renderer::InitializeColouredCubeVertices()
     // normal attribute
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+}
+
+void Renderer::InitialiseBillboardVertices()
+{
+    const float unitSquareVerts[30] = {
+        -0.5f, 0.5f, 0.0f,    0.0f, 1.0f, // top left
+        0.5f, 0.5f, 0.0f,     1.0f, 1.0f, // top right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+
+        0.5f, 0.5f, 0.0f,     1.0f, 1.0f, // top right
+        0.5f, -0.5f, 0.0f,    1.0f, 0.0f, // bottom right
+        -0.5f, -0.5f, 0.0f,   0.0f, 0.0f, // bottom left
+    };
+    glGenVertexArrays(1, &m_billboardVAO);
+    glGenBuffers(1, &m_billboardVBO);
+
+    glBindBuffer(GL_ARRAY_BUFFER, m_billboardVBO);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(unitSquareVerts), unitSquareVerts, GL_STATIC_DRAW);
+
+    glBindVertexArray(m_billboardVAO);
+
+    // position attribute
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+    glEnableVertexAttribArray(0);
+    // uv attribute
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+    glEnableVertexAttribArray(1);
+
+    stbi_set_flip_vertically_on_load(true);
+    int img_w, img_h, n;
+    const auto data = stbi_load("steve wright.png", &img_w, &img_h, &n, NUM_CHANNELS);
+
+    OpenGlGPULoadTexture(data, img_w, img_h, &m_testTexture);
+    stbi_image_free(data);
+
+}
+
+void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera)
+{
+    using namespace glm;
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, m_testTexture);
+
+    m_billboardShader.use();
+    /*
+    uniform vec3 CameraRight_worldspace;\n"
+"uniform vec3 CameraUp_worldspace;\n"
+"uniform vec3 particleCenter_wordspace;\n"
+"uniform vec2 BillboardSize;\n"
+    */
+    auto ViewMatrix = camera.GetViewMatrix();
+    auto CameraRight_worldspace = vec3{ ViewMatrix[0][0], ViewMatrix[1][0], ViewMatrix[2][0] };
+    auto CameraUp_worldspace = vec3{ ViewMatrix[0][1], ViewMatrix[1][1], ViewMatrix[2][1] };
+
+    m_billboardShader.setVec3("CameraRight_worldspace", CameraRight_worldspace);
+    m_billboardShader.setVec3("CameraUp_worldspace", CameraUp_worldspace);
+
+    m_billboardShader.setVec3("particleCenter_wordspace", woldPos);
+    m_billboardShader.setVec2("BillboardSize", billboardSize);
+    glm::mat4 projection = glm::perspective(glm::radians(camera.Zoom), (float)m_scrWidth / (float)m_scrHeight, 0.1f, DRAW_DISTANCE);
+    auto vp = projection * ViewMatrix;
+    m_billboardShader.setMat4("VP", vp);
+    
+    glBindVertexArray(m_billboardVAO);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
 }
 
 glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& dimensions) {
@@ -1002,8 +1098,10 @@ void Renderer::LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int 
     stbi_set_flip_vertically_on_load(true);
     const auto data = stbi_load(blocksTextureFilePath.c_str(), &img_w, &img_h, &n, NUM_CHANNELS);
 
+
     m_blocksDiffuseTextureAtlasNumberOfBlocks = numBlocks;
     OpenGlGPULoadTexture(data, img_w, img_h, &m_blocksDiffuseTextureAtlas);
+    stbi_image_free(data);
 
 }
 

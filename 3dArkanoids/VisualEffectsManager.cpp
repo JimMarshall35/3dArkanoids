@@ -15,7 +15,6 @@ void VisualEffectsManager::DrawComboNotifications(const IRenderer* renderer, con
 		if (!m_comboNotificationPool[i].active) {
 			continue;
 		}
-		auto ident = std::string("heart");
 		renderer->DrawBillboard(notification.pos, notification.billboardSize, camera, notification.spriteIdentifier);
 	}
 }

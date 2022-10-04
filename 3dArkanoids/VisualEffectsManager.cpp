@@ -33,7 +33,7 @@ void VisualEffectsManager::PushStartedComboNotification(const glm::vec3& pos)
 	}
 
 	if (freeNotification == nullptr) {
-		std::cout << "combo notification bool is full - consider increasing size" << std::endl;
+		std::cout << "combo notification pool is full - consider increasing size" << std::endl;
 		return;
 	}
 

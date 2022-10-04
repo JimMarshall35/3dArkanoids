@@ -41,8 +41,6 @@ void VisualEffectsManager::PushStartedComboNotification(const glm::vec3& pos)
 	freeNotification->pos = pos;
 	freeNotification->startPos = pos;
 	freeNotification->endPos = freeNotification->pos + NOTIFICATION_ENDPOINT_ADDITION;
-	//freeNotification->
-
 }
 
 void VisualEffectsManager::OnEvent(EngineUpdateFrameEventArgs e)

@@ -33,7 +33,7 @@ private:
 		glm::vec2 billboardSize = { 10,10 };
 	};
 	ComboNotification m_comboNotificationPool[COMBO_NOTIFICATION_POOL_SIZE];
-	const glm::vec3 NOTIFICATION_ENDPOINT_ADDITION = { 0, 0, 20 };
+	const glm::vec3 NOTIFICATION_ENDPOINT_ADDITION = { 0, 0, 30 };
 
 };
 

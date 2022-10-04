@@ -710,7 +710,7 @@ void Renderer::InitialiseBillboardVertices()
 
     stbi_set_flip_vertically_on_load(true);
     int img_w, img_h, n;
-    const auto data = stbi_load("steve wright.png", &img_w, &img_h, &n, NUM_CHANNELS);
+    const auto data = stbi_load("heart-png-31.png", &img_w, &img_h, &n, NUM_CHANNELS);
 
     OpenGlGPULoadTexture(data, img_w, img_h, &m_testTexture);
     stbi_image_free(data);
@@ -726,9 +726,9 @@ void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboar
     m_billboardShader.use();
     /*
     uniform vec3 CameraRight_worldspace;\n"
-"uniform vec3 CameraUp_worldspace;\n"
-"uniform vec3 particleCenter_wordspace;\n"
-"uniform vec2 BillboardSize;\n"
+    uniform vec3 CameraUp_worldspace;\n"
+    uniform vec3 particleCenter_wordspace;\n"
+    uniform vec2 BillboardSize;\n"
     */
     auto ViewMatrix = camera.GetViewMatrix();
     auto CameraRight_worldspace = vec3{ ViewMatrix[0][0], ViewMatrix[1][0], ViewMatrix[2][0] };

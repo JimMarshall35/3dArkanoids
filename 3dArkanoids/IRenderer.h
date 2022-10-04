@@ -33,11 +33,11 @@ public:
 	* ie one type of block per row of the texture with first the square end piece
 	* and then the long rectangle piece.
 	*/
-	virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) = 0;
+	virtual void DesignateOneByTwoBlocksTexture(const std::string& blocksTextureIdentifier, int numBlocks) = 0;
 	virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) = 0;
 	virtual void SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) = 0;
 	virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() = 0;
 
-	virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) const = 0;
+	virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const = 0;
 
 };

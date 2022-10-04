@@ -21,7 +21,7 @@ public:
 
 	void DrawComboNotifications(const IRenderer* renderer, const Camera& camera) const;
 private:
-	void PushStartedComboNotification(const glm::vec3& pos);
+	void PushStartedComboNotification(const glm::vec3& pos, int sizeOfCombo);
 private:
 	struct ComboNotification {
 		glm::vec3 pos;
@@ -31,9 +31,10 @@ private:
 		double totalTime = 1.5f;
 		bool active = false;
 		glm::vec2 billboardSize = { 10,10 };
+		std::string spriteIdentifier;
 	};
 	ComboNotification m_comboNotificationPool[COMBO_NOTIFICATION_POOL_SIZE];
 	const glm::vec3 NOTIFICATION_ENDPOINT_ADDITION = { 0, 0, 30 };
-
+	std::string GetIdentifierForComboNumber(int combo);
 };
 

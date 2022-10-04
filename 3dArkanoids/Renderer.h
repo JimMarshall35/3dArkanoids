@@ -2,6 +2,7 @@
 
 #include <string>
 #include <ft2build.h>
+#include <map>
 #include FT_FREETYPE_H
 
 #include "IRenderer.h"
@@ -11,9 +12,12 @@
 struct RendererInitialisationData {
     int screenWidth;
     int screenHeight;
-    std::string blocksTexturePath;
+    std::string oneByTwoBlocksTextureIdentifier;
     int numBlocksInTexture;
+    std::string spritesFilePath;
 };
+
+
 
 class Renderer :
     public IRenderer
@@ -40,10 +44,10 @@ public:
     virtual void SetCubePos(size_t indexCubeIsAt, const glm::vec3& newPos) override;
     virtual void SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour) override;
 
-    virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) override;
+    virtual void DesignateOneByTwoBlocksTexture(const std::string& blocksTextureIdentifier, int numBlocks) override;
     virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() override;
-    virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) const override;
+    virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const override;
 
 private:
     void Initialize();
@@ -53,7 +57,7 @@ private:
     void InitializeTexturedOneByTwoCubeVertices();
     void InitializeColouredCubeVertices();
     void InitialiseBillboardVertices();
-
+    void LoadSpriteFromFile(const std::string& filePath);
 private:
     /// Holds all state information relevant to a character as loaded using FreeType
     struct Character {
@@ -62,7 +66,10 @@ private:
         glm::ivec2   Bearing;   // Offset from baseline to left/top of glyph
         unsigned int Advance;   // Horizontal offset to advance to next glyph
     };
-
+    struct LoadedSprite {
+        int widthPx, heightPx;
+        unsigned int spriteId;
+    };
 private:
     Sphere m_sphere = Sphere(1.0f); // class stolen from http://www.songho.ca/opengl/gl_sphere.html
 
@@ -109,7 +116,7 @@ private:
     unsigned int m_blocksDiffuseTextureAtlasNumberOfBlocks;
 
     unsigned int m_testTexture;
-
+    std::map<std::string, LoadedSprite> m_loadedSprites;
 
 };
 

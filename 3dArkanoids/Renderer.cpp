@@ -9,6 +9,9 @@
 #include "PlayfieldDefs.h"
 #include "stb_image.h"
 #include "GLTextureHelper.h"
+#include <fstream>
+#include <string.h>
+
 
 #pragma region colour shader
 
@@ -315,11 +318,14 @@ Renderer::Renderer()
     Initialize();
 }
 
+#define use_CRT_SECURE_NO_WARNINGS 1
 Renderer::Renderer(const RendererInitialisationData& initData)
     :m_scrWidth(initData.screenWidth), m_scrHeight(initData.screenHeight)
 {
-    LoadOneByTwoBlocksTexture(initData.blocksTexturePath, initData.numBlocksInTexture);
+    LoadSpriteFromFile(initData.spritesFilePath);
+    DesignateOneByTwoBlocksTexture(initData.oneByTwoBlocksTextureIdentifier, initData.numBlocksInTexture);
     Initialize();
+    
 }
 
 
@@ -717,11 +723,73 @@ void Renderer::InitialiseBillboardVertices()
 
 }
 
-void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) const
+void Renderer::LoadSpriteFromFile(const std::string& filePath)
+{
+    using namespace std;
+
+    ifstream spritesFile(filePath);
+    string line;
+    int onLine = 0;
+    stbi_set_flip_vertically_on_load(1);
+    while (getline(spritesFile, line)) {
+        onLine++;
+        const auto lineBufferSize = 300;
+        char lineCopy[lineBufferSize];
+        strcpy_s(lineCopy, line.c_str());
+        rsize_t strMax = line.length();
+        char* next_token;
+        char* ptr = strtok_s(lineCopy, " ", &next_token);
+        std::string pathAndIdentifierName[2];
+        int numOnThisLine = 0;
+        bool errored = false;
+        while (ptr != NULL) {
+            pathAndIdentifierName[numOnThisLine] = string(ptr);
+            if (++numOnThisLine > 2) {
+                std::cerr << "more than two space separated entries on line " << onLine << '\n';
+                errored = true;
+                break;
+            }
+            ptr = strtok_s(NULL, " ", &next_token);
+        }
+        if (numOnThisLine < 2) {
+            std::cerr << "less than two space separated entries on line " << onLine << '\n';
+            errored = true;
+        }
+        
+        if (errored) {
+            // no point in trying to load a wrongly written line
+            continue;
+        }
+
+        LoadedSprite sprite;
+        int channels;
+        auto loadedData = stbi_load(pathAndIdentifierName[0].c_str(), &sprite.widthPx, &sprite.heightPx, &channels, 4);
+        if (loadedData != nullptr) {
+            OpenGlGPULoadTexture(loadedData, sprite.widthPx, sprite.heightPx, &sprite.spriteId);
+            m_loadedSprites[pathAndIdentifierName[1]] = sprite;
+        }
+        else {
+            std::cout << "couldn't load " << pathAndIdentifierName[0] << '\n';
+        }
+        stbi_image_free(loadedData);
+    }
+}
+
+#define RUNTIME_CHECK_SPRITE_IDENTIFIER
+
+void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const
 {
     using namespace glm;
+
+#ifdef RUNTIME_CHECK_SPRITE_IDENTIFIER
+    if (m_loadedSprites.find(identifier) == m_loadedSprites.end()) {
+        std::cout << "sprite " << identifier << " not found\n";
+        return;
+    }
+#endif // RUNTIME_CHECK_SPRITE_IDENTIFIER
+
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_testTexture);
+    glBindTexture(GL_TEXTURE_2D, m_loadedSprites.at(identifier).spriteId);
 
     m_billboardShader.use();
     /*
@@ -1091,17 +1159,18 @@ void Renderer::SetCubeColour(size_t indexCubeIsAt, const glm::vec3& newColour)
 {
 }
 
-void Renderer::LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks)
+void Renderer::DesignateOneByTwoBlocksTexture(const std::string& identifier, int numBlocks)
 {
-    int img_w, img_h;
-    int n;
-    stbi_set_flip_vertically_on_load(true);
-    const auto data = stbi_load(blocksTextureFilePath.c_str(), &img_w, &img_h, &n, NUM_CHANNELS);
-
-
+    if (m_loadedSprites.find(identifier) == m_loadedSprites.end()) {
+        std::cout << "One by two block texture " << identifier << "not found\n";
+        return;
+    }
+    const auto& sprite = m_loadedSprites[identifier];
+    if (sprite.spriteId == 0) {
+        std::cout << "sprite with identifier " << identifier << " not properly loaded\n";
+    }
     m_blocksDiffuseTextureAtlasNumberOfBlocks = numBlocks;
-    OpenGlGPULoadTexture(data, img_w, img_h, &m_blocksDiffuseTextureAtlas);
-    stbi_image_free(data);
+    m_blocksDiffuseTextureAtlas = sprite.spriteId;
 
 }
 

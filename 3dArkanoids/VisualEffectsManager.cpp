@@ -5,7 +5,7 @@
 void VisualEffectsManager::OnEvent(BallComboEventArgs e)
 {
 	std::cout << "Ball combo! " << e.numBounces << "\n";
-	PushStartedComboNotification({ e.ballX,e.ballY,e.ballZ });
+	PushStartedComboNotification({ e.ballX,e.ballY,e.ballZ }, e.numBounces);
 }
 
 void VisualEffectsManager::DrawComboNotifications(const IRenderer* renderer, const Camera& camera) const
@@ -15,11 +15,12 @@ void VisualEffectsManager::DrawComboNotifications(const IRenderer* renderer, con
 		if (!m_comboNotificationPool[i].active) {
 			continue;
 		}
-		renderer->DrawBillboard(notification.pos, notification.billboardSize, camera);
+		auto ident = std::string("heart");
+		renderer->DrawBillboard(notification.pos, notification.billboardSize, camera, notification.spriteIdentifier);
 	}
 }
 
-void VisualEffectsManager::PushStartedComboNotification(const glm::vec3& pos)
+void VisualEffectsManager::PushStartedComboNotification(const glm::vec3& pos, int sizeOfCombo)
 {
 	ComboNotification* freeNotification = nullptr;
 	for (int i = 0; i < COMBO_NOTIFICATION_POOL_SIZE; i++) {
@@ -41,6 +42,17 @@ void VisualEffectsManager::PushStartedComboNotification(const glm::vec3& pos)
 	freeNotification->pos = pos;
 	freeNotification->startPos = pos;
 	freeNotification->endPos = freeNotification->pos + NOTIFICATION_ENDPOINT_ADDITION;
+	freeNotification->spriteIdentifier = GetIdentifierForComboNumber(sizeOfCombo);
+}
+
+std::string VisualEffectsManager::GetIdentifierForComboNumber(int combo)
+{
+	if (combo == 2) {
+		return "heart";
+	}
+	if (combo > 2) {
+		return "steve";
+	}
 }
 
 void VisualEffectsManager::OnEvent(EngineUpdateFrameEventArgs e)

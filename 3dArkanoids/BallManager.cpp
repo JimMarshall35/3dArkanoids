@@ -8,6 +8,7 @@
 #include "game.h"
 #include "Bat.h"
 
+
 #include <glm/gtx/rotate_vector.hpp>
 #include "GameToUiMessage.h"
 #define TARGET_MS_PER_FRAME 30
@@ -263,9 +264,9 @@ static float ClampDirection(glm::vec3& dirToChange, double mostObtuseAngleAllowe
 	return angle;
 }
 
-BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, double& jumpAmountToChange, double& jumpTimeToChange, bool deleteBlock)
+BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool deleteBlock)
 {
-	auto angle = ClampDirection(dirToChange, m_mostObtuseAngleAllowed);
+	auto angle = ClampDirection(thisBall->direction, m_mostObtuseAngleAllowed);
 	if (deleteBlock) {
 		GameToUiMessage m;
 		m.ballAngleWithYAxis = angle;
@@ -275,21 +276,22 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 
 
 	if (thisBall->jumping) {
-		jumpTimerToChange += (double)TARGET_MS_PER_FRAME / 1000.0f;
-		if (jumpTimerToChange >= thisBall->jumpTime) {
-			jumpTimerToChange = 0;
-			jumpingToChange = false;
-			dirToChange.z = 0;
-			posToChange.z = 0;
-			dirToChange = glm::normalize(thisBall->direction);
+		thisBall->jumpTimer += (double)TARGET_MS_PER_FRAME / 1000.0f;
+		if (thisBall->jumpTimer >= thisBall->jumpTime) {
+			thisBall->jumpTimer = 0;
+			thisBall->jumping = false;
+			thisBall->direction.z = 0;
+			thisBall->pos.z = 0;
+			thisBall->direction = glm::normalize(thisBall->direction);
+			thisBall->blockCombo = 0;
 		}
 		else {
 			const auto ballJumpFromBottomToPeakTime = thisBall->jumpTime / 2.0;
-			auto jumpProgress = (ballJumpFromBottomToPeakTime - jumpTimerToChange) / ballJumpFromBottomToPeakTime;
+			auto jumpProgress = (ballJumpFromBottomToPeakTime - thisBall->jumpTimer) / ballJumpFromBottomToPeakTime;
 			//std::cout << jumpProgress << "\n";
 			auto directionXY = glm::vec3(thisBall->direction.x, thisBall->direction.y, 0);
 			directionXY.z = jumpProgress * thisBall->jumpAmount;
-			dirToChange = directionXY;
+			thisBall->direction = directionXY;
 		}
 		
 	}
@@ -303,6 +305,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 	auto& ballCenter = thisBall->pos;
 
 
+
 	glm::vec3 vPotentialPosition = {
 		thisBall->pos.x + thisBall->direction.x * thisBall->speed,
 		thisBall->pos.y + thisBall->direction.y * thisBall->speed,
@@ -310,18 +313,18 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 	};
 
 	if (thisBall->pos.x < -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius) {
-		posToChange.x = -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius;
-		dirToChange.x *= -1.0f;
+		thisBall->pos.x = -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius;
+		thisBall->direction.x *= -1.0f;
 		return BallAdvanceResult::HIT_LEFT_SIDE;
 	}
 	if (thisBall->pos.x > (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f) {
-		posToChange.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f;
-		dirToChange.x *= -1.0f;
+		thisBall->pos.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f;
+		thisBall->direction.x *= -1.0f;
 		return BallAdvanceResult::HIT_RIGHT_SIDE;
 	}
 	if (thisBall->pos.y > (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f) {
-		posToChange.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f;
-		dirToChange.y *= -1.0f;
+		thisBall->pos.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f;
+		thisBall->direction.y *= -1.0f;
 		return BallAdvanceResult::HIT_TOP_SIDE;
 	}
 
@@ -337,15 +340,15 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 		bool collidingWithBat = (vPotentialPosition.x <= batX + batWidth / 2.0f + thisBall->radius)
 			&& (vPotentialPosition.x >= batX - batWidth / 2.0f + thisBall->radius);
 		if (collidingWithBat) {
-			posToChange.y = topOfBat;
-			posToChange.x = vPotentialPosition.x;
-			dirToChange.y *= -1.0f;
+			thisBall->pos.y = topOfBat;
+			thisBall->pos.x = vPotentialPosition.x;
+			thisBall->direction.y *= -1.0f;
 
 			auto rotationMagnitude = (thisBall->pos.x - batX) / (batWidth / 2 + thisBall->radius);
 
 			auto rotatedVec = glm::rotate(Vec3ToVec2(thisBall->direction), -(float)rotationMagnitude * glm::radians(35.0f));
-			dirToChange.x = rotatedVec.x;
-			dirToChange.y = rotatedVec.y;
+			thisBall->direction.x = rotatedVec.x;
+			thisBall->direction.y = rotatedVec.y;
 
 			return BallAdvanceResult::HIT_BAT;
 		}
@@ -411,13 +414,19 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 					// therefore "statically" resolving the collision
 					if (fOverlap > 0)
 					{
+						if (thisBall->jumping && deleteBlock) {
+							thisBall->blockCombo++;
+							if (thisBall->blockCombo >= 2) {
+								m_ballComboEvent({ thisBall->blockCombo, thisBall->pos.x, thisBall->pos.y, thisBall->pos.z });
+							}
+						}
 						returnVal = BallAdvanceResult::HIT_BLOCK;
 						// Statically resolve the collision
 						auto newPos = vPotentialPosition - glm::normalize(vRayToNearest) * fOverlap;
 						vPotentialPosition.x = newPos.x;
 						vPotentialPosition.y = newPos.y;
 
-						ReflectBall(dirToChange, newPos, vNearestPoint, oldBallDirection);
+						ReflectBall(thisBall->direction, newPos, vNearestPoint, oldBallDirection);
 
 						// delete block (will have more sophisiticated handling for different blocks)
 						unsigned char oldval;
@@ -429,11 +438,11 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 						}
 						if (thisBall->direction.z < 0) {
 							// do mini jump
-							dirToChange.z = 0;
-							jumpingToChange = true;
-							jumpTimerToChange = 0;
-							jumpAmountToChange = SMALL_JUMP_AMOUNT;
-							jumpTimeToChange = SMALL_JUMP_TIME;
+							thisBall->direction.z = 0;
+							thisBall->jumping = true;
+							thisBall->jumpTimer = 0;
+							thisBall->jumpAmount = SMALL_JUMP_AMOUNT;
+							thisBall->jumpTime = SMALL_JUMP_TIME;
 						}
 					}
 				}
@@ -442,11 +451,11 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(const Ball* thisBall, gl
 	}
 	
 	if(!std::isnan(vPotentialPosition.x) && !std::isnan(vPotentialPosition.y) && !std::isnan(vPotentialPosition.z)){
-		posToChange = vPotentialPosition;
+		thisBall->pos = vPotentialPosition;
 		
 	}
 	else {
-		dirToChange = oldBallDirection;
+		thisBall->direction = oldBallDirection;
 	}
 	
 
@@ -462,8 +471,10 @@ void BallManager::LookAhead(const Ball* thisBall)
 	double jumpAmount = 5.0;
 	double jumpTime = 0.0;
 
+	Ball copiedBall = *thisBall;
+
 	for (int i = 0; i < m_numAdvancesToCheckForBatHit; i++) {
-		if (AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, jumpAmount, jumpTime, false) == BallAdvanceResult::HIT_BAT) {
+		if (AdvanceBall(&ball, false) == BallAdvanceResult::HIT_BAT) {
 			m_drawProjectedBalls = true;
 			break;
 		}
@@ -471,7 +482,7 @@ void BallManager::LookAhead(const Ball* thisBall)
 	}
 	if (m_drawProjectedBalls) {
 		for (int i = 0; i < m_lookaheadBy; i++) {
-			AdvanceBall(&ball, ball.pos, ball.direction, jumpTimer, jumping, jumpAmount, jumpTime, false);
+			AdvanceBall(&ball, false);
 			m_lookAheadPositions[i] = ball.pos;
 
 		}
@@ -485,7 +496,7 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 			return true;
 		}
 
-		AdvanceBall(thisBall, thisBall->pos, thisBall->direction, thisBall->jumpTimer, thisBall->jumping, thisBall->jumpAmount, thisBall->jumpTime);
+		AdvanceBall(thisBall);
 
 		LookAhead(thisBall);
 

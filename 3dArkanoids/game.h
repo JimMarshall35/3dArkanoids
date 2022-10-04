@@ -15,6 +15,7 @@
 #include "Bat.h"
 #include "GameFramework.h"
 #include "BallManager.h"
+#include "VisualEffectsManager.h"
 
 #define MAX_NUM_BALLS 50
 class ILevelLoader;
@@ -78,6 +79,7 @@ private:
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
 	BallManager m_ballManager;
+	VisualEffectsManager m_visualEffectsManager;
 	Bat m_bat;
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;

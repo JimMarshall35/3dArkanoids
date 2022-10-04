@@ -171,6 +171,9 @@
     <ClCompile Include="GetUpdatedBoardStreamCallData.cpp">
       <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
     </ClCompile>
+    <ClCompile Include="VisualEffectsManager.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -349,6 +352,12 @@
     </ClInclude>
     <ClInclude Include="GetUpdatedBoardStreamCallData.h">
       <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="BallComboEventArgs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="VisualEffectsManager.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

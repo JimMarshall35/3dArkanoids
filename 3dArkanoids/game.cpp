@@ -14,7 +14,7 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory 
 {
 	m_renderer = renderer;
 	m_levelEditorServer = levelEditorServerFactory(this);
-	
+	m_ballManager.SubscribeToBallComboEvent(&m_visualEffectsManager);
 	
 }
 

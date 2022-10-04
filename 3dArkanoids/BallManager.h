@@ -5,6 +5,8 @@
 #include "ISerializable.h"
 #include <glm/glm.hpp>
 #include <functional>
+#include "Event.h"
+#include "BallComboEventArgs.h"
 
 class Game;
 class IRenderer;
@@ -26,6 +28,12 @@ public:
 	void ReceiveInput(double changeInBatX);
 	void Draw(const IRenderer* renderer, const Camera& camera) const;
 	void ReleaseBalls();
+	void SubscribeToBallComboEvent(EventListener<BallComboEventArgs>* listener) {
+		m_ballComboEvent += listener;
+	}
+	void UnSubscribeFromBallComboEvent(EventListener<BallComboEventArgs>* listener) {
+		m_ballComboEvent -= listener;
+	}
 private:
 	struct Ball {
 		glm::vec3 pos;
@@ -39,6 +47,8 @@ private:
 		double jumpAmount = 5.0;
 		double jumpTimer = 0.0;
 		double jumpTime = 1.0;
+
+		int blockCombo = 0;
 	};
 	enum class BallAdvanceResult {
 		HIT_NOTHING,
@@ -64,7 +74,7 @@ private:
 	glm::vec3 m_lookAheadPositions[LOOKAHEAD_BUFFER_SIZE];
 	bool m_drawProjectedBalls = false;
 	double m_mostObtuseAngleAllowed = 70.0;
-	
+	Event<BallComboEventArgs> m_ballComboEvent;
 private:
 	void PushRecylcedIndex(size_t index);
 	size_t PopRecycledIndex();
@@ -74,7 +84,7 @@ private:
 	void IterateBallList(BallIteratorFunctionWithCurrentAndPrevious iterationFunction);
 
 	// todo: just change this to not take a const Ball ptr and get rid of other params except deleteblock
-	BallAdvanceResult AdvanceBall(const Ball* thisBall, glm::vec3& posToChange, glm::vec3& dirToChange, double& jumpTimerToChange, bool& jumpingToChange, double& jumpAmountToChange, double& jumpTimeToChange, bool deleteBlock=true);
+	BallAdvanceResult AdvanceBall(Ball* thisBall, bool deleteBlock=true);
 	void LookAhead(const Ball* thisBall);
 private:
 	static void ReflectBall(glm::vec3& directionToChange, const glm::vec3& newPos, const glm::vec3& nearestPoint, const glm::vec3& oldDirection);

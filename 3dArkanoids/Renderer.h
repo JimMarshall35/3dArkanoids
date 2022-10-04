@@ -43,7 +43,7 @@ public:
     virtual void LoadOneByTwoBlocksTexture(std::string blocksTextureFilePath, int numBlocks) override;
     virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() override;
-    virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) override;
+    virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) const override;
 
 private:
     void Initialize();

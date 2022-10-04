@@ -41,6 +41,8 @@ void Game::Draw(const Camera& camera) const
 	m_renderer->DrawTexturedOneByTwoInstancedBlocks(m_currentNumBlocks, camera);
 	m_bat.Draw(m_renderer.get(), camera);
 	m_ballManager.Draw(m_renderer.get(), camera);
+	m_visualEffectsManager.DrawComboNotifications(m_renderer.get(), camera);
+	//m_visualEffectsManager
 	//m_renderer->DrawBillboard({ 0,0,0 }, { 16,16 }, camera);
 }
 
@@ -320,6 +322,7 @@ void Game::Init()
 	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
 	m_frameUpdateEvent += &m_fallingBlockManager;
 	m_frameUpdateEvent += m_levelEditorServer.get();
+	m_frameUpdateEvent += &m_visualEffectsManager;
 
 	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
 	m_renderer->SetLightPos(

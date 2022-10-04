@@ -717,7 +717,7 @@ void Renderer::InitialiseBillboardVertices()
 
 }
 
-void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera)
+void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera) const
 {
     using namespace glm;
     glActiveTexture(GL_TEXTURE0);

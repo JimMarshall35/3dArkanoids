@@ -173,3 +173,4 @@ void ZzFX_Init(int randomTableSize, int sampleRate)
 void ZzFX_FreeBuiltSamples(ZzFX_SoundSamples* samples) {
     free(samples->buffer);
 }
+

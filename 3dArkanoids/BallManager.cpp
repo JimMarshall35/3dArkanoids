@@ -349,7 +349,9 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool del
 			auto rotatedVec = glm::rotate(Vec3ToVec2(thisBall->direction), -(float)rotationMagnitude * glm::radians(35.0f));
 			thisBall->direction.x = rotatedVec.x;
 			thisBall->direction.y = rotatedVec.y;
-
+			if (deleteBlock) {
+				m_soundEffectEvent({ SoundEffect::HitBat });
+			}
 			return BallAdvanceResult::HIT_BAT;
 		}
 
@@ -432,6 +434,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool del
 						unsigned char oldval;
 
 						if (deleteBlock) {
+							m_soundEffectEvent({ SoundEffect::HitBlock });
 							if (m_game->RemoveBlock({ vCell.x,vCell.y,vCell.z }) != EditBlockResultCode::BLOCK_AT_SPACE) {
 
 							}

@@ -10,12 +10,14 @@
 
 size_t m_currentNumBlocks = 0;
 
-Game::Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory levelEditorServerFactory)
+Game::Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPlayer> audioPlayer, LevelEditorServerFactory levelEditorServerFactory)
+	:m_soundEffectsManager(SoundEffectsManager(audioPlayer))
 {
 	m_renderer = renderer;
+	m_audioPlayer = audioPlayer;
 	m_levelEditorServer = levelEditorServerFactory(this);
 	m_ballManager.SubscribeToBallComboEvent(&m_visualEffectsManager);
-	
+	m_ballManager.SubscribeToSoundEffectEvent(&m_soundEffectsManager);
 }
 
 /// <summary>

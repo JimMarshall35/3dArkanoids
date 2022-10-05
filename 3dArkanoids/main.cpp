@@ -23,6 +23,8 @@
 #include "Terrain.h"
 #include "SerializationFunctions.h"
 
+#include "PortAudioPlayer.h"
+
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
 
@@ -120,8 +122,13 @@ int main()
     RendererInitialisationData d = { SCR_WIDTH, SCR_HEIGHT, "blocks", 6, "sprites.txt"};
     auto renderer = make_shared<Renderer>(d);
 
+    AudioPlayerInitialisationData ad = { "soundfx.txt" };
+
+    auto audio = make_shared<PortAudioPlayer>(ad);
+
     Game game(
         renderer,
+        audio,
         [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
 
     Terrain t;
@@ -159,7 +166,7 @@ int main()
     t.OpenStreamToTerrainVoxelsFile("terrain.vox");
     t.StreamCube({ 0,0,0 });
     
-
+    
     
     //game.Init();
 

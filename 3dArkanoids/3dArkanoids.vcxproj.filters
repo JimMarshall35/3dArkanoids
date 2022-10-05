@@ -186,6 +186,12 @@
     <ClCompile Include="zzfx.c">
       <Filter>Source Files\audio</Filter>
     </ClCompile>
+    <ClCompile Include="TextFileResourceListParser.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffectsManager.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -388,6 +394,15 @@
     </ClInclude>
     <ClInclude Include="IdGenerator.h">
       <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="TextFileResourceListParser.h">
+      <Filter>Header Files\utils</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffectsManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffectEventArgs.h">
+      <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

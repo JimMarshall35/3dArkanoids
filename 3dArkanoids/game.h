@@ -16,10 +16,12 @@
 #include "GameFramework.h"
 #include "BallManager.h"
 #include "VisualEffectsManager.h"
+#include "SoundEffectsManager.h"
 
 #define MAX_NUM_BALLS 50
 class ILevelLoader;
 class IRenderer;
+class IAudioPlayer;
 class Camera;
 class GameInput;
 
@@ -56,7 +58,7 @@ public:
 		return "Gameplay";
 	}
 
-	Game(const std::shared_ptr<IRenderer>& renderer, LevelEditorServerFactory levelEditorServerFactory);
+	Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPlayer> audioPlayer, LevelEditorServerFactory levelEditorServerFactory);
 	void SetScreenDims(const glm::ivec2& screenDims);
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
 	void SaveLevelTest(std::string filePath);
@@ -76,10 +78,12 @@ private:
 	Array3D<unsigned char> m_playFieldArray;
 	std::unique_ptr<ILevelEditorServer> m_levelEditorServer;
 	std::shared_ptr<IRenderer> m_renderer;
+	std::shared_ptr<IAudioPlayer> m_audioPlayer;
 	FallingBlockManager m_fallingBlockManager;
 	GameBlockTypes m_gameBlockTypes;
 	BallManager m_ballManager;
 	VisualEffectsManager m_visualEffectsManager;
+	SoundEffectsManager m_soundEffectsManager;
 	Bat m_bat;
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;

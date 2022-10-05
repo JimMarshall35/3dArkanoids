@@ -7,6 +7,7 @@
 #include <functional>
 #include "Event.h"
 #include "BallComboEventArgs.h"
+#include "SoundEffectEventArgs.h"
 
 class Game;
 class IRenderer;
@@ -34,6 +35,13 @@ public:
 	void UnSubscribeFromBallComboEvent(EventListener<BallComboEventArgs>* listener) {
 		m_ballComboEvent -= listener;
 	}
+	void SubscribeToSoundEffectEvent(EventListener<SoundEffectEventArgs>* listener) {
+		m_soundEffectEvent += listener;
+	}
+	void UnSubscribeToSoundEffectEvent(EventListener<SoundEffectEventArgs>* listener) {
+		m_soundEffectEvent -= listener;
+	}
+
 private:
 	struct Ball {
 		glm::vec3 pos;
@@ -75,6 +83,7 @@ private:
 	bool m_drawProjectedBalls = false;
 	double m_mostObtuseAngleAllowed = 70.0;
 	Event<BallComboEventArgs> m_ballComboEvent;
+	Event<SoundEffectEventArgs> m_soundEffectEvent;
 private:
 	void PushRecylcedIndex(size_t index);
 	size_t PopRecycledIndex();

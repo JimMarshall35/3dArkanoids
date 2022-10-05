@@ -9,9 +9,9 @@
 #include "PlayfieldDefs.h"
 #include "stb_image.h"
 #include "GLTextureHelper.h"
-#include <fstream>
-#include <string.h>
 
+#include <string.h>
+#include "TextFileResourceListParser.h"
 
 #pragma region colour shader
 
@@ -726,53 +726,20 @@ void Renderer::InitialiseBillboardVertices()
 void Renderer::LoadSpriteFromFile(const std::string& filePath)
 {
     using namespace std;
-
-    ifstream spritesFile(filePath);
-    string line;
-    int onLine = 0;
     stbi_set_flip_vertically_on_load(1);
-    while (getline(spritesFile, line)) {
-        onLine++;
-        const auto lineBufferSize = 300;
-        char lineCopy[lineBufferSize];
-        strcpy_s(lineCopy, line.c_str());
-        rsize_t strMax = line.length();
-        char* next_token;
-        char* ptr = strtok_s(lineCopy, " ", &next_token);
-        std::string pathAndIdentifierName[2];
-        int numOnThisLine = 0;
-        bool errored = false;
-        while (ptr != NULL) {
-            pathAndIdentifierName[numOnThisLine] = string(ptr);
-            if (++numOnThisLine > 2) {
-                std::cerr << "more than two space separated entries on line " << onLine << '\n';
-                errored = true;
-                break;
-            }
-            ptr = strtok_s(NULL, " ", &next_token);
-        }
-        if (numOnThisLine < 2) {
-            std::cerr << "less than two space separated entries on line " << onLine << '\n';
-            errored = true;
-        }
-        
-        if (errored) {
-            // no point in trying to load a wrongly written line
-            continue;
-        }
-
+    ParseResourcesTextFile(filePath, [this](string path, string identifier) {
         LoadedSprite sprite;
         int channels;
-        auto loadedData = stbi_load(pathAndIdentifierName[0].c_str(), &sprite.widthPx, &sprite.heightPx, &channels, 4);
+        auto loadedData = stbi_load(path.c_str(), &sprite.widthPx, &sprite.heightPx, &channels, 4);
         if (loadedData != nullptr) {
             OpenGlGPULoadTexture(loadedData, sprite.widthPx, sprite.heightPx, &sprite.spriteId);
-            m_loadedSprites[pathAndIdentifierName[1]] = sprite;
+            m_loadedSprites[identifier] = sprite;
         }
         else {
-            std::cout << "couldn't load " << pathAndIdentifierName[0] << '\n';
+            std::cout << "couldn't load " << path << '\n';
         }
         stbi_image_free(loadedData);
-    }
+    });
 }
 
 #define RUNTIME_CHECK_SPRITE_IDENTIFIER

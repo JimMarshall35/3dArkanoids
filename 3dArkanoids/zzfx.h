@@ -3,12 +3,12 @@
 
 
 typedef struct {
-    float volume;
-    float randomness;
-    float frequency;
-    float attack;
-    float sustain;
-    float release;
+    double volume;
+    double randomness;
+    double frequency;
+    double attack;
+    double sustain;
+    double release;
     enum WAVE_SHAPE {
         SIN,
         TRI,
@@ -17,18 +17,18 @@ typedef struct {
         NOISE
     }shape;
     int shapeCurve;
-    float slide;
-    float deltaSlide;
-    float pitchJump;
-    float pitchJumpTime;
-    float repeatTime;
-    float noise;
-    float modulation;
-    unsigned int bitCrush;
-    float delay;
-    float sustainVolume;
-    float decay;
-    float tremolo;
+    double slide;
+    double deltaSlide;
+    double pitchJump;
+    double pitchJumpTime;
+    double repeatTime;
+    double noise;
+    double modulation;
+    int bitCrush;
+    double delay;
+    double sustainVolume;
+    double decay;
+    double tremolo;
 } ZzFX_Sound;
 
 typedef struct {
@@ -36,7 +36,7 @@ typedef struct {
     int buffer_size;
 } ZzFX_SoundSamples;
 
-ZzFX_SoundSamples ZzFX_BuildSamples(ZzFX_Sound sound);
+ZzFX_SoundSamples ZzFX_BuildSamples(ZzFX_Sound* sound);
 void ZzFX_FreeBuiltSamples(ZzFX_SoundSamples* samples);
 void ZzFX_Init(int randomTableSize, int sampleRate);
 void ZzFX_TearDown();

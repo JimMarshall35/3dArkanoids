@@ -1,0 +1,12 @@
+sfx/ArkanoidSFX(5).wav sfx5
+sfx/ArkanoidSFX(11).wav sfx11
+sfx/ArkanoidSFX(12).wav sfx12
+sfx/bathit.wav bathit
+sfx/destroyblock.wav destroyblock
+sfx/destroyenemy.wav destroyenemy
+sfx/die.wav die
+sfx/grow.wav grow
+sfx/hitmetalblock.wav hitmetalblock
+sfx/lasershoot.wav lasershoot
+sfx/newlife.wav newlife
+sfx/sticktobat.wav sticktobat

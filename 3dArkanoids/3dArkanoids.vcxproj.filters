@@ -73,6 +73,12 @@
     <Filter Include="Header Files\game\level editor server\grpc\call datas\base classes">
       <UniqueIdentifier>{9adbba7b-35f6-44ed-994d-a37662027fde}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\audio">
+      <UniqueIdentifier>{5d191ae0-e7bb-496f-afce-960399ed54be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\audio">
+      <UniqueIdentifier>{8ab63160-118b-4391-86ef-8171f8f20ee1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -173,6 +179,12 @@
     </ClCompile>
     <ClCompile Include="VisualEffectsManager.cpp">
       <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="PortAudioPlayer.cpp">
+      <Filter>Source Files\audio</Filter>
+    </ClCompile>
+    <ClCompile Include="zzfx.c">
+      <Filter>Source Files\audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -358,6 +370,24 @@
     </ClInclude>
     <ClInclude Include="VisualEffectsManager.h">
       <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="audiofile.h">
+      <Filter>Header Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioRingBuffer.h">
+      <Filter>Header Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="IAudioPlayer.h">
+      <Filter>Header Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="PortAudioPlayer.h">
+      <Filter>Header Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="zzfx.h">
+      <Filter>Header Files\audio</Filter>
+    </ClInclude>
+    <ClInclude Include="IdGenerator.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

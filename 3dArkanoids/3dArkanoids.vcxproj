@@ -84,13 +84,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)freetype-windows-binaries-2.12.1\include;$(SolutionDir)assimp-3.1.1-win-binaries\include;$(SolutionDir)glm-master;$(SolutionDir)glfw-3.3.5.bin.WIN64\include;$(SolutionDir)glad\include;$(SolutionDir)grpc\Debug\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)portaudio\include;$(SolutionDir)freetype-windows-binaries-2.12.1\include;$(SolutionDir)assimp-3.1.1-win-binaries\include;$(SolutionDir)glm-master;$(SolutionDir)glfw-3.3.5.bin.WIN64\include;$(SolutionDir)glad\include;$(SolutionDir)grpc\Debug\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)freetype-windows-binaries-2.12.1\release static\vs2015-2022\win64;$(SolutionDir)assimp-3.1.1-win-binaries\lib64;$(SolutionDir)glfw-3.3.5.bin.WIN64\lib-vc2019;$(SolutionDir)portaudio\out\build\x64-Debug;$(SolutionDir)grpc\Debug\lib;$(LibraryPath)</LibraryPath>
     <AllProjectIncludesArePublic>false</AllProjectIncludesArePublic>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)freetype-windows-binaries-2.12.1\include;$(SolutionDir)assimp-3.1.1-win-binaries\include;$(SolutionDir)glm-master;$(SolutionDir)glfw-3.3.5.bin.WIN64\include;$(SolutionDir)glad\include;$(SolutionDir)grpc\include;$(SolutionDir)protobuf\install\include;$(SolutionDir)grpc\third_party\abseil-cpp;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)portaudio\include;$(SolutionDir)freetype-windows-binaries-2.12.1\include;$(SolutionDir)assimp-3.1.1-win-binaries\include;$(SolutionDir)glm-master;$(SolutionDir)glfw-3.3.5.bin.WIN64\include;$(SolutionDir)glad\include;$(SolutionDir)grpc\include;$(SolutionDir)protobuf\install\include;$(SolutionDir)grpc\third_party\abseil-cpp;$(IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)freetype-windows-binaries-2.12.1\release static\vs2015-2022\win64;$(SolutionDir)assimp-3.1.1-win-binaries\lib64;$(SolutionDir)glfw-3.3.5.bin.WIN64\lib-vc2019;$(SolutionDir)portaudio\out\build\x64-Debug;$(SolutionDir)grpc\.build\Release;$(SolutionDir)protobuf\install\lib;$(LibraryPath)</LibraryPath>
     <AllProjectIncludesArePublic>false</AllProjectIncludesArePublic>
   </PropertyGroup>
@@ -179,6 +179,7 @@
     <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="InitialConnectionHandshakeCallData.cpp" />
+    <ClCompile Include="PortAudioPlayer.cpp" />
     <ClCompile Include="SerializationFunctions.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
     <ClCompile Include="PlayBoardEdit.pb.cc" />
@@ -192,9 +193,12 @@
     <ClCompile Include="stbi_image.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="VisualEffectsManager.cpp" />
+    <ClCompile Include="zzfx.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array3d.h" />
+    <ClInclude Include="audiofile.h" />
+    <ClInclude Include="AudioRingBuffer.h" />
     <ClInclude Include="AutoList.h" />
     <ClInclude Include="BallComboEventArgs.h" />
     <ClInclude Include="BallManager.h" />
@@ -224,6 +228,8 @@
     <ClInclude Include="GRPCCallData.h" />
     <ClInclude Include="GrpcLevelEditorServer.h" />
     <ClInclude Include="GRPCStreamingCallData.h" />
+    <ClInclude Include="IAudioPlayer.h" />
+    <ClInclude Include="IdGenerator.h" />
     <ClInclude Include="InitialConnectionHandshakeCallData.h" />
     <ClInclude Include="IProceed.h" />
     <ClInclude Include="ISerializable.h" />
@@ -237,6 +243,7 @@
     <ClInclude Include="PlayBoardEdit.grpc.pb.h" />
     <ClInclude Include="PlayBoardEdit.pb.h" />
     <ClInclude Include="PlayfieldDefs.h" />
+    <ClInclude Include="PortAudioPlayer.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="SerializableProperty.h" />
     <ClInclude Include="SerializablePropertyType.h" />
@@ -255,6 +262,7 @@
     <ClInclude Include="TSQueue.h" />
     <ClInclude Include="typedefs.h" />
     <ClInclude Include="VisualEffectsManager.h" />
+    <ClInclude Include="zzfx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

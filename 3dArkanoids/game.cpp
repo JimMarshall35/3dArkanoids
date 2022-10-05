@@ -18,6 +18,7 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPla
 	m_levelEditorServer = levelEditorServerFactory(this);
 	m_ballManager.SubscribeToBallComboEvent(&m_visualEffectsManager);
 	m_ballManager.SubscribeToSoundEffectEvent(&m_soundEffectsManager);
+	m_ballManager.SubscribeToBallComboEvent(&m_soundEffectsManager);
 }
 
 /// <summary>

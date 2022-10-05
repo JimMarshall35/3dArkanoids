@@ -106,6 +106,7 @@ void BallManager::ReleaseBalls()
 		}
 		else {
 			if (!thisBall->jumping && m_numBalls == 1) {
+				m_soundEffectEvent({ SoundEffect::Jump });
 				thisBall->jumping = true;
 				thisBall->jumpTime = BIG_JUMP_TIME;
 				thisBall->jumpAmount = BIG_JUMP_AMOUNT;
@@ -315,16 +316,28 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool del
 	if (thisBall->pos.x < -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius) {
 		thisBall->pos.x = -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius;
 		thisBall->direction.x *= -1.0f;
+		if (deleteBlock) {
+			m_soundEffectEvent({ SoundEffect::HitSide });
+		}
+		
 		return BallAdvanceResult::HIT_LEFT_SIDE;
 	}
 	if (thisBall->pos.x > (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f) {
 		thisBall->pos.x = (float)m_game->GetBoardState().getW() * (float)BLOCK_WIDTH_UNITS - (float)BLOCK_WIDTH_UNITS * 0.5f;
 		thisBall->direction.x *= -1.0f;
+		if (deleteBlock) {
+			m_soundEffectEvent({ SoundEffect::HitSide });
+		}
+
 		return BallAdvanceResult::HIT_RIGHT_SIDE;
 	}
 	if (thisBall->pos.y > (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f) {
 		thisBall->pos.y = (float)m_game->GetBoardState().getH() * (float)BLOCK_HEIGHT_UNITS - (float)BLOCK_HEIGHT_UNITS * 0.5f;
 		thisBall->direction.y *= -1.0f;
+		if (deleteBlock) {
+			m_soundEffectEvent({ SoundEffect::HitSide });
+		}
+
 		return BallAdvanceResult::HIT_TOP_SIDE;
 	}
 

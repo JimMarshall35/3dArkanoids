@@ -21,7 +21,7 @@ public:
     }
 
     void ReadBlock(T* output, size_t numvalues) {
-        std::lock_guard<std::mutex> lock(_bufferMutex);
+        //std::lock_guard<std::mutex> lock(_bufferMutex);
         for (size_t i = 0; i < numvalues; i++) {
             // read into the output buffer
             output[i] = _buffer[_readptr];
@@ -35,14 +35,14 @@ public:
     }
 
     void WriteBlock(T* input, size_t numvalues, double volume) {
-        std::lock_guard<std::mutex> lock(_bufferMutex);
+        //std::lock_guard<std::mutex> lock(_bufferMutex);
         for (size_t i = 0; i < numvalues; i++) {
             WriteSingle(input[i], volume);
         }
     }
 
     void WriteBlock(T* input, size_t numvalues) {
-        std::lock_guard<std::mutex> lock(_bufferMutex);
+        //std::lock_guard<std::mutex> lock(_bufferMutex);
         for (size_t i = 0; i < numvalues; i++) {
             WriteSingle(input[i]);
         }

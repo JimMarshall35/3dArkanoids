@@ -5,7 +5,7 @@ Has a generalised framework for serializing properties in classes and exposing t
 
 possible mechanics will include:
 - ramps that launches the ball upwards
-- a "Jump" powerup that lets you jump the ball - the jump is partially implemented
+- a "Jump" powerup that lets you jump the ball - the jump is implemented
 - blocks that, if lined up by knocking down the ones below will cause an explosion
 - classic arkanoids powerups
 - different shaped and sized bricks

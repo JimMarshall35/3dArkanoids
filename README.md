@@ -29,3 +29,5 @@ uses this spline library:
 https://github.com/chen0040/cpp-spline
 
 VS 2019
+All cpp/h files are in one folder but there are filters in the visual studio project.
+The editor project does have folders

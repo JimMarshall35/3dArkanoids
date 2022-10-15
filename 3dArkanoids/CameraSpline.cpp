@@ -85,3 +85,14 @@ bool CameraSpline::InterpolateCameraAlongCurve(float deltaT)
 	m_cameraToManage->LookCameraAt(spotToLookAt, glm::normalize(nextNode - cameraPos));
 	return false;
 }
+
+void CameraSpline::SnapToEndOfCurve()
+{
+	m_cameraToManage->Position = cppSplineVecToGlm(m_mapFlyoverCurve->node(0));
+	auto spotToLookAt = glm::vec3{
+		(PLAYFIELD_WIDTH_BLOCKS * BLOCK_WIDTH_UNITS) / 2,
+		(PLAYFIELD_HEIGHT_BLOCKS * BLOCK_HEIGHT_UNITS) / 2,
+		0
+	};
+	m_cameraToManage->LookCameraAt(spotToLookAt);
+}

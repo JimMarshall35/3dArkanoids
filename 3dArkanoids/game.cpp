@@ -169,7 +169,11 @@ void Game::ReceiveInput(const GameInput& gameInput)
 			GameLayerType::Input);
 		return;
 	}
-	if (gameInput.Firing && m_state == GameState::PLAYING) {
+	else if (gameInput.Firing && m_state == GameState::IN_INTRO) {
+		m_camManager.SnapToEndOfCurve();
+		m_state = GameState::PLAYING;
+	}
+	else if (gameInput.Firing && m_state == GameState::PLAYING) {
 		m_ballManager.ReleaseBalls();
 	}
 	m_ballManager.ReceiveInput(m_bat.RecieveInput(gameInput));

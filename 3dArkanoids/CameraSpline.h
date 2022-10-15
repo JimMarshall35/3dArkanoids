@@ -17,6 +17,8 @@ public:
 	/// <param name="deltaT"></param>
 	/// <returns>true if finished, false if not</returns>
 	bool InterpolateCameraAlongCurve(float deltaT);
+
+	void SnapToEndOfCurve();
 private:
 	Camera* m_cameraToManage;
 	std::unique_ptr<Curve> m_mapFlyoverCurve;

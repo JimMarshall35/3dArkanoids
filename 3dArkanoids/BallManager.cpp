@@ -32,6 +32,8 @@ void BallManager::Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEven
 {
 	m_game = game;
 	m_bat = bat;
+	m_minBallY = -(bat->GetDistanceFromFirstRow() + 16.0f);
+
 	updateEvent += this;
 }
 
@@ -277,7 +279,7 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool del
 
 
 	if (thisBall->jumping) {
-		thisBall->jumpTimer += (double)TARGET_MS_PER_FRAME / 1000.0f;
+		thisBall->jumpTimer += ((double)TARGET_MS_PER_FRAME / 1000.0f)/(double)BALL_ADVANCES_PER_FRAME;
 		if (thisBall->jumpTimer >= thisBall->jumpTime) {
 			thisBall->jumpTimer = 0;
 			thisBall->jumping = false;
@@ -511,8 +513,10 @@ void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 		if (thisBall->stuckToBat) {
 			return true;
 		}
-
-		AdvanceBall(thisBall);
+		for (int i = 0; i < BALL_ADVANCES_PER_FRAME; i++) {
+			AdvanceBall(thisBall);
+		}
+		
 
 		LookAhead(thisBall);
 

@@ -16,7 +16,8 @@ class Camera;
 class Bat;
 #define MAX_NUM_BALLS 128
 #define DEFAULT_BALL_RADIUS 2.0f
-#define DEFAULT_BALL_SPEED 2.0f
+#define DEFAULT_BALL_SPEED 1.0f
+#define BALL_ADVANCES_PER_FRAME 3
 #define LOOKAHEAD_BUFFER_SIZE 300
 
 class BallManager
@@ -82,6 +83,8 @@ private:
 	glm::vec3 m_lookAheadPositions[LOOKAHEAD_BUFFER_SIZE];
 	bool m_drawProjectedBalls = false;
 	double m_mostObtuseAngleAllowed = 70.0;
+	float m_minBallY;
+
 	Event<BallComboEventArgs> m_ballComboEvent;
 	Event<SoundEffectEventArgs> m_soundEffectEvent;
 private:

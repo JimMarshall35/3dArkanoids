@@ -98,6 +98,7 @@ int PortAudioPlayer::paSoundFxCallback(const void* inputBuffer, void* outputBuff
 bool PortAudioPlayer::PlayClip(std::string id, float volume)
 {
     if (_audioDataMap.find(id) == _audioDataMap.end()) {
+        std::cerr << "clip not found \n";
         return false;
     }
     s_soundFxBuffer.WriteBlock(_audioDataMap[id].data(), _audioDataMap[id].size(), volume);

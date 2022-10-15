@@ -5,12 +5,12 @@
 class Camera;
 
 class IRenderer;
-class GameCameraManager
+class CameraSpline
 {
 public:
-	GameCameraManager(Camera* cameraToManage);
+	CameraSpline(Camera* cameraToManage);
 	void TestVisualiseFlyoverCurve(const Camera& camToDrawUsing, const IRenderer* renderer);
-
+	void Reset();
 	/// <summary>
 	/// interpolate over a curve
 	/// </summary>

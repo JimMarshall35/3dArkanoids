@@ -25,8 +25,9 @@ class BallManager
 	public ISerializable
 {
 public:
-	void Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent, const Bat* bat);
+	void Init(Game* game, const Bat* bat);
 	void AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius = DEFAULT_BALL_RADIUS, float speed = DEFAULT_BALL_SPEED);
+	void ClearBalls();
 	void ReceiveInput(double changeInBatX);
 	void Draw(const IRenderer* renderer, const Camera& camera) const;
 	void ReleaseBalls();

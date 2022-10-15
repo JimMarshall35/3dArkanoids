@@ -5,3 +5,4 @@ enum class CursorType{
 	CURSOR_DISABLED
 };
 typedef void(*ToggleCursorFunc)(CursorType newVal);
+typedef void(*CloseProgramFunc)(void);

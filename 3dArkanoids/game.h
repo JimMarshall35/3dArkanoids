@@ -17,7 +17,7 @@
 #include "BallManager.h"
 #include "VisualEffectsManager.h"
 #include "SoundEffectsManager.h"
-#include "GameCameraManager.h"
+#include "CameraSpline.h"
 #include "SystemAbstractionTypedefs.h"
 
 #define MAX_NUM_BALLS 50
@@ -101,7 +101,7 @@ private:
 	VisualEffectsManager m_visualEffectsManager;
 	SoundEffectsManager m_soundEffectsManager;
 	Bat m_bat;
-	GameCameraManager m_camManager;
+	CameraSpline m_camManager;
 	GameState m_state = GameState::IN_INTRO;
 	ToggleCursorFunc m_toggleCursor;
 	

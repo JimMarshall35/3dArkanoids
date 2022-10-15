@@ -7,8 +7,8 @@
 #include "SerializationFunctions.h"
 #include "game.h"
 
-LevelSelectScreen::LevelSelectScreen(const std::shared_ptr<IRenderer>& renderer, ToggleCursorFunc toggleCursor, Game* game)
-    :m_renderer(renderer), m_toggleCursor(toggleCursor), m_game(game)
+LevelSelectScreen::LevelSelectScreen(const std::shared_ptr<IRenderer>& renderer, ToggleCursorFunc toggleCursor, CloseProgramFunc closeProgram)
+    :m_renderer(renderer), m_toggleCursor(toggleCursor), m_closeProgram(closeProgram)
 {
     using namespace std;
     ParseResourcesTextFile("levels.txt", [this](string path, string identifier) {
@@ -22,7 +22,6 @@ void LevelSelectScreen::Update(float deltaT)
         m_shouldLoadNewLevelNow = false;
         if (m_levelIdentifierToLevelFilePath.find(m_hovveredLevel) != m_levelIdentifierToLevelFilePath.end()) {
             LoadSerializableFromSingleBigBinary(m_levelIdentifierToLevelFilePath[m_hovveredLevel]);
-            m_game->Init();
             GameFramework::PushLayers("Gameplay",
                 GameLayerType::Draw |
                 GameLayerType::Update |
@@ -73,6 +72,10 @@ std::string LevelSelectScreen::GetDrawableLayerName() const
 
 void LevelSelectScreen::ReceiveInput(const GameInput& input)
 {
+    if (input.ExitGame) {
+        m_closeProgram();
+        return;
+    }
     if (input.Firing) {
         m_shouldLoadNewLevelNow = true;
         return;

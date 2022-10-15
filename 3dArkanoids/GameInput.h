@@ -6,4 +6,5 @@ struct GameInput {
 	bool Firing = false; // for firing the ball, left mouse on pc.
 	double xPos;
 	double yPos;
+	bool ExitGame = false;
 };

@@ -28,13 +28,12 @@ static inline glm::vec2 Vec3ToVec2(const glm::vec3& vec3);
 static inline glm::vec2 AdjustTileCoordsToWorld(const glm::ivec2& vCell);
 
 
-void BallManager::Init(Game* game, Event<EngineUpdateFrameEventArgs>& updateEvent, const Bat* bat)
+void BallManager::Init(Game* game, const Bat* bat)
 {
 	m_game = game;
 	m_bat = bat;
 	m_minBallY = -(bat->GetDistanceFromFirstRow() + 16.0f);
 
-	updateEvent += this;
 }
 
 void BallManager::AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckToBat, float radius, float speed)
@@ -56,6 +55,13 @@ void BallManager::AddBall(const glm::vec3& pos, glm::vec3 direction, bool stuckT
 		} while (*endOfBallList != nullptr);
 		*endOfBallList = &ball;
 	}
+}
+
+void BallManager::ClearBalls()
+{
+	m_numBalls = 0;
+	m_numRecycledBallIndices = 0;
+	m_ballListHead = nullptr;
 }
 
 void BallManager::ReceiveInput(double changeInBatX)

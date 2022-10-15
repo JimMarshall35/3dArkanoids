@@ -1,10 +1,10 @@
-#include "GameCameraManager.h"
+#include "CameraSpline.h"
 #include "Bezier.h"
 #include "PlayfieldDefs.h"
 #include "IRenderer.h"
 #include "Camera.h"
 
-GameCameraManager::GameCameraManager(Camera* cameraToManage)
+CameraSpline::CameraSpline(Camera* cameraToManage)
 {
 	m_cameraToManage = cameraToManage;
 	m_mapFlyoverCurve = std::make_unique<Bezier>();
@@ -17,7 +17,7 @@ GameCameraManager::GameCameraManager(Camera* cameraToManage)
 	m_totalFlyoverTime = m_mapFlyoverCurve->total_length() / m_flyoverSpeedDistanceUnitsPerSecond;
 }
 
-void GameCameraManager::TestVisualiseFlyoverCurve(const Camera& camToDrawUsing, const IRenderer* renderer)
+void CameraSpline::TestVisualiseFlyoverCurve(const Camera& camToDrawUsing, const IRenderer* renderer)
 {
 	for (int i = 10; i < m_mapFlyoverCurve->node_count() - 10; i++) {
 		auto node = m_mapFlyoverCurve->node(i);
@@ -30,6 +30,11 @@ void GameCameraManager::TestVisualiseFlyoverCurve(const Camera& camToDrawUsing, 
 	}
 }
 
+void CameraSpline::Reset()
+{
+	m_flyoverTimeElapsed = 0.0f;
+}
+
 inline glm::vec3 cppSplineVecToGlm(const Vector& vec) {
 	return glm::vec3(vec.x, vec.y, vec.z);
 }
@@ -37,13 +42,12 @@ inline Vector glmVecToCppSpline(const glm::vec3& vec) {
 	return Vector{ vec.x,vec.y,vec.z };
 }
 
-bool GameCameraManager::InterpolateCameraAlongCurve(float deltaT)
+bool CameraSpline::InterpolateCameraAlongCurve(float deltaT)
 {
-	bool rval = false;
 	m_flyoverTimeElapsed += deltaT;
 	if (m_flyoverTimeElapsed > m_totalFlyoverTime) {
-		m_flyoverTimeElapsed = m_totalFlyoverTime;
-		rval = true;
+		m_flyoverTimeElapsed = 0;
+		return true;
 	}
 	auto distanceShouldHaveCovered = m_flyoverTimeElapsed * m_flyoverSpeedDistanceUnitsPerSecond;
 	glm::vec3 cameraPos = cppSplineVecToGlm(m_mapFlyoverCurve->node(0));
@@ -79,5 +83,5 @@ bool GameCameraManager::InterpolateCameraAlongCurve(float deltaT)
 	};
 	m_cameraToManage->Position = cameraPos;
 	m_cameraToManage->LookCameraAt(spotToLookAt, glm::normalize(nextNode - cameraPos));
-	return rval;
+	return false;
 }

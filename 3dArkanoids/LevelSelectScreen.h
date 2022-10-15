@@ -5,7 +5,6 @@
 #include <memory>
 
 class IRenderer;
-class Game;
 
 class LevelSelectScreen
 	:public UpdateableLayerBase,
@@ -13,7 +12,7 @@ class LevelSelectScreen
 	public RecieveInputLayerBase
 {
 public:
-	LevelSelectScreen(const std::shared_ptr<IRenderer>& renderer, ToggleCursorFunc toggleCursor, Game* game);
+	LevelSelectScreen(const std::shared_ptr<IRenderer>& renderer, ToggleCursorFunc toggleCursor, CloseProgramFunc closeWindow);
 
 	// Inherited via UpdateableLayerBase
 	virtual void Update(float deltaT) override;
@@ -44,11 +43,10 @@ public:
 private:
 	std::map<std::string, std::string> m_levelIdentifierToLevelFilePath;
 	std::shared_ptr<IRenderer> m_renderer;
-	ToggleCursorFunc m_toggleCursor;
 	std::string m_hovveredLevel;
 	bool m_shouldLoadNewLevelNow = false;
-	Game* m_game;
+	CloseProgramFunc m_closeProgram;
+	ToggleCursorFunc m_toggleCursor;
 
-	
 };
 

@@ -32,6 +32,7 @@ Game::Game(
 	m_frameUpdateEvent += &m_fallingBlockManager;
 	m_frameUpdateEvent += m_levelEditorServer.get();
 	m_frameUpdateEvent += &m_visualEffectsManager;
+	m_frameUpdateEvent += &m_ballManager;
 }
 
 /// <summary>
@@ -160,6 +161,14 @@ void Game::ReceiveInput(const GameInput& gameInput)
 {
 	// todo : sort this weirdness out. this function should just be the last line
 	// this if check should go in m_ballManager.RecieveInput
+	if (gameInput.ExitGame) {
+		GameFramework::PopLayers(GameLayerType::Draw); // ui overlay
+		GameFramework::PopLayers(
+			GameLayerType::Draw |
+			GameLayerType::Update |
+			GameLayerType::Input);
+		return;
+	}
 	if (gameInput.Firing && m_state == GameState::PLAYING) {
 		m_ballManager.ReleaseBalls();
 	}
@@ -300,9 +309,7 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 	return returnedResult;
 }
 
-void Game::OnUpdatePush()
-{
-}
+
 
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
@@ -342,9 +349,7 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 	return BLOCK_AT_SPACE;
 }
 
-void Game::OnUpdatePop()
-{
-}
+
 
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
 {
@@ -358,6 +363,7 @@ SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& n
 void Game::Init()
 {
 	m_state = GameState::IN_INTRO;
+	m_camManager.Reset();
 	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
 	m_renderer->SetLightPos(
 		glm::vec3(
@@ -367,26 +373,11 @@ void Game::Init()
 	);
 	m_renderer->SetLightColour(glm::vec3(1.0, 1.0, 1.0));
 
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.184f, 0.176f, 0.803f, 1.0f }, glm::vec2{ 0.0f,0.0f } });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 0, 0, 1 }, GetUvOffsetFromByteValue(2) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0, 1, 0, 1 }, GetUvOffsetFromByteValue(3) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.094, 0.949, 0.898, 0.2 }, GetUvOffsetFromByteValue(4) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 0.98, 0.878, 0, 1 }, GetUvOffsetFromByteValue(5) });
-	//m_gameBlockTypes.Add(BlockTypeDescription{ glm::vec4{ 1, 1, 1, 1 }, GetUvOffsetFromByteValue(6) });
-	//m_gameBlockTypes.LoadFromFile("GameBlockTypesNew.jim");
-
-
-
-	//m_playFieldArray.LoadFromFile("Level.jim");
-
 	int w = m_playFieldArray.getW();
 
 	m_bat.SetMinAndMaxXPos(0.0 - BLOCK_WIDTH_UNITS * 0.5f, ((w * BLOCK_WIDTH_UNITS) - BLOCK_WIDTH_UNITS) + BLOCK_WIDTH_UNITS * 0.5f);
 
-	m_ballManager.Init(
-		this,
-		m_frameUpdateEvent,
-		&m_bat);
+	m_ballManager.Init(this, &m_bat);
 
 	const auto ballStartingY =
 		-(m_bat.GetDistanceFromFirstRow() + BLOCK_DEPTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat.GetDepthAndHeight().x * 0.5f);
@@ -466,4 +457,14 @@ void Game::OnDrawablePush()
 
 void Game::OnDrawablePop()
 {
+}
+
+void Game::OnUpdatePush()
+{
+	Init();
+}
+
+void Game::OnUpdatePop()
+{
+	m_ballManager.ClearBalls();
 }

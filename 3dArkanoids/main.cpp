@@ -24,7 +24,7 @@
 #include "SerializationFunctions.h"
 
 #include "PortAudioPlayer.h"
-#include "GameCameraManager.h"
+#include "CameraSpline.h"
 
 #include "LevelSelectScreen.h"
 
@@ -41,7 +41,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
 Camera camera = Camera();
 GLFWwindow* window;
-Game* gamePtr;
+std::shared_ptr<IRenderer> renderer;
 
 double deltaTime = 0;
 
@@ -68,6 +68,10 @@ void ToggleCursorLock(CursorType newType) {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
         break;
     }
+}
+
+void CloseWindow() {
+    glfwSetWindowShouldClose(window, true);
 }
 
 int main()
@@ -99,10 +103,6 @@ int main()
     glfwSetScrollCallback(window, scroll_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
 
-
-    // tell GLFW to capture our mouse
-    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-
     // glad: load all OpenGL function pointers
     // ---------------------------------------
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -117,95 +117,42 @@ int main()
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     // During init, enable debug output
-    //glEnable(GL_DEBUG_OUTPUT);
-    //glDebugMessageCallback(MessageCallback, 0);
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(MessageCallback, 0);
 
     // uncomment this call to draw in wireframe polygons.
     //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-    
-    //camera.Position.z = (((float)PLAYFIELD_DEPTH_BLOCKS / 2.0f) * (float)BLOCK_DEPTH_UNITS)*10;
-    //camera.Position.x = ((float)PLAYFIELD_WIDTH_BLOCKS) * (float)BLOCK_WIDTH_UNITS * 0.5;
-    //camera.Position.y = -200.0f;
-    ////yaw: -90 pitch: 5
-    //camera.Yaw = -90.0f;
-    //camera.Pitch = 50.0f;
-    //camera.updateCameraVectors();
+
     using namespace std;
     using namespace std::chrono;
+
+    // create audio and renderer
     RendererInitialisationData d = { SCR_WIDTH, SCR_HEIGHT, "blocks", 6, "sprites.txt"};
-    auto renderer = make_shared<Renderer>(d);
+    renderer = make_shared<Renderer>(d);
 
     AudioPlayerInitialisationData ad = { "soundfx.txt" };
-
     auto audio = make_shared<PortAudioPlayer>(ad);
 
+    // create game framework layers
     Game game(
         renderer,
         audio,
         [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); },
         &camera,
         &ToggleCursorLock);
-
-    Terrain t;
-
-
-    int nm = 512 * 512 * (128);
-
     GameUiOverlay ui(renderer);
+    LevelSelectScreen levelSelect(renderer, &ToggleCursorLock, &CloseWindow);
 
-    LevelSelectScreen levelSelect(renderer, &ToggleCursorLock, &game);
-
-    gamePtr = &game;
+    // push the initial layer
     GameFramework::PushLayers("LevelSelect",
         GameLayerType::Draw |
         GameLayerType::Update |
         GameLayerType::Input);
 
-    //GameFramework::PushLayers("Gameplay",
-    //    GameLayerType::Draw |
-    //    GameLayerType::Update |
-    //    GameLayerType::Input);
 
-    //GameFramework::PushLayers("GameplayUI",
-    //    GameLayerType::Draw);
-
-    Assimp::Importer importer;
-
-    SerializableProperty p;
-    p.name = "uvoffset";
-    p.type = SerializablePropertyType::Vec2;
-    p.data.dataUnion.Vec2.x = 0;
-    p.data.dataUnion.Vec2.y = 0;
-
-    //SaveSerializableToSingleBigBinary("Level.big");
-    //LoadSerializableFromSingleBigBinary("level.big");
-    // SetSerializableProperty("GameBlockTypes.blocktypes[5].uvoffset", p);
-    //game.Init();
     DebugPrintAllSerializableThings();
 
     auto prevClock = high_resolution_clock::now();
-    //t.GenerateTerrainVoxelFieldFile("terrain.vox",)
-    //t.OpenStreamToTerrainVoxelsFile("terrain.vox");
-    //t.StreamCube({ 0,0,0 });
-    //Curve* curve = new Bezier();
-
-    //curve->set_steps(100); // generate 100 interpolate points between the last 4 way points
-
-    //curve->add_way_point(Vector(1, 1, 0));
-    //curve->add_way_point(Vector(2, 3, 0));
-    //curve->add_way_point(Vector(3, 2, 0));
-    //curve->add_way_point(Vector(4, 6, 0));
-
-    //std::cout << "nodes: " << curve->node_count() << std::endl;
-    //std::cout << "total length: " << curve->total_length() << std::endl;
-    //for (int i = 0; i < curve->node_count(); ++i) {
-    //    std::cout << "node #" << i << ": " << curve->node(i).toString() << " (length so far: " << curve->length_from_starting_point(i) << ")" << std::endl;
-    //}
-    //delete curve;
-
-    //game.Init();
-
-    //t.GenerateTerrainVoxelFieldFile("terrain.vox", 1.0, 512, 512, 128, &TestTerrainDensityFunction);
 
     // render loop
     // -----------
@@ -253,13 +200,22 @@ int main()
     return 0;
 }
 
+bool escapeAcknowledged = false;
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
 {
     static glm::vec3 block1Pos(0.0,1.0,0.0);
-    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-        glfwSetWindowShouldClose(window, true);
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS && !escapeAcknowledged) {
+        GameInput gi;
+        gi.ExitGame = true;
+        escapeAcknowledged = true;
+        GameFramework::RecieveInput(gi);
+    }
+    else if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) {
+        escapeAcknowledged = false;
+    }
+        //glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
         camera.ProcessKeyboard(FORWARD, deltaTime);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
@@ -283,7 +239,7 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height)
     // make sure the viewport matches the new window dimensions; note that width and 
     // height will be significantly larger than specified on retina displays.
     glViewport(0, 0, width, height);
-    gamePtr->SetScreenDims(glm::ivec2(width, height));
+    renderer->SetScreenDims(glm::ivec2(width, height));
 }
 
 double lastX = SCR_WIDTH / 2.0f;

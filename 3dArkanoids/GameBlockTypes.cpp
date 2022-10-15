@@ -102,6 +102,7 @@ void GameBlockTypes::InitialiseSerializablePropertiesArray()
 	}
 
 	SerializableProperty prop;
+	m_serializableProperties.clear();
 	m_serializableProperties.push_back(prop);
 	auto& p = m_serializableProperties.back();
 	p.name = "blocktypes";

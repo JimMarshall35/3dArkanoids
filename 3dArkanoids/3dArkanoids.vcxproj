@@ -165,7 +165,7 @@
     <ClCompile Include="BlockInstanceRenderData.cpp" />
     <ClCompile Include="BSpline.cpp" />
     <ClCompile Include="Camera.cpp" />
-    <ClCompile Include="GameCameraManager.cpp" />
+    <ClCompile Include="CameraSpline.cpp" />
     <ClCompile Include="CatmullRom.cpp" />
     <ClCompile Include="ChangeBlockCallData.cpp" />
     <ClCompile Include="CubeDrawer.cpp" />
@@ -217,7 +217,7 @@
     <ClInclude Include="BlockInstanceRenderData.h" />
     <ClInclude Include="BSpline.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="GameCameraManager.h" />
+    <ClInclude Include="CameraSpline.h" />
     <ClInclude Include="CatmullRom.h" />
     <ClInclude Include="ChangeBlockCallData.h" />
     <ClInclude Include="CubeDrawer.h" />

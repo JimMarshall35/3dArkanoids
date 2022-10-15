@@ -22,56 +22,17 @@
     <Filter Include="Header Files\graphics\interfaces">
       <UniqueIdentifier>{476ae588-1b6f-4fb9-91ab-189e59dfcc48}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\game">
-      <UniqueIdentifier>{9d92b01e-46cd-4ba1-93f5-326d14293435}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game">
-      <UniqueIdentifier>{3cdd17f3-effd-4ad5-9a09-b9d8a6bc55d5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\utils">
       <UniqueIdentifier>{affac581-a71a-489a-a012-48cdf48e2c14}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\utils">
       <UniqueIdentifier>{c8af2025-618e-4241-b7be-e972826d71f2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\game\level editor server">
-      <UniqueIdentifier>{bf838fec-e86f-4663-a6d0-659bcfd4ff59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level editor server">
-      <UniqueIdentifier>{ea629dcc-9fc2-4710-95fc-7a5d7d7cb357}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level editor server\grpc">
-      <UniqueIdentifier>{4d349f5c-2523-49e6-9c2c-afa039b173a4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\level editor server\grpc">
-      <UniqueIdentifier>{eaaed2e9-e37c-4985-bcca-120a50026d1e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\utils\third party">
       <UniqueIdentifier>{9efd3a9d-a296-4f75-9d89-9bea69515d38}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\utils\third party">
       <UniqueIdentifier>{6867d13f-9b2b-4d9e-8d2d-c40abacffb3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\serialization framework">
-      <UniqueIdentifier>{eedc3987-416c-41e9-a71f-b7094f49c4e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\serialization framework">
-      <UniqueIdentifier>{4e63cf45-8600-4be5-a546-1c55f399f5bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\level editor server\grpc\call datas">
-      <UniqueIdentifier>{e41809d9-273f-4b47-8b72-a400b53aa65d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\game\level editor server\grpc\auto generated">
-      <UniqueIdentifier>{439e77d3-bd17-4d90-9e78-c6707a922c6c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level editor server\grpc\call datas">
-      <UniqueIdentifier>{0fb9d63f-b0e7-4f46-9558-8b8345c442c5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level editor server\grpc\auto generated">
-      <UniqueIdentifier>{bae4d316-07fd-446c-a2ca-88194e43ca50}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\game\level editor server\grpc\call datas\base classes">
-      <UniqueIdentifier>{9adbba7b-35f6-44ed-994d-a37662027fde}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\audio">
       <UniqueIdentifier>{5d191ae0-e7bb-496f-afce-960399ed54be}</UniqueIdentifier>
@@ -82,8 +43,83 @@
     <Filter Include="Header Files\utils\third party\cpp-spline">
       <UniqueIdentifier>{ba37a734-48e4-445e-a0ff-e4e2317feef6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\utils\cpp-spline">
+    <Filter Include="Header Files\level editor server">
+      <UniqueIdentifier>{ea629dcc-9fc2-4710-95fc-7a5d7d7cb357}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level editor server\grpc">
+      <UniqueIdentifier>{4d349f5c-2523-49e6-9c2c-afa039b173a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level editor server\grpc\call datas">
+      <UniqueIdentifier>{0fb9d63f-b0e7-4f46-9558-8b8345c442c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level editor server\grpc\call datas\base classes">
+      <UniqueIdentifier>{9adbba7b-35f6-44ed-994d-a37662027fde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\level editor server\grpc\auto generated">
+      <UniqueIdentifier>{bae4d316-07fd-446c-a2ca-88194e43ca50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\serialization framework">
+      <UniqueIdentifier>{eedc3987-416c-41e9-a71f-b7094f49c4e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\level editor server">
+      <UniqueIdentifier>{bf838fec-e86f-4663-a6d0-659bcfd4ff59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\level editor server\grpc">
+      <UniqueIdentifier>{eaaed2e9-e37c-4985-bcca-120a50026d1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\level editor server\grpc\call datas">
+      <UniqueIdentifier>{e41809d9-273f-4b47-8b72-a400b53aa65d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\level editor server\grpc\auto generated">
+      <UniqueIdentifier>{439e77d3-bd17-4d90-9e78-c6707a922c6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\serialization framework">
+      <UniqueIdentifier>{4e63cf45-8600-4be5-a546-1c55f399f5bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\camera">
+      <UniqueIdentifier>{08561835-e21e-4874-9f1d-79102e07d775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\camera">
+      <UniqueIdentifier>{e30f1db4-b9ad-4b74-af48-00202125e726}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game framework">
+      <UniqueIdentifier>{0736d397-8a99-4e34-9b44-26bde485e39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game framework layers">
+      <UniqueIdentifier>{be11a946-fd5b-4f71-b6c9-c6533b9a91dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game framework layers\game">
+      <UniqueIdentifier>{9d92b01e-46cd-4ba1-93f5-326d14293435}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game framework layers\level select screen">
+      <UniqueIdentifier>{7228fa6d-dbf3-40be-b3d7-ed00bc1aa1b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\game framework layers\game ui overlay">
+      <UniqueIdentifier>{760064ce-3724-4875-82f0-3c5f2d6e5429}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework">
+      <UniqueIdentifier>{a7055ba3-01ec-4eb7-8b83-017d2a365feb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework layers">
+      <UniqueIdentifier>{ae278934-d59d-413a-b546-b2324ea72eaa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework layers\game ui overlay">
+      <UniqueIdentifier>{6ac51022-0c34-494c-acd4-5eba21159c0f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework layers\level select screen">
+      <UniqueIdentifier>{cd867e60-56e1-469e-8d53-c6a8ef0465d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework layers\game">
+      <UniqueIdentifier>{3cdd17f3-effd-4ad5-9a09-b9d8a6bc55d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils\third party\cpp-spline">
       <UniqueIdentifier>{b4308ee5-57c8-480a-9c4e-4c64da6a0032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\graphics\third party">
+      <UniqueIdentifier>{2e79f1a8-f205-4a33-864f-6c3ae2696d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graphics\third party">
+      <UniqueIdentifier>{d09403e1-9344-446e-9a6d-a54091210c6b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -100,40 +136,28 @@
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="FallingBlock.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="BlockInstanceRenderData.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
     <ClCompile Include="GrpcLevelEditorServer.cpp">
-      <Filter>Source Files\game\level editor server\grpc</Filter>
+      <Filter>Source Files\level editor server\grpc</Filter>
     </ClCompile>
     <ClCompile Include="FallingBlockManager.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="PlayboardEditAsyncImpl.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameBlockTypes.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameFramework.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="GameUiOverlay.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
-    <ClCompile Include="Sphere.cpp">
-      <Filter>Source Files\graphics</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="BallManager.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="stbi_image.cpp">
       <Filter>Source Files\utils\third party</Filter>
@@ -141,47 +165,41 @@
     <ClCompile Include="GLTextureHelper.cpp">
       <Filter>Source Files\graphics</Filter>
     </ClCompile>
-    <ClCompile Include="Terrain.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SimplexNoise.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SerializationFunctions.cpp">
-      <Filter>Source Files\game\serialization framework</Filter>
+      <Filter>Source Files\serialization framework</Filter>
     </ClCompile>
     <ClCompile Include="Bat.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="GetSerializableNodesCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="ChangeBlockCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="GetBoardStateCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="InitialConnectionHandshakeCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc\auto generated</Filter>
+      <Filter>Source Files\level editor server\grpc\auto generated</Filter>
     </ClCompile>
     <ClCompile Include="PlayBoardEdit.pb.cc">
-      <Filter>Source Files\game\level editor server\grpc\auto generated</Filter>
+      <Filter>Source Files\level editor server\grpc\auto generated</Filter>
     </ClCompile>
     <ClCompile Include="SetSerializablePropertyCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="SetBoardStateCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="GetUpdatedBoardStreamCallData.cpp">
-      <Filter>Source Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
     </ClCompile>
     <ClCompile Include="VisualEffectsManager.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
     <ClCompile Include="PortAudioPlayer.cpp">
       <Filter>Source Files\audio</Filter>
@@ -192,32 +210,50 @@
     <ClCompile Include="TextFileResourceListParser.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
-    <ClCompile Include="SoundEffectsManager.cpp">
-      <Filter>Source Files\game</Filter>
-    </ClCompile>
     <ClCompile Include="FrameMemoryAllocator.cpp">
       <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="Bezier.cpp">
-      <Filter>Source Files\utils\cpp-spline</Filter>
+      <Filter>Source Files\utils\third party\cpp-spline</Filter>
     </ClCompile>
     <ClCompile Include="BSpline.cpp">
-      <Filter>Source Files\utils\cpp-spline</Filter>
+      <Filter>Source Files\utils\third party\cpp-spline</Filter>
     </ClCompile>
     <ClCompile Include="CatmullRom.cpp">
-      <Filter>Source Files\utils\cpp-spline</Filter>
+      <Filter>Source Files\utils\third party\cpp-spline</Filter>
     </ClCompile>
     <ClCompile Include="Curve.cpp">
-      <Filter>Source Files\utils\cpp-spline</Filter>
+      <Filter>Source Files\utils\third party\cpp-spline</Filter>
     </ClCompile>
     <ClCompile Include="Vector.cpp">
-      <Filter>Source Files\utils\cpp-spline</Filter>
-    </ClCompile>
-    <ClCompile Include="GameCameraManager.cpp">
-      <Filter>Source Files\game</Filter>
+      <Filter>Source Files\utils\third party\cpp-spline</Filter>
     </ClCompile>
     <ClCompile Include="LevelSelectScreen.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\game framework layers\level select screen</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraSpline.cpp">
+      <Filter>Source Files\camera</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundEffectsManager.cpp">
+      <Filter>Source Files\game framework layers\game</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFramework.cpp">
+      <Filter>Source Files\game framework</Filter>
+    </ClCompile>
+    <ClCompile Include="GameUiOverlay.cpp">
+      <Filter>Source Files\game framework layers\game ui overlay</Filter>
+    </ClCompile>
+    <ClCompile Include="SimplexNoise.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Terrain.cpp">
+      <Filter>Source Files\graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Sphere.cpp">
+      <Filter>Source Files\graphics\third party</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -234,13 +270,10 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="PlayfieldDefs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="Array3d.h">
       <Filter>Header Files\utils</Filter>
@@ -249,13 +282,13 @@
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="FallingBlock.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="FallingBlockManager.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="BlockColourDefs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
       <Filter>Header Files\utils</Filter>
@@ -264,7 +297,7 @@
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="FallingBlockFinishedEventArgs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="SizedQueue.h">
       <Filter>Header Files\utils</Filter>
@@ -276,16 +309,16 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="MasterArrayUpdatedEventArgs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="ILevelEditorServerGame.h">
-      <Filter>Header Files\game\level editor server</Filter>
+      <Filter>Header Files\level editor server</Filter>
     </ClInclude>
     <ClInclude Include="ILevelEditorServer.h">
-      <Filter>Header Files\game\level editor server</Filter>
+      <Filter>Header Files\level editor server</Filter>
     </ClInclude>
     <ClInclude Include="LevelEditorServerFactoryTypedef.h">
-      <Filter>Header Files\game\level editor server</Filter>
+      <Filter>Header Files\level editor server</Filter>
     </ClInclude>
     <ClInclude Include="TSQueue.h">
       <Filter>Header Files\utils</Filter>
@@ -294,37 +327,25 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GrpcLevelEditorServer.h">
-      <Filter>Header Files\game\level editor server\grpc</Filter>
+      <Filter>Header Files\level editor server\grpc</Filter>
     </ClInclude>
     <ClInclude Include="FrameMemoryAllocator.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="GameBlockTypes.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="GameInput.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="AutoList.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="Bat.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameFramework.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameUiOverlay.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="GameToUiMessage.h">
-      <Filter>Header Files\game</Filter>
-    </ClInclude>
-    <ClInclude Include="Sphere.h">
-      <Filter>Header Files\graphics</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="BallManager.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="stb_image_write.h">
       <Filter>Header Files\utils\third party</Filter>
@@ -339,19 +360,19 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="ISerializable.h">
-      <Filter>Header Files\game\serialization framework</Filter>
+      <Filter>Header Files\serialization framework</Filter>
     </ClInclude>
     <ClInclude Include="SerializablePropertyType.h">
-      <Filter>Header Files\game\serialization framework</Filter>
+      <Filter>Header Files\serialization framework</Filter>
     </ClInclude>
     <ClInclude Include="SerializableProperty.h">
-      <Filter>Header Files\game\serialization framework</Filter>
+      <Filter>Header Files\serialization framework</Filter>
     </ClInclude>
     <ClInclude Include="ISerializablePropertiesNode.h">
-      <Filter>Header Files\game\serialization framework</Filter>
+      <Filter>Header Files\serialization framework</Filter>
     </ClInclude>
     <ClInclude Include="SerializationFunctions.h">
-      <Filter>Header Files\game\serialization framework</Filter>
+      <Filter>Header Files\serialization framework</Filter>
     </ClInclude>
     <ClInclude Include="Terrain.h">
       <Filter>Header Files\graphics</Filter>
@@ -363,46 +384,46 @@
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
     <ClInclude Include="IProceed.h">
-      <Filter>Header Files\game\level editor server\grpc</Filter>
+      <Filter>Header Files\level editor server\grpc</Filter>
     </ClInclude>
     <ClInclude Include="ChangeBlockCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="GetBoardStateCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="GetSerializableNodesCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="InitialConnectionHandshakeCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="PlayBoardEdit.pb.h">
-      <Filter>Header Files\game\level editor server\grpc\auto generated</Filter>
+      <Filter>Header Files\level editor server\grpc\auto generated</Filter>
     </ClInclude>
     <ClInclude Include="PlayBoardEdit.grpc.pb.h">
-      <Filter>Header Files\game\level editor server\grpc\auto generated</Filter>
+      <Filter>Header Files\level editor server\grpc\auto generated</Filter>
     </ClInclude>
     <ClInclude Include="SetSerializablePropertyCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="SetBoardStateCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="GRPCStreamingCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas\base classes</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas\base classes</Filter>
     </ClInclude>
     <ClInclude Include="GRPCCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas\base classes</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas\base classes</Filter>
     </ClInclude>
     <ClInclude Include="GetUpdatedBoardStreamCallData.h">
-      <Filter>Header Files\game\level editor server\grpc\call datas</Filter>
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
     <ClInclude Include="BallComboEventArgs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="VisualEffectsManager.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="audiofile.h">
       <Filter>Header Files\audio</Filter>
@@ -425,11 +446,8 @@
     <ClInclude Include="TextFileResourceListParser.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="SoundEffectsManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SoundEffectEventArgs.h">
-      <Filter>Header Files\game</Filter>
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
     <ClInclude Include="Bezier.h">
       <Filter>Header Files\utils\third party\cpp-spline</Filter>
@@ -446,14 +464,32 @@
     <ClInclude Include="Vector.h">
       <Filter>Header Files\utils\third party\cpp-spline</Filter>
     </ClInclude>
-    <ClInclude Include="GameCameraManager.h">
-      <Filter>Header Files\game</Filter>
+    <ClInclude Include="SystemAbstractionTypedefs.h">
+      <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="LevelSelectScreen.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\game framework layers\level select screen</Filter>
     </ClInclude>
-    <ClInclude Include="SystemAbstractionTypedefs.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="CameraSpline.h">
+      <Filter>Header Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Header Files\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="SoundEffectsManager.h">
+      <Filter>Header Files\game framework layers\game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameFramework.h">
+      <Filter>Header Files\game framework</Filter>
+    </ClInclude>
+    <ClInclude Include="GameUiOverlay.h">
+      <Filter>Header Files\game framework layers\game ui overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="GameToUiMessage.h">
+      <Filter>Header Files\game framework layers\game ui overlay</Filter>
+    </ClInclude>
+    <ClInclude Include="Sphere.h">
+      <Filter>Header Files\graphics\third party</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

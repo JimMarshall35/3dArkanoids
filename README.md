@@ -19,4 +19,13 @@ possible mechanics will include:
 
 work in progress.
 
+c++ libraries used:
+port audio,
+freetype,
+assimp (not yet actually used),
+stbi_image
+
+uses this spline library:
+https://github.com/chen0040/cpp-spline
+
 VS 2019

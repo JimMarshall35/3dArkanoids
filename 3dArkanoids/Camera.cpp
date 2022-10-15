@@ -81,6 +81,13 @@ void Camera::updateCameraVectors()
     Up = glm::normalize(glm::cross(Right, Front));
 }
 
+void Camera::LookCameraAt(const glm::vec3& point)
+{
+    Front = glm::normalize(point - Position);
+    //Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+    //Up = glm::normalize(glm::cross(Right, Front));
+}
+
 #define CAMERA_SAVED_BINARY_SIZE (sizeof(glm::vec3) * 5 + sizeof(float) * 5)
 
 void Camera::SaveToFile(std::string path) const

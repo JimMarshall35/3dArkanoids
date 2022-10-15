@@ -79,6 +79,12 @@
     <Filter Include="Source Files\audio">
       <UniqueIdentifier>{8ab63160-118b-4391-86ef-8171f8f20ee1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\utils\third party\cpp-spline">
+      <UniqueIdentifier>{ba37a734-48e4-445e-a0ff-e4e2317feef6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\utils\cpp-spline">
+      <UniqueIdentifier>{b4308ee5-57c8-480a-9c4e-4c64da6a0032}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -109,9 +115,6 @@
       <Filter>Source Files\game</Filter>
     </ClCompile>
     <ClCompile Include="PlayboardEditAsyncImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="FrameMemoryAllocator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
@@ -190,6 +193,27 @@
       <Filter>Source Files\utils</Filter>
     </ClCompile>
     <ClCompile Include="SoundEffectsManager.cpp">
+      <Filter>Source Files\game</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameMemoryAllocator.cpp">
+      <Filter>Source Files\utils</Filter>
+    </ClCompile>
+    <ClCompile Include="Bezier.cpp">
+      <Filter>Source Files\utils\cpp-spline</Filter>
+    </ClCompile>
+    <ClCompile Include="BSpline.cpp">
+      <Filter>Source Files\utils\cpp-spline</Filter>
+    </ClCompile>
+    <ClCompile Include="CatmullRom.cpp">
+      <Filter>Source Files\utils\cpp-spline</Filter>
+    </ClCompile>
+    <ClCompile Include="Curve.cpp">
+      <Filter>Source Files\utils\cpp-spline</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>Source Files\utils\cpp-spline</Filter>
+    </ClCompile>
+    <ClCompile Include="GameCameraManager.cpp">
       <Filter>Source Files\game</Filter>
     </ClCompile>
   </ItemGroup>
@@ -402,6 +426,24 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SoundEffectEventArgs.h">
+      <Filter>Header Files\game</Filter>
+    </ClInclude>
+    <ClInclude Include="Bezier.h">
+      <Filter>Header Files\utils\third party\cpp-spline</Filter>
+    </ClInclude>
+    <ClInclude Include="BSpline.h">
+      <Filter>Header Files\utils\third party\cpp-spline</Filter>
+    </ClInclude>
+    <ClInclude Include="CatmullRom.h">
+      <Filter>Header Files\utils\third party\cpp-spline</Filter>
+    </ClInclude>
+    <ClInclude Include="Curve.h">
+      <Filter>Header Files\utils\third party\cpp-spline</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>Header Files\utils\third party\cpp-spline</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCameraManager.h">
       <Filter>Header Files\game</Filter>
     </ClInclude>
   </ItemGroup>

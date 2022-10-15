@@ -24,6 +24,7 @@
 #include "SerializationFunctions.h"
 
 #include "PortAudioPlayer.h"
+#include "GameCameraManager.h"
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
@@ -133,6 +134,8 @@ int main()
 
     Terrain t;
 
+    GameCameraManager camManager(&camera);
+
     int nm = 512 * 512 * (128);
 
     GameUiOverlay ui(renderer);
@@ -163,11 +166,24 @@ int main()
 
     auto prevClock = high_resolution_clock::now();
     //t.GenerateTerrainVoxelFieldFile("terrain.vox",)
-    t.OpenStreamToTerrainVoxelsFile("terrain.vox");
-    t.StreamCube({ 0,0,0 });
-    
-    
-    
+    //t.OpenStreamToTerrainVoxelsFile("terrain.vox");
+    //t.StreamCube({ 0,0,0 });
+    //Curve* curve = new Bezier();
+
+    //curve->set_steps(100); // generate 100 interpolate points between the last 4 way points
+
+    //curve->add_way_point(Vector(1, 1, 0));
+    //curve->add_way_point(Vector(2, 3, 0));
+    //curve->add_way_point(Vector(3, 2, 0));
+    //curve->add_way_point(Vector(4, 6, 0));
+
+    //std::cout << "nodes: " << curve->node_count() << std::endl;
+    //std::cout << "total length: " << curve->total_length() << std::endl;
+    //for (int i = 0; i < curve->node_count(); ++i) {
+    //    std::cout << "node #" << i << ": " << curve->node(i).toString() << " (length so far: " << curve->length_from_starting_point(i) << ")" << std::endl;
+    //}
+    //delete curve;
+
     //game.Init();
 
     //t.GenerateTerrainVoxelFieldFile("terrain.vox", 1.0, 512, 512, 128, &TestTerrainDensityFunction);
@@ -190,6 +206,7 @@ int main()
         // update
         // ------
         GameFramework::Update(deltaTime);
+        //camManager.InterpolateCameraAlongCurve(deltaTime);
 
         // render
         // ------
@@ -197,6 +214,7 @@ int main()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         GameFramework::Draw(camera);
+        //camManager.TestVisualiseFlyoverCurve(camera, renderer.get());
 
         glfwSwapBuffers(window);
         glfwPollEvents();

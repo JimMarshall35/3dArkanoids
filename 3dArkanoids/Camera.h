@@ -21,7 +21,7 @@ enum Camera_Movement {
 };
 
 // Default camera values
-const float YAW = -90.0f;
+const float YAW = -0.0;
 const float PITCH = 0.0f;
 const float SPEED = 10.0f;
 const float SENSITIVITY = 0.4f;
@@ -48,7 +48,7 @@ public:
     float Zoom;
 
     // constructor with vectors
-    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f), float yaw = YAW, float pitch = PITCH);
+    Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 0.0f, 1.0f), float yaw = YAW, float pitch = PITCH);
 
 
     // constructor with scalar values
@@ -68,6 +68,8 @@ public:
     //private:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();
+
+    void LookCameraAt(const glm::vec3& point);
 
     /*void SaveToFile(std::string file) const;
     void LoadFromFile(std::string file);*/

@@ -161,10 +161,15 @@
   <ItemGroup>
     <ClCompile Include="BallManager.cpp" />
     <ClCompile Include="Bat.cpp" />
+    <ClCompile Include="Bezier.cpp" />
     <ClCompile Include="BlockInstanceRenderData.cpp" />
+    <ClCompile Include="BSpline.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="GameCameraManager.cpp" />
+    <ClCompile Include="CatmullRom.cpp" />
     <ClCompile Include="ChangeBlockCallData.cpp" />
     <ClCompile Include="CubeDrawer.cpp" />
+    <ClCompile Include="Curve.cpp" />
     <ClCompile Include="FallingBlock.cpp" />
     <ClCompile Include="FallingBlockManager.cpp" />
     <ClCompile Include="FrameMemoryAllocator.cpp" />
@@ -194,6 +199,7 @@
     <ClCompile Include="stbi_image.cpp" />
     <ClCompile Include="Terrain.cpp" />
     <ClCompile Include="TextFileResourceListParser.cpp" />
+    <ClCompile Include="Vector.cpp" />
     <ClCompile Include="VisualEffectsManager.cpp" />
     <ClCompile Include="zzfx.c" />
   </ItemGroup>
@@ -205,11 +211,16 @@
     <ClInclude Include="BallComboEventArgs.h" />
     <ClInclude Include="BallManager.h" />
     <ClInclude Include="Bat.h" />
+    <ClInclude Include="Bezier.h" />
     <ClInclude Include="BlockColourDefs.h" />
     <ClInclude Include="BlockInstanceRenderData.h" />
+    <ClInclude Include="BSpline.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="GameCameraManager.h" />
+    <ClInclude Include="CatmullRom.h" />
     <ClInclude Include="ChangeBlockCallData.h" />
     <ClInclude Include="CubeDrawer.h" />
+    <ClInclude Include="Curve.h" />
     <ClInclude Include="EngineUpdateFrameEventArgs.h" />
     <ClInclude Include="ErrorHandling.h" />
     <ClInclude Include="Event.h" />
@@ -266,6 +277,7 @@
     <ClInclude Include="transvoxel.h" />
     <ClInclude Include="TSQueue.h" />
     <ClInclude Include="typedefs.h" />
+    <ClInclude Include="Vector.h" />
     <ClInclude Include="VisualEffectsManager.h" />
     <ClInclude Include="zzfx.h" />
   </ItemGroup>

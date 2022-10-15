@@ -10,8 +10,15 @@
 
 size_t m_currentNumBlocks = 0;
 
-Game::Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPlayer> audioPlayer, LevelEditorServerFactory levelEditorServerFactory)
-	:m_soundEffectsManager(SoundEffectsManager(audioPlayer))
+Game::Game(
+	const std::shared_ptr<IRenderer>& renderer,
+	std::shared_ptr<IAudioPlayer> audioPlayer,
+	LevelEditorServerFactory levelEditorServerFactory,
+	Camera* cam, ToggleCursorFunc toggleCursor
+)
+	:m_soundEffectsManager(SoundEffectsManager(audioPlayer)),
+	m_camManager(cam),
+	m_toggleCursor(toggleCursor)
 {
 	m_renderer = renderer;
 	m_audioPlayer = audioPlayer;
@@ -19,6 +26,12 @@ Game::Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPla
 	m_ballManager.SubscribeToBallComboEvent(&m_visualEffectsManager);
 	m_ballManager.SubscribeToSoundEffectEvent(&m_soundEffectsManager);
 	m_ballManager.SubscribeToBallComboEvent(&m_soundEffectsManager);
+
+	m_fallingBlockManager.BlockFinished += this;
+	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
+	m_frameUpdateEvent += &m_fallingBlockManager;
+	m_frameUpdateEvent += m_levelEditorServer.get();
+	m_frameUpdateEvent += &m_visualEffectsManager;
 }
 
 /// <summary>
@@ -65,6 +78,21 @@ void Game::SetScreenDims(const glm::ivec2& screenDims)
 void Game::Update(float deltaT)
 {
 	m_frameUpdateEvent(EngineUpdateFrameEventArgs{ deltaT });
+	switch (m_state)
+	{
+	case GameState::IN_INTRO:
+		{
+			auto finished = m_camManager.InterpolateCameraAlongCurve(deltaT);
+			if (finished) {
+				m_state = GameState::PLAYING;
+			}
+		}
+		break;
+	case GameState::PLAYING:
+		break;
+	default:
+		break;
+	}
 	
 }
 
@@ -132,7 +160,7 @@ void Game::ReceiveInput(const GameInput& gameInput)
 {
 	// todo : sort this weirdness out. this function should just be the last line
 	// this if check should go in m_ballManager.RecieveInput
-	if (gameInput.Firing) {
+	if (gameInput.Firing && m_state == GameState::PLAYING) {
 		m_ballManager.ReleaseBalls();
 	}
 	m_ballManager.ReceiveInput(m_bat.RecieveInput(gameInput));
@@ -272,6 +300,10 @@ EditBlockResultCode Game::AddOrChangeBlock(const glm::ivec3& point, unsigned cha
 	return returnedResult;
 }
 
+void Game::OnUpdatePush()
+{
+}
+
 EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 {
 	if (point.x < 0
@@ -310,6 +342,10 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 	return BLOCK_AT_SPACE;
 }
 
+void Game::OnUpdatePop()
+{
+}
+
 SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& newState)
 {
 	m_playFieldArray = newState;
@@ -321,12 +357,7 @@ SetBoardDescriptionResultCPP Game::SetBoardState(const Array3D<unsigned char>& n
 
 void Game::Init()
 {
-	m_fallingBlockManager.BlockFinished += this;
-	m_fallingBlockManager.SubscribeAsListenerToMasterArrayUpdatedEvent(m_masterArrayUpdatedEvent);
-	m_frameUpdateEvent += &m_fallingBlockManager;
-	m_frameUpdateEvent += m_levelEditorServer.get();
-	m_frameUpdateEvent += &m_visualEffectsManager;
-
+	m_state = GameState::IN_INTRO;
 	float LightPosZMultiplier = 5.0f; // this multiplied by height of the board is the lights z position
 	m_renderer->SetLightPos(
 		glm::vec3(
@@ -419,7 +450,20 @@ void Game::SetPossibleBlocks(const std::vector<BlockTypeDescriptionEditor>& poss
 	}
 }
 
+void Game::OnInputPush()
+{
+	m_toggleCursor(CursorType::CURSOR_DISABLED);
+}
 
+void Game::OnInputPop()
+{
+	m_toggleCursor(CursorType::CURSOR_ENABLED);
+}
 
+void Game::OnDrawablePush()
+{
+}
 
-
+void Game::OnDrawablePop()
+{
+}

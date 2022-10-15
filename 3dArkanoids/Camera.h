@@ -69,7 +69,7 @@ public:
     // calculates the front vector from the Camera's (updated) Euler Angles
     void updateCameraVectors();
 
-    void LookCameraAt(const glm::vec3& point);
+    void LookCameraAt(const glm::vec3& point, const glm::vec3& right);
 
     /*void SaveToFile(std::string file) const;
     void LoadFromFile(std::string file);*/

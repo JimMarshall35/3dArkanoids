@@ -26,6 +26,8 @@
 #include "PortAudioPlayer.h"
 #include "GameCameraManager.h"
 
+#include "LevelSelectScreen.h"
+
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 1200
 
@@ -38,7 +40,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn);
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
 Camera camera = Camera();
-Renderer* renderer;
+GLFWwindow* window;
 Game* gamePtr;
 
 double deltaTime = 0;
@@ -57,6 +59,16 @@ static void GLAPIENTRY MessageCallback(GLenum source,
 }
 
 
+void ToggleCursorLock(CursorType newType) {
+    switch (newType) {
+    case CursorType::CURSOR_DISABLED:
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        break;
+    case CursorType::CURSOR_ENABLED:
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        break;
+    }
+}
 
 int main()
 {
@@ -73,7 +85,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Arkanoids 3D", NULL, NULL);
+    window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Arkanoids 3D", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -81,7 +93,7 @@ int main()
         return -1;
     }
     glfwMakeContextCurrent(window);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
     glfwSetCursorPosCallback(window, mouse_callback);
     glfwSetScrollCallback(window, scroll_callback);
@@ -130,25 +142,32 @@ int main()
     Game game(
         renderer,
         audio,
-        [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); });
+        [](ILevelEditorServerGame* g) { return std::make_unique<GrpcLevelEditorServer>(g); },
+        &camera,
+        &ToggleCursorLock);
 
     Terrain t;
 
-    GameCameraManager camManager(&camera);
 
     int nm = 512 * 512 * (128);
 
     GameUiOverlay ui(renderer);
 
-    gamePtr = &game;
+    LevelSelectScreen levelSelect(renderer, &ToggleCursorLock, &game);
 
-    GameFramework::PushLayers("Gameplay",
+    gamePtr = &game;
+    GameFramework::PushLayers("LevelSelect",
         GameLayerType::Draw |
         GameLayerType::Update |
         GameLayerType::Input);
 
-    GameFramework::PushLayers("GameplayUI",
-        GameLayerType::Draw);
+    //GameFramework::PushLayers("Gameplay",
+    //    GameLayerType::Draw |
+    //    GameLayerType::Update |
+    //    GameLayerType::Input);
+
+    //GameFramework::PushLayers("GameplayUI",
+    //    GameLayerType::Draw);
 
     Assimp::Importer importer;
 
@@ -159,9 +178,9 @@ int main()
     p.data.dataUnion.Vec2.y = 0;
 
     //SaveSerializableToSingleBigBinary("Level.big");
-    LoadSerializableFromSingleBigBinary("level.big");
-   // SetSerializableProperty("GameBlockTypes.blocktypes[5].uvoffset", p);
-    game.Init();
+    //LoadSerializableFromSingleBigBinary("level.big");
+    // SetSerializableProperty("GameBlockTypes.blocktypes[5].uvoffset", p);
+    //game.Init();
     DebugPrintAllSerializableThings();
 
     auto prevClock = high_resolution_clock::now();
@@ -206,7 +225,6 @@ int main()
         // update
         // ------
         GameFramework::Update(deltaTime);
-        //camManager.InterpolateCameraAlongCurve(deltaTime);
 
         // render
         // ------
@@ -286,7 +304,7 @@ void mouse_callback(GLFWwindow* window, double xpos, double ypos)
     double xoffset = xpos - lastX;
     double yoffset = lastY - ypos; // reversed since y-coordinates go from bottom to top
 
-    GameInput input = { xoffset, false };
+    GameInput input = { xoffset, false, xpos, ypos };
     GameFramework::RecieveInput(input);
 
     lastX = xpos;

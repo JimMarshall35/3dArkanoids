@@ -184,6 +184,7 @@
     <ClCompile Include="GLTextureHelper.cpp" />
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="InitialConnectionHandshakeCallData.cpp" />
+    <ClCompile Include="LevelSelectScreen.cpp" />
     <ClCompile Include="PortAudioPlayer.cpp" />
     <ClCompile Include="SerializationFunctions.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
@@ -247,6 +248,7 @@
     <ClInclude Include="IProceed.h" />
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="ISerializablePropertiesNode.h" />
+    <ClInclude Include="LevelSelectScreen.h" />
     <ClInclude Include="PlayboardEditAsyncImpl.h" />
     <ClInclude Include="ILevelEditorServerGame.h" />
     <ClInclude Include="ILevelEditorServer.h" />
@@ -272,6 +274,7 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="stb_image_resize.h" />
     <ClInclude Include="stb_image_write.h" />
+    <ClInclude Include="SystemAbstractionTypedefs.h" />
     <ClInclude Include="Terrain.h" />
     <ClInclude Include="TextFileResourceListParser.h" />
     <ClInclude Include="transvoxel.h" />

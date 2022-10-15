@@ -41,3 +41,11 @@ void GameUiOverlay::RecieveMessage(const GameToUiMessage& message)
     m_editorConnected = message.editorConnected;
     
 }
+
+void GameUiOverlay::OnDrawablePush()
+{
+}
+
+void GameUiOverlay::OnDrawablePop()
+{
+}

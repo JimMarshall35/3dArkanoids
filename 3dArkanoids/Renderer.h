@@ -48,6 +48,8 @@ public:
     virtual void DrawTexturedOneByTwoInstancedBlocks(const size_t numberToDraw, const Camera& camera) override;
     virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() override;
     virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const override;
+    virtual unsigned int GetBaseTextSize();
+    virtual float GetTextWidth(float scale, std::string text) override;
 
 private:
     void Initialize();
@@ -117,6 +119,8 @@ private:
 
     unsigned int m_testTexture;
     std::map<std::string, LoadedSprite> m_loadedSprites;
+
+
 
 };
 

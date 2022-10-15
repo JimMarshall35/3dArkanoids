@@ -17,8 +17,16 @@
 #include "BallManager.h"
 #include "VisualEffectsManager.h"
 #include "SoundEffectsManager.h"
+#include "GameCameraManager.h"
+#include "SystemAbstractionTypedefs.h"
 
 #define MAX_NUM_BALLS 50
+
+enum class GameState {
+	IN_INTRO,
+	PLAYING,
+
+};
 class ILevelLoader;
 class IRenderer;
 class IAudioPlayer;
@@ -41,6 +49,9 @@ public:
 	virtual std::string GetDrawableLayerName() const override {
 		return "Gameplay";
 	}
+	virtual void OnDrawablePush() override;
+	virtual void OnDrawablePop() override;
+
 	// implementation of IUpdateableLayer
 	virtual void Update(float deltaT) override;
 	virtual bool MasksPreviousUpdateableLayer() const override {
@@ -49,6 +60,9 @@ public:
 	virtual std::string GetUpdateableLayerName() const override {
 		return "Gameplay";
 	}
+	virtual void OnUpdatePush() override;
+	virtual void OnUpdatePop() override;
+
 	// implementation of IRecieveInputLayer
 	virtual void ReceiveInput(const GameInput& gameInput) override;
 	virtual bool MasksPreviousInputLayer() const override {
@@ -57,8 +71,10 @@ public:
 	virtual std::string GetInputLayerName() const override {
 		return "Gameplay";
 	}
+	virtual void OnInputPush() override;
+	virtual void OnInputPop() override;
 
-	Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPlayer> audioPlayer, LevelEditorServerFactory levelEditorServerFactory);
+	Game(const std::shared_ptr<IRenderer>& renderer, std::shared_ptr<IAudioPlayer> audioPlayer, LevelEditorServerFactory levelEditorServerFactory, Camera* cam, ToggleCursorFunc toggleCursor);
 	void SetScreenDims(const glm::ivec2& screenDims);
 	int IndexOfRenderDataAt(const glm::ivec3& coords);
 	void SaveLevelTest(std::string filePath);
@@ -85,6 +101,10 @@ private:
 	VisualEffectsManager m_visualEffectsManager;
 	SoundEffectsManager m_soundEffectsManager;
 	Bat m_bat;
+	GameCameraManager m_camManager;
+	GameState m_state = GameState::IN_INTRO;
+	ToggleCursorFunc m_toggleCursor;
+	
 	// Inherited via EventListener
 	virtual void OnEvent(FallingBlockFinishedEventArgs e) override;
 

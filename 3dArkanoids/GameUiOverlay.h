@@ -19,5 +19,9 @@ private:
 	bool m_editorConnected = false;
 	// Inherited via GameFrameworkMessageRecipientBase
 	virtual void RecieveMessage(const GameToUiMessage& message) override;
+
+	// Inherited via DrawableLayerBase
+	virtual void OnDrawablePush() override;
+	virtual void OnDrawablePop() override;
 };
 

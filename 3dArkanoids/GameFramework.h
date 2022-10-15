@@ -28,6 +28,8 @@ public:
 	virtual void ReceiveInput(const GameInput& input) = 0;
 	virtual bool MasksPreviousInputLayer() const  = 0;
 	virtual std::string GetInputLayerName() const = 0;
+	virtual void OnInputPush() = 0;
+	virtual void OnInputPop() = 0;
 };
 
 class DrawableLayerBase
@@ -36,6 +38,8 @@ public:
 	virtual void Draw(const Camera& camera) const = 0;
 	virtual bool MasksPreviousDrawableLayer() const = 0;
 	virtual std::string GetDrawableLayerName() const = 0;
+	virtual void OnDrawablePush() = 0;
+	virtual void OnDrawablePop() = 0;
 };
 
 class UpdateableLayerBase
@@ -44,7 +48,8 @@ public:
 	virtual void Update(float deltaT) = 0;
 	virtual bool MasksPreviousUpdateableLayer() const = 0;
 	virtual std::string GetUpdateableLayerName() const = 0;
-
+	virtual void OnUpdatePush() = 0;
+	virtual void OnUpdatePop() = 0;
 };
 
 template<typename MessageT>

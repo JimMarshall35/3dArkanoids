@@ -132,35 +132,6 @@ bool GameFramework::PopLayers(GameLayerType whichLayers)
 	return true;
 }
 
-RecieveInputLayerBase* GameFramework::PopInputLayer()
-{
-	if (m_inputStackSize == 0) {
-		std::cerr << "m_inputStackSize is zero - can't pop\n";
-		return nullptr;
-	}
-	auto top = m_inputStack[--m_inputStackSize];
-	return top;
-}
-
-const DrawableLayerBase* GameFramework::PopDrawableLayer()
-{
-	if (m_drawableStackSize == 0) {
-		std::cerr << "m_drawableStackSize is zero - can't pop\n";
-		return nullptr;
-	}
-	auto top = m_drawableStack[--m_drawableStackSize];
-	return top;
-}
-
-UpdateableLayerBase* GameFramework::PopUpdatableLayer()
-{
-	if (m_updateableStack == 0) {
-		std::cerr << "m_updateableStack is zero - can't pop\n";
-		return nullptr;
-	}
-	auto top = m_updateableStack[--m_updateableStackSize];
-	return top;
-}
 void GameFramework::PushInputLayer(RecieveInputLayerBase* input)
 {
 	if (m_inputStackSize >= FRAMEWORK_STACKS_SIZE) {
@@ -168,6 +139,18 @@ void GameFramework::PushInputLayer(RecieveInputLayerBase* input)
 		return;
 	}
 	m_inputStack[m_inputStackSize++] = input;
+	input->OnInputPush();
+}
+
+RecieveInputLayerBase* GameFramework::PopInputLayer()
+{
+	if (m_inputStackSize == 0) {
+		std::cerr << "m_inputStackSize is zero - can't pop\n";
+		return nullptr;
+	}
+	auto top = m_inputStack[--m_inputStackSize];
+	top->OnInputPop();
+	return top;
 }
 
 void GameFramework::PushDrawableLayer(DrawableLayerBase* drawable)
@@ -177,6 +160,18 @@ void GameFramework::PushDrawableLayer(DrawableLayerBase* drawable)
 		return;
 	}
 	m_drawableStack[m_drawableStackSize++] = drawable;
+	drawable->OnDrawablePush();
+}
+
+const DrawableLayerBase* GameFramework::PopDrawableLayer()
+{
+	if (m_drawableStackSize == 0) {
+		std::cerr << "m_drawableStackSize is zero - can't pop\n";
+		return nullptr;
+	}
+	auto top = m_drawableStack[--m_drawableStackSize];
+	top->OnDrawablePop();
+	return top;
 }
 
 void GameFramework::PushUpdatableLayer(UpdateableLayerBase* updatable)
@@ -186,4 +181,16 @@ void GameFramework::PushUpdatableLayer(UpdateableLayerBase* updatable)
 		return;
 	}
 	m_updateableStack[m_updateableStackSize++] = updatable;
+	updatable->OnUpdatePush();
+}
+
+UpdateableLayerBase* GameFramework::PopUpdatableLayer()
+{
+	if (m_updateableStack == 0) {
+		std::cerr << "m_updateableStack is zero - can't pop\n";
+		return nullptr;
+	}
+	auto top = m_updateableStack[--m_updateableStackSize];
+	top->OnUpdatePop();
+	return top;
 }

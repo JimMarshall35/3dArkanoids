@@ -19,7 +19,7 @@ public:
 	virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
-	
+
 	// load a texture for 1x2 blocks 
 	/*
 	* 
@@ -39,5 +39,6 @@ public:
 	virtual glm::vec2 getUvOffsetToNextOneByTwoBlock() = 0;
 
 	virtual void DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const = 0;
-
+	virtual unsigned int GetBaseTextSize() = 0;
+	virtual float GetTextWidth(float scale, std::string text) = 0;
 };

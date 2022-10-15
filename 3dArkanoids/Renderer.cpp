@@ -265,8 +265,7 @@ std::string textFragGlsl =
 
 "void main()\n"
 "{\n"
-"    vec4 sampled = vec4(1.0, 1.0, 1.0, texture(text, TexCoords).r);\n"
-"    color = vec4(textColor, 1.0) * sampled;\n"
+"    color = vec4(textColor.x, textColor.y, textColor.z, texture(text, TexCoords).r);\n"
 "}\n";
 
 #pragma endregion
@@ -742,6 +741,16 @@ void Renderer::LoadSpriteFromFile(const std::string& filePath)
     });
 }
 
+float Renderer::GetTextWidth(float scale, std::string text)
+{
+    auto width = 0.0f;
+    for (char c : text) {
+        //width += m_characters[c].Bearing.x * scale;
+        width += (float)(m_characters[c].Advance >> 6) * scale; // bitshift by 6 to get value in pixels (2^6 = 64 (divide amount of 1/64th pixels by 64 to get amount of pixels))
+    }
+    return width;
+}
+
 #define RUNTIME_CHECK_SPRITE_IDENTIFIER
 
 void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboardSize, const Camera& camera, const std::string& identifier) const
@@ -780,6 +789,11 @@ void Renderer::DrawBillboard(const glm::vec3& woldPos, const glm::vec2& billboar
     
     glBindVertexArray(m_billboardVAO);
     glDrawArrays(GL_TRIANGLES, 0, 6);
+}
+
+unsigned int Renderer::GetBaseTextSize()
+{
+    return m_baseTextSize;
 }
 
 glm::mat4 PositionAndScaleToModelMatrix(const glm::vec3& pos, const glm::vec3& dimensions) {
@@ -899,7 +913,7 @@ void Renderer::DrawInstancedBlocks(const size_t numberToDraw, const Camera& came
 void Renderer::DrawTextAnchoredToBottomLeft(std::string text, float x, float y, float scale, glm::vec3 colour) const
 {
     m_textShader.use();
-    m_textShader.setVec3("textColour", colour);
+    m_textShader.setVec3("textColor", colour);
 
     glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_scrWidth), 0.0f, static_cast<float>(m_scrHeight));
     m_textShader.setMat4("projection", projection);

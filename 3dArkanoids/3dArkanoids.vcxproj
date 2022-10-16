@@ -178,6 +178,7 @@
     <ClCompile Include="GameFramework.cpp" />
     <ClCompile Include="GameUiOverlay.cpp" />
     <ClCompile Include="GetBoardStateCallData.cpp" />
+    <ClCompile Include="GetGameFrameworkStacksStreamCallData.cpp" />
     <ClCompile Include="GetSerializableNodesCallData.cpp" />
     <ClCompile Include="GetUpdatedBoardStreamCallData.cpp" />
     <ClCompile Include="glad.c" />
@@ -236,6 +237,7 @@
     <ClInclude Include="GameToUiMessage.h" />
     <ClInclude Include="GameUiOverlay.h" />
     <ClInclude Include="GetBoardStateCallData.h" />
+    <ClInclude Include="GetGameFrameworkStacksStreamCallData.h" />
     <ClInclude Include="GetSerializableNodesCallData.h" />
     <ClInclude Include="GetUpdatedBoardStreamCallData.h" />
     <ClInclude Include="GLTextureHelper.h" />

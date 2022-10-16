@@ -38,7 +38,8 @@ namespace grpc {
 class ILevelEditorServerGame;
 //class CallData;
 class ISerializable;
-
+class GetGameFrameworkStacksStreamCallData;
+class GetUpdatedBoardStreamCallData;
 
 
 
@@ -66,7 +67,6 @@ private:
 
     std::atomic<bool> m_shouldServerContinue = true;
     std::atomic<bool> m_newBoardStateFlag = false;
-    std::atomic<bool> m_newFrameworkStacksState = false;
     const Array3D<unsigned char>* m_newBoardState;
     
 
@@ -78,5 +78,7 @@ private:
     // Inherited via ILevelEditorServer
     virtual void NotifyNewBoardState(const Array3D<unsigned char>& newState) override;
 
+    void StreamNewGameFrameworkState(GetGameFrameworkStacksStreamCallData* stream);
+    void StreamNewBoardState(GetUpdatedBoardStreamCallData* stream);
 };
 

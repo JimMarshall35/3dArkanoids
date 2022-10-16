@@ -241,6 +241,27 @@ namespace _3dArkanoidsEditor.ViewModels
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
             m_gameConnectionService.Client.GameBoardStream(m_upateStreamCts.Token, newDescription => MasterGameBoard = newDescription);
+            m_gameConnectionService.Client.GetFrameworkStacksStream(m_gameFrameworkUpdateStreamCts.Token, (newStacks) =>
+            {
+                GameTerminal.WriteLine("Game framework change:");
+                GameTerminal.WriteLine("Input");
+                foreach(var layer in newStacks.InputStack)
+                {
+                    GameTerminal.WriteLine(layer.ToString());
+                }
+                GameTerminal.WriteLine("Update");
+                foreach (var layer in newStacks.UpdatableStack)
+                {
+                    GameTerminal.WriteLine(layer.ToString());
+                }
+                GameTerminal.WriteLine("Drawable");
+                foreach (var layer in newStacks.DrawableStack)
+                {
+                    GameTerminal.WriteLine(layer.ToString());
+                }
+                GameTerminal.WriteLine("\n\n");
+
+            });
         }
 
 
@@ -322,7 +343,7 @@ namespace _3dArkanoidsEditor.ViewModels
         {
             m_connectionCts = new CancellationTokenSource();
             m_upateStreamCts = new CancellationTokenSource();
-            m_gameFrameworkUpdateStream = new CancellationTokenSource();
+            m_gameFrameworkUpdateStreamCts = new CancellationTokenSource();
 
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");
@@ -365,7 +386,7 @@ namespace _3dArkanoidsEditor.ViewModels
         private IGameConnectionService m_gameConnectionService;
         private CancellationTokenSource m_connectionCts;
         private CancellationTokenSource m_upateStreamCts;
-        private CancellationTokenSource m_gameFrameworkUpdateStream;
+        private CancellationTokenSource m_gameFrameworkUpdateStreamCts;
 
     }
 }

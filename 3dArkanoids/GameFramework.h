@@ -2,6 +2,8 @@
 #include <stack>
 #include <string>
 #include <map>
+#include <thread>
+#include <atomic>
 #include "AutoList.h"
 
 class GameInput;
@@ -63,6 +65,7 @@ public:
 #define FRAMEWORK_STACKS_SIZE 100
 static class GameFramework {
 public:
+	GameFramework();
 	static void Update(double deltaT);
 	static void Draw(const Camera& camera);
 	static void RecieveInput(const GameInput& input);
@@ -73,7 +76,14 @@ public:
 
 	template<typename MessageT>
 	static void SendFrameworkMessage(const MessageT& message);
-	
+	static RecieveInputLayerBase** GetInputLayers();
+	static DrawableLayerBase** GetDrawableLayers();
+	static UpdateableLayerBase** GetUpdatableLayers();
+	static size_t GetInputLayersSize();
+	static size_t GetUpdatableLayersSize();
+	static size_t GetDrawableLayersSize();
+	static const bool NewDataToReport();
+	static void AcknowledgeNewData();
 private:
 	static void PushInputLayer(RecieveInputLayerBase* input);
 	static void PushDrawableLayer(DrawableLayerBase* drawable);
@@ -90,6 +100,8 @@ private:
 	static RecieveInputLayerBase* m_inputStack[FRAMEWORK_STACKS_SIZE];
 	static DrawableLayerBase* m_drawableStack[FRAMEWORK_STACKS_SIZE];
 	static UpdateableLayerBase* m_updateableStack[FRAMEWORK_STACKS_SIZE];
+
+	static std::atomic<bool> m_newDataToReport;
 };
 
 template<typename MessageT>

@@ -14,6 +14,12 @@ UpdateableLayerBase* GameFramework::m_updateableStack[FRAMEWORK_STACKS_SIZE];
 size_t GameFramework::m_inputStackSize;
 size_t GameFramework::m_drawableStackSize;
 size_t GameFramework::m_updateableStackSize;
+std::atomic<bool> GameFramework::m_newDataToReport;
+
+GameFramework::GameFramework()
+{
+	m_newDataToReport = false;
+}
 
 void GameFramework::Update(double deltaT)
 {
@@ -114,6 +120,7 @@ bool GameFramework::PushLayers(std::string name, GameLayerType whichLayers)
 			return false;
 		}
 	}
+	m_newDataToReport = true;
 	return true;
 }
 
@@ -129,6 +136,8 @@ bool GameFramework::PopLayers(GameLayerType whichLayers)
 	if (whichLayers & GameLayerType::Update) {
 		PopUpdatableLayer();
 	}
+	m_newDataToReport = true;
+
 	return true;
 }
 
@@ -193,4 +202,29 @@ UpdateableLayerBase* GameFramework::PopUpdatableLayer()
 	auto top = m_updateableStack[--m_updateableStackSize];
 	top->OnUpdatePop();
 	return top;
+}
+
+RecieveInputLayerBase** GameFramework::GetInputLayers() {
+	return m_inputStack;
+}
+DrawableLayerBase** GameFramework::GetDrawableLayers() {
+	return m_drawableStack;
+}
+UpdateableLayerBase** GameFramework::GetUpdatableLayers() {
+	return m_updateableStack;
+}
+size_t GameFramework::GetInputLayersSize() {
+	return m_inputStackSize;
+}
+size_t GameFramework::GetUpdatableLayersSize() {
+	return m_updateableStackSize;
+}
+size_t GameFramework::GetDrawableLayersSize() {
+	return m_drawableStackSize;
+}
+const bool GameFramework::NewDataToReport() {
+	return m_newDataToReport;
+}
+void GameFramework::AcknowledgeNewData() {
+	m_newDataToReport = false;
 }

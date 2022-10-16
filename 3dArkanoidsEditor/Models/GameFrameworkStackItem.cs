@@ -15,7 +15,12 @@ namespace _3dArkanoidsEditor.Models
         }
 
         public string Name { get; private set; }
-        public string MasksPrevious { get; private set; }
+        public bool MasksPrevious { get; private set; }
+
+        public string ToString()
+        {
+            return $"Layer {Name}, Masks previous: {MasksPrevious}";
+        }
 
     }
 }

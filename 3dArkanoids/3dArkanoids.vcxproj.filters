@@ -255,6 +255,9 @@
     <ClCompile Include="Sphere.cpp">
       <Filter>Source Files\graphics\third party</Filter>
     </ClCompile>
+    <ClCompile Include="GetGameFrameworkStacksStreamCallData.cpp">
+      <Filter>Source Files\level editor server\grpc\call datas</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="IRenderer.h">
@@ -490,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="Sphere.h">
       <Filter>Header Files\graphics\third party</Filter>
+    </ClInclude>
+    <ClInclude Include="GetGameFrameworkStacksStreamCallData.h">
+      <Filter>Header Files\level editor server\grpc\call datas</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

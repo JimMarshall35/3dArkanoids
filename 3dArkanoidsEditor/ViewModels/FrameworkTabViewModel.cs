@@ -19,9 +19,18 @@ namespace _3dArkanoidsEditor.ViewModels
 
         public void RecieveUpdate(GameFrameworkStacks newStacks)
         {
-            DrawableStack = newStacks.DrawableStack.Select(model => new FrameworkLayerViewModel(model)).ToList();
-            InputStack = newStacks.InputStack.Select(model => new FrameworkLayerViewModel(model)).ToList();
-            UpdateStack = newStacks.UpdatableStack.Select(model => new FrameworkLayerViewModel(model)).ToList();
+            DrawableStack = newStacks.DrawableStack
+                .Select(model => new FrameworkLayerViewModel(model))
+                .ToList();
+
+            InputStack = newStacks.InputStack
+                .Select(model => new FrameworkLayerViewModel(model))
+                .ToList();
+
+            UpdateStack = newStacks.UpdatableStack
+                .Select(model => new FrameworkLayerViewModel(model))
+                .ToList();
+
             SetIsMasked(DrawableStack);
             SetIsMasked(UpdateStack);
             SetIsMasked(InputStack);

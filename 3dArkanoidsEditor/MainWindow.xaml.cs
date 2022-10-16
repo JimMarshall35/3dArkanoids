@@ -29,7 +29,8 @@ namespace _3dArkanoidsEditor
             InitializeComponent();
             DataContext = new MainViewModel(
                                 new GRPCService(), 
-                                new TerminalViewModel()
+                                new TerminalViewModel(),
+                                new FrameworkTabViewModel()
                             );
         }
 

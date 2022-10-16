@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using _3dArkanoidsEditor.Models;
+using _3dArkanoidsEditor.ViewModels.interfaces;
 
 namespace _3dArkanoidsEditor.ViewModels
 {
-    class FrameworkTabViewModel : ViewModelBase
+    class FrameworkTabViewModel : ViewModelBase, IFrameworkTabViewModel
     {
         public FrameworkTabViewModel()
         {

@@ -26,8 +26,8 @@ namespace _3dArkanoidsEditor.ViewModels
         public ICommand ConnectCommand { get; private set; }
         public ICommand ChangeToolCommand { get; private set; }
 
-        private FrameworkTabViewModel m_frameworkTabViewModel;
-        public FrameworkTabViewModel FrameworkTabViewModel
+        private IFrameworkTabViewModel m_frameworkTabViewModel;
+        public IFrameworkTabViewModel FrameworkTabViewModel
         {
             get
             {
@@ -194,7 +194,7 @@ namespace _3dArkanoidsEditor.ViewModels
             m_gameConnectionService.GameConnectionLost -= OnGameConnectionLost;
         }
 
-        public MainViewModel(IGameConnectionService gameConnectionService, ITerminalViewModel terminal)
+        public MainViewModel(IGameConnectionService gameConnectionService, ITerminalViewModel terminal, IFrameworkTabViewModel frameworkTabViewModel)
         {
             GameTerminal = terminal;
             GetBlockCommand = new RelayCommand(
@@ -220,7 +220,7 @@ namespace _3dArkanoidsEditor.ViewModels
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
-            FrameworkTabViewModel = new FrameworkTabViewModel();
+            FrameworkTabViewModel = frameworkTabViewModel;
         }
 
         #endregion

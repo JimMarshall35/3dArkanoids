@@ -19,40 +19,16 @@ namespace _3dArkanoidsEditor.ViewModels
     {
         #region Bindable properties
 
-
+        #region commands
 
         public ICommand OnSingleTileEditCommand { get; private set; }
         public ICommand GetBlockCommand { get; private set; }
         public ICommand ConnectCommand { get; private set; }
         public ICommand ChangeToolCommand { get; private set; }
 
-        private IFrameworkTabViewModel m_frameworkTabViewModel;
-        public IFrameworkTabViewModel FrameworkTabViewModel
-        {
-            get
-            {
-                return m_frameworkTabViewModel;
-            }
-            private set
-            {
-                m_frameworkTabViewModel = value;
-                OnPropertyChange(nameof(FrameworkTabViewModel));
-            }
-        }
+        #endregion // commands
 
-        private BoardEditorToolType m_selectedTool = BoardEditorToolType.Erase;
-        public BoardEditorToolType SelectedTool
-        {
-            get
-            {
-                return m_selectedTool;
-            }
-            private set
-            {
-                m_selectedTool = value;
-                OnPropertyChange(nameof(SelectedTool));
-            }
-        }
+        #region board state
 
         private GameBoardDescription m_gameBoardDescription;
         public GameBoardDescription MasterGameBoard
@@ -65,21 +41,6 @@ namespace _3dArkanoidsEditor.ViewModels
             {
                 m_gameBoardDescription = value;
                 OnPropertyChange(nameof(MasterGameBoard));
-            }
-        }
-
-        private bool m_loaded = false;
-        public bool Loaded
-        {
-            get
-            {
-                return m_loaded;
-            }
-            set
-            {
-                m_loaded = value;
-                OnPropertyChange(nameof(Loaded));
-                OnPropertyChange(nameof(IsAllowedToTryToConnect));
             }
         }
 
@@ -125,6 +86,42 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        #endregion // board state
+
+        #region child viewmodels
+
+        public ITerminalViewModel GameTerminal { get; private set; }
+        private IFrameworkTabViewModel m_frameworkTabViewModel;
+        public IFrameworkTabViewModel FrameworkTabViewModel
+        {
+            get
+            {
+                return m_frameworkTabViewModel;
+            }
+            private set
+            {
+                m_frameworkTabViewModel = value;
+                OnPropertyChange(nameof(FrameworkTabViewModel));
+            }
+        }
+        public ObservableCollection<BlockTypeOptionViewModel> BlockOptionsViewModels { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
+        public ObservableCollection<SerializablePropertiesNodeViewModel> SerializablePropertiesNodeViewModels { get; private set; } = new ObservableCollection<SerializablePropertiesNodeViewModel>();
+
+        #endregion // child viewmodels
+
+        #region block types
+
+        public List<GameBlockType> GameBlockTypes
+        {
+            get
+            {
+                var r = BlockOptionsViewModels
+                    .Select(x => x.GameBlockType)
+                    .ToList();
+                return r;
+            }
+        }
+
         private int m_selectedBlockTypeIndex = 0;
         public int SelectedBlockTypeIndex
         {
@@ -139,7 +136,6 @@ namespace _3dArkanoidsEditor.ViewModels
                 OnPropertyChange(nameof(SelectedBlockCode));
             }
         }
-
 
         public byte SelectedBlockCode
         {
@@ -157,6 +153,43 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
+        #endregion // block types
+
+        #region editor tools
+
+        private BoardEditorToolType m_selectedTool = BoardEditorToolType.Erase;
+        public BoardEditorToolType SelectedTool
+        {
+            get
+            {
+                return m_selectedTool;
+            }
+            private set
+            {
+                m_selectedTool = value;
+                OnPropertyChange(nameof(SelectedTool));
+            }
+        }
+
+        #endregion // editor tools
+
+        #region Connection
+
+        private bool m_loaded = false;
+        public bool Loaded
+        {
+            get
+            {
+                return m_loaded;
+            }
+            set
+            {
+                m_loaded = value;
+                OnPropertyChange(nameof(Loaded));
+                OnPropertyChange(nameof(IsAllowedToTryToConnect));
+            }
+        }
+
         public bool IsAllowedToTryToConnect
         {
             get
@@ -165,26 +198,9 @@ namespace _3dArkanoidsEditor.ViewModels
             }
         }
 
-        public List<GameBlockType> GameBlockTypes
-        {
-            get
-            {
-                var r = BlockOptionsViewModels
-                    .Select(x => x.GameBlockType)
-                    .ToList();
-                //r.Prepend(new GameBlockType(0, 0, 0, 0, 0));
-                return r;
-            }
-        }
+        #endregion // Connection
 
-        public ObservableCollection<BlockTypeOptionViewModel> BlockOptionsViewModels { get; private set; } = new ObservableCollection<BlockTypeOptionViewModel>();
-
-        public ObservableCollection<SerializablePropertiesNodeViewModel> SerializablePropertiesNodeViewModels { get; private set; } = new ObservableCollection<SerializablePropertiesNodeViewModel>();
-
-        public ITerminalViewModel GameTerminal { get; private set; }
-
-
-        #endregion
+        #endregion // Bindable properties
 
         #region ctor
 
@@ -192,11 +208,16 @@ namespace _3dArkanoidsEditor.ViewModels
         {
             m_gameConnectionService.GameConnectionAquired -= OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost -= OnGameConnectionLost;
+            m_gameFrameworkUpdateStreamCts.Cancel();
+            m_upateStreamCts.Cancel();
         }
 
         public MainViewModel(IGameConnectionService gameConnectionService, ITerminalViewModel terminal, IFrameworkTabViewModel frameworkTabViewModel)
         {
             GameTerminal = terminal;
+            FrameworkTabViewModel = frameworkTabViewModel;
+            m_gameConnectionService = gameConnectionService;
+
             GetBlockCommand = new RelayCommand(
                     _ => GetBlock(), 
                     null
@@ -217,10 +238,12 @@ namespace _3dArkanoidsEditor.ViewModels
                     null
                 );
             
-            m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
-            FrameworkTabViewModel = frameworkTabViewModel;
+
+            m_connectionCts = new CancellationTokenSource();
+            m_upateStreamCts = new CancellationTokenSource();
+            m_gameFrameworkUpdateStreamCts = new CancellationTokenSource();
         }
 
         #endregion
@@ -334,10 +357,6 @@ namespace _3dArkanoidsEditor.ViewModels
 
         public void TryConnectToGame()
         {
-            m_connectionCts = new CancellationTokenSource();
-            m_upateStreamCts = new CancellationTokenSource();
-            m_gameFrameworkUpdateStreamCts = new CancellationTokenSource();
-
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");
             m_connectionCts.CancelAfter(15000);
@@ -346,7 +365,7 @@ namespace _3dArkanoidsEditor.ViewModels
             
         }
 
-        #endregion
+        #endregion // Command Backing Methods
 
         #region Helpers
         private async Task GetSerializableProperties()
@@ -359,7 +378,7 @@ namespace _3dArkanoidsEditor.ViewModels
                 SerializablePropertiesNodeViewModels.Add(new SerializablePropertiesNodeViewModel(r,m_gameConnectionService.Client));
             }
         }
-        #endregion
+        #endregion // Helpers
 
         #region private set only properties?!
 
@@ -375,11 +394,10 @@ namespace _3dArkanoidsEditor.ViewModels
 
         #endregion
 
-        private bool m_getBlockCommandRunning = false;
-        private IGameConnectionService m_gameConnectionService;
-        private CancellationTokenSource m_connectionCts;
-        private CancellationTokenSource m_upateStreamCts;
-        private CancellationTokenSource m_gameFrameworkUpdateStreamCts;
+        private readonly IGameConnectionService m_gameConnectionService;
+        private readonly CancellationTokenSource m_connectionCts;
+        private readonly CancellationTokenSource m_upateStreamCts;
+        private readonly CancellationTokenSource m_gameFrameworkUpdateStreamCts;
 
     }
 }

@@ -190,7 +190,6 @@
     <ClCompile Include="SerializationFunctions.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
     <ClCompile Include="PlayBoardEdit.pb.cc" />
-    <ClCompile Include="PlayboardEditAsyncImpl.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="SetBoardStateCallData.cpp" />
@@ -251,7 +250,6 @@
     <ClInclude Include="ISerializable.h" />
     <ClInclude Include="ISerializablePropertiesNode.h" />
     <ClInclude Include="LevelSelectScreen.h" />
-    <ClInclude Include="PlayboardEditAsyncImpl.h" />
     <ClInclude Include="ILevelEditorServerGame.h" />
     <ClInclude Include="ILevelEditorServer.h" />
     <ClInclude Include="IRenderer.h" />

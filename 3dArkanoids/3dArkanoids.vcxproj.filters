@@ -150,9 +150,6 @@
     <ClCompile Include="FallingBlockManager.cpp">
       <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
-    <ClCompile Include="PlayboardEditAsyncImpl.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GameBlockTypes.cpp">
       <Filter>Source Files\game framework layers\game</Filter>
     </ClCompile>
@@ -305,9 +302,6 @@
     <ClInclude Include="SizedQueue.h">
       <Filter>Header Files\utils</Filter>
     </ClInclude>
-    <ClInclude Include="EngineUpdateFrameEventArgs.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="BlockInstanceRenderData.h">
       <Filter>Header Files\graphics</Filter>
     </ClInclude>
@@ -325,9 +319,6 @@
     </ClInclude>
     <ClInclude Include="TSQueue.h">
       <Filter>Header Files\utils</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayboardEditAsyncImpl.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GrpcLevelEditorServer.h">
       <Filter>Header Files\level editor server\grpc</Filter>
@@ -496,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="GetGameFrameworkStacksStreamCallData.h">
       <Filter>Header Files\level editor server\grpc\call datas</Filter>
+    </ClInclude>
+    <ClInclude Include="EngineUpdateFrameEventArgs.h">
+      <Filter>Header Files\game framework layers\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

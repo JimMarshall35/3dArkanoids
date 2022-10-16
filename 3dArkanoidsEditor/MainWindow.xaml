@@ -19,7 +19,7 @@
         <converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor x:Key="UiEnabledConverter"></converters:SerializablePropertyTypeEnumToIsUiEnabledBoolConvertor>
         <converters:BoolToVisibilityConvertor x:Key="BoolToVisConvertor"></converters:BoolToVisibilityConvertor>
         <converters:BoardEditorToolTypeToIsButtonEnabledConvertor x:Key="BoardEditorToolToButtonEnabledConvertor"></converters:BoardEditorToolTypeToIsButtonEnabledConvertor>
-
+        <converters:BoolToTextDecorationConvertorForFrameworkLayers x:Key="BoolToTextDecorationConvertorForFrameworkLayers"></converters:BoolToTextDecorationConvertorForFrameworkLayers>
 
         <DataTemplate x:Key="GameBlock">
             <StackPanel Orientation="Horizontal">
@@ -257,6 +257,16 @@
 
             </TreeViewItem>
         </HierarchicalDataTemplate>
+
+
+        <DataTemplate 
+            x:Key="GameFrameworkStackItemTemplate"
+            DataType="{x:Type viewmodels:FrameworkLayerViewModel}">
+            <TextBlock 
+                Text="{Binding Name}"
+                TextDecorations="{Binding IsMasked, Converter={StaticResource BoolToTextDecorationConvertorForFrameworkLayers}}"></TextBlock>
+        </DataTemplate>
+        
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -280,55 +290,124 @@
             <RowDefinition Height="auto"/>
             <RowDefinition Height="5"/>
         </Grid.RowDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Margin="3">
             <Button Command="{Binding GetBlockCommand}" IsEnabled="{Binding Loaded}">GetBlocks</Button>
             <Button Command="{Binding ConnectCommand}" IsEnabled="{Binding IsAllowedToTryToConnect}">Connect</Button>
         </StackPanel>
-        <StackPanel Orientation="Vertical"
+        <TabControl Grid.Row="2"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="6"
+                    Grid.RowSpan="7"
+                    Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}">
+            <TabItem Header="Game">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="5"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="5"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical"
                     Grid.Row="2"
                     Grid.Column="1">
-            <views:PlayBoardCanvas 
-            
-            PlayBoardTilesX="{Binding PlayFieldX}"
-            PlayBoardTilesY="{Binding PlayFieldY}"
-            PlayBoardTilesZ="{Binding PlayFieldZ}"
-            PlayBoardDescription="{Binding MasterGameBoard}"
-            SingleTileEdit="{Binding OnSingleTileEditCommand}"
-            SelectedBlockCode="{Binding SelectedBlockCode, Mode=OneWay}"
-            GameBlockTypes="{Binding GameBlockTypes}"/>
-            <StackPanel Orientation="Horizontal">
-                <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
-                        IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}"
-                        Command="{Binding ChangeToolCommand}"
-                        CommandParameter="{StaticResource EraseVal}">
-                    Erase
-                </Button>
-                <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
-                        IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource DrawVal}}"
-                        Command="{Binding ChangeToolCommand}"
-                        CommandParameter="{StaticResource DrawVal}">
-                    Draw
-                </Button>
-            </StackPanel>
-        </StackPanel>
+                        <views:PlayBoardCanvas 
+                        PlayBoardTilesX="{Binding PlayFieldX}"
+                        PlayBoardTilesY="{Binding PlayFieldY}"
+                        PlayBoardTilesZ="{Binding PlayFieldZ}"
+                        PlayBoardDescription="{Binding MasterGameBoard}"
+                        SingleTileEdit="{Binding OnSingleTileEditCommand}"
+                        SelectedBlockCode="{Binding SelectedBlockCode, Mode=OneWay}"
+                        GameBlockTypes="{Binding GameBlockTypes}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
+                                    IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}"
+                                    Command="{Binding ChangeToolCommand}"
+                                    CommandParameter="{StaticResource EraseVal}">
+                                Erase
+                            </Button>
+                            <Button Visibility="{Binding Loaded, Converter={StaticResource BoolToVisConvertor}}"
+                                    IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource DrawVal}}"
+                                    Command="{Binding ChangeToolCommand}"
+                                    CommandParameter="{StaticResource DrawVal}">
+                                Draw
+                            </Button>
+                        </StackPanel>
+                    </StackPanel>
+
+                    <ListBox
+                        Grid.Row="2"
+                        Grid.RowSpan="5"
+                        Grid.Column="2"
+                        ItemsSource="{Binding BlockOptionsViewModels}"
+                        ItemTemplate="{StaticResource GameBlock}"
+                        SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}"
+                        IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}">
+                    </ListBox>
+                    <TreeView
+                        Padding="0"
+                        Grid.Row="2"
+                        Grid.Column="3"
+                        Grid.ColumnSpan="4"
+                        Grid.RowSpan="5"
+                        ItemsSource="{Binding SerializablePropertiesNodeViewModels}"
+                        ItemTemplate="{StaticResource SerializablePropertiesNodeTemplate}"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Framework"
+                     DataContext="{Binding FrameworkTabViewModel}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="0">
+                        <Label>Drawable</Label>
+                        <ListBox ItemsSource="{Binding DrawableStack}"
+                                ItemTemplate="{StaticResource GameFrameworkStackItemTemplate}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="1">
+                        <Label>Input</Label>
+                        <ListBox ItemsSource="{Binding InputStack}"
+                                ItemTemplate="{StaticResource GameFrameworkStackItemTemplate}"/>
+                    </StackPanel>
+
+                    <StackPanel Orientation="Vertical"
+                                Grid.Row="0"
+                                Grid.Column="2">
+                        <Label>Updatable</Label>
+                        <ListBox ItemsSource="{Binding UpdateStack}"
+                                ItemTemplate="{StaticResource GameFrameworkStackItemTemplate}"/>
+                    </StackPanel>
+                    
+
+                </Grid>
+            </TabItem>
+        </TabControl>
         
-        <ListBox
-            Grid.Row="2"
-            Grid.RowSpan="5"
-            Grid.Column="2"
-            ItemsSource="{Binding BlockOptionsViewModels}"
-            ItemTemplate="{StaticResource GameBlock}"
-            SelectedIndex="{Binding SelectedBlockTypeIndex, Mode=TwoWay}"
-            IsEnabled="{Binding SelectedTool, Converter={StaticResource BoardEditorToolToButtonEnabledConvertor}, ConverterParameter={StaticResource EraseVal}}">
-        </ListBox>
-        <TreeView
-            Padding="0"
-            Grid.Row="2"
-            Grid.Column="3"
-            Grid.ColumnSpan="4"
-            Grid.RowSpan="5"
-            ItemsSource="{Binding SerializablePropertiesNodeViewModels}"
-            ItemTemplate="{StaticResource SerializablePropertiesNodeTemplate}"/>
 
 
         <t:Terminal x:Name="TerminalOutput"

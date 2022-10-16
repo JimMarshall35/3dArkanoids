@@ -107,7 +107,6 @@ void GrpcLevelEditorServer::StreamNewGameFrameworkState(GetGameFrameworkStacksSt
 		auto updatable = new EditorGRPC::UpdatableLayersStack();
 		auto numUpdatable = GameFramework::GetUpdatableLayersSize();
 		const auto frameworkUpdatable = GameFramework::GetUpdatableLayers();
-		if (updatable->layers_size() > 0) updatable->clear_layers();
 		for (int i = 0; i < numUpdatable; i++) {
 			const auto& fLayer = *frameworkUpdatable[i];
 			auto newlyAdded = updatable->add_layers();
@@ -116,7 +115,6 @@ void GrpcLevelEditorServer::StreamNewGameFrameworkState(GetGameFrameworkStacksSt
 		}
 
 		auto drawable = new EditorGRPC::DrawableLayersStack();
-		if (drawable->layers_size() > 0)drawable->clear_layers();
 		auto numDrawable = GameFramework::GetDrawableLayersSize();
 		const auto frameworkDrawable = GameFramework::GetDrawableLayers();
 		for (int i = 0; i < numDrawable; i++) {
@@ -127,7 +125,6 @@ void GrpcLevelEditorServer::StreamNewGameFrameworkState(GetGameFrameworkStacksSt
 		}
 
 		auto input = new EditorGRPC::InputLayersStack();
-		if (input->layers_size() > 0)input->clear_layers();
 		auto numInput = GameFramework::GetInputLayersSize();
 		const auto frameworkInput = GameFramework::GetInputLayers();
 		for (int i = 0; i < numInput; i++) {

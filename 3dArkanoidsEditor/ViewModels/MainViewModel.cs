@@ -26,6 +26,20 @@ namespace _3dArkanoidsEditor.ViewModels
         public ICommand ConnectCommand { get; private set; }
         public ICommand ChangeToolCommand { get; private set; }
 
+        private FrameworkTabViewModel m_frameworkTabViewModel;
+        public FrameworkTabViewModel FrameworkTabViewModel
+        {
+            get
+            {
+                return m_frameworkTabViewModel;
+            }
+            private set
+            {
+                m_frameworkTabViewModel = value;
+                OnPropertyChange(nameof(FrameworkTabViewModel));
+            }
+        }
+
         private BoardEditorToolType m_selectedTool = BoardEditorToolType.Erase;
         public BoardEditorToolType SelectedTool
         {
@@ -206,7 +220,7 @@ namespace _3dArkanoidsEditor.ViewModels
             m_gameConnectionService = gameConnectionService;
             m_gameConnectionService.GameConnectionAquired += OnGameConnectionAquire;
             m_gameConnectionService.GameConnectionLost += OnGameConnectionLost;
-
+            FrameworkTabViewModel = new FrameworkTabViewModel();
         }
 
         #endregion
@@ -241,27 +255,7 @@ namespace _3dArkanoidsEditor.ViewModels
             Loaded = true;
             GameTerminal.WriteLine("Connected to game");
             m_gameConnectionService.Client.GameBoardStream(m_upateStreamCts.Token, newDescription => MasterGameBoard = newDescription);
-            m_gameConnectionService.Client.GetFrameworkStacksStream(m_gameFrameworkUpdateStreamCts.Token, (newStacks) =>
-            {
-                GameTerminal.WriteLine("Game framework change:");
-                GameTerminal.WriteLine("Input");
-                foreach(var layer in newStacks.InputStack)
-                {
-                    GameTerminal.WriteLine(layer.ToString());
-                }
-                GameTerminal.WriteLine("Update");
-                foreach (var layer in newStacks.UpdatableStack)
-                {
-                    GameTerminal.WriteLine(layer.ToString());
-                }
-                GameTerminal.WriteLine("Drawable");
-                foreach (var layer in newStacks.DrawableStack)
-                {
-                    GameTerminal.WriteLine(layer.ToString());
-                }
-                GameTerminal.WriteLine("\n\n");
-
-            });
+            m_gameConnectionService.Client.GetFrameworkStacksStream(m_gameFrameworkUpdateStreamCts.Token, newStacks => FrameworkTabViewModel.RecieveUpdate(newStacks));
         }
 
 
@@ -295,7 +289,6 @@ namespace _3dArkanoidsEditor.ViewModels
         private async void GetBlock()
         {
             MasterGameBoard = await m_gameConnectionService.Client.GetBoardStateAsync();
-            
         }
 
         private async void OnSingleTileEdit(object e)

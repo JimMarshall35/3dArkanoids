@@ -34,6 +34,11 @@ void PauseLayer::ReceiveInput(const GameInput& input)
     if (input.PauseGame) {
         GameFramework::PopLayers(GameLayerType::Draw | GameLayerType::Input | GameLayerType::Update);
     }
+    else if (input.ExitGame) {
+        GameFramework::PopLayers(GameLayerType::Draw);
+        GameFramework::PopLayers(GameLayerType::Draw | GameLayerType::Input | GameLayerType::Update);
+        GameFramework::PopLayers(GameLayerType::Draw | GameLayerType::Input | GameLayerType::Update);
+    }
 }
 
 bool PauseLayer::MasksPreviousInputLayer() const

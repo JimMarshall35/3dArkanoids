@@ -322,6 +322,7 @@ namespace _3dArkanoidsEditor.ViewModels
         {
             m_connectionCts = new CancellationTokenSource();
             m_upateStreamCts = new CancellationTokenSource();
+            m_gameFrameworkUpdateStream = new CancellationTokenSource();
 
             TryingToConnect = true;
             GameTerminal.WriteLine("Trying to connect to game...");
@@ -364,6 +365,7 @@ namespace _3dArkanoidsEditor.ViewModels
         private IGameConnectionService m_gameConnectionService;
         private CancellationTokenSource m_connectionCts;
         private CancellationTokenSource m_upateStreamCts;
+        private CancellationTokenSource m_gameFrameworkUpdateStream;
 
     }
 }

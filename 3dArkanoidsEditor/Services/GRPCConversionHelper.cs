@@ -279,5 +279,16 @@ namespace _3dArkanoidsEditor.Services
             rval.Depth = description.Depth;
             return rval;
         }
+
+        public static Models.GameFrameworkStacks ToModel(this EditorGRPC.GameFrameworkLayers layers)
+        {
+            var input = layers.Input.Layers.Select(x => new Models.GameFrameworkStackItem(x.Name, x.MasksLayerBelow))
+                .ToList();
+            var update = layers.Updatable.Layers.Select(x => new Models.GameFrameworkStackItem(x.Name, x.MasksLayerBelow))
+                .ToList();
+            var drawable = layers.Drawable.Layers.Select(x => new Models.GameFrameworkStackItem(x.Name, x.MasksLayerBelow))
+                .ToList();
+            return new Models.GameFrameworkStacks(update, drawable, input);
+        }
     }
 }

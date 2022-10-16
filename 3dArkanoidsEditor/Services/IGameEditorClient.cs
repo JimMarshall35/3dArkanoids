@@ -10,6 +10,7 @@ using System.Threading;
 namespace _3dArkanoidsEditor.Services
 {
     public delegate void SetNewDescription(Models.GameBoardDescription newDescription);
+    public delegate void SetNewFrameworkStacksState(Models.GameFrameworkStacks stacks);
     interface IGameEditorClient
     {
         Task<GameBoardDescription> GetBoardStateAsync();
@@ -19,5 +20,6 @@ namespace _3dArkanoidsEditor.Services
         Task<SetSerializablePropertyResult> SetSerializablePropertyAsync(SerializableProperty prop, string path);
         Task<SetNewBoardStateResult> SetBoardStateAsync(GameBoardDescription description);
         Task GameBoardStream(CancellationToken ct, SetNewDescription setNewDescription);
+        Task GetFrameworkStacksStream(CancellationToken ct, SetNewFrameworkStacksState setNewStacks);
     }
 }

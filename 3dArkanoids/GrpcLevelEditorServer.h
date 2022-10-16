@@ -66,6 +66,7 @@ private:
 
     std::atomic<bool> m_shouldServerContinue = true;
     std::atomic<bool> m_newBoardStateFlag = false;
+    std::atomic<bool> m_newFrameworkStacksState = false;
     const Array3D<unsigned char>* m_newBoardState;
     
 

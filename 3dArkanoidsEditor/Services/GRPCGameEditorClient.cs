@@ -86,6 +86,18 @@ namespace _3dArkanoidsEditor.Services
             }
         }
 
+        public async Task GetFrameworkStacksStream(CancellationToken ct, SetNewFrameworkStacksState setNewStacks)
+        {
+            using (var call = m_client.GetGameFramworkStackStream(new EditorGRPC.Void()))
+            {
+                while (await call.ResponseStream.MoveNext(ct))
+                {
+                    var stacks = call.ResponseStream.Current;
+                    setNewStacks(stacks.ToModel());
+                }
+            }
+        }
+
         private PlayBoardEditClient m_client;
     }
 }

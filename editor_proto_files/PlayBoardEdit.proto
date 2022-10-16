@@ -11,6 +11,8 @@ service PlayBoardEdit{
 	rpc GetSerializableNodes(Void) returns(SerializablePropertiesNodes);
 	rpc SetSerializableProperty(SetSerializablePropertyData) returns(SetSerializablePropertyResult);
 	rpc GetUpdatedBoardStream(Void) returns(stream BoardDescription);
+	rpc SaveLevel(FileSavePath) returns (FileSaveResult);
+	rpc GetGameFramworkStackStream(Void) returns(stream GameFrameworkLayers);
 }
 
 message Point{
@@ -164,3 +166,38 @@ message SerializablePropertiesNodes{
 	repeated SerializablePropertiesNode nodes = 1;
 }
 
+message FileSavePath{
+	string path = 1;
+}
+
+message FileSaveResult{
+	enum Result{
+		SUCCESS = 0;
+		FAILURE_PATH_NOT_VALID = 1;
+		OTHER_FAILURE = 2;
+	}
+	Result result = 1;
+}
+
+message FrameworkLayer{
+	bool masksLayerBelow = 1;
+	string name = 2;
+}
+
+message UpdatableLayersStack{
+	repeated FrameworkLayer layers = 1;
+}
+
+message DrawableLayersStack{
+	repeated FrameworkLayer layers = 1;
+}
+
+message InputLayersStack{
+	repeated FrameworkLayer layers = 1;
+}
+
+message GameFrameworkLayers{
+	UpdatableLayersStack updatable = 1;
+	DrawableLayersStack drawable = 2;
+	InputLayersStack input = 3;
+}

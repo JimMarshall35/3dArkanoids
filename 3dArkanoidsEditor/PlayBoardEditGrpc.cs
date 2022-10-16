@@ -67,6 +67,12 @@ namespace EditorGRPC {
     static readonly grpc::Marshaller<global::EditorGRPC.SetSerializablePropertyData> __Marshaller_EditorGRPC_SetSerializablePropertyData = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SetSerializablePropertyData.Parser));
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Marshaller<global::EditorGRPC.SetSerializablePropertyResult> __Marshaller_EditorGRPC_SetSerializablePropertyResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.SetSerializablePropertyResult.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.FileSavePath> __Marshaller_EditorGRPC_FileSavePath = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.FileSavePath.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.FileSaveResult> __Marshaller_EditorGRPC_FileSaveResult = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.FileSaveResult.Parser));
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Marshaller<global::EditorGRPC.GameFrameworkLayers> __Marshaller_EditorGRPC_GameFrameworkLayers = grpc::Marshallers.Create(__Helper_SerializeMessage, context => __Helper_DeserializeMessage(context, global::EditorGRPC.GameFrameworkLayers.Parser));
 
     [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
     static readonly grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult> __Method_AddBlock = new grpc::Method<global::EditorGRPC.Point, global::EditorGRPC.EditBlockResult>(
@@ -140,6 +146,22 @@ namespace EditorGRPC {
         __Marshaller_EditorGRPC_Void,
         __Marshaller_EditorGRPC_BoardDescription);
 
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::EditorGRPC.FileSavePath, global::EditorGRPC.FileSaveResult> __Method_SaveLevel = new grpc::Method<global::EditorGRPC.FileSavePath, global::EditorGRPC.FileSaveResult>(
+        grpc::MethodType.Unary,
+        __ServiceName,
+        "SaveLevel",
+        __Marshaller_EditorGRPC_FileSavePath,
+        __Marshaller_EditorGRPC_FileSaveResult);
+
+    [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+    static readonly grpc::Method<global::EditorGRPC.Void, global::EditorGRPC.GameFrameworkLayers> __Method_GetGameFramworkStackStream = new grpc::Method<global::EditorGRPC.Void, global::EditorGRPC.GameFrameworkLayers>(
+        grpc::MethodType.ServerStreaming,
+        __ServiceName,
+        "GetGameFramworkStackStream",
+        __Marshaller_EditorGRPC_Void,
+        __Marshaller_EditorGRPC_GameFrameworkLayers);
+
     /// <summary>Service descriptor</summary>
     public static global::Google.Protobuf.Reflection.ServiceDescriptor Descriptor
     {
@@ -200,6 +222,18 @@ namespace EditorGRPC {
 
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       public virtual global::System.Threading.Tasks.Task GetUpdatedBoardStream(global::EditorGRPC.Void request, grpc::IServerStreamWriter<global::EditorGRPC.BoardDescription> responseStream, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task<global::EditorGRPC.FileSaveResult> SaveLevel(global::EditorGRPC.FileSavePath request, grpc::ServerCallContext context)
+      {
+        throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
+      }
+
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::System.Threading.Tasks.Task GetGameFramworkStackStream(global::EditorGRPC.Void request, grpc::IServerStreamWriter<global::EditorGRPC.GameFrameworkLayers> responseStream, grpc::ServerCallContext context)
       {
         throw new grpc::RpcException(new grpc::Status(grpc::StatusCode.Unimplemented, ""));
       }
@@ -403,6 +437,36 @@ namespace EditorGRPC {
       {
         return CallInvoker.AsyncServerStreamingCall(__Method_GetUpdatedBoardStream, null, options, request);
       }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.FileSaveResult SaveLevel(global::EditorGRPC.FileSavePath request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SaveLevel(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual global::EditorGRPC.FileSaveResult SaveLevel(global::EditorGRPC.FileSavePath request, grpc::CallOptions options)
+      {
+        return CallInvoker.BlockingUnaryCall(__Method_SaveLevel, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.FileSaveResult> SaveLevelAsync(global::EditorGRPC.FileSavePath request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return SaveLevelAsync(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncUnaryCall<global::EditorGRPC.FileSaveResult> SaveLevelAsync(global::EditorGRPC.FileSavePath request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncUnaryCall(__Method_SaveLevel, null, options, request);
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::EditorGRPC.GameFrameworkLayers> GetGameFramworkStackStream(global::EditorGRPC.Void request, grpc::Metadata headers = null, global::System.DateTime? deadline = null, global::System.Threading.CancellationToken cancellationToken = default(global::System.Threading.CancellationToken))
+      {
+        return GetGameFramworkStackStream(request, new grpc::CallOptions(headers, deadline, cancellationToken));
+      }
+      [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
+      public virtual grpc::AsyncServerStreamingCall<global::EditorGRPC.GameFrameworkLayers> GetGameFramworkStackStream(global::EditorGRPC.Void request, grpc::CallOptions options)
+      {
+        return CallInvoker.AsyncServerStreamingCall(__Method_GetGameFramworkStackStream, null, options, request);
+      }
       /// <summary>Creates a new instance of client from given <c>ClientBaseConfiguration</c>.</summary>
       [global::System.CodeDom.Compiler.GeneratedCode("grpc_csharp_plugin", null)]
       protected override PlayBoardEditClient NewInstance(ClientBaseConfiguration configuration)
@@ -425,7 +489,9 @@ namespace EditorGRPC {
           .AddMethod(__Method_InitialConnectionHandshake, serviceImpl.InitialConnectionHandshake)
           .AddMethod(__Method_GetSerializableNodes, serviceImpl.GetSerializableNodes)
           .AddMethod(__Method_SetSerializableProperty, serviceImpl.SetSerializableProperty)
-          .AddMethod(__Method_GetUpdatedBoardStream, serviceImpl.GetUpdatedBoardStream).Build();
+          .AddMethod(__Method_GetUpdatedBoardStream, serviceImpl.GetUpdatedBoardStream)
+          .AddMethod(__Method_SaveLevel, serviceImpl.SaveLevel)
+          .AddMethod(__Method_GetGameFramworkStackStream, serviceImpl.GetGameFramworkStackStream).Build();
     }
 
     /// <summary>Register service method with a service binder with or without implementation. Useful when customizing the  service binding logic.
@@ -444,6 +510,8 @@ namespace EditorGRPC {
       serviceBinder.AddMethod(__Method_GetSerializableNodes, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.Void, global::EditorGRPC.SerializablePropertiesNodes>(serviceImpl.GetSerializableNodes));
       serviceBinder.AddMethod(__Method_SetSerializableProperty, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.SetSerializablePropertyData, global::EditorGRPC.SetSerializablePropertyResult>(serviceImpl.SetSerializableProperty));
       serviceBinder.AddMethod(__Method_GetUpdatedBoardStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::EditorGRPC.Void, global::EditorGRPC.BoardDescription>(serviceImpl.GetUpdatedBoardStream));
+      serviceBinder.AddMethod(__Method_SaveLevel, serviceImpl == null ? null : new grpc::UnaryServerMethod<global::EditorGRPC.FileSavePath, global::EditorGRPC.FileSaveResult>(serviceImpl.SaveLevel));
+      serviceBinder.AddMethod(__Method_GetGameFramworkStackStream, serviceImpl == null ? null : new grpc::ServerStreamingServerMethod<global::EditorGRPC.Void, global::EditorGRPC.GameFrameworkLayers>(serviceImpl.GetGameFramworkStackStream));
     }
 
   }

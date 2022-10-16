@@ -48,7 +48,7 @@ struct TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto {
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::AuxiliaryParseTableField aux[]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
-  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[19]
+  static const ::PROTOBUF_NAMESPACE_ID::internal::ParseTable schema[26]
     PROTOBUF_SECTION_VARIABLE(protodesc_cold);
   static const ::PROTOBUF_NAMESPACE_ID::internal::FieldMetadata field_metadata[];
   static const ::PROTOBUF_NAMESPACE_ID::internal::SerializationTable serialization_table[];
@@ -71,12 +71,30 @@ extern ChildNodesDefaultTypeInternal _ChildNodes_default_instance_;
 class ClientInfo;
 struct ClientInfoDefaultTypeInternal;
 extern ClientInfoDefaultTypeInternal _ClientInfo_default_instance_;
+class DrawableLayersStack;
+struct DrawableLayersStackDefaultTypeInternal;
+extern DrawableLayersStackDefaultTypeInternal _DrawableLayersStack_default_instance_;
 class EditBlockResult;
 struct EditBlockResultDefaultTypeInternal;
 extern EditBlockResultDefaultTypeInternal _EditBlockResult_default_instance_;
+class FileSavePath;
+struct FileSavePathDefaultTypeInternal;
+extern FileSavePathDefaultTypeInternal _FileSavePath_default_instance_;
+class FileSaveResult;
+struct FileSaveResultDefaultTypeInternal;
+extern FileSaveResultDefaultTypeInternal _FileSaveResult_default_instance_;
+class FrameworkLayer;
+struct FrameworkLayerDefaultTypeInternal;
+extern FrameworkLayerDefaultTypeInternal _FrameworkLayer_default_instance_;
+class GameFrameworkLayers;
+struct GameFrameworkLayersDefaultTypeInternal;
+extern GameFrameworkLayersDefaultTypeInternal _GameFrameworkLayers_default_instance_;
 class GameSettings;
 struct GameSettingsDefaultTypeInternal;
 extern GameSettingsDefaultTypeInternal _GameSettings_default_instance_;
+class InputLayersStack;
+struct InputLayersStackDefaultTypeInternal;
+extern InputLayersStackDefaultTypeInternal _InputLayersStack_default_instance_;
 class Point;
 struct PointDefaultTypeInternal;
 extern PointDefaultTypeInternal _Point_default_instance_;
@@ -101,6 +119,9 @@ extern SetSerializablePropertyDataDefaultTypeInternal _SetSerializablePropertyDa
 class SetSerializablePropertyResult;
 struct SetSerializablePropertyResultDefaultTypeInternal;
 extern SetSerializablePropertyResultDefaultTypeInternal _SetSerializablePropertyResult_default_instance_;
+class UpdatableLayersStack;
+struct UpdatableLayersStackDefaultTypeInternal;
+extern UpdatableLayersStackDefaultTypeInternal _UpdatableLayersStack_default_instance_;
 class Vec2;
 struct Vec2DefaultTypeInternal;
 extern Vec2DefaultTypeInternal _Vec2_default_instance_;
@@ -120,8 +141,14 @@ template<> ::EditorGRPC::BlockType* Arena::CreateMaybeMessage<::EditorGRPC::Bloc
 template<> ::EditorGRPC::BoardDescription* Arena::CreateMaybeMessage<::EditorGRPC::BoardDescription>(Arena*);
 template<> ::EditorGRPC::ChildNodes* Arena::CreateMaybeMessage<::EditorGRPC::ChildNodes>(Arena*);
 template<> ::EditorGRPC::ClientInfo* Arena::CreateMaybeMessage<::EditorGRPC::ClientInfo>(Arena*);
+template<> ::EditorGRPC::DrawableLayersStack* Arena::CreateMaybeMessage<::EditorGRPC::DrawableLayersStack>(Arena*);
 template<> ::EditorGRPC::EditBlockResult* Arena::CreateMaybeMessage<::EditorGRPC::EditBlockResult>(Arena*);
+template<> ::EditorGRPC::FileSavePath* Arena::CreateMaybeMessage<::EditorGRPC::FileSavePath>(Arena*);
+template<> ::EditorGRPC::FileSaveResult* Arena::CreateMaybeMessage<::EditorGRPC::FileSaveResult>(Arena*);
+template<> ::EditorGRPC::FrameworkLayer* Arena::CreateMaybeMessage<::EditorGRPC::FrameworkLayer>(Arena*);
+template<> ::EditorGRPC::GameFrameworkLayers* Arena::CreateMaybeMessage<::EditorGRPC::GameFrameworkLayers>(Arena*);
 template<> ::EditorGRPC::GameSettings* Arena::CreateMaybeMessage<::EditorGRPC::GameSettings>(Arena*);
+template<> ::EditorGRPC::InputLayersStack* Arena::CreateMaybeMessage<::EditorGRPC::InputLayersStack>(Arena*);
 template<> ::EditorGRPC::Point* Arena::CreateMaybeMessage<::EditorGRPC::Point>(Arena*);
 template<> ::EditorGRPC::SerializablePropertiesNode* Arena::CreateMaybeMessage<::EditorGRPC::SerializablePropertiesNode>(Arena*);
 template<> ::EditorGRPC::SerializablePropertiesNodes* Arena::CreateMaybeMessage<::EditorGRPC::SerializablePropertiesNodes>(Arena*);
@@ -130,6 +157,7 @@ template<> ::EditorGRPC::SerializablePropertyData* Arena::CreateMaybeMessage<::E
 template<> ::EditorGRPC::SetBoardDescriptionResult* Arena::CreateMaybeMessage<::EditorGRPC::SetBoardDescriptionResult>(Arena*);
 template<> ::EditorGRPC::SetSerializablePropertyData* Arena::CreateMaybeMessage<::EditorGRPC::SetSerializablePropertyData>(Arena*);
 template<> ::EditorGRPC::SetSerializablePropertyResult* Arena::CreateMaybeMessage<::EditorGRPC::SetSerializablePropertyResult>(Arena*);
+template<> ::EditorGRPC::UpdatableLayersStack* Arena::CreateMaybeMessage<::EditorGRPC::UpdatableLayersStack>(Arena*);
 template<> ::EditorGRPC::Vec2* Arena::CreateMaybeMessage<::EditorGRPC::Vec2>(Arena*);
 template<> ::EditorGRPC::Vec3* Arena::CreateMaybeMessage<::EditorGRPC::Vec3>(Arena*);
 template<> ::EditorGRPC::Vec4* Arena::CreateMaybeMessage<::EditorGRPC::Vec4>(Arena*);
@@ -251,6 +279,32 @@ inline bool SetSerializablePropertyResult_Result_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SetSerializablePropertyResult_Result* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SetSerializablePropertyResult_Result>(
     SetSerializablePropertyResult_Result_descriptor(), name, value);
+}
+enum FileSaveResult_Result : int {
+  FileSaveResult_Result_SUCCESS = 0,
+  FileSaveResult_Result_FAILURE_PATH_NOT_VALID = 1,
+  FileSaveResult_Result_OTHER_FAILURE = 2,
+  FileSaveResult_Result_FileSaveResult_Result_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  FileSaveResult_Result_FileSaveResult_Result_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool FileSaveResult_Result_IsValid(int value);
+constexpr FileSaveResult_Result FileSaveResult_Result_Result_MIN = FileSaveResult_Result_SUCCESS;
+constexpr FileSaveResult_Result FileSaveResult_Result_Result_MAX = FileSaveResult_Result_OTHER_FAILURE;
+constexpr int FileSaveResult_Result_Result_ARRAYSIZE = FileSaveResult_Result_Result_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* FileSaveResult_Result_descriptor();
+template<typename T>
+inline const std::string& FileSaveResult_Result_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, FileSaveResult_Result>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function FileSaveResult_Result_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    FileSaveResult_Result_descriptor(), enum_t_value);
+}
+inline bool FileSaveResult_Result_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, FileSaveResult_Result* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<FileSaveResult_Result>(
+    FileSaveResult_Result_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -3752,6 +3806,1157 @@ class SerializablePropertiesNodes final :
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
 };
+// -------------------------------------------------------------------
+
+class FileSavePath final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.FileSavePath) */ {
+ public:
+  inline FileSavePath() : FileSavePath(nullptr) {}
+  ~FileSavePath() override;
+  explicit constexpr FileSavePath(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FileSavePath(const FileSavePath& from);
+  FileSavePath(FileSavePath&& from) noexcept
+    : FileSavePath() {
+    *this = ::std::move(from);
+  }
+
+  inline FileSavePath& operator=(const FileSavePath& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FileSavePath& operator=(FileSavePath&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FileSavePath& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FileSavePath* internal_default_instance() {
+    return reinterpret_cast<const FileSavePath*>(
+               &_FileSavePath_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    19;
+
+  friend void swap(FileSavePath& a, FileSavePath& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FileSavePath* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FileSavePath* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FileSavePath* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FileSavePath>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FileSavePath& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FileSavePath& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FileSavePath* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.FileSavePath";
+  }
+  protected:
+  explicit FileSavePath(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kPathFieldNumber = 1,
+  };
+  // string path = 1;
+  void clear_path();
+  const std::string& path() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_path(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_path();
+  PROTOBUF_NODISCARD std::string* release_path();
+  void set_allocated_path(std::string* path);
+  private:
+  const std::string& _internal_path() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_path(const std::string& value);
+  std::string* _internal_mutable_path();
+  public:
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.FileSavePath)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr path_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class FileSaveResult final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.FileSaveResult) */ {
+ public:
+  inline FileSaveResult() : FileSaveResult(nullptr) {}
+  ~FileSaveResult() override;
+  explicit constexpr FileSaveResult(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FileSaveResult(const FileSaveResult& from);
+  FileSaveResult(FileSaveResult&& from) noexcept
+    : FileSaveResult() {
+    *this = ::std::move(from);
+  }
+
+  inline FileSaveResult& operator=(const FileSaveResult& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FileSaveResult& operator=(FileSaveResult&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FileSaveResult& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FileSaveResult* internal_default_instance() {
+    return reinterpret_cast<const FileSaveResult*>(
+               &_FileSaveResult_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    20;
+
+  friend void swap(FileSaveResult& a, FileSaveResult& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FileSaveResult* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FileSaveResult* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FileSaveResult* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FileSaveResult>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FileSaveResult& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FileSaveResult& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FileSaveResult* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.FileSaveResult";
+  }
+  protected:
+  explicit FileSaveResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  typedef FileSaveResult_Result Result;
+  static constexpr Result SUCCESS =
+    FileSaveResult_Result_SUCCESS;
+  static constexpr Result FAILURE_PATH_NOT_VALID =
+    FileSaveResult_Result_FAILURE_PATH_NOT_VALID;
+  static constexpr Result OTHER_FAILURE =
+    FileSaveResult_Result_OTHER_FAILURE;
+  static inline bool Result_IsValid(int value) {
+    return FileSaveResult_Result_IsValid(value);
+  }
+  static constexpr Result Result_MIN =
+    FileSaveResult_Result_Result_MIN;
+  static constexpr Result Result_MAX =
+    FileSaveResult_Result_Result_MAX;
+  static constexpr int Result_ARRAYSIZE =
+    FileSaveResult_Result_Result_ARRAYSIZE;
+  static inline const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor*
+  Result_descriptor() {
+    return FileSaveResult_Result_descriptor();
+  }
+  template<typename T>
+  static inline const std::string& Result_Name(T enum_t_value) {
+    static_assert(::std::is_same<T, Result>::value ||
+      ::std::is_integral<T>::value,
+      "Incorrect type passed to function Result_Name.");
+    return FileSaveResult_Result_Name(enum_t_value);
+  }
+  static inline bool Result_Parse(::PROTOBUF_NAMESPACE_ID::ConstStringParam name,
+      Result* value) {
+    return FileSaveResult_Result_Parse(name, value);
+  }
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kResultFieldNumber = 1,
+  };
+  // .EditorGRPC.FileSaveResult.Result result = 1;
+  void clear_result();
+  ::EditorGRPC::FileSaveResult_Result result() const;
+  void set_result(::EditorGRPC::FileSaveResult_Result value);
+  private:
+  ::EditorGRPC::FileSaveResult_Result _internal_result() const;
+  void _internal_set_result(::EditorGRPC::FileSaveResult_Result value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.FileSaveResult)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  int result_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class FrameworkLayer final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.FrameworkLayer) */ {
+ public:
+  inline FrameworkLayer() : FrameworkLayer(nullptr) {}
+  ~FrameworkLayer() override;
+  explicit constexpr FrameworkLayer(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  FrameworkLayer(const FrameworkLayer& from);
+  FrameworkLayer(FrameworkLayer&& from) noexcept
+    : FrameworkLayer() {
+    *this = ::std::move(from);
+  }
+
+  inline FrameworkLayer& operator=(const FrameworkLayer& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline FrameworkLayer& operator=(FrameworkLayer&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const FrameworkLayer& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const FrameworkLayer* internal_default_instance() {
+    return reinterpret_cast<const FrameworkLayer*>(
+               &_FrameworkLayer_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    21;
+
+  friend void swap(FrameworkLayer& a, FrameworkLayer& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(FrameworkLayer* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(FrameworkLayer* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  FrameworkLayer* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<FrameworkLayer>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const FrameworkLayer& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const FrameworkLayer& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(FrameworkLayer* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.FrameworkLayer";
+  }
+  protected:
+  explicit FrameworkLayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kNameFieldNumber = 2,
+    kMasksLayerBelowFieldNumber = 1,
+  };
+  // string name = 2;
+  void clear_name();
+  const std::string& name() const;
+  template <typename ArgT0 = const std::string&, typename... ArgT>
+  void set_name(ArgT0&& arg0, ArgT... args);
+  std::string* mutable_name();
+  PROTOBUF_NODISCARD std::string* release_name();
+  void set_allocated_name(std::string* name);
+  private:
+  const std::string& _internal_name() const;
+  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
+  std::string* _internal_mutable_name();
+  public:
+
+  // bool masksLayerBelow = 1;
+  void clear_maskslayerbelow();
+  bool maskslayerbelow() const;
+  void set_maskslayerbelow(bool value);
+  private:
+  bool _internal_maskslayerbelow() const;
+  void _internal_set_maskslayerbelow(bool value);
+  public:
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.FrameworkLayer)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
+  bool maskslayerbelow_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class UpdatableLayersStack final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.UpdatableLayersStack) */ {
+ public:
+  inline UpdatableLayersStack() : UpdatableLayersStack(nullptr) {}
+  ~UpdatableLayersStack() override;
+  explicit constexpr UpdatableLayersStack(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  UpdatableLayersStack(const UpdatableLayersStack& from);
+  UpdatableLayersStack(UpdatableLayersStack&& from) noexcept
+    : UpdatableLayersStack() {
+    *this = ::std::move(from);
+  }
+
+  inline UpdatableLayersStack& operator=(const UpdatableLayersStack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline UpdatableLayersStack& operator=(UpdatableLayersStack&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const UpdatableLayersStack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const UpdatableLayersStack* internal_default_instance() {
+    return reinterpret_cast<const UpdatableLayersStack*>(
+               &_UpdatableLayersStack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    22;
+
+  friend void swap(UpdatableLayersStack& a, UpdatableLayersStack& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(UpdatableLayersStack* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(UpdatableLayersStack* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  UpdatableLayersStack* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<UpdatableLayersStack>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const UpdatableLayersStack& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const UpdatableLayersStack& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(UpdatableLayersStack* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.UpdatableLayersStack";
+  }
+  protected:
+  explicit UpdatableLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLayersFieldNumber = 1,
+  };
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  int layers_size() const;
+  private:
+  int _internal_layers_size() const;
+  public:
+  void clear_layers();
+  ::EditorGRPC::FrameworkLayer* mutable_layers(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+      mutable_layers();
+  private:
+  const ::EditorGRPC::FrameworkLayer& _internal_layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* _internal_add_layers();
+  public:
+  const ::EditorGRPC::FrameworkLayer& layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* add_layers();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+      layers() const;
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.UpdatableLayersStack)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer > layers_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class DrawableLayersStack final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.DrawableLayersStack) */ {
+ public:
+  inline DrawableLayersStack() : DrawableLayersStack(nullptr) {}
+  ~DrawableLayersStack() override;
+  explicit constexpr DrawableLayersStack(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  DrawableLayersStack(const DrawableLayersStack& from);
+  DrawableLayersStack(DrawableLayersStack&& from) noexcept
+    : DrawableLayersStack() {
+    *this = ::std::move(from);
+  }
+
+  inline DrawableLayersStack& operator=(const DrawableLayersStack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline DrawableLayersStack& operator=(DrawableLayersStack&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const DrawableLayersStack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const DrawableLayersStack* internal_default_instance() {
+    return reinterpret_cast<const DrawableLayersStack*>(
+               &_DrawableLayersStack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    23;
+
+  friend void swap(DrawableLayersStack& a, DrawableLayersStack& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(DrawableLayersStack* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(DrawableLayersStack* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  DrawableLayersStack* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<DrawableLayersStack>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const DrawableLayersStack& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const DrawableLayersStack& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(DrawableLayersStack* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.DrawableLayersStack";
+  }
+  protected:
+  explicit DrawableLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLayersFieldNumber = 1,
+  };
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  int layers_size() const;
+  private:
+  int _internal_layers_size() const;
+  public:
+  void clear_layers();
+  ::EditorGRPC::FrameworkLayer* mutable_layers(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+      mutable_layers();
+  private:
+  const ::EditorGRPC::FrameworkLayer& _internal_layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* _internal_add_layers();
+  public:
+  const ::EditorGRPC::FrameworkLayer& layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* add_layers();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+      layers() const;
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.DrawableLayersStack)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer > layers_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class InputLayersStack final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.InputLayersStack) */ {
+ public:
+  inline InputLayersStack() : InputLayersStack(nullptr) {}
+  ~InputLayersStack() override;
+  explicit constexpr InputLayersStack(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  InputLayersStack(const InputLayersStack& from);
+  InputLayersStack(InputLayersStack&& from) noexcept
+    : InputLayersStack() {
+    *this = ::std::move(from);
+  }
+
+  inline InputLayersStack& operator=(const InputLayersStack& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline InputLayersStack& operator=(InputLayersStack&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const InputLayersStack& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const InputLayersStack* internal_default_instance() {
+    return reinterpret_cast<const InputLayersStack*>(
+               &_InputLayersStack_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    24;
+
+  friend void swap(InputLayersStack& a, InputLayersStack& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(InputLayersStack* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(InputLayersStack* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  InputLayersStack* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<InputLayersStack>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const InputLayersStack& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const InputLayersStack& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(InputLayersStack* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.InputLayersStack";
+  }
+  protected:
+  explicit InputLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kLayersFieldNumber = 1,
+  };
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  int layers_size() const;
+  private:
+  int _internal_layers_size() const;
+  public:
+  void clear_layers();
+  ::EditorGRPC::FrameworkLayer* mutable_layers(int index);
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+      mutable_layers();
+  private:
+  const ::EditorGRPC::FrameworkLayer& _internal_layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* _internal_add_layers();
+  public:
+  const ::EditorGRPC::FrameworkLayer& layers(int index) const;
+  ::EditorGRPC::FrameworkLayer* add_layers();
+  const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+      layers() const;
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.InputLayersStack)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer > layers_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
+// -------------------------------------------------------------------
+
+class GameFrameworkLayers final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:EditorGRPC.GameFrameworkLayers) */ {
+ public:
+  inline GameFrameworkLayers() : GameFrameworkLayers(nullptr) {}
+  ~GameFrameworkLayers() override;
+  explicit constexpr GameFrameworkLayers(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+
+  GameFrameworkLayers(const GameFrameworkLayers& from);
+  GameFrameworkLayers(GameFrameworkLayers&& from) noexcept
+    : GameFrameworkLayers() {
+    *this = ::std::move(from);
+  }
+
+  inline GameFrameworkLayers& operator=(const GameFrameworkLayers& from) {
+    CopyFrom(from);
+    return *this;
+  }
+  inline GameFrameworkLayers& operator=(GameFrameworkLayers&& from) noexcept {
+    if (this == &from) return *this;
+    if (GetOwningArena() == from.GetOwningArena()
+  #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
+        && GetOwningArena() != nullptr
+  #endif  // !PROTOBUF_FORCE_COPY_IN_MOVE
+    ) {
+      InternalSwap(&from);
+    } else {
+      CopyFrom(from);
+    }
+    return *this;
+  }
+
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* descriptor() {
+    return GetDescriptor();
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Descriptor* GetDescriptor() {
+    return default_instance().GetMetadata().descriptor;
+  }
+  static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
+    return default_instance().GetMetadata().reflection;
+  }
+  static const GameFrameworkLayers& default_instance() {
+    return *internal_default_instance();
+  }
+  static inline const GameFrameworkLayers* internal_default_instance() {
+    return reinterpret_cast<const GameFrameworkLayers*>(
+               &_GameFrameworkLayers_default_instance_);
+  }
+  static constexpr int kIndexInFileMessages =
+    25;
+
+  friend void swap(GameFrameworkLayers& a, GameFrameworkLayers& b) {
+    a.Swap(&b);
+  }
+  inline void Swap(GameFrameworkLayers* other) {
+    if (other == this) return;
+  #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() != nullptr &&
+        GetOwningArena() == other->GetOwningArena()) {
+   #else  // PROTOBUF_FORCE_COPY_IN_SWAP
+    if (GetOwningArena() == other->GetOwningArena()) {
+  #endif  // !PROTOBUF_FORCE_COPY_IN_SWAP
+      InternalSwap(other);
+    } else {
+      ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
+    }
+  }
+  void UnsafeArenaSwap(GameFrameworkLayers* other) {
+    if (other == this) return;
+    GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
+    InternalSwap(other);
+  }
+
+  // implements Message ----------------------------------------------
+
+  GameFrameworkLayers* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<GameFrameworkLayers>(arena);
+  }
+  using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
+  void CopyFrom(const GameFrameworkLayers& from);
+  using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
+  void MergeFrom(const GameFrameworkLayers& from);
+  private:
+  static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
+  public:
+  PROTOBUF_ATTRIBUTE_REINITIALIZES void Clear() final;
+  bool IsInitialized() const final;
+
+  size_t ByteSizeLong() const final;
+  const char* _InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) final;
+  uint8_t* _InternalSerialize(
+      uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const final;
+  int GetCachedSize() const final { return _cached_size_.Get(); }
+
+  private:
+  void SharedCtor();
+  void SharedDtor();
+  void SetCachedSize(int size) const final;
+  void InternalSwap(GameFrameworkLayers* other);
+
+  private:
+  friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
+  static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
+    return "EditorGRPC.GameFrameworkLayers";
+  }
+  protected:
+  explicit GameFrameworkLayers(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                       bool is_message_owned = false);
+  private:
+  static void ArenaDtor(void* object);
+  inline void RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena* arena);
+  public:
+
+  static const ClassData _class_data_;
+  const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GetClassData() const final;
+
+  ::PROTOBUF_NAMESPACE_ID::Metadata GetMetadata() const final;
+
+  // nested types ----------------------------------------------------
+
+  // accessors -------------------------------------------------------
+
+  enum : int {
+    kUpdatableFieldNumber = 1,
+    kDrawableFieldNumber = 2,
+    kInputFieldNumber = 3,
+  };
+  // .EditorGRPC.UpdatableLayersStack updatable = 1;
+  bool has_updatable() const;
+  private:
+  bool _internal_has_updatable() const;
+  public:
+  void clear_updatable();
+  const ::EditorGRPC::UpdatableLayersStack& updatable() const;
+  PROTOBUF_NODISCARD ::EditorGRPC::UpdatableLayersStack* release_updatable();
+  ::EditorGRPC::UpdatableLayersStack* mutable_updatable();
+  void set_allocated_updatable(::EditorGRPC::UpdatableLayersStack* updatable);
+  private:
+  const ::EditorGRPC::UpdatableLayersStack& _internal_updatable() const;
+  ::EditorGRPC::UpdatableLayersStack* _internal_mutable_updatable();
+  public:
+  void unsafe_arena_set_allocated_updatable(
+      ::EditorGRPC::UpdatableLayersStack* updatable);
+  ::EditorGRPC::UpdatableLayersStack* unsafe_arena_release_updatable();
+
+  // .EditorGRPC.DrawableLayersStack drawable = 2;
+  bool has_drawable() const;
+  private:
+  bool _internal_has_drawable() const;
+  public:
+  void clear_drawable();
+  const ::EditorGRPC::DrawableLayersStack& drawable() const;
+  PROTOBUF_NODISCARD ::EditorGRPC::DrawableLayersStack* release_drawable();
+  ::EditorGRPC::DrawableLayersStack* mutable_drawable();
+  void set_allocated_drawable(::EditorGRPC::DrawableLayersStack* drawable);
+  private:
+  const ::EditorGRPC::DrawableLayersStack& _internal_drawable() const;
+  ::EditorGRPC::DrawableLayersStack* _internal_mutable_drawable();
+  public:
+  void unsafe_arena_set_allocated_drawable(
+      ::EditorGRPC::DrawableLayersStack* drawable);
+  ::EditorGRPC::DrawableLayersStack* unsafe_arena_release_drawable();
+
+  // .EditorGRPC.InputLayersStack input = 3;
+  bool has_input() const;
+  private:
+  bool _internal_has_input() const;
+  public:
+  void clear_input();
+  const ::EditorGRPC::InputLayersStack& input() const;
+  PROTOBUF_NODISCARD ::EditorGRPC::InputLayersStack* release_input();
+  ::EditorGRPC::InputLayersStack* mutable_input();
+  void set_allocated_input(::EditorGRPC::InputLayersStack* input);
+  private:
+  const ::EditorGRPC::InputLayersStack& _internal_input() const;
+  ::EditorGRPC::InputLayersStack* _internal_mutable_input();
+  public:
+  void unsafe_arena_set_allocated_input(
+      ::EditorGRPC::InputLayersStack* input);
+  ::EditorGRPC::InputLayersStack* unsafe_arena_release_input();
+
+  // @@protoc_insertion_point(class_scope:EditorGRPC.GameFrameworkLayers)
+ private:
+  class _Internal;
+
+  template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
+  typedef void InternalArenaConstructable_;
+  typedef void DestructorSkippable_;
+  ::EditorGRPC::UpdatableLayersStack* updatable_;
+  ::EditorGRPC::DrawableLayersStack* drawable_;
+  ::EditorGRPC::InputLayersStack* input_;
+  mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
+  friend struct ::TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto;
+};
 // ===================================================================
 
 
@@ -5779,9 +6984,583 @@ SerializablePropertiesNodes::nodes() const {
   return nodes_;
 }
 
+// -------------------------------------------------------------------
+
+// FileSavePath
+
+// string path = 1;
+inline void FileSavePath::clear_path() {
+  path_.ClearToEmpty();
+}
+inline const std::string& FileSavePath::path() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.FileSavePath.path)
+  return _internal_path();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FileSavePath::set_path(ArgT0&& arg0, ArgT... args) {
+ 
+ path_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:EditorGRPC.FileSavePath.path)
+}
+inline std::string* FileSavePath::mutable_path() {
+  std::string* _s = _internal_mutable_path();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.FileSavePath.path)
+  return _s;
+}
+inline const std::string& FileSavePath::_internal_path() const {
+  return path_.Get();
+}
+inline void FileSavePath::_internal_set_path(const std::string& value) {
+  
+  path_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FileSavePath::_internal_mutable_path() {
+  
+  return path_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FileSavePath::release_path() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.FileSavePath.path)
+  return path_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FileSavePath::set_allocated_path(std::string* path) {
+  if (path != nullptr) {
+    
+  } else {
+    
+  }
+  path_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), path,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (path_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    path_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.FileSavePath.path)
+}
+
+// -------------------------------------------------------------------
+
+// FileSaveResult
+
+// .EditorGRPC.FileSaveResult.Result result = 1;
+inline void FileSaveResult::clear_result() {
+  result_ = 0;
+}
+inline ::EditorGRPC::FileSaveResult_Result FileSaveResult::_internal_result() const {
+  return static_cast< ::EditorGRPC::FileSaveResult_Result >(result_);
+}
+inline ::EditorGRPC::FileSaveResult_Result FileSaveResult::result() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.FileSaveResult.result)
+  return _internal_result();
+}
+inline void FileSaveResult::_internal_set_result(::EditorGRPC::FileSaveResult_Result value) {
+  
+  result_ = value;
+}
+inline void FileSaveResult::set_result(::EditorGRPC::FileSaveResult_Result value) {
+  _internal_set_result(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.FileSaveResult.result)
+}
+
+// -------------------------------------------------------------------
+
+// FrameworkLayer
+
+// bool masksLayerBelow = 1;
+inline void FrameworkLayer::clear_maskslayerbelow() {
+  maskslayerbelow_ = false;
+}
+inline bool FrameworkLayer::_internal_maskslayerbelow() const {
+  return maskslayerbelow_;
+}
+inline bool FrameworkLayer::maskslayerbelow() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.FrameworkLayer.masksLayerBelow)
+  return _internal_maskslayerbelow();
+}
+inline void FrameworkLayer::_internal_set_maskslayerbelow(bool value) {
+  
+  maskslayerbelow_ = value;
+}
+inline void FrameworkLayer::set_maskslayerbelow(bool value) {
+  _internal_set_maskslayerbelow(value);
+  // @@protoc_insertion_point(field_set:EditorGRPC.FrameworkLayer.masksLayerBelow)
+}
+
+// string name = 2;
+inline void FrameworkLayer::clear_name() {
+  name_.ClearToEmpty();
+}
+inline const std::string& FrameworkLayer::name() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.FrameworkLayer.name)
+  return _internal_name();
+}
+template <typename ArgT0, typename... ArgT>
+inline PROTOBUF_ALWAYS_INLINE
+void FrameworkLayer::set_name(ArgT0&& arg0, ArgT... args) {
+ 
+ name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
+  // @@protoc_insertion_point(field_set:EditorGRPC.FrameworkLayer.name)
+}
+inline std::string* FrameworkLayer::mutable_name() {
+  std::string* _s = _internal_mutable_name();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.FrameworkLayer.name)
+  return _s;
+}
+inline const std::string& FrameworkLayer::_internal_name() const {
+  return name_.Get();
+}
+inline void FrameworkLayer::_internal_set_name(const std::string& value) {
+  
+  name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, value, GetArenaForAllocation());
+}
+inline std::string* FrameworkLayer::_internal_mutable_name() {
+  
+  return name_.Mutable(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, GetArenaForAllocation());
+}
+inline std::string* FrameworkLayer::release_name() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.FrameworkLayer.name)
+  return name_.Release(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), GetArenaForAllocation());
+}
+inline void FrameworkLayer::set_allocated_name(std::string* name) {
+  if (name != nullptr) {
+    
+  } else {
+    
+  }
+  name_.SetAllocated(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), name,
+      GetArenaForAllocation());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (name_.IsDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited())) {
+    name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  }
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.FrameworkLayer.name)
+}
+
+// -------------------------------------------------------------------
+
+// UpdatableLayersStack
+
+// repeated .EditorGRPC.FrameworkLayer layers = 1;
+inline int UpdatableLayersStack::_internal_layers_size() const {
+  return layers_.size();
+}
+inline int UpdatableLayersStack::layers_size() const {
+  return _internal_layers_size();
+}
+inline void UpdatableLayersStack::clear_layers() {
+  layers_.Clear();
+}
+inline ::EditorGRPC::FrameworkLayer* UpdatableLayersStack::mutable_layers(int index) {
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.UpdatableLayersStack.layers)
+  return layers_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+UpdatableLayersStack::mutable_layers() {
+  // @@protoc_insertion_point(field_mutable_list:EditorGRPC.UpdatableLayersStack.layers)
+  return &layers_;
+}
+inline const ::EditorGRPC::FrameworkLayer& UpdatableLayersStack::_internal_layers(int index) const {
+  return layers_.Get(index);
+}
+inline const ::EditorGRPC::FrameworkLayer& UpdatableLayersStack::layers(int index) const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.UpdatableLayersStack.layers)
+  return _internal_layers(index);
+}
+inline ::EditorGRPC::FrameworkLayer* UpdatableLayersStack::_internal_add_layers() {
+  return layers_.Add();
+}
+inline ::EditorGRPC::FrameworkLayer* UpdatableLayersStack::add_layers() {
+  ::EditorGRPC::FrameworkLayer* _add = _internal_add_layers();
+  // @@protoc_insertion_point(field_add:EditorGRPC.UpdatableLayersStack.layers)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+UpdatableLayersStack::layers() const {
+  // @@protoc_insertion_point(field_list:EditorGRPC.UpdatableLayersStack.layers)
+  return layers_;
+}
+
+// -------------------------------------------------------------------
+
+// DrawableLayersStack
+
+// repeated .EditorGRPC.FrameworkLayer layers = 1;
+inline int DrawableLayersStack::_internal_layers_size() const {
+  return layers_.size();
+}
+inline int DrawableLayersStack::layers_size() const {
+  return _internal_layers_size();
+}
+inline void DrawableLayersStack::clear_layers() {
+  layers_.Clear();
+}
+inline ::EditorGRPC::FrameworkLayer* DrawableLayersStack::mutable_layers(int index) {
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.DrawableLayersStack.layers)
+  return layers_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+DrawableLayersStack::mutable_layers() {
+  // @@protoc_insertion_point(field_mutable_list:EditorGRPC.DrawableLayersStack.layers)
+  return &layers_;
+}
+inline const ::EditorGRPC::FrameworkLayer& DrawableLayersStack::_internal_layers(int index) const {
+  return layers_.Get(index);
+}
+inline const ::EditorGRPC::FrameworkLayer& DrawableLayersStack::layers(int index) const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.DrawableLayersStack.layers)
+  return _internal_layers(index);
+}
+inline ::EditorGRPC::FrameworkLayer* DrawableLayersStack::_internal_add_layers() {
+  return layers_.Add();
+}
+inline ::EditorGRPC::FrameworkLayer* DrawableLayersStack::add_layers() {
+  ::EditorGRPC::FrameworkLayer* _add = _internal_add_layers();
+  // @@protoc_insertion_point(field_add:EditorGRPC.DrawableLayersStack.layers)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+DrawableLayersStack::layers() const {
+  // @@protoc_insertion_point(field_list:EditorGRPC.DrawableLayersStack.layers)
+  return layers_;
+}
+
+// -------------------------------------------------------------------
+
+// InputLayersStack
+
+// repeated .EditorGRPC.FrameworkLayer layers = 1;
+inline int InputLayersStack::_internal_layers_size() const {
+  return layers_.size();
+}
+inline int InputLayersStack::layers_size() const {
+  return _internal_layers_size();
+}
+inline void InputLayersStack::clear_layers() {
+  layers_.Clear();
+}
+inline ::EditorGRPC::FrameworkLayer* InputLayersStack::mutable_layers(int index) {
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.InputLayersStack.layers)
+  return layers_.Mutable(index);
+}
+inline ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >*
+InputLayersStack::mutable_layers() {
+  // @@protoc_insertion_point(field_mutable_list:EditorGRPC.InputLayersStack.layers)
+  return &layers_;
+}
+inline const ::EditorGRPC::FrameworkLayer& InputLayersStack::_internal_layers(int index) const {
+  return layers_.Get(index);
+}
+inline const ::EditorGRPC::FrameworkLayer& InputLayersStack::layers(int index) const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.InputLayersStack.layers)
+  return _internal_layers(index);
+}
+inline ::EditorGRPC::FrameworkLayer* InputLayersStack::_internal_add_layers() {
+  return layers_.Add();
+}
+inline ::EditorGRPC::FrameworkLayer* InputLayersStack::add_layers() {
+  ::EditorGRPC::FrameworkLayer* _add = _internal_add_layers();
+  // @@protoc_insertion_point(field_add:EditorGRPC.InputLayersStack.layers)
+  return _add;
+}
+inline const ::PROTOBUF_NAMESPACE_ID::RepeatedPtrField< ::EditorGRPC::FrameworkLayer >&
+InputLayersStack::layers() const {
+  // @@protoc_insertion_point(field_list:EditorGRPC.InputLayersStack.layers)
+  return layers_;
+}
+
+// -------------------------------------------------------------------
+
+// GameFrameworkLayers
+
+// .EditorGRPC.UpdatableLayersStack updatable = 1;
+inline bool GameFrameworkLayers::_internal_has_updatable() const {
+  return this != internal_default_instance() && updatable_ != nullptr;
+}
+inline bool GameFrameworkLayers::has_updatable() const {
+  return _internal_has_updatable();
+}
+inline void GameFrameworkLayers::clear_updatable() {
+  if (GetArenaForAllocation() == nullptr && updatable_ != nullptr) {
+    delete updatable_;
+  }
+  updatable_ = nullptr;
+}
+inline const ::EditorGRPC::UpdatableLayersStack& GameFrameworkLayers::_internal_updatable() const {
+  const ::EditorGRPC::UpdatableLayersStack* p = updatable_;
+  return p != nullptr ? *p : reinterpret_cast<const ::EditorGRPC::UpdatableLayersStack&>(
+      ::EditorGRPC::_UpdatableLayersStack_default_instance_);
+}
+inline const ::EditorGRPC::UpdatableLayersStack& GameFrameworkLayers::updatable() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.GameFrameworkLayers.updatable)
+  return _internal_updatable();
+}
+inline void GameFrameworkLayers::unsafe_arena_set_allocated_updatable(
+    ::EditorGRPC::UpdatableLayersStack* updatable) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(updatable_);
+  }
+  updatable_ = updatable;
+  if (updatable) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:EditorGRPC.GameFrameworkLayers.updatable)
+}
+inline ::EditorGRPC::UpdatableLayersStack* GameFrameworkLayers::release_updatable() {
+  
+  ::EditorGRPC::UpdatableLayersStack* temp = updatable_;
+  updatable_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::EditorGRPC::UpdatableLayersStack* GameFrameworkLayers::unsafe_arena_release_updatable() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.GameFrameworkLayers.updatable)
+  
+  ::EditorGRPC::UpdatableLayersStack* temp = updatable_;
+  updatable_ = nullptr;
+  return temp;
+}
+inline ::EditorGRPC::UpdatableLayersStack* GameFrameworkLayers::_internal_mutable_updatable() {
+  
+  if (updatable_ == nullptr) {
+    auto* p = CreateMaybeMessage<::EditorGRPC::UpdatableLayersStack>(GetArenaForAllocation());
+    updatable_ = p;
+  }
+  return updatable_;
+}
+inline ::EditorGRPC::UpdatableLayersStack* GameFrameworkLayers::mutable_updatable() {
+  ::EditorGRPC::UpdatableLayersStack* _msg = _internal_mutable_updatable();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.GameFrameworkLayers.updatable)
+  return _msg;
+}
+inline void GameFrameworkLayers::set_allocated_updatable(::EditorGRPC::UpdatableLayersStack* updatable) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete updatable_;
+  }
+  if (updatable) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::EditorGRPC::UpdatableLayersStack>::GetOwningArena(updatable);
+    if (message_arena != submessage_arena) {
+      updatable = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, updatable, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  updatable_ = updatable;
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.GameFrameworkLayers.updatable)
+}
+
+// .EditorGRPC.DrawableLayersStack drawable = 2;
+inline bool GameFrameworkLayers::_internal_has_drawable() const {
+  return this != internal_default_instance() && drawable_ != nullptr;
+}
+inline bool GameFrameworkLayers::has_drawable() const {
+  return _internal_has_drawable();
+}
+inline void GameFrameworkLayers::clear_drawable() {
+  if (GetArenaForAllocation() == nullptr && drawable_ != nullptr) {
+    delete drawable_;
+  }
+  drawable_ = nullptr;
+}
+inline const ::EditorGRPC::DrawableLayersStack& GameFrameworkLayers::_internal_drawable() const {
+  const ::EditorGRPC::DrawableLayersStack* p = drawable_;
+  return p != nullptr ? *p : reinterpret_cast<const ::EditorGRPC::DrawableLayersStack&>(
+      ::EditorGRPC::_DrawableLayersStack_default_instance_);
+}
+inline const ::EditorGRPC::DrawableLayersStack& GameFrameworkLayers::drawable() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.GameFrameworkLayers.drawable)
+  return _internal_drawable();
+}
+inline void GameFrameworkLayers::unsafe_arena_set_allocated_drawable(
+    ::EditorGRPC::DrawableLayersStack* drawable) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(drawable_);
+  }
+  drawable_ = drawable;
+  if (drawable) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:EditorGRPC.GameFrameworkLayers.drawable)
+}
+inline ::EditorGRPC::DrawableLayersStack* GameFrameworkLayers::release_drawable() {
+  
+  ::EditorGRPC::DrawableLayersStack* temp = drawable_;
+  drawable_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::EditorGRPC::DrawableLayersStack* GameFrameworkLayers::unsafe_arena_release_drawable() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.GameFrameworkLayers.drawable)
+  
+  ::EditorGRPC::DrawableLayersStack* temp = drawable_;
+  drawable_ = nullptr;
+  return temp;
+}
+inline ::EditorGRPC::DrawableLayersStack* GameFrameworkLayers::_internal_mutable_drawable() {
+  
+  if (drawable_ == nullptr) {
+    auto* p = CreateMaybeMessage<::EditorGRPC::DrawableLayersStack>(GetArenaForAllocation());
+    drawable_ = p;
+  }
+  return drawable_;
+}
+inline ::EditorGRPC::DrawableLayersStack* GameFrameworkLayers::mutable_drawable() {
+  ::EditorGRPC::DrawableLayersStack* _msg = _internal_mutable_drawable();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.GameFrameworkLayers.drawable)
+  return _msg;
+}
+inline void GameFrameworkLayers::set_allocated_drawable(::EditorGRPC::DrawableLayersStack* drawable) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete drawable_;
+  }
+  if (drawable) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::EditorGRPC::DrawableLayersStack>::GetOwningArena(drawable);
+    if (message_arena != submessage_arena) {
+      drawable = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, drawable, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  drawable_ = drawable;
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.GameFrameworkLayers.drawable)
+}
+
+// .EditorGRPC.InputLayersStack input = 3;
+inline bool GameFrameworkLayers::_internal_has_input() const {
+  return this != internal_default_instance() && input_ != nullptr;
+}
+inline bool GameFrameworkLayers::has_input() const {
+  return _internal_has_input();
+}
+inline void GameFrameworkLayers::clear_input() {
+  if (GetArenaForAllocation() == nullptr && input_ != nullptr) {
+    delete input_;
+  }
+  input_ = nullptr;
+}
+inline const ::EditorGRPC::InputLayersStack& GameFrameworkLayers::_internal_input() const {
+  const ::EditorGRPC::InputLayersStack* p = input_;
+  return p != nullptr ? *p : reinterpret_cast<const ::EditorGRPC::InputLayersStack&>(
+      ::EditorGRPC::_InputLayersStack_default_instance_);
+}
+inline const ::EditorGRPC::InputLayersStack& GameFrameworkLayers::input() const {
+  // @@protoc_insertion_point(field_get:EditorGRPC.GameFrameworkLayers.input)
+  return _internal_input();
+}
+inline void GameFrameworkLayers::unsafe_arena_set_allocated_input(
+    ::EditorGRPC::InputLayersStack* input) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(input_);
+  }
+  input_ = input;
+  if (input) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:EditorGRPC.GameFrameworkLayers.input)
+}
+inline ::EditorGRPC::InputLayersStack* GameFrameworkLayers::release_input() {
+  
+  ::EditorGRPC::InputLayersStack* temp = input_;
+  input_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::EditorGRPC::InputLayersStack* GameFrameworkLayers::unsafe_arena_release_input() {
+  // @@protoc_insertion_point(field_release:EditorGRPC.GameFrameworkLayers.input)
+  
+  ::EditorGRPC::InputLayersStack* temp = input_;
+  input_ = nullptr;
+  return temp;
+}
+inline ::EditorGRPC::InputLayersStack* GameFrameworkLayers::_internal_mutable_input() {
+  
+  if (input_ == nullptr) {
+    auto* p = CreateMaybeMessage<::EditorGRPC::InputLayersStack>(GetArenaForAllocation());
+    input_ = p;
+  }
+  return input_;
+}
+inline ::EditorGRPC::InputLayersStack* GameFrameworkLayers::mutable_input() {
+  ::EditorGRPC::InputLayersStack* _msg = _internal_mutable_input();
+  // @@protoc_insertion_point(field_mutable:EditorGRPC.GameFrameworkLayers.input)
+  return _msg;
+}
+inline void GameFrameworkLayers::set_allocated_input(::EditorGRPC::InputLayersStack* input) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete input_;
+  }
+  if (input) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper<::EditorGRPC::InputLayersStack>::GetOwningArena(input);
+    if (message_arena != submessage_arena) {
+      input = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, input, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  input_ = input;
+  // @@protoc_insertion_point(field_set_allocated:EditorGRPC.GameFrameworkLayers.input)
+}
+
 #ifdef __GNUC__
   #pragma GCC diagnostic pop
 #endif  // __GNUC__
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
+// -------------------------------------------------------------------
+
 // -------------------------------------------------------------------
 
 // -------------------------------------------------------------------
@@ -5844,6 +7623,11 @@ template <> struct is_proto_enum< ::EditorGRPC::SetSerializablePropertyResult_Re
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::EditorGRPC::SetSerializablePropertyResult_Result>() {
   return ::EditorGRPC::SetSerializablePropertyResult_Result_descriptor();
+}
+template <> struct is_proto_enum< ::EditorGRPC::FileSaveResult_Result> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::EditorGRPC::FileSaveResult_Result>() {
+  return ::EditorGRPC::FileSaveResult_Result_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

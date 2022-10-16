@@ -100,6 +100,22 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::BoardDescription>> PrepareAsyncGetUpdatedBoardStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::BoardDescription>>(PrepareAsyncGetUpdatedBoardStreamRaw(context, request, cq));
     }
+    virtual ::grpc::Status SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::EditorGRPC::FileSaveResult* response) = 0;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>> AsyncSaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>>(AsyncSaveLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>> PrepareAsyncSaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>>(PrepareAsyncSaveLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReaderInterface< ::EditorGRPC::GameFrameworkLayers>> GetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) {
+      return std::unique_ptr< ::grpc::ClientReaderInterface< ::EditorGRPC::GameFrameworkLayers>>(GetGameFramworkStackStreamRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>> AsyncGetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>>(AsyncGetGameFramworkStackStreamRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>> PrepareAsyncGetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>>(PrepareAsyncGetGameFramworkStackStreamRaw(context, request, cq));
+    }
     class async_interface {
      public:
       virtual ~async_interface() {}
@@ -120,6 +136,9 @@ class PlayBoardEdit final {
       virtual void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, std::function<void(::grpc::Status)>) = 0;
       virtual void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
       virtual void GetUpdatedBoardStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::BoardDescription>* reactor) = 0;
+      virtual void SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, std::function<void(::grpc::Status)>) = 0;
+      virtual void SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, ::grpc::ClientUnaryReactor* reactor) = 0;
+      virtual void GetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::GameFrameworkLayers>* reactor) = 0;
     };
     typedef class async_interface experimental_async_interface;
     virtual class async_interface* async() { return nullptr; }
@@ -144,6 +163,11 @@ class PlayBoardEdit final {
     virtual ::grpc::ClientReaderInterface< ::EditorGRPC::BoardDescription>* GetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::BoardDescription>* AsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
     virtual ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::BoardDescription>* PrepareAsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>* AsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientAsyncResponseReaderInterface< ::EditorGRPC::FileSaveResult>* PrepareAsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) = 0;
+    virtual ::grpc::ClientReaderInterface< ::EditorGRPC::GameFrameworkLayers>* GetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>* AsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) = 0;
+    virtual ::grpc::ClientAsyncReaderInterface< ::EditorGRPC::GameFrameworkLayers>* PrepareAsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) = 0;
   };
   class Stub final : public StubInterface {
    public:
@@ -213,6 +237,22 @@ class PlayBoardEdit final {
     std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>> PrepareAsyncGetUpdatedBoardStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
       return std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>>(PrepareAsyncGetUpdatedBoardStreamRaw(context, request, cq));
     }
+    ::grpc::Status SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::EditorGRPC::FileSaveResult* response) override;
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>> AsyncSaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>>(AsyncSaveLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>> PrepareAsyncSaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>>(PrepareAsyncSaveLevelRaw(context, request, cq));
+    }
+    std::unique_ptr< ::grpc::ClientReader< ::EditorGRPC::GameFrameworkLayers>> GetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) {
+      return std::unique_ptr< ::grpc::ClientReader< ::EditorGRPC::GameFrameworkLayers>>(GetGameFramworkStackStreamRaw(context, request));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>> AsyncGetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>>(AsyncGetGameFramworkStackStreamRaw(context, request, cq, tag));
+    }
+    std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>> PrepareAsyncGetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+      return std::unique_ptr< ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>>(PrepareAsyncGetGameFramworkStackStreamRaw(context, request, cq));
+    }
     class async final :
       public StubInterface::async_interface {
      public:
@@ -233,6 +273,9 @@ class PlayBoardEdit final {
       void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, std::function<void(::grpc::Status)>) override;
       void SetSerializableProperty(::grpc::ClientContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response, ::grpc::ClientUnaryReactor* reactor) override;
       void GetUpdatedBoardStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::BoardDescription>* reactor) override;
+      void SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, std::function<void(::grpc::Status)>) override;
+      void SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, ::grpc::ClientUnaryReactor* reactor) override;
+      void GetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::GameFrameworkLayers>* reactor) override;
      private:
       friend class Stub;
       explicit async(Stub* stub): stub_(stub) { }
@@ -263,6 +306,11 @@ class PlayBoardEdit final {
     ::grpc::ClientReader< ::EditorGRPC::BoardDescription>* GetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) override;
     ::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>* AsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) override;
     ::grpc::ClientAsyncReader< ::EditorGRPC::BoardDescription>* PrepareAsyncGetUpdatedBoardStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>* AsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>* PrepareAsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) override;
+    ::grpc::ClientReader< ::EditorGRPC::GameFrameworkLayers>* GetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) override;
+    ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>* AsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) override;
+    ::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>* PrepareAsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) override;
     const ::grpc::internal::RpcMethod rpcmethod_AddBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_RemoveBlock_;
     const ::grpc::internal::RpcMethod rpcmethod_ChangeBlock_;
@@ -272,6 +320,8 @@ class PlayBoardEdit final {
     const ::grpc::internal::RpcMethod rpcmethod_GetSerializableNodes_;
     const ::grpc::internal::RpcMethod rpcmethod_SetSerializableProperty_;
     const ::grpc::internal::RpcMethod rpcmethod_GetUpdatedBoardStream_;
+    const ::grpc::internal::RpcMethod rpcmethod_SaveLevel_;
+    const ::grpc::internal::RpcMethod rpcmethod_GetGameFramworkStackStream_;
   };
   static std::unique_ptr<Stub> NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options = ::grpc::StubOptions());
 
@@ -288,6 +338,8 @@ class PlayBoardEdit final {
     virtual ::grpc::Status GetSerializableNodes(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::EditorGRPC::SerializablePropertiesNodes* response);
     virtual ::grpc::Status SetSerializableProperty(::grpc::ServerContext* context, const ::EditorGRPC::SetSerializablePropertyData* request, ::EditorGRPC::SetSerializablePropertyResult* response);
     virtual ::grpc::Status GetUpdatedBoardStream(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::grpc::ServerWriter< ::EditorGRPC::BoardDescription>* writer);
+    virtual ::grpc::Status SaveLevel(::grpc::ServerContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response);
+    virtual ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* writer);
   };
   template <class BaseClass>
   class WithAsyncMethod_AddBlock : public BaseClass {
@@ -469,7 +521,47 @@ class PlayBoardEdit final {
       ::grpc::Service::RequestAsyncServerStreaming(8, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
-  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_ChangeBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<WithAsyncMethod_InitialConnectionHandshake<WithAsyncMethod_GetSerializableNodes<WithAsyncMethod_SetSerializableProperty<WithAsyncMethod_GetUpdatedBoardStream<Service > > > > > > > > > AsyncService;
+  template <class BaseClass>
+  class WithAsyncMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodAsync(9);
+    }
+    ~WithAsyncMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSaveLevel(::grpc::ServerContext* context, ::EditorGRPC::FileSavePath* request, ::grpc::ServerAsyncResponseWriter< ::EditorGRPC::FileSaveResult>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithAsyncMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithAsyncMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodAsync(10);
+    }
+    ~WithAsyncMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetGameFramworkStackStream(::grpc::ServerContext* context, ::EditorGRPC::Void* request, ::grpc::ServerAsyncWriter< ::EditorGRPC::GameFrameworkLayers>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(10, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  typedef WithAsyncMethod_AddBlock<WithAsyncMethod_RemoveBlock<WithAsyncMethod_ChangeBlock<WithAsyncMethod_GetBoardState<WithAsyncMethod_SetBoardState<WithAsyncMethod_InitialConnectionHandshake<WithAsyncMethod_GetSerializableNodes<WithAsyncMethod_SetSerializableProperty<WithAsyncMethod_GetUpdatedBoardStream<WithAsyncMethod_SaveLevel<WithAsyncMethod_GetGameFramworkStackStream<Service > > > > > > > > > > > AsyncService;
   template <class BaseClass>
   class WithCallbackMethod_AddBlock : public BaseClass {
    private:
@@ -708,7 +800,56 @@ class PlayBoardEdit final {
     virtual ::grpc::ServerWriteReactor< ::EditorGRPC::BoardDescription>* GetUpdatedBoardStream(
       ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/)  { return nullptr; }
   };
-  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_ChangeBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<WithCallbackMethod_InitialConnectionHandshake<WithCallbackMethod_GetSerializableNodes<WithCallbackMethod_SetSerializableProperty<WithCallbackMethod_GetUpdatedBoardStream<Service > > > > > > > > > CallbackService;
+  template <class BaseClass>
+  class WithCallbackMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response) { return this->SaveLevel(context, request, response); }));}
+    void SetMessageAllocatorFor_SaveLevel(
+        ::grpc::MessageAllocator< ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult>* allocator) {
+      ::grpc::internal::MethodHandler* const handler = ::grpc::Service::GetHandler(9);
+      static_cast<::grpc::internal::CallbackUnaryHandler< ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult>*>(handler)
+              ->SetMessageAllocator(allocator);
+    }
+    ~WithCallbackMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SaveLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithCallbackMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithCallbackMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodCallback(10,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::EditorGRPC::Void, ::EditorGRPC::GameFrameworkLayers>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::EditorGRPC::Void* request) { return this->GetGameFramworkStackStream(context, request); }));
+    }
+    ~WithCallbackMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::EditorGRPC::GameFrameworkLayers>* GetGameFramworkStackStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/)  { return nullptr; }
+  };
+  typedef WithCallbackMethod_AddBlock<WithCallbackMethod_RemoveBlock<WithCallbackMethod_ChangeBlock<WithCallbackMethod_GetBoardState<WithCallbackMethod_SetBoardState<WithCallbackMethod_InitialConnectionHandshake<WithCallbackMethod_GetSerializableNodes<WithCallbackMethod_SetSerializableProperty<WithCallbackMethod_GetUpdatedBoardStream<WithCallbackMethod_SaveLevel<WithCallbackMethod_GetGameFramworkStackStream<Service > > > > > > > > > > > CallbackService;
   typedef CallbackService ExperimentalCallbackService;
   template <class BaseClass>
   class WithGenericMethod_AddBlock : public BaseClass {
@@ -859,6 +1000,40 @@ class PlayBoardEdit final {
     }
     // disable synchronous version of this method
     ::grpc::Status GetUpdatedBoardStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::BoardDescription>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodGeneric(9);
+    }
+    ~WithGenericMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+  };
+  template <class BaseClass>
+  class WithGenericMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithGenericMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodGeneric(10);
+    }
+    ~WithGenericMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
       abort();
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
@@ -1041,6 +1216,46 @@ class PlayBoardEdit final {
     }
     void RequestGetUpdatedBoardStream(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
       ::grpc::Service::RequestAsyncServerStreaming(8, context, request, writer, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodRaw(9);
+    }
+    ~WithRawMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestSaveLevel(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncResponseWriter< ::grpc::ByteBuffer>* response, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncUnary(9, context, request, response, new_call_cq, notification_cq, tag);
+    }
+  };
+  template <class BaseClass>
+  class WithRawMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodRaw(10);
+    }
+    ~WithRawMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    void RequestGetGameFramworkStackStream(::grpc::ServerContext* context, ::grpc::ByteBuffer* request, ::grpc::ServerAsyncWriter< ::grpc::ByteBuffer>* writer, ::grpc::CompletionQueue* new_call_cq, ::grpc::ServerCompletionQueue* notification_cq, void *tag) {
+      ::grpc::Service::RequestAsyncServerStreaming(10, context, request, writer, new_call_cq, notification_cq, tag);
     }
   };
   template <class BaseClass>
@@ -1239,6 +1454,50 @@ class PlayBoardEdit final {
       return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
     }
     virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* GetUpdatedBoardStream(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodRawCallback(9,
+          new ::grpc::internal::CallbackUnaryHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const ::grpc::ByteBuffer* request, ::grpc::ByteBuffer* response) { return this->SaveLevel(context, request, response); }));
+    }
+    ~WithRawCallbackMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerUnaryReactor* SaveLevel(
+      ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/, ::grpc::ByteBuffer* /*response*/)  { return nullptr; }
+  };
+  template <class BaseClass>
+  class WithRawCallbackMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithRawCallbackMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodRawCallback(10,
+          new ::grpc::internal::CallbackServerStreamingHandler< ::grpc::ByteBuffer, ::grpc::ByteBuffer>(
+            [this](
+                   ::grpc::CallbackServerContext* context, const::grpc::ByteBuffer* request) { return this->GetGameFramworkStackStream(context, request); }));
+    }
+    ~WithRawCallbackMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable synchronous version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    virtual ::grpc::ServerWriteReactor< ::grpc::ByteBuffer>* GetGameFramworkStackStream(
       ::grpc::CallbackServerContext* /*context*/, const ::grpc::ByteBuffer* /*request*/)  { return nullptr; }
   };
   template <class BaseClass>
@@ -1457,7 +1716,34 @@ class PlayBoardEdit final {
     // replace default version of method with streamed unary
     virtual ::grpc::Status StreamedSetSerializableProperty(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::SetSerializablePropertyData,::EditorGRPC::SetSerializablePropertyResult>* server_unary_streamer) = 0;
   };
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<Service > > > > > > > > StreamedUnaryService;
+  template <class BaseClass>
+  class WithStreamedUnaryMethod_SaveLevel : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithStreamedUnaryMethod_SaveLevel() {
+      ::grpc::Service::MarkMethodStreamed(9,
+        new ::grpc::internal::StreamedUnaryHandler<
+          ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerUnaryStreamer<
+                     ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult>* streamer) {
+                       return this->StreamedSaveLevel(context,
+                         streamer);
+                  }));
+    }
+    ~WithStreamedUnaryMethod_SaveLevel() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status SaveLevel(::grpc::ServerContext* /*context*/, const ::EditorGRPC::FileSavePath* /*request*/, ::EditorGRPC::FileSaveResult* /*response*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with streamed unary
+    virtual ::grpc::Status StreamedSaveLevel(::grpc::ServerContext* context, ::grpc::ServerUnaryStreamer< ::EditorGRPC::FileSavePath,::EditorGRPC::FileSaveResult>* server_unary_streamer) = 0;
+  };
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<WithStreamedUnaryMethod_SaveLevel<Service > > > > > > > > > StreamedUnaryService;
   template <class BaseClass>
   class WithSplitStreamingMethod_GetUpdatedBoardStream : public BaseClass {
    private:
@@ -1485,8 +1771,35 @@ class PlayBoardEdit final {
     // replace default version of method with split streamed
     virtual ::grpc::Status StreamedGetUpdatedBoardStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::EditorGRPC::Void,::EditorGRPC::BoardDescription>* server_split_streamer) = 0;
   };
-  typedef WithSplitStreamingMethod_GetUpdatedBoardStream<Service > SplitStreamedService;
-  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<WithSplitStreamingMethod_GetUpdatedBoardStream<Service > > > > > > > > > StreamedService;
+  template <class BaseClass>
+  class WithSplitStreamingMethod_GetGameFramworkStackStream : public BaseClass {
+   private:
+    void BaseClassMustBeDerivedFromService(const Service* /*service*/) {}
+   public:
+    WithSplitStreamingMethod_GetGameFramworkStackStream() {
+      ::grpc::Service::MarkMethodStreamed(10,
+        new ::grpc::internal::SplitServerStreamingHandler<
+          ::EditorGRPC::Void, ::EditorGRPC::GameFrameworkLayers>(
+            [this](::grpc::ServerContext* context,
+                   ::grpc::ServerSplitStreamer<
+                     ::EditorGRPC::Void, ::EditorGRPC::GameFrameworkLayers>* streamer) {
+                       return this->StreamedGetGameFramworkStackStream(context,
+                         streamer);
+                  }));
+    }
+    ~WithSplitStreamingMethod_GetGameFramworkStackStream() override {
+      BaseClassMustBeDerivedFromService(this);
+    }
+    // disable regular version of this method
+    ::grpc::Status GetGameFramworkStackStream(::grpc::ServerContext* /*context*/, const ::EditorGRPC::Void* /*request*/, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* /*writer*/) override {
+      abort();
+      return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+    }
+    // replace default version of method with split streamed
+    virtual ::grpc::Status StreamedGetGameFramworkStackStream(::grpc::ServerContext* context, ::grpc::ServerSplitStreamer< ::EditorGRPC::Void,::EditorGRPC::GameFrameworkLayers>* server_split_streamer) = 0;
+  };
+  typedef WithSplitStreamingMethod_GetUpdatedBoardStream<WithSplitStreamingMethod_GetGameFramworkStackStream<Service > > SplitStreamedService;
+  typedef WithStreamedUnaryMethod_AddBlock<WithStreamedUnaryMethod_RemoveBlock<WithStreamedUnaryMethod_ChangeBlock<WithStreamedUnaryMethod_GetBoardState<WithStreamedUnaryMethod_SetBoardState<WithStreamedUnaryMethod_InitialConnectionHandshake<WithStreamedUnaryMethod_GetSerializableNodes<WithStreamedUnaryMethod_SetSerializableProperty<WithSplitStreamingMethod_GetUpdatedBoardStream<WithStreamedUnaryMethod_SaveLevel<WithSplitStreamingMethod_GetGameFramworkStackStream<Service > > > > > > > > > > > StreamedService;
 };
 
 }  // namespace EditorGRPC

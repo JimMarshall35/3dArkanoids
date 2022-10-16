@@ -273,9 +273,97 @@ struct SerializablePropertiesNodesDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT SerializablePropertiesNodesDefaultTypeInternal _SerializablePropertiesNodes_default_instance_;
+constexpr FileSavePath::FileSavePath(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : path_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string){}
+struct FileSavePathDefaultTypeInternal {
+  constexpr FileSavePathDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~FileSavePathDefaultTypeInternal() {}
+  union {
+    FileSavePath _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT FileSavePathDefaultTypeInternal _FileSavePath_default_instance_;
+constexpr FileSaveResult::FileSaveResult(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : result_(0)
+{}
+struct FileSaveResultDefaultTypeInternal {
+  constexpr FileSaveResultDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~FileSaveResultDefaultTypeInternal() {}
+  union {
+    FileSaveResult _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT FileSaveResultDefaultTypeInternal _FileSaveResult_default_instance_;
+constexpr FrameworkLayer::FrameworkLayer(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : name_(&::PROTOBUF_NAMESPACE_ID::internal::fixed_address_empty_string)
+  , maskslayerbelow_(false){}
+struct FrameworkLayerDefaultTypeInternal {
+  constexpr FrameworkLayerDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~FrameworkLayerDefaultTypeInternal() {}
+  union {
+    FrameworkLayer _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT FrameworkLayerDefaultTypeInternal _FrameworkLayer_default_instance_;
+constexpr UpdatableLayersStack::UpdatableLayersStack(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : layers_(){}
+struct UpdatableLayersStackDefaultTypeInternal {
+  constexpr UpdatableLayersStackDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~UpdatableLayersStackDefaultTypeInternal() {}
+  union {
+    UpdatableLayersStack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT UpdatableLayersStackDefaultTypeInternal _UpdatableLayersStack_default_instance_;
+constexpr DrawableLayersStack::DrawableLayersStack(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : layers_(){}
+struct DrawableLayersStackDefaultTypeInternal {
+  constexpr DrawableLayersStackDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~DrawableLayersStackDefaultTypeInternal() {}
+  union {
+    DrawableLayersStack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT DrawableLayersStackDefaultTypeInternal _DrawableLayersStack_default_instance_;
+constexpr InputLayersStack::InputLayersStack(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : layers_(){}
+struct InputLayersStackDefaultTypeInternal {
+  constexpr InputLayersStackDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~InputLayersStackDefaultTypeInternal() {}
+  union {
+    InputLayersStack _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT InputLayersStackDefaultTypeInternal _InputLayersStack_default_instance_;
+constexpr GameFrameworkLayers::GameFrameworkLayers(
+  ::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized)
+  : updatable_(nullptr)
+  , drawable_(nullptr)
+  , input_(nullptr){}
+struct GameFrameworkLayersDefaultTypeInternal {
+  constexpr GameFrameworkLayersDefaultTypeInternal()
+    : _instance(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized{}) {}
+  ~GameFrameworkLayersDefaultTypeInternal() {}
+  union {
+    GameFrameworkLayers _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT GameFrameworkLayersDefaultTypeInternal _GameFrameworkLayers_default_instance_;
 }  // namespace EditorGRPC
-static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[19];
-static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[4];
+static ::PROTOBUF_NAMESPACE_ID::Metadata file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[26];
+static const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[5];
 static constexpr ::PROTOBUF_NAMESPACE_ID::ServiceDescriptor const** file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = nullptr;
 
 const uint32_t TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
@@ -450,6 +538,58 @@ const uint32_t TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offse
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::EditorGRPC::SerializablePropertiesNodes, nodes_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FileSavePath, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FileSavePath, path_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FileSaveResult, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FileSaveResult, result_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FrameworkLayer, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FrameworkLayer, maskslayerbelow_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::FrameworkLayer, name_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::UpdatableLayersStack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::UpdatableLayersStack, layers_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::DrawableLayersStack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::DrawableLayersStack, layers_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::InputLayersStack, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::InputLayersStack, layers_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::GameFrameworkLayers, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::GameFrameworkLayers, updatable_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::GameFrameworkLayers, drawable_),
+  PROTOBUF_FIELD_OFFSET(::EditorGRPC::GameFrameworkLayers, input_),
 };
 static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::EditorGRPC::Point)},
@@ -471,6 +611,13 @@ static const ::PROTOBUF_NAMESPACE_ID::internal::MigrationSchema schemas[] PROTOB
   { 149, -1, -1, sizeof(::EditorGRPC::SetSerializablePropertyResult)},
   { 156, -1, -1, sizeof(::EditorGRPC::SerializablePropertiesNode)},
   { 164, -1, -1, sizeof(::EditorGRPC::SerializablePropertiesNodes)},
+  { 171, -1, -1, sizeof(::EditorGRPC::FileSavePath)},
+  { 178, -1, -1, sizeof(::EditorGRPC::FileSaveResult)},
+  { 185, -1, -1, sizeof(::EditorGRPC::FrameworkLayer)},
+  { 193, -1, -1, sizeof(::EditorGRPC::UpdatableLayersStack)},
+  { 200, -1, -1, sizeof(::EditorGRPC::DrawableLayersStack)},
+  { 207, -1, -1, sizeof(::EditorGRPC::InputLayersStack)},
+  { 214, -1, -1, sizeof(::EditorGRPC::GameFrameworkLayers)},
 };
 
 static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] = {
@@ -493,6 +640,13 @@ static ::PROTOBUF_NAMESPACE_ID::Message const * const file_default_instances[] =
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_SetSerializablePropertyResult_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_SerializablePropertiesNode_default_instance_),
   reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_SerializablePropertiesNodes_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_FileSavePath_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_FileSaveResult_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_FrameworkLayer_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_UpdatableLayersStack_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_DrawableLayersStack_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_InputLayersStack_default_instance_),
+  reinterpret_cast<const ::PROTOBUF_NAMESPACE_ID::Message*>(&::EditorGRPC::_GameFrameworkLayers_default_instance_),
 };
 
 const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -548,30 +702,49 @@ const char descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2epr
   "sNode\022\014\n\004name\030\001 \001(\t\022/\n\005props\030\002 \003(\0132 .Edi"
   "torGRPC.SerializableProperty\"T\n\033Serializ"
   "ablePropertiesNodes\0225\n\005nodes\030\001 \003(\0132&.Edi"
-  "torGRPC.SerializablePropertiesNode2\301\005\n\rP"
-  "layBoardEdit\022:\n\010AddBlock\022\021.EditorGRPC.Po"
-  "int\032\033.EditorGRPC.EditBlockResult\022=\n\013Remo"
-  "veBlock\022\021.EditorGRPC.Point\032\033.EditorGRPC."
-  "EditBlockResult\022A\n\013ChangeBlock\022\025.EditorG"
-  "RPC.BlockEdit\032\033.EditorGRPC.EditBlockResu"
-  "lt\022\?\n\rGetBoardState\022\020.EditorGRPC.Void\032\034."
-  "EditorGRPC.BoardDescription\022T\n\rSetBoardS"
-  "tate\022\034.EditorGRPC.BoardDescription\032%.Edi"
-  "torGRPC.SetBoardDescriptionResult\022N\n\032Ini"
-  "tialConnectionHandshake\022\026.EditorGRPC.Cli"
-  "entInfo\032\030.EditorGRPC.GameSettings\022Q\n\024Get"
-  "SerializableNodes\022\020.EditorGRPC.Void\032\'.Ed"
-  "itorGRPC.SerializablePropertiesNodes\022m\n\027"
-  "SetSerializableProperty\022\'.EditorGRPC.Set"
-  "SerializablePropertyData\032).EditorGRPC.Se"
-  "tSerializablePropertyResult\022I\n\025GetUpdate"
-  "dBoardStream\022\020.EditorGRPC.Void\032\034.EditorG"
-  "RPC.BoardDescription0\001b\006proto3"
+  "torGRPC.SerializablePropertiesNode\"\034\n\014Fi"
+  "leSavePath\022\014\n\004path\030\001 \001(\t\"\211\001\n\016FileSaveRes"
+  "ult\0221\n\006result\030\001 \001(\0162!.EditorGRPC.FileSav"
+  "eResult.Result\"D\n\006Result\022\013\n\007SUCCESS\020\000\022\032\n"
+  "\026FAILURE_PATH_NOT_VALID\020\001\022\021\n\rOTHER_FAILU"
+  "RE\020\002\"7\n\016FrameworkLayer\022\027\n\017masksLayerBelo"
+  "w\030\001 \001(\010\022\014\n\004name\030\002 \001(\t\"B\n\024UpdatableLayers"
+  "Stack\022*\n\006layers\030\001 \003(\0132\032.EditorGRPC.Frame"
+  "workLayer\"A\n\023DrawableLayersStack\022*\n\006laye"
+  "rs\030\001 \003(\0132\032.EditorGRPC.FrameworkLayer\">\n\020"
+  "InputLayersStack\022*\n\006layers\030\001 \003(\0132\032.Edito"
+  "rGRPC.FrameworkLayer\"\252\001\n\023GameFrameworkLa"
+  "yers\0223\n\tupdatable\030\001 \001(\0132 .EditorGRPC.Upd"
+  "atableLayersStack\0221\n\010drawable\030\002 \001(\0132\037.Ed"
+  "itorGRPC.DrawableLayersStack\022+\n\005input\030\003 "
+  "\001(\0132\034.EditorGRPC.InputLayersStack2\327\006\n\rPl"
+  "ayBoardEdit\022:\n\010AddBlock\022\021.EditorGRPC.Poi"
+  "nt\032\033.EditorGRPC.EditBlockResult\022=\n\013Remov"
+  "eBlock\022\021.EditorGRPC.Point\032\033.EditorGRPC.E"
+  "ditBlockResult\022A\n\013ChangeBlock\022\025.EditorGR"
+  "PC.BlockEdit\032\033.EditorGRPC.EditBlockResul"
+  "t\022\?\n\rGetBoardState\022\020.EditorGRPC.Void\032\034.E"
+  "ditorGRPC.BoardDescription\022T\n\rSetBoardSt"
+  "ate\022\034.EditorGRPC.BoardDescription\032%.Edit"
+  "orGRPC.SetBoardDescriptionResult\022N\n\032Init"
+  "ialConnectionHandshake\022\026.EditorGRPC.Clie"
+  "ntInfo\032\030.EditorGRPC.GameSettings\022Q\n\024GetS"
+  "erializableNodes\022\020.EditorGRPC.Void\032\'.Edi"
+  "torGRPC.SerializablePropertiesNodes\022m\n\027S"
+  "etSerializableProperty\022\'.EditorGRPC.SetS"
+  "erializablePropertyData\032).EditorGRPC.Set"
+  "SerializablePropertyResult\022I\n\025GetUpdated"
+  "BoardStream\022\020.EditorGRPC.Void\032\034.EditorGR"
+  "PC.BoardDescription0\001\022A\n\tSaveLevel\022\030.Edi"
+  "torGRPC.FileSavePath\032\032.EditorGRPC.FileSa"
+  "veResult\022Q\n\032GetGameFramworkStackStream\022\020"
+  ".EditorGRPC.Void\032\037.EditorGRPC.GameFramew"
+  "orkLayers0\001b\006proto3"
   ;
 static ::PROTOBUF_NAMESPACE_ID::internal::once_flag descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once;
 const ::PROTOBUF_NAMESPACE_ID::internal::DescriptorTable descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto = {
-  false, false, 2830, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
-  &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 19,
+  false, false, 3579, descriptor_table_protodef_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, "editor_proto_files/PlayBoardEdit.proto", 
+  &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once, nullptr, 0, 26,
   schemas, file_default_instances, TableStruct_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto::offsets,
   file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto, file_level_service_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto,
 };
@@ -695,6 +868,29 @@ constexpr SetSerializablePropertyResult_Result SetSerializablePropertyResult::FA
 constexpr SetSerializablePropertyResult_Result SetSerializablePropertyResult::Result_MIN;
 constexpr SetSerializablePropertyResult_Result SetSerializablePropertyResult::Result_MAX;
 constexpr int SetSerializablePropertyResult::Result_ARRAYSIZE;
+#endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* FileSaveResult_Result_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto);
+  return file_level_enum_descriptors_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[4];
+}
+bool FileSaveResult_Result_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+      return true;
+    default:
+      return false;
+  }
+}
+
+#if (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
+constexpr FileSaveResult_Result FileSaveResult::SUCCESS;
+constexpr FileSaveResult_Result FileSaveResult::FAILURE_PATH_NOT_VALID;
+constexpr FileSaveResult_Result FileSaveResult::OTHER_FAILURE;
+constexpr FileSaveResult_Result FileSaveResult::Result_MIN;
+constexpr FileSaveResult_Result FileSaveResult::Result_MAX;
+constexpr int FileSaveResult::Result_ARRAYSIZE;
 #endif  // (__cplusplus < 201703) && (!defined(_MSC_VER) || (_MSC_VER >= 1900 && _MSC_VER < 1912))
 
 // ===================================================================
@@ -5410,6 +5606,1459 @@ void SerializablePropertiesNodes::InternalSwap(SerializablePropertiesNodes* othe
       file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[18]);
 }
 
+// ===================================================================
+
+class FileSavePath::_Internal {
+ public:
+};
+
+FileSavePath::FileSavePath(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.FileSavePath)
+}
+FileSavePath::FileSavePath(const FileSavePath& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    path_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_path().empty()) {
+    path_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_path(), 
+      GetArenaForAllocation());
+  }
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.FileSavePath)
+}
+
+inline void FileSavePath::SharedCtor() {
+path_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  path_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+}
+
+FileSavePath::~FileSavePath() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.FileSavePath)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void FileSavePath::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  path_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void FileSavePath::ArenaDtor(void* object) {
+  FileSavePath* _this = reinterpret_cast< FileSavePath* >(object);
+  (void)_this;
+}
+void FileSavePath::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void FileSavePath::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void FileSavePath::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.FileSavePath)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  path_.ClearToEmpty();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* FileSavePath::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // string path = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          auto str = _internal_mutable_path();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "EditorGRPC.FileSavePath.path"));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* FileSavePath::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.FileSavePath)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // string path = 1;
+  if (!this->_internal_path().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_path().data(), static_cast<int>(this->_internal_path().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "EditorGRPC.FileSavePath.path");
+    target = stream->WriteStringMaybeAliased(
+        1, this->_internal_path(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.FileSavePath)
+  return target;
+}
+
+size_t FileSavePath::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.FileSavePath)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string path = 1;
+  if (!this->_internal_path().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_path());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileSavePath::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    FileSavePath::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileSavePath::GetClassData() const { return &_class_data_; }
+
+void FileSavePath::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<FileSavePath *>(to)->MergeFrom(
+      static_cast<const FileSavePath &>(from));
+}
+
+
+void FileSavePath::MergeFrom(const FileSavePath& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.FileSavePath)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_path().empty()) {
+    _internal_set_path(from._internal_path());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FileSavePath::CopyFrom(const FileSavePath& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.FileSavePath)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileSavePath::IsInitialized() const {
+  return true;
+}
+
+void FileSavePath::InternalSwap(FileSavePath* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &path_, lhs_arena,
+      &other->path_, rhs_arena
+  );
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata FileSavePath::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[19]);
+}
+
+// ===================================================================
+
+class FileSaveResult::_Internal {
+ public:
+};
+
+FileSaveResult::FileSaveResult(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.FileSaveResult)
+}
+FileSaveResult::FileSaveResult(const FileSaveResult& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  result_ = from.result_;
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.FileSaveResult)
+}
+
+inline void FileSaveResult::SharedCtor() {
+result_ = 0;
+}
+
+FileSaveResult::~FileSaveResult() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.FileSaveResult)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void FileSaveResult::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void FileSaveResult::ArenaDtor(void* object) {
+  FileSaveResult* _this = reinterpret_cast< FileSaveResult* >(object);
+  (void)_this;
+}
+void FileSaveResult::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void FileSaveResult::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void FileSaveResult::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.FileSaveResult)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  result_ = 0;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* FileSaveResult::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .EditorGRPC.FileSaveResult.Result result = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_result(static_cast<::EditorGRPC::FileSaveResult_Result>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* FileSaveResult::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.FileSaveResult)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .EditorGRPC.FileSaveResult.Result result = 1;
+  if (this->_internal_result() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_result(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.FileSaveResult)
+  return target;
+}
+
+size_t FileSaveResult::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.FileSaveResult)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .EditorGRPC.FileSaveResult.Result result = 1;
+  if (this->_internal_result() != 0) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::EnumSize(this->_internal_result());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FileSaveResult::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    FileSaveResult::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FileSaveResult::GetClassData() const { return &_class_data_; }
+
+void FileSaveResult::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<FileSaveResult *>(to)->MergeFrom(
+      static_cast<const FileSaveResult &>(from));
+}
+
+
+void FileSaveResult::MergeFrom(const FileSaveResult& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.FileSaveResult)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_result() != 0) {
+    _internal_set_result(from._internal_result());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FileSaveResult::CopyFrom(const FileSaveResult& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.FileSaveResult)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FileSaveResult::IsInitialized() const {
+  return true;
+}
+
+void FileSaveResult::InternalSwap(FileSaveResult* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(result_, other->result_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata FileSaveResult::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[20]);
+}
+
+// ===================================================================
+
+class FrameworkLayer::_Internal {
+ public:
+};
+
+FrameworkLayer::FrameworkLayer(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.FrameworkLayer)
+}
+FrameworkLayer::FrameworkLayer(const FrameworkLayer& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    name_.Set(::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::EmptyDefault{}, from._internal_name(), 
+      GetArenaForAllocation());
+  }
+  maskslayerbelow_ = from.maskslayerbelow_;
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.FrameworkLayer)
+}
+
+inline void FrameworkLayer::SharedCtor() {
+name_.UnsafeSetDefault(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  name_.Set(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(), "", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+maskslayerbelow_ = false;
+}
+
+FrameworkLayer::~FrameworkLayer() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.FrameworkLayer)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void FrameworkLayer::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  name_.DestroyNoArena(&::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited());
+}
+
+void FrameworkLayer::ArenaDtor(void* object) {
+  FrameworkLayer* _this = reinterpret_cast< FrameworkLayer* >(object);
+  (void)_this;
+}
+void FrameworkLayer::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void FrameworkLayer::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void FrameworkLayer::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.FrameworkLayer)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmpty();
+  maskslayerbelow_ = false;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* FrameworkLayer::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // bool masksLayerBelow = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          maskslayerbelow_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // string name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_name();
+          ptr = ::PROTOBUF_NAMESPACE_ID::internal::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(::PROTOBUF_NAMESPACE_ID::internal::VerifyUTF8(str, "EditorGRPC.FrameworkLayer.name"));
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* FrameworkLayer::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.FrameworkLayer)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // bool masksLayerBelow = 1;
+  if (this->_internal_maskslayerbelow() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::WriteBoolToArray(1, this->_internal_maskslayerbelow(), target);
+  }
+
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "EditorGRPC.FrameworkLayer.name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_name(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.FrameworkLayer)
+  return target;
+}
+
+size_t FrameworkLayer::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.FrameworkLayer)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  // bool masksLayerBelow = 1;
+  if (this->_internal_maskslayerbelow() != 0) {
+    total_size += 1 + 1;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData FrameworkLayer::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    FrameworkLayer::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*FrameworkLayer::GetClassData() const { return &_class_data_; }
+
+void FrameworkLayer::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<FrameworkLayer *>(to)->MergeFrom(
+      static_cast<const FrameworkLayer &>(from));
+}
+
+
+void FrameworkLayer::MergeFrom(const FrameworkLayer& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.FrameworkLayer)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_name().empty()) {
+    _internal_set_name(from._internal_name());
+  }
+  if (from._internal_maskslayerbelow() != 0) {
+    _internal_set_maskslayerbelow(from._internal_maskslayerbelow());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void FrameworkLayer::CopyFrom(const FrameworkLayer& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.FrameworkLayer)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool FrameworkLayer::IsInitialized() const {
+  return true;
+}
+
+void FrameworkLayer::InternalSwap(FrameworkLayer* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &::PROTOBUF_NAMESPACE_ID::internal::GetEmptyStringAlreadyInited(),
+      &name_, lhs_arena,
+      &other->name_, rhs_arena
+  );
+  swap(maskslayerbelow_, other->maskslayerbelow_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata FrameworkLayer::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[21]);
+}
+
+// ===================================================================
+
+class UpdatableLayersStack::_Internal {
+ public:
+};
+
+UpdatableLayersStack::UpdatableLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
+  layers_(arena) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.UpdatableLayersStack)
+}
+UpdatableLayersStack::UpdatableLayersStack(const UpdatableLayersStack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      layers_(from.layers_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.UpdatableLayersStack)
+}
+
+inline void UpdatableLayersStack::SharedCtor() {
+}
+
+UpdatableLayersStack::~UpdatableLayersStack() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.UpdatableLayersStack)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void UpdatableLayersStack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void UpdatableLayersStack::ArenaDtor(void* object) {
+  UpdatableLayersStack* _this = reinterpret_cast< UpdatableLayersStack* >(object);
+  (void)_this;
+}
+void UpdatableLayersStack::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void UpdatableLayersStack::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void UpdatableLayersStack::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.UpdatableLayersStack)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  layers_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* UpdatableLayersStack::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated .EditorGRPC.FrameworkLayer layers = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_layers(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* UpdatableLayersStack::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.UpdatableLayersStack)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_layers_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, this->_internal_layers(i), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.UpdatableLayersStack)
+  return target;
+}
+
+size_t UpdatableLayersStack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.UpdatableLayersStack)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  total_size += 1UL * this->_internal_layers_size();
+  for (const auto& msg : this->layers_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData UpdatableLayersStack::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    UpdatableLayersStack::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*UpdatableLayersStack::GetClassData() const { return &_class_data_; }
+
+void UpdatableLayersStack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<UpdatableLayersStack *>(to)->MergeFrom(
+      static_cast<const UpdatableLayersStack &>(from));
+}
+
+
+void UpdatableLayersStack::MergeFrom(const UpdatableLayersStack& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.UpdatableLayersStack)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  layers_.MergeFrom(from.layers_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void UpdatableLayersStack::CopyFrom(const UpdatableLayersStack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.UpdatableLayersStack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool UpdatableLayersStack::IsInitialized() const {
+  return true;
+}
+
+void UpdatableLayersStack::InternalSwap(UpdatableLayersStack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  layers_.InternalSwap(&other->layers_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata UpdatableLayersStack::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[22]);
+}
+
+// ===================================================================
+
+class DrawableLayersStack::_Internal {
+ public:
+};
+
+DrawableLayersStack::DrawableLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
+  layers_(arena) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.DrawableLayersStack)
+}
+DrawableLayersStack::DrawableLayersStack(const DrawableLayersStack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      layers_(from.layers_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.DrawableLayersStack)
+}
+
+inline void DrawableLayersStack::SharedCtor() {
+}
+
+DrawableLayersStack::~DrawableLayersStack() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.DrawableLayersStack)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void DrawableLayersStack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void DrawableLayersStack::ArenaDtor(void* object) {
+  DrawableLayersStack* _this = reinterpret_cast< DrawableLayersStack* >(object);
+  (void)_this;
+}
+void DrawableLayersStack::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void DrawableLayersStack::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void DrawableLayersStack::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.DrawableLayersStack)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  layers_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* DrawableLayersStack::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated .EditorGRPC.FrameworkLayer layers = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_layers(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* DrawableLayersStack::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.DrawableLayersStack)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_layers_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, this->_internal_layers(i), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.DrawableLayersStack)
+  return target;
+}
+
+size_t DrawableLayersStack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.DrawableLayersStack)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  total_size += 1UL * this->_internal_layers_size();
+  for (const auto& msg : this->layers_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData DrawableLayersStack::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    DrawableLayersStack::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*DrawableLayersStack::GetClassData() const { return &_class_data_; }
+
+void DrawableLayersStack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<DrawableLayersStack *>(to)->MergeFrom(
+      static_cast<const DrawableLayersStack &>(from));
+}
+
+
+void DrawableLayersStack::MergeFrom(const DrawableLayersStack& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.DrawableLayersStack)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  layers_.MergeFrom(from.layers_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void DrawableLayersStack::CopyFrom(const DrawableLayersStack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.DrawableLayersStack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool DrawableLayersStack::IsInitialized() const {
+  return true;
+}
+
+void DrawableLayersStack::InternalSwap(DrawableLayersStack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  layers_.InternalSwap(&other->layers_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata DrawableLayersStack::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[23]);
+}
+
+// ===================================================================
+
+class InputLayersStack::_Internal {
+ public:
+};
+
+InputLayersStack::InputLayersStack(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned),
+  layers_(arena) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.InputLayersStack)
+}
+InputLayersStack::InputLayersStack(const InputLayersStack& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message(),
+      layers_(from.layers_) {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.InputLayersStack)
+}
+
+inline void InputLayersStack::SharedCtor() {
+}
+
+InputLayersStack::~InputLayersStack() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.InputLayersStack)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void InputLayersStack::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void InputLayersStack::ArenaDtor(void* object) {
+  InputLayersStack* _this = reinterpret_cast< InputLayersStack* >(object);
+  (void)_this;
+}
+void InputLayersStack::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void InputLayersStack::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void InputLayersStack::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.InputLayersStack)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  layers_.Clear();
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* InputLayersStack::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // repeated .EditorGRPC.FrameworkLayer layers = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr -= 1;
+          do {
+            ptr += 1;
+            ptr = ctx->ParseMessage(_internal_add_layers(), ptr);
+            CHK_(ptr);
+            if (!ctx->DataAvailable(ptr)) break;
+          } while (::PROTOBUF_NAMESPACE_ID::internal::ExpectTag<10>(ptr));
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* InputLayersStack::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.InputLayersStack)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  for (unsigned int i = 0,
+      n = static_cast<unsigned int>(this->_internal_layers_size()); i < n; i++) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, this->_internal_layers(i), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.InputLayersStack)
+  return target;
+}
+
+size_t InputLayersStack::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.InputLayersStack)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // repeated .EditorGRPC.FrameworkLayer layers = 1;
+  total_size += 1UL * this->_internal_layers_size();
+  for (const auto& msg : this->layers_) {
+    total_size +=
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(msg);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData InputLayersStack::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    InputLayersStack::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*InputLayersStack::GetClassData() const { return &_class_data_; }
+
+void InputLayersStack::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<InputLayersStack *>(to)->MergeFrom(
+      static_cast<const InputLayersStack &>(from));
+}
+
+
+void InputLayersStack::MergeFrom(const InputLayersStack& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.InputLayersStack)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  layers_.MergeFrom(from.layers_);
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void InputLayersStack::CopyFrom(const InputLayersStack& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.InputLayersStack)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool InputLayersStack::IsInitialized() const {
+  return true;
+}
+
+void InputLayersStack::InternalSwap(InputLayersStack* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  layers_.InternalSwap(&other->layers_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata InputLayersStack::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[24]);
+}
+
+// ===================================================================
+
+class GameFrameworkLayers::_Internal {
+ public:
+  static const ::EditorGRPC::UpdatableLayersStack& updatable(const GameFrameworkLayers* msg);
+  static const ::EditorGRPC::DrawableLayersStack& drawable(const GameFrameworkLayers* msg);
+  static const ::EditorGRPC::InputLayersStack& input(const GameFrameworkLayers* msg);
+};
+
+const ::EditorGRPC::UpdatableLayersStack&
+GameFrameworkLayers::_Internal::updatable(const GameFrameworkLayers* msg) {
+  return *msg->updatable_;
+}
+const ::EditorGRPC::DrawableLayersStack&
+GameFrameworkLayers::_Internal::drawable(const GameFrameworkLayers* msg) {
+  return *msg->drawable_;
+}
+const ::EditorGRPC::InputLayersStack&
+GameFrameworkLayers::_Internal::input(const GameFrameworkLayers* msg) {
+  return *msg->input_;
+}
+GameFrameworkLayers::GameFrameworkLayers(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  if (!is_message_owned) {
+    RegisterArenaDtor(arena);
+  }
+  // @@protoc_insertion_point(arena_constructor:EditorGRPC.GameFrameworkLayers)
+}
+GameFrameworkLayers::GameFrameworkLayers(const GameFrameworkLayers& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_updatable()) {
+    updatable_ = new ::EditorGRPC::UpdatableLayersStack(*from.updatable_);
+  } else {
+    updatable_ = nullptr;
+  }
+  if (from._internal_has_drawable()) {
+    drawable_ = new ::EditorGRPC::DrawableLayersStack(*from.drawable_);
+  } else {
+    drawable_ = nullptr;
+  }
+  if (from._internal_has_input()) {
+    input_ = new ::EditorGRPC::InputLayersStack(*from.input_);
+  } else {
+    input_ = nullptr;
+  }
+  // @@protoc_insertion_point(copy_constructor:EditorGRPC.GameFrameworkLayers)
+}
+
+inline void GameFrameworkLayers::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&updatable_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&input_) -
+    reinterpret_cast<char*>(&updatable_)) + sizeof(input_));
+}
+
+GameFrameworkLayers::~GameFrameworkLayers() {
+  // @@protoc_insertion_point(destructor:EditorGRPC.GameFrameworkLayers)
+  if (GetArenaForAllocation() != nullptr) return;
+  SharedDtor();
+  _internal_metadata_.Delete<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+inline void GameFrameworkLayers::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete updatable_;
+  if (this != internal_default_instance()) delete drawable_;
+  if (this != internal_default_instance()) delete input_;
+}
+
+void GameFrameworkLayers::ArenaDtor(void* object) {
+  GameFrameworkLayers* _this = reinterpret_cast< GameFrameworkLayers* >(object);
+  (void)_this;
+}
+void GameFrameworkLayers::RegisterArenaDtor(::PROTOBUF_NAMESPACE_ID::Arena*) {
+}
+void GameFrameworkLayers::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void GameFrameworkLayers::Clear() {
+// @@protoc_insertion_point(message_clear_start:EditorGRPC.GameFrameworkLayers)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && updatable_ != nullptr) {
+    delete updatable_;
+  }
+  updatable_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && drawable_ != nullptr) {
+    delete drawable_;
+  }
+  drawable_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && input_ != nullptr) {
+    delete input_;
+  }
+  input_ = nullptr;
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* GameFrameworkLayers::_InternalParse(const char* ptr, ::PROTOBUF_NAMESPACE_ID::internal::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::PROTOBUF_NAMESPACE_ID::internal::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .EditorGRPC.UpdatableLayersStack updatable = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_updatable(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .EditorGRPC.DrawableLayersStack drawable = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_drawable(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .EditorGRPC.InputLayersStack input = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 26)) {
+          ptr = ctx->ParseMessage(_internal_mutable_input(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* GameFrameworkLayers::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:EditorGRPC.GameFrameworkLayers)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .EditorGRPC.UpdatableLayersStack updatable = 1;
+  if (this->_internal_has_updatable()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        1, _Internal::updatable(this), target, stream);
+  }
+
+  // .EditorGRPC.DrawableLayersStack drawable = 2;
+  if (this->_internal_has_drawable()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        2, _Internal::drawable(this), target, stream);
+  }
+
+  // .EditorGRPC.InputLayersStack input = 3;
+  if (this->_internal_has_input()) {
+    target = stream->EnsureSpace(target);
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(
+        3, _Internal::input(this), target, stream);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:EditorGRPC.GameFrameworkLayers)
+  return target;
+}
+
+size_t GameFrameworkLayers::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:EditorGRPC.GameFrameworkLayers)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .EditorGRPC.UpdatableLayersStack updatable = 1;
+  if (this->_internal_has_updatable()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *updatable_);
+  }
+
+  // .EditorGRPC.DrawableLayersStack drawable = 2;
+  if (this->_internal_has_drawable()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *drawable_);
+  }
+
+  // .EditorGRPC.InputLayersStack input = 3;
+  if (this->_internal_has_input()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *input_);
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData GameFrameworkLayers::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    GameFrameworkLayers::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*GameFrameworkLayers::GetClassData() const { return &_class_data_; }
+
+void GameFrameworkLayers::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<GameFrameworkLayers *>(to)->MergeFrom(
+      static_cast<const GameFrameworkLayers &>(from));
+}
+
+
+void GameFrameworkLayers::MergeFrom(const GameFrameworkLayers& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:EditorGRPC.GameFrameworkLayers)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_updatable()) {
+    _internal_mutable_updatable()->::EditorGRPC::UpdatableLayersStack::MergeFrom(from._internal_updatable());
+  }
+  if (from._internal_has_drawable()) {
+    _internal_mutable_drawable()->::EditorGRPC::DrawableLayersStack::MergeFrom(from._internal_drawable());
+  }
+  if (from._internal_has_input()) {
+    _internal_mutable_input()->::EditorGRPC::InputLayersStack::MergeFrom(from._internal_input());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void GameFrameworkLayers::CopyFrom(const GameFrameworkLayers& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:EditorGRPC.GameFrameworkLayers)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool GameFrameworkLayers::IsInitialized() const {
+  return true;
+}
+
+void GameFrameworkLayers::InternalSwap(GameFrameworkLayers* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(GameFrameworkLayers, input_)
+      + sizeof(GameFrameworkLayers::input_)
+      - PROTOBUF_FIELD_OFFSET(GameFrameworkLayers, updatable_)>(
+          reinterpret_cast<char*>(&updatable_),
+          reinterpret_cast<char*>(&other->updatable_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata GameFrameworkLayers::GetMetadata() const {
+  return ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(
+      &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_getter, &descriptor_table_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto_once,
+      file_level_metadata_editor_5fproto_5ffiles_2fPlayBoardEdit_2eproto[25]);
+}
+
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace EditorGRPC
 PROTOBUF_NAMESPACE_OPEN
@@ -5469,6 +7118,27 @@ template<> PROTOBUF_NOINLINE ::EditorGRPC::SerializablePropertiesNode* Arena::Cr
 }
 template<> PROTOBUF_NOINLINE ::EditorGRPC::SerializablePropertiesNodes* Arena::CreateMaybeMessage< ::EditorGRPC::SerializablePropertiesNodes >(Arena* arena) {
   return Arena::CreateMessageInternal< ::EditorGRPC::SerializablePropertiesNodes >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::FileSavePath* Arena::CreateMaybeMessage< ::EditorGRPC::FileSavePath >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::FileSavePath >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::FileSaveResult* Arena::CreateMaybeMessage< ::EditorGRPC::FileSaveResult >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::FileSaveResult >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::FrameworkLayer* Arena::CreateMaybeMessage< ::EditorGRPC::FrameworkLayer >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::FrameworkLayer >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::UpdatableLayersStack* Arena::CreateMaybeMessage< ::EditorGRPC::UpdatableLayersStack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::UpdatableLayersStack >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::DrawableLayersStack* Arena::CreateMaybeMessage< ::EditorGRPC::DrawableLayersStack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::DrawableLayersStack >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::InputLayersStack* Arena::CreateMaybeMessage< ::EditorGRPC::InputLayersStack >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::InputLayersStack >(arena);
+}
+template<> PROTOBUF_NOINLINE ::EditorGRPC::GameFrameworkLayers* Arena::CreateMaybeMessage< ::EditorGRPC::GameFrameworkLayers >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::EditorGRPC::GameFrameworkLayers >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

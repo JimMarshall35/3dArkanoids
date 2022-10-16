@@ -31,6 +31,8 @@ static const char* PlayBoardEdit_method_names[] = {
   "/EditorGRPC.PlayBoardEdit/GetSerializableNodes",
   "/EditorGRPC.PlayBoardEdit/SetSerializableProperty",
   "/EditorGRPC.PlayBoardEdit/GetUpdatedBoardStream",
+  "/EditorGRPC.PlayBoardEdit/SaveLevel",
+  "/EditorGRPC.PlayBoardEdit/GetGameFramworkStackStream",
 };
 
 std::unique_ptr< PlayBoardEdit::Stub> PlayBoardEdit::NewStub(const std::shared_ptr< ::grpc::ChannelInterface>& channel, const ::grpc::StubOptions& options) {
@@ -49,6 +51,8 @@ PlayBoardEdit::Stub::Stub(const std::shared_ptr< ::grpc::ChannelInterface>& chan
   , rpcmethod_GetSerializableNodes_(PlayBoardEdit_method_names[6], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_SetSerializableProperty_(PlayBoardEdit_method_names[7], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
   , rpcmethod_GetUpdatedBoardStream_(PlayBoardEdit_method_names[8], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
+  , rpcmethod_SaveLevel_(PlayBoardEdit_method_names[9], options.suffix_for_stats(),::grpc::internal::RpcMethod::NORMAL_RPC, channel)
+  , rpcmethod_GetGameFramworkStackStream_(PlayBoardEdit_method_names[10], options.suffix_for_stats(),::grpc::internal::RpcMethod::SERVER_STREAMING, channel)
   {}
 
 ::grpc::Status PlayBoardEdit::Stub::AddBlock(::grpc::ClientContext* context, const ::EditorGRPC::Point& request, ::EditorGRPC::EditBlockResult* response) {
@@ -251,6 +255,45 @@ void PlayBoardEdit::Stub::async::GetUpdatedBoardStream(::grpc::ClientContext* co
   return ::grpc::internal::ClientAsyncReaderFactory< ::EditorGRPC::BoardDescription>::Create(channel_.get(), cq, rpcmethod_GetUpdatedBoardStream_, context, request, false, nullptr);
 }
 
+::grpc::Status PlayBoardEdit::Stub::SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::EditorGRPC::FileSaveResult* response) {
+  return ::grpc::internal::BlockingUnaryCall< ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), rpcmethod_SaveLevel_, context, request, response);
+}
+
+void PlayBoardEdit::Stub::async::SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, std::function<void(::grpc::Status)> f) {
+  ::grpc::internal::CallbackUnaryCall< ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SaveLevel_, context, request, response, std::move(f));
+}
+
+void PlayBoardEdit::Stub::async::SaveLevel(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response, ::grpc::ClientUnaryReactor* reactor) {
+  ::grpc::internal::ClientCallbackUnaryFactory::Create< ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(stub_->channel_.get(), stub_->rpcmethod_SaveLevel_, context, request, response, reactor);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>* PlayBoardEdit::Stub::PrepareAsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncResponseReaderHelper::Create< ::EditorGRPC::FileSaveResult, ::EditorGRPC::FileSavePath, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(channel_.get(), cq, rpcmethod_SaveLevel_, context, request);
+}
+
+::grpc::ClientAsyncResponseReader< ::EditorGRPC::FileSaveResult>* PlayBoardEdit::Stub::AsyncSaveLevelRaw(::grpc::ClientContext* context, const ::EditorGRPC::FileSavePath& request, ::grpc::CompletionQueue* cq) {
+  auto* result =
+    this->PrepareAsyncSaveLevelRaw(context, request, cq);
+  result->StartCall();
+  return result;
+}
+
+::grpc::ClientReader< ::EditorGRPC::GameFrameworkLayers>* PlayBoardEdit::Stub::GetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request) {
+  return ::grpc::internal::ClientReaderFactory< ::EditorGRPC::GameFrameworkLayers>::Create(channel_.get(), rpcmethod_GetGameFramworkStackStream_, context, request);
+}
+
+void PlayBoardEdit::Stub::async::GetGameFramworkStackStream(::grpc::ClientContext* context, const ::EditorGRPC::Void* request, ::grpc::ClientReadReactor< ::EditorGRPC::GameFrameworkLayers>* reactor) {
+  ::grpc::internal::ClientCallbackReaderFactory< ::EditorGRPC::GameFrameworkLayers>::Create(stub_->channel_.get(), stub_->rpcmethod_GetGameFramworkStackStream_, context, request, reactor);
+}
+
+::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>* PlayBoardEdit::Stub::AsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq, void* tag) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::EditorGRPC::GameFrameworkLayers>::Create(channel_.get(), cq, rpcmethod_GetGameFramworkStackStream_, context, request, true, tag);
+}
+
+::grpc::ClientAsyncReader< ::EditorGRPC::GameFrameworkLayers>* PlayBoardEdit::Stub::PrepareAsyncGetGameFramworkStackStreamRaw(::grpc::ClientContext* context, const ::EditorGRPC::Void& request, ::grpc::CompletionQueue* cq) {
+  return ::grpc::internal::ClientAsyncReaderFactory< ::EditorGRPC::GameFrameworkLayers>::Create(channel_.get(), cq, rpcmethod_GetGameFramworkStackStream_, context, request, false, nullptr);
+}
+
 PlayBoardEdit::Service::Service() {
   AddMethod(new ::grpc::internal::RpcServiceMethod(
       PlayBoardEdit_method_names[0],
@@ -342,6 +385,26 @@ PlayBoardEdit::Service::Service() {
              ::grpc::ServerWriter<::EditorGRPC::BoardDescription>* writer) {
                return service->GetUpdatedBoardStream(ctx, req, writer);
              }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayBoardEdit_method_names[9],
+      ::grpc::internal::RpcMethod::NORMAL_RPC,
+      new ::grpc::internal::RpcMethodHandler< PlayBoardEdit::Service, ::EditorGRPC::FileSavePath, ::EditorGRPC::FileSaveResult, ::grpc::protobuf::MessageLite, ::grpc::protobuf::MessageLite>(
+          [](PlayBoardEdit::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::EditorGRPC::FileSavePath* req,
+             ::EditorGRPC::FileSaveResult* resp) {
+               return service->SaveLevel(ctx, req, resp);
+             }, this)));
+  AddMethod(new ::grpc::internal::RpcServiceMethod(
+      PlayBoardEdit_method_names[10],
+      ::grpc::internal::RpcMethod::SERVER_STREAMING,
+      new ::grpc::internal::ServerStreamingHandler< PlayBoardEdit::Service, ::EditorGRPC::Void, ::EditorGRPC::GameFrameworkLayers>(
+          [](PlayBoardEdit::Service* service,
+             ::grpc::ServerContext* ctx,
+             const ::EditorGRPC::Void* req,
+             ::grpc::ServerWriter<::EditorGRPC::GameFrameworkLayers>* writer) {
+               return service->GetGameFramworkStackStream(ctx, req, writer);
+             }, this)));
 }
 
 PlayBoardEdit::Service::~Service() {
@@ -404,6 +467,20 @@ PlayBoardEdit::Service::~Service() {
 }
 
 ::grpc::Status PlayBoardEdit::Service::GetUpdatedBoardStream(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::grpc::ServerWriter< ::EditorGRPC::BoardDescription>* writer) {
+  (void) context;
+  (void) request;
+  (void) writer;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayBoardEdit::Service::SaveLevel(::grpc::ServerContext* context, const ::EditorGRPC::FileSavePath* request, ::EditorGRPC::FileSaveResult* response) {
+  (void) context;
+  (void) request;
+  (void) response;
+  return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "");
+}
+
+::grpc::Status PlayBoardEdit::Service::GetGameFramworkStackStream(::grpc::ServerContext* context, const ::EditorGRPC::Void* request, ::grpc::ServerWriter< ::EditorGRPC::GameFrameworkLayers>* writer) {
   (void) context;
   (void) request;
   (void) writer;

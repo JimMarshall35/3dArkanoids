@@ -19,6 +19,7 @@ public:
 	virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 	virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
+	virtual void DrawTextAnchoredToCenter(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const = 0;
 
 	// load a texture for 1x2 blocks 
 	/*

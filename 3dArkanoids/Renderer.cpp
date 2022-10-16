@@ -741,6 +741,7 @@ void Renderer::LoadSpriteFromFile(const std::string& filePath)
     });
 }
 
+
 float Renderer::GetTextWidth(float scale, std::string text)
 {
     auto width = 0.0f;
@@ -984,6 +985,18 @@ void Renderer::DrawTextAnchoredToBottomRight(std::string text, float xOffset, fl
     DrawTextAnchoredToBottomLeft(text, m_scrWidth - totalAdvance * scale, 0, scale, colour);
 }
 
+void Renderer::DrawTextAnchoredToCenter(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const
+{
+    unsigned int totalAdvance = 0;
+    for (char c : text) {
+        const auto& character = m_characters[c];
+        totalAdvance += character.Advance >> 6;
+    }
+    float baseX, baseY;
+    baseX = (m_scrWidth / 2.0f) - ((totalAdvance * scale) / 2.0f);
+    baseY = (m_scrHeight / 2.0f) - ((m_baseTextSize * scale) / 2.0f);
+    DrawTextAnchoredToTopLeft(text, baseX + xOffset, baseY + yOffset, scale, colour);
+}
 
 /// <summary>
 /// Sets an initial openGL uniform buffer of instanced rendering data for

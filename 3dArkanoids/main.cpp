@@ -25,6 +25,7 @@
 
 #include "PortAudioPlayer.h"
 #include "CameraSpline.h"
+#include "PauseLayer.h"
 
 #include "LevelSelectScreen.h"
 
@@ -142,6 +143,7 @@ int main()
         &ToggleCursorLock);
     GameUiOverlay ui(renderer);
     LevelSelectScreen levelSelect(renderer, &ToggleCursorLock, &CloseWindow);
+    PauseLayer pause(renderer, &ToggleCursorLock);
 
     // push the initial layer
     GameFramework::PushLayers("LevelSelect",
@@ -201,6 +203,7 @@ int main()
 }
 
 bool escapeAcknowledged = false;
+bool pauseAcknowledged = false;
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
 void processInput(GLFWwindow* window)
@@ -214,6 +217,16 @@ void processInput(GLFWwindow* window)
     }
     else if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_RELEASE) {
         escapeAcknowledged = false;
+    }
+
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS && !pauseAcknowledged) {
+        GameInput gi;
+        gi.PauseGame = true;
+        pauseAcknowledged = true;
+        GameFramework::RecieveInput(gi);
+    }
+    else if (glfwGetKey(window, GLFW_KEY_P) == GLFW_RELEASE) {
+        pauseAcknowledged = false;
     }
         //glfwSetWindowShouldClose(window, true);
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)

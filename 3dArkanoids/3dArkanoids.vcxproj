@@ -186,6 +186,7 @@
     <ClCompile Include="GrpcLevelEditorServer.cpp" />
     <ClCompile Include="InitialConnectionHandshakeCallData.cpp" />
     <ClCompile Include="LevelSelectScreen.cpp" />
+    <ClCompile Include="PauseLayer.cpp" />
     <ClCompile Include="PortAudioPlayer.cpp" />
     <ClCompile Include="SerializationFunctions.cpp" />
     <ClCompile Include="PlayBoardEdit.grpc.pb.cc" />
@@ -255,6 +256,7 @@
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="LevelEditorServerFactoryTypedef.h" />
     <ClInclude Include="MasterArrayUpdatedEventArgs.h" />
+    <ClInclude Include="PauseLayer.h" />
     <ClInclude Include="PlayBoardEdit.grpc.pb.h" />
     <ClInclude Include="PlayBoardEdit.pb.h" />
     <ClInclude Include="PlayfieldDefs.h" />

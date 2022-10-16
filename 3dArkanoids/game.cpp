@@ -161,9 +161,17 @@ void Game::ReceiveInput(const GameInput& gameInput)
 {
 	// todo : sort this weirdness out. this function should just be the last line
 	// this if check should go in m_ballManager.RecieveInput
+	
 	if (gameInput.ExitGame) {
 		GameFramework::PopLayers(GameLayerType::Draw); // ui overlay
 		GameFramework::PopLayers(
+			GameLayerType::Draw |
+			GameLayerType::Update |
+			GameLayerType::Input);
+		return;
+	}
+	else if (gameInput.PauseGame) {
+		GameFramework::PushLayers("Pause",
 			GameLayerType::Draw |
 			GameLayerType::Update |
 			GameLayerType::Input);

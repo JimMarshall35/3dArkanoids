@@ -33,6 +33,7 @@ public:
     virtual void DrawTextAnchoredToTopLeft(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
     virtual void DrawTextAnchoredToTopRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
     virtual void DrawTextAnchoredToBottomRight(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
+    virtual void DrawTextAnchoredToCenter(std::string text, float xOffset, float yOffset, float scale, glm::vec3 colour) const override;
 
     virtual void SetInstancedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
     virtual void SetInstancedTexturedBlocksUbo(const BlockInstanceRenderData* instances, const size_t numberToSet) override;
@@ -119,8 +120,5 @@ private:
 
     unsigned int m_testTexture;
     std::map<std::string, LoadedSprite> m_loadedSprites;
-
-
-
 };
 

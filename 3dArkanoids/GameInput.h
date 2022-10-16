@@ -7,4 +7,5 @@ struct GameInput {
 	double xPos;
 	double yPos;
 	bool ExitGame = false;
+	bool PauseGame = false;
 };

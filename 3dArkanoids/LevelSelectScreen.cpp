@@ -80,6 +80,9 @@ void LevelSelectScreen::ReceiveInput(const GameInput& input)
         m_shouldLoadNewLevelNow = true;
         return;
     }
+    if (input.PauseGame) {
+        return;
+    }
     glm::vec2 start = { 0,0 };
     auto baseTextSize = m_renderer->GetBaseTextSize();
     m_hovveredLevel = "";

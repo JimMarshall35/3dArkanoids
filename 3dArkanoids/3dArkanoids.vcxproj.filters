@@ -121,6 +121,12 @@
     <Filter Include="Source Files\graphics\third party">
       <UniqueIdentifier>{d09403e1-9344-446e-9a6d-a54091210c6b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\game framework layers\pause">
+      <UniqueIdentifier>{587f88d0-37c5-484d-bed8-8de5c0b61c52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\game framework layers\pause">
+      <UniqueIdentifier>{dc29f637-98fc-4e48-992a-9b4bc2e23584}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -254,6 +260,9 @@
     </ClCompile>
     <ClCompile Include="GetGameFrameworkStacksStreamCallData.cpp">
       <Filter>Source Files\level editor server\grpc\call datas</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseLayer.cpp">
+      <Filter>Source Files\game framework layers\pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,6 +499,9 @@
     </ClInclude>
     <ClInclude Include="EngineUpdateFrameEventArgs.h">
       <Filter>Header Files\game framework layers\game</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseLayer.h">
+      <Filter>Header Files\game framework layers\pause</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

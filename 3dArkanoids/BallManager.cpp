@@ -258,6 +258,17 @@ void BallManager::ReflectBall(glm::vec3& directionToChange, const glm::vec3& new
 	//directionToChange.z = vec2Relected.z;
 }
 
+void BallManager::ResetAfterDeath()
+{
+	const auto ballStartingY =
+		-(m_bat->GetDistanceFromFirstRow() + BLOCK_DEPTH_UNITS * 0.5f) + DEFAULT_BALL_RADIUS + (m_bat->GetDepthAndHeight().x * 0.5f);
+	AddBall(
+		{ m_bat->GetXPos() , ballStartingY, 0 },
+		glm::normalize(glm::vec3{ -0.5,1,0 }),
+		true);
+
+}
+
 static float ClampDirection(glm::vec3& dirToChange, double mostObtuseAngleAllowed){
 	// returns angle against y axis
 	const double Pi = 3.14159265358979323846264;
@@ -321,6 +332,9 @@ BallManager::BallAdvanceResult BallManager::AdvanceBall(Ball* thisBall, bool del
 		thisBall->pos.z + thisBall->direction.z * thisBall->speed,
 	};
 
+	if (thisBall->pos.y < m_minBallY) {
+		return BallAdvanceResult::OUT_OF_PLAY;
+	}
 	if (thisBall->pos.x < -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius) {
 		thisBall->pos.x = -((float)BLOCK_WIDTH_UNITS * 0.5f) + thisBall->radius;
 		thisBall->direction.x *= -1.0f;
@@ -515,19 +529,34 @@ void BallManager::LookAhead(const Ball* thisBall)
 
 void BallManager::OnEvent(EngineUpdateFrameEventArgs e)
 {
-	IterateBallList([this](Ball* thisBall, Ball* lastBall, int onIteration) {
+	size_t deletedIndices[MAX_NUM_BALLS];
+	size_t numDeletedIndicies = 0;
+	IterateBallList([this, &numDeletedIndicies,&deletedIndices](Ball* thisBall, Ball* lastBall, int onIteration) {
 		if (thisBall->stuckToBat) {
 			return true;
 		}
+		BallAdvanceResult lastRes;
 		for (int i = 0; i < BALL_ADVANCES_PER_FRAME; i++) {
-			AdvanceBall(thisBall);
+			lastRes = AdvanceBall(thisBall);
+			if (lastRes == BallAdvanceResult::OUT_OF_PLAY) {
+				deletedIndices[numDeletedIndicies++] = onIteration;
+				break;
+			}
 		}
 		
-
-		LookAhead(thisBall);
+		if (lastRes != BallAdvanceResult::OUT_OF_PLAY) {
+			LookAhead(thisBall);
+		}
 
 		return true;
 	});
+	for (int i = 0; i < numDeletedIndicies; i++) {
+		auto indexToDelete = deletedIndices[i];
+		RemoveBallAtListIndex(indexToDelete);
+	}
+	if (m_numBalls == 0) {
+		ResetAfterDeath();
+	}
 }
 
 const std::vector<SerializableProperty>& BallManager::GetSerializableProperties() const

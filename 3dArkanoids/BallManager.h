@@ -99,8 +99,8 @@ private:
 	// todo: just change this to not take a const Ball ptr and get rid of other params except deleteblock
 	BallAdvanceResult AdvanceBall(Ball* thisBall, bool deleteBlock=true);
 	void LookAhead(const Ball* thisBall);
-private:
 	static void ReflectBall(glm::vec3& directionToChange, const glm::vec3& newPos, const glm::vec3& nearestPoint, const glm::vec3& oldDirection);
+	void ResetAfterDeath();
 public:
 	//void TestRemoveFunc(int index) {
 	//	RemoveBallAtListIndex(index);

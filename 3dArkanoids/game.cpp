@@ -255,6 +255,10 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 {
 	auto finishedColStart = e.FinishedBlock->atGridCoords;
 	auto finishedColDestination = e.FinishedGridCoords;
+	if (finishedColDestination.z > 0 && m_playFieldArray.At(finishedColDestination - glm::ivec3{ 0,0,-1 }) == 0) {
+		m_fallingBlockManager.StartBlockFalling(e.FinishedBlock, m_playFieldArray);
+		return;
+	}
 	auto movementAmount = finishedColStart.z - finishedColDestination.z;
 
 	e.FinishedBlock->IterateOverChildBlocksAndSelf([this, finishedColStart, movementAmount](BlockInstanceRenderData* workingBlock, int onZLayer) {
@@ -271,6 +275,9 @@ void Game::OnEvent(FallingBlockFinishedEventArgs e)
 				int indexOfNewParent = IndexOfRenderDataAt(glm::ivec3(pasteIndex.x, pasteIndex.y, pasteIndex.z - 1));
 				if (indexOfLandedBlocksColumn >= 0 && indexOfNewParent >= 0) {
 					m_blockRenderData[indexOfNewParent].child = &m_blockRenderData[indexOfLandedBlocksColumn];
+				}
+				else {
+					std::cerr << "sjij\n";
 				}
 			}
 
@@ -347,6 +354,7 @@ EditBlockResultCode Game::RemoveBlock(const glm::ivec3& point)
 		}
 		else {
 			std::cout << "breakpoint\n";
+
 		}
 	}
 	 

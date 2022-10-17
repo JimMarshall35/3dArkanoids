@@ -65,13 +65,13 @@ void FallingBlockColumn::Update(float deltaTime)
 	}
 
 	m_fallingColumnListHead->IterateOverChildBlocksAndSelf([this](BlockInstanceRenderData* workingBlock, int onZLayer) {
-			auto zoffset = glm::vec3(0, 0, onZLayer * (float)BLOCK_DEPTH_UNITS);
+			auto zoffset = onZLayer * (float)BLOCK_DEPTH_UNITS;
 			auto newz = m_fallStartPointWorldSpace.z - (0.5 * GRAVITY * m_fallTimeElapsed) * m_fallTimeElapsed;
 			workingBlock->SetNewWorldPos(
 				glm::vec3(
 					m_fallStartPointWorldSpace.x,// + zoffset,
 					m_fallStartPointWorldSpace.y,// + zoffset,
-					newz + zoffset.z//m_fallTimeElapsed / m_fallTimeTotal
+					newz + zoffset//m_fallTimeElapsed / m_fallTimeTotal
 				)
 			);
 		});	

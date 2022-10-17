@@ -265,7 +265,9 @@ std::string textFragGlsl =
 
 "void main()\n"
 "{\n"
-"    color = vec4(textColor.x, textColor.y, textColor.z, texture(text, TexCoords).r);\n"
+"   if(texture(text, TexCoords).r == 0)\n"
+"       discard;"
+"   color = vec4(textColor.x, textColor.y, textColor.z, 1.0);\n"
 "}\n";
 
 #pragma endregion

@@ -32,7 +32,7 @@ void BallManager::Init(Game* game, const Bat* bat)
 {
 	m_game = game;
 	m_bat = bat;
-	m_minBallY = -(bat->GetDistanceFromFirstRow() + 16.0f);
+	m_minBallY = -(bat->GetDistanceFromFirstRow() + 80.0f);
 
 }
 

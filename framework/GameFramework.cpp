@@ -34,6 +34,7 @@ void GameFramework::Update(double deltaT)
 
 void GameFramework::Draw(const Camera& camera)
 {
+	/*
 	if (m_drawableStackSize == 0) {
 		return;
 	}
@@ -41,6 +42,19 @@ void GameFramework::Draw(const Camera& camera)
 	do {
 		m_drawableStack[topOfStackIndex]->Draw(camera);
 	} while (!m_drawableStack[topOfStackIndex--]->MasksPreviousDrawableLayer());
+	*/
+	if (m_drawableStackSize == 0) {
+		return;
+	}
+	DrawableLayerBase* temp[FRAMEWORK_STACKS_SIZE];
+	auto numAdded = 0;
+	auto topOfStackIndex = m_drawableStackSize - 1;
+	do {
+		temp[numAdded++] = m_drawableStack[topOfStackIndex];
+	} while (!m_drawableStack[topOfStackIndex--]->MasksPreviousDrawableLayer());
+	for (int i = numAdded-1; i >=0 ; i--) {
+		temp[i]->Draw(camera);
+	}
 }
 
 void GameFramework::RecieveInput(const GameInput& input)

@@ -265,9 +265,8 @@ std::string textFragGlsl =
 
 "void main()\n"
 "{\n"
-"   if(texture(text, TexCoords).r == 0)\n"
-"       discard;"
-"   color = vec4(textColor.x, textColor.y, textColor.z, 1.0);\n"
+//"   if(texture(text,TexCoords).r < 3) discard;\n"
+"   color = vec4(textColor.x, textColor.y, textColor.z, texture(text, TexCoords).r);\n"
 "}\n";
 
 #pragma endregion
@@ -338,7 +337,7 @@ void Renderer::SetScreenDims(const glm::ivec2& value)
 {
     m_scrWidth = value.x;
     m_scrHeight = value.y;
-    m_uiProjectionMatrix = glm::ortho(0.0f, static_cast<float>(m_scrWidth), 0.0f, static_cast<float>(m_scrHeight));
+    m_uiProjectionMatrix = glm::ortho(0.0f, static_cast<float>(m_scrWidth), 0.0f, static_cast<float>(m_scrHeight),-0.01f,DRAW_DISTANCE);
 }
 
 void PrintInfo() {
@@ -918,8 +917,7 @@ void Renderer::DrawTextAnchoredToBottomLeft(std::string text, float x, float y, 
     m_textShader.use();
     m_textShader.setVec3("textColor", colour);
 
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(m_scrWidth), 0.0f, static_cast<float>(m_scrHeight));
-    m_textShader.setMat4("projection", projection);
+    m_textShader.setMat4("projection", m_uiProjectionMatrix);
 
     glActiveTexture(GL_TEXTURE0);
     glBindVertexArray(m_freeTypeVAO);

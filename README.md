@@ -15,7 +15,7 @@ possible mechanics will include:
 - a line that shows the trajectory of the ball when it's going to hit the bat (showing where it will got in real time) - implemented
 - a powerup that flips the entire play-field upside down, possibly resulting in a different or weird board
 - stuff around the outside of the board, better rendering engine with textures, more and better lighting
-- sound effects
+- sound effects - implemented, although not very well
 
 work in progress.
 
